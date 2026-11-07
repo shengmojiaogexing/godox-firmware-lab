@@ -1,0 +1,51 @@
+﻿==============================================================================
+range 0x080045ac .. 0x080045f8  flash_charge_state_machine
+==============================================================================
+080045ac: 70b5       push {r4, r5, r6, lr}          <flash_charge_state_machine>
+080045ae: 7d20       movs r0, #0x7d              
+080045b0: 934c       ldr r4, [pc, #0x24c]           ; lit@08004800 = 0x20000150 (ram)
+080045b2: 0001       lsls r0, r0, #4             
+080045b4: a085       strh r0, [r4, #0x2c]        
+080045b6: fff79bf9   bl #0x80038f0               
+080045ba: 07f041fa   bl #0x800ba40               
+080045be: 07f027f9   bl #0x800b810               
+080045c2: a07c       ldrb r0, [r4, #0x12]        
+080045c4: 0121       movs r1, #1                 
+080045c6: 0128       cmp r0, #1                  
+080045c8: 05d0       beq #0x80045d6              
+080045ca: 8e48       ldr r0, [pc, #0x238]           ; lit@08004804 = 0x200001d0 (ram)
+080045cc: 0323       movs r3, #3                 
+080045ce: 0078       ldrb r0, [r0]               
+080045d0: 0528       cmp r0, #5                  
+080045d2: 1cd0       beq #0x800460e              
+080045d4: 1ee0       b #0x8004614                
+080045d6: e07c       ldrb r0, [r4, #0x13]        
+080045d8: 0028       cmp r0, #0                  
+080045da: 0dd0       beq #0x80045f8              
+080045dc: e174       strb r1, [r4, #0x13]        
+080045de: 8a48       ldr r0, [pc, #0x228]           ; lit@08004808 = 0x20000418 (SETTINGS base)
+080045e0: 227d       ldrb r2, [r4, #0x14]        
+080045e2: 815c       ldrb r1, [r0, r2]           
+080045e4: 0029       cmp r1, #0                  
+080045e6: 0fd0       beq #0x8004608              
+080045e8: 491e       subs r1, r1, #1             
+080045ea: 8154       strb r1, [r0, r2]           
+080045ec: 062a       cmp r2, #6                  
+080045ee: 02d1       bne #0x80045f6              
+080045f0: 8079       ldrb r0, [r0, #6]           
+080045f2: 07f0dbf9   bl #0x800b9ac               
+080045f6: 70bd       pop {r4, r5, r6, pc}        
+python.exe : Traceback (most recent call last):
+At line:1 char:160
++ ... NG='utf-8'; & D:\神牛\AD200pro-RE\python\python.exe D:\神牛\keypatch\dev\ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "D:\神牛\keypatch\dev\ad200_ui\store\dump_funcs.py", line 120, in <module>
+    sys.exit(main(sys.argv))
+             ^^^^^^^^^^^^^^
+  File "D:\神牛\keypatch\dev\ad200_ui\store\dump_funcs.py", line 109, in main
+    addr = int(a, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '0x080045ac:0x080045f8'

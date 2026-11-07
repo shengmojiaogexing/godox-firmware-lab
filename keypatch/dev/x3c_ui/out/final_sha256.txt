@@ -1,0 +1,24 @@
+X3-C v1.38 UI 原型补丁 —— 成品清单
+========================================================================
+
+名称   : v1.2 ALL-group
+路径   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_patch.bin
+长度   : 1021468（原厂 1021468，长度不变=True）
+sha256 : c32a8521bb2e214ef0889b50c25c6dd10d55683e2eb5e07746c6c95e8e9bd594
+验证   : PASS（19/19 PASS）
+   [PASS] ui_broadcast_allch @0x080F0020: push {r4, r5, r6, lr}; movs r4, #0; ldr r5, [pc, #0x48]; ldr r6, [pc, #0x4c]; mov r0, r4; bl #0x8014814
+   [PASS] ui_broadcast_allid @0x080F0100: push {r4, r5, r6, lr}; movs r4, #0; ldr r5, [pc, #0x4c]; mov r0, r4; bl #0x8014814; movs r0, #4
+   [PASS] ui_broadcast_allch(): 频道 32；同步字 64 次（KEY 交替=True）；功率帧 32 个([80],0xD1,30)=True；造型灯帧 32 个([80],0xB1,1)=True；TEST 32
+   [PASS] ui_quickpanel_ext 共 39 个 bl；2×建磁贴、2×文本、2×图标(0x0802553E)，且原厂属性 setter 全部出现=True
+   [PASS] ui_broadcast_allid 全 ID 扫描: 步长 1、上限 100 = True（期望 True）
+
+名称   : v1.2 per-group (A-E), KEY=0xD798
+路径   : D:\神牛\keypatch\out\X3_C_v1.38_app_keyD798_pergroup.bin
+长度   : 1021468（原厂 1021468，长度不变=True）
+sha256 : 170441ed258eff6aa20eeb15ea56d0b5c1c723d465be72266ce2ef4d73f01db7
+验证   : PASS（19/19 PASS）
+   [PASS] ui_broadcast_allch @0x080F0020: push {r4, r5, r6, lr}; movs r4, #0; ldr r5, [pc, #0xd0]; ldr r6, [pc, #0xd4]; mov r0, r4; bl #0x8014814
+   [PASS] ui_broadcast_allid @0x080F0100: push {r4, r5, r6, lr}; movs r4, #0; ldr r5, [pc, #0x4c]; mov r0, r4; bl #0x8014814; movs r0, #4
+   [PASS] ui_broadcast_allch(): 频道 32；同步字 64 次（KEY 交替=True）；功率帧 160 个([10, 11, 12, 13, 14],0xD1,30)=True；造型灯帧 160 个([10, 11, 12, 13, 14],0xB1,1)=True；TEST 32
+   [PASS] ui_quickpanel_ext 共 39 个 bl；2×建磁贴、2×文本、2×图标(0x0802553E)，且原厂属性 setter 全部出现=True
+   [PASS] ui_broadcast_allid 全 ID 扫描: 步长 1、上限 100 = True（期望 True）

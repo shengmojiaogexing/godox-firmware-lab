@@ -1,0 +1,76 @@
+﻿==============================================================================
+AD200 Pro V1.60 settings[7]（F8）持久化 & 语义 —— Unicorn 调用级实测
+image: D:\神牛\AD200pro-RE\samples\AD200pro_V1.60.bin
+==============================================================================
+
+== T1 builder 0x080043E4：settings[7] → 记录字节 31 ==
+  builder 返回 reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0'  r0=0x20000484
+  记录: 5c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 11 22 33 44 55 66 07 01
+  [PASS] 记录字节 0 == 0x5C (magic)  rec[0]=0x5c
+  [PASS] 记录 byte24..27 == settings[0..3] 的 word  word6=0x44332211
+  [PASS] 记录 byte28..31 == settings[4..7] 的 word  word7=0x01076655
+  [PASS] 记录字节 31 == settings[7] == 1  rec[31]=0x01
+
+== T2 flash_store_params 0x0800B820(slot=3) → flash 0x0801F000+300 ==
+  store 返回 reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0'
+  flash[0x0801F000+300..+31]: 5c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 11 22 33 44 55 66 07 01
+  [PASS] 镜像 0x20000464 word7 == 记录 word7
+  [PASS] 参数页记录 magic==0x5C  byte0=0x5c
+  [PASS] 参数页记录字节31 == settings[7] == 1  byte31=0x01
+  [PASS] 参数页记录字节24..31 == settings[0..7]  11 22 33 44 55 66 07 01
+
+== T3 保存触发：0x0800B810 置 200 tick 倒计时 → 0x08009B38 落盘 ==
+  调度后倒计时 [0x20000218] = 200 (0xc8)
+  [PASS] 0x0800B810 把保存倒计时设为 200  cd=200
+  第 200 次调用保存任务后落盘，slot=1
+  [PASS] 改 F8 后保存任务在 200 次 tick（=200 次主循环）后写 flash  calls=200 slot=1
+  flash 记录: 5c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01
+  [PASS] 落盘记录字节 31 == 1  byte31=0x01
+  [PASS] 记录 magic
+  [PASS] 记录未变化时不重复写 flash（slot 不递增）  slot 1 -> 1
+
+== T4 C.Fn 改值入口：F8 由 0→1（上限 1 生效），再次 + 回到 0 ==
+  0x08008504(编辑 +) 后 settings[7]=1  reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0'
+  [PASS] F8 编辑 + 后 0→1  v=1
+  再次 0x08008504 后 settings[7]=0（上限 1 回绕）
+  [PASS] 上限表 0x0800E314[7]=1 → 再次 + 回绕到 0  v=0
+  0x080045AC(编辑 -) 后 settings[7]=0  reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0'
+  [PASS] F8 编辑 - 后 1→0  v=0
+  再次 0x080045AC 后 settings[7]=1（0 → 上限回绕）
+  [PASS] F8 编辑 - 在 0 处回绕到上限 1（同一张 0x0800E314 表）  v=1
+
+== T5 上电加载 settings_load_task 0x0800AC58：记录字节31 → 0x2000041F ==
+  load 后 settings[0..7] = 01 02 03 44 02 01 07 01  reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0'
+  [PASS] 加载后 settings[7]==1  v=1
+  [PASS] 合法记录加载后 settings[0..7] 与记录一致  01 02 03 44 02 01 07 01
+  加载任务末尾重新归一化保存: slot=0 flash slot0 记录=5c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 50 50 50 50 50 50 00 00 01 02 03 44 02 01 07 01
+  [PASS] 加载后重写 slot0 且记录字节31 仍为 1  slot=0 magic=0x5c b31=0x01
+
+== T5b 记录字节31=5（>上限 1）→ 加载时 clamp 成 0 ==
+  load 后 settings = 01 02 03 44 02 01 07 00  reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0'
+  [PASS] 记录字节31=5 时加载后被 clamp 为 0（0x0800E314[7]=1）  v=0
+
+== T6 运行期读者：抓 0x2000041F 的读取 PC ==
+  C.Fn 渲染 0x08003FD0(item=7): 读取 0x2000041F 的 PC（去重）= 0x08004230   (reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0')
+  [PASS] F8 渲染路径确实读了 settings[7]  hits=['0x8004230']
+  显示页 FUNC_08004F70: 读取 0x2000041F 的 PC（去重）= 0x08004ff4   (reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0')
+  [PASS] 显示页 FUNC_08004F70 路径读了 settings[7]（稳定色温显示逻辑）  hits=['0x8004ff4']
+
+== T7 启动+主循环运行期：抓 0x2000041F 的读取 PC（真实执行路径）==
+  启动到主循环+主循环运行期间读取 0x2000041F 的 PC（去重）= 0x08004496
+  命中次数=1
+
+== T8 静默清零路径：ui_key_80 (0x0800BC34) 在特定模式下清 settings[7] ==
+  调用后 settings[7]=0  g_mode=0x10  reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0'
+  [PASS] ui_key_80 在该状态下把 settings[7] 从 1 清成 0（F8 会被静默关掉）  v=0
+  [PASS] 同时 g_mode bits4-5 被置 1（0x10）  g_mode=0x10
+
+== T9 上电默认值 & 运行期写者 ==
+  0x080048E4 后 settings = 00 00 01 00 00 00 00 00  reason='fault: Unhandled CPU exception (UC_ERR_EXCEPTION) at 0xfffffff0'
+  [PASS] 上电默认 settings[7]==0（F8=OFF/普通模式）  v=0
+  [PASS] 默认值函数写入 settings[0..7] = 00 00 01 00 00 00 00 00  00 00 01 00 00 00 00 00
+  上电（无有效参数记录时）对 0x2000041F 的写入 PC/值 = 0x08004920<=0x00
+  [PASS] 上电写 settings[7] 的代码是默认值路径 0x08004920 且写 0  [(134236448, 0)]
+
+==============================================================================
+结果: 全部 PASS

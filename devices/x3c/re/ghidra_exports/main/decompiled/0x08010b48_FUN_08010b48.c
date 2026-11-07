@@ -1,0 +1,10 @@
+// 0x08010b48 FUN_08010b48 size=26
+
+void FUN_08010b48(void)
+
+{
+  FUN_08022e34(DAT_08010b64,0x2000);
+  FUN_08022e38(DAT_08010b68,0x100);
+  return;
+}
+

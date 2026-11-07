@@ -1,0 +1,156 @@
+﻿==============================================================================
+range 0x080045e8 .. 0x08004700  
+==============================================================================
+080045e8: 491e       subs r1, r1, #1             
+080045ea: 8154       strb r1, [r0, r2]           
+080045ec: 062a       cmp r2, #6                  
+080045ee: 02d1       bne #0x80045f6              
+080045f0: 8079       ldrb r0, [r0, #6]           
+080045f2: 07f0dbf9   bl #0x800b9ac               
+080045f6: 70bd       pop {r4, r5, r6, pc}        
+080045f8: 207d       ldrb r0, [r4, #0x14]        
+080045fa: 0028       cmp r0, #0                  
+080045fc: 02d0       beq #0x8004604              
+080045fe: 401e       subs r0, r0, #1             
+08004600: 2075       strb r0, [r4, #0x14]        
+08004602: 70bd       pop {r4, r5, r6, pc}        
+08004604: 0720       movs r0, #7                 
+08004606: fbe7       b #0x8004600                
+08004608: 8049       ldr r1, [pc, #0x200]           ; lit@0800480c = 0x0800e314 (flash)
+0800460a: 895c       ldrb r1, [r1, r2]           
+0800460c: ede7       b #0x80045ea                
+0800460e: e07b       ldrb r0, [r4, #0xf]         
+08004610: 0028       cmp r0, #0                  
+08004612: 0cd0       beq #0x800462e              
+08004614: e07b       ldrb r0, [r4, #0xf]         
+08004616: 0022       movs r2, #0                 
+08004618: 0628       cmp r0, #6                  
+0800461a: 6cd0       beq #0x80046f6              
+0800461c: 0fdc       bgt #0x800463e              
+0800461e: 0028       cmp r0, #0                  
+08004620: 10d0       beq #0x8004644              
+08004622: 5a22       movs r2, #0x5a              
+08004624: 0328       cmp r0, #3                  
+08004626: 3ed0       beq #0x80046a6              
+08004628: 0428       cmp r0, #4                  
+0800462a: 30d1       bne #0x800468e              
+0800462c: 4fe0       b #0x80046ce                
+0800462e: e07f       ldrb r0, [r4, #0x1f]        
+08004630: 0028       cmp r0, #0                  
+08004632: 02d0       beq #0x800463a              
+08004634: 401e       subs r0, r0, #1             
+08004636: e077       strb r0, [r4, #0x1f]        
+08004638: 70bd       pop {r4, r5, r6, pc}        
+0800463a: e377       strb r3, [r4, #0x1f]        
+0800463c: 70bd       pop {r4, r5, r6, pc}        
+0800463e: 0a28       cmp r0, #0xa                
+08004640: 25d1       bne #0x800468e              
+08004642: a9e0       b #0x8004798                
+08004644: 607b       ldrb r0, [r4, #0xd]         
+08004646: 8007       lsls r0, r0, #0x1e          
+08004648: 800f       lsrs r0, r0, #0x1e          
+0800464a: 0128       cmp r0, #1                  
+0800464c: 02d0       beq #0x8004654              
+0800464e: 0228       cmp r0, #2                  
+08004650: 09d0       beq #0x8004666              
+08004652: 1ae0       b #0x800468a                
+08004654: 6a4b       ldr r3, [pc, #0x1a8]           ; lit@08004800 = 0x20000150 (ram)
+08004656: a17d       ldrb r1, [r4, #0x16]        
+08004658: 3433       adds r3, #0x34              
+0800465a: 585c       ldrb r0, [r3, r1]           
+0800465c: 5028       cmp r0, #0x50               
+0800465e: 14d2       bhs #0x800468a              
+08004660: 401c       adds r0, r0, #1             
+08004662: 5854       strb r0, [r3, r1]           
+08004664: 11e0       b #0x800468a                
+08004666: 6648       ldr r0, [pc, #0x198]           ; lit@08004800 = 0x20000150 (ram)
+08004668: a17d       ldrb r1, [r4, #0x16]        
+0800466a: 3a30       adds r0, #0x3a              
+0800466c: 435c       ldrb r3, [r0, r1]           
+0800466e: 5025       movs r5, #0x50              
+08004670: 322b       cmp r3, #0x32               
+08004672: 0fd0       beq #0x8004694              
+08004674: 06dc       bgt #0x8004684              
+08004676: 142b       cmp r3, #0x14               
+08004678: 12d0       beq #0x80046a0              
+0800467a: 1e2b       cmp r3, #0x1e               
+0800467c: 0ed0       beq #0x800469c              
+0800467e: 282b       cmp r3, #0x28               
+08004680: 02d1       bne #0x8004688              
+08004682: 09e0       b #0x8004698                
+08004684: 3c2b       cmp r3, #0x3c               
+08004686: 03d0       beq #0x8004690              
+08004688: 4554       strb r5, [r0, r1]           
+0800468a: 6148       ldr r0, [pc, #0x184]           ; lit@08004810 = 0x200001fb (ram)
+0800468c: 0270       strb r2, [r0]               
+0800468e: 8ee0       b #0x80047ae                
+08004690: 4623       movs r3, #0x46              
+08004692: 06e0       b #0x80046a2                
+08004694: 3c23       movs r3, #0x3c              
+08004696: 04e0       b #0x80046a2                
+08004698: 3223       movs r3, #0x32              
+0800469a: 02e0       b #0x80046a2                
+0800469c: 2823       movs r3, #0x28              
+0800469e: 00e0       b #0x80046a2                
+080046a0: 1e23       movs r3, #0x1e              
+080046a2: 4354       strb r3, [r0, r1]           
+080046a4: f1e7       b #0x800468a                
+080046a6: a078       ldrb r0, [r4, #2]           
+080046a8: 0128       cmp r0, #1                  
+080046aa: 01d8       bhi #0x80046b0              
+080046ac: a170       strb r1, [r4, #2]           
+080046ae: 7ee0       b #0x80047ae                
+080046b0: 1428       cmp r0, #0x14               
+080046b2: 01d8       bhi #0x80046b8              
+080046b4: 401e       subs r0, r0, #1             
+080046b6: 06e0       b #0x80046c6                
+080046b8: 3228       cmp r0, #0x32               
+080046ba: 01d8       bhi #0x80046c0              
+080046bc: 401f       subs r0, r0, #5             
+080046be: 02e0       b #0x80046c6                
+080046c0: 6328       cmp r0, #0x63               
+080046c2: 02d0       beq #0x80046ca              
+080046c4: 0a38       subs r0, #0xa               
+080046c6: a070       strb r0, [r4, #2]           
+080046c8: 71e0       b #0x80047ae                
+080046ca: a270       strb r2, [r4, #2]           
+080046cc: 6fe0       b #0x80047ae                
+080046ce: 6078       ldrb r0, [r4, #1]           
+080046d0: 0128       cmp r0, #1                  
+080046d2: 01d8       bhi #0x80046d8              
+080046d4: 6170       strb r1, [r4, #1]           
+080046d6: 6ae0       b #0x80047ae                
+080046d8: 1428       cmp r0, #0x14               
+080046da: 01d8       bhi #0x80046e0              
+080046dc: 401e       subs r0, r0, #1             
+080046de: 06e0       b #0x80046ee                
+080046e0: 3228       cmp r0, #0x32               
+080046e2: 01d8       bhi #0x80046e8              
+080046e4: 401f       subs r0, r0, #5             
+080046e6: 02e0       b #0x80046ee                
+080046e8: 6328       cmp r0, #0x63               
+080046ea: 02d0       beq #0x80046f2              
+080046ec: 0a38       subs r0, #0xa               
+080046ee: 6070       strb r0, [r4, #1]           
+080046f0: 5de0       b #0x80047ae                
+080046f2: 6270       strb r2, [r4, #1]           
+080046f4: 5be0       b #0x80047ae                
+080046f6: 607c       ldrb r0, [r4, #0x11]        
+080046f8: 1821       movs r1, #0x18              
+080046fa: 1828       cmp r0, #0x18               
+080046fc: 4ad0       beq #0x8004794              
+080046fe: 14dc       bgt #0x800472a              
+python.exe : Traceback (most recent call last):
+At line:1 char:160
++ ... NG='utf-8'; & D:\神牛\AD200pro-RE\python\python.exe D:\神牛\keypatch\dev\ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "D:\神牛\keypatch\dev\ad200_ui\store\dump_funcs.py", line 120, in <module>
+    sys.exit(main(sys.argv))
+             ^^^^^^^^^^^^^^
+  File "D:\神牛\keypatch\dev\ad200_ui\store\dump_funcs.py", line 109, in main
+    addr = int(a, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '0x080045e8:0x08004700'

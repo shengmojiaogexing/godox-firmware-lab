@@ -1,0 +1,405 @@
+{
+ "reached_main": false,
+ "stalls": [
+  {
+   "i": 28,
+   "pc": "0x0800cb2e",
+   "pages": [
+    "0x800b",
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     375
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0x00000000",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 48,
+   "pc": "0x0800cbb6",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 68,
+   "pc": "0x0800cbb8",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 88,
+   "pc": "0x0800cbba",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 108,
+   "pc": "0x0800cbb6",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 128,
+   "pc": "0x0800cbb8",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 148,
+   "pc": "0x0800cbba",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 168,
+   "pc": "0x0800cbb6",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 188,
+   "pc": "0x0800cbb8",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 208,
+   "pc": "0x0800cbba",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 228,
+   "pc": "0x0800cbb6",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 248,
+   "pc": "0x0800cbb8",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 268,
+   "pc": "0x0800cbba",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 288,
+   "pc": "0x0800cbb6",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 308,
+   "pc": "0x0800cbb8",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 328,
+   "pc": "0x0800cbba",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 348,
+   "pc": "0x0800cbb6",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 368,
+   "pc": "0x0800cbb8",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 388,
+   "pc": "0x0800cbba",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 408,
+   "pc": "0x0800cbb6",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  },
+  {
+   "i": 428,
+   "pc": "0x0800cbb8",
+   "pages": [
+    "0x800c"
+   ],
+   "polls": [
+    [
+     "0x48000410",
+     1500
+    ]
+   ],
+   "unstick": {
+    "addr": "0x48000410",
+    "old": "0xffffffff",
+    "new": "0xffffffff",
+    "how": "all bits"
+   }
+  }
+ ]
+}

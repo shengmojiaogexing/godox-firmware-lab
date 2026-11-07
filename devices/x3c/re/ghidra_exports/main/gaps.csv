@@ -1,0 +1,2 @@
+block,start,end,length,initialized
+ram,0x080490f9,0x0804914c,84,yes

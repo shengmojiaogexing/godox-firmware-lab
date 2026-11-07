@@ -1,0 +1,18 @@
+addr,name,reason
+0x0801d1fc,thunk_FUN_0802c016,thunk
+0x080232b6,thunk_FUN_0801c118,thunk
+0x0802b768,thunk_FUN_08017f3c,thunk
+0x08032a96,thunk_FUN_08027756,thunk
+0x08032ab4,thunk_FUN_08027774,thunk
+0x08032ab8,thunk_FUN_08027774,thunk
+0x08032abc,thunk_FUN_080277e2,thunk
+0x08032ac0,thunk_FUN_08027790,thunk
+0x08032ac4,thunk_FUN_0802782e,thunk
+0x08032ac8,thunk_FUN_0802782e,thunk
+0x08032acc,thunk_FUN_08032b92,thunk
+0x080f8138,FUN_080f8138,"incomplete: Low-level Error: Bad instruction count exceeded:
+    ...
+    No pcode could be generated at address: r0x080f7f90"
+0x080fb258,FUN_080fb258,"incomplete: Low-level Error: Bad instruction count exceeded:
+    ...
+    No pcode could be generated at address: r0x080fb33c"

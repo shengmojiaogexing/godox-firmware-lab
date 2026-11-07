@@ -1,0 +1,2148 @@
+解析 disasm.txt：16429 条指令，323 个函数（含字面量注释 1210 条）
+
+==============================================================================
+[1] 关键 RAM 地址的读/写点（常量传播解析基址）
+==============================================================================
+
+  UI+0x00 0x20000150                         读
+    0x08004274  in ui_key_100              0x08004274 ldrb   r2, [r0]
+    0x080042AA  in ui_key_10               0x080042AA ldrb   r2, [r0]
+    0x08004A9E  in FUNC_08004a84           0x08004A9E ldrb   r0, [r1]
+    0x080063B0  in FUNC_080063a0           0x080063B0 ldrb   r2, [r0]
+    0x08009B90  in ui_key_4                0x08009B90 ldrb   r1, [r0]
+    0x0800B912  in ui_key_20               0x0800B912 ldrb   r2, [r0]
+    0x0800BC40  in ui_key_80               0x0800BC40 ldrb   r1, [r0]
+    0x0800C2E4  in ui_menu_task            0x0800C2E4 ldrb   r0, [r1]
+
+  UI+0x00 0x20000150                         写
+    0x08004280  in ui_key_100              0x08004280 strb   r1, [r0]
+    0x080042B6  in ui_key_10               0x080042B6 strb   r1, [r0]
+    0x08004A90  in FUNC_08004a84           0x08004A90 strb   r2, [r1]
+    0x08005B84  in FUNC_08005ae8           0x08005B84 strb   r0, [r1]
+    0x080063BC  in FUNC_080063a0           0x080063BC strb   r1, [r0]
+    0x08009B9C  in ui_key_4                0x08009B9C strb   r2, [r0]
+    0x0800B91E  in ui_key_20               0x0800B91E strb   r1, [r0]
+    0x0800BC4C  in ui_key_80               0x0800BC4C strb   r2, [r0]
+    0x0800C2F0  in ui_menu_task            0x0800C2F0 strb   r2, [r1]
+    0x0800C5EC  in FUNC_0800c554           0x0800C5EC strb   r0, [r1]
+
+  UI+0x01 0x20000151                         读
+    0x080043FE  in param_record_build      0x080043FE ldrb   r2, [r2]
+    0x080046CE  in FUNC_080045ac           0x080046CE ldrb   r0, [r4, #1]
+    0x080052F8  in FUNC_080051c0           0x080052F8 ldrb   r0, [r0]
+    0x08008626  in FUNC_08008504           0x08008626 ldrb   r0, [r4, #1]
+    0x08009E00  in FUNC_08009d58           0x08009E00 ldrb   r2, [r1, #1]
+    0x08009E32  in FUNC_08009e14           0x08009E32 ldrb   r0, [r0]
+    0x0800AD24  in settings_load_task      0x0800AD24 ldrb   r1, [r0]
+    0x0800B862  in FUNC_0800b858           0x0800B862 ldrb   r0, [r0]
+    0x0800B8C8  in FUNC_0800b888           0x0800B8C8 ldrb   r0, [r0]
+    0x0800C4E4  in FUNC_0800c4d4           0x0800C4E4 ldrb   r0, [r0]
+
+  UI+0x01 0x20000151                         写
+    0x080046D4  in FUNC_080045ac           0x080046D4 strb   r1, [r4, #1]
+    0x080046EE  in FUNC_080045ac           0x080046EE strb   r0, [r4, #1]
+    0x080046F2  in FUNC_080045ac           0x080046F2 strb   r2, [r4, #1]
+    0x08004904  in ui_key_14               0x08004904 strb   r1, [r2]
+    0x0800863A  in FUNC_08008504           0x0800863A strb   r0, [r4, #1]
+    0x08008644  in FUNC_08008504           0x08008644 strb   r0, [r4, #1]
+    0x08009E08  in FUNC_08009d58           0x08009E08 strb   r0, [r1, #1]
+    0x0800AD62  in settings_load_task      0x0800AD62 strb   r2, [r0]
+    0x0800CCE8  in settings_expand         0x0800CCE8 strb   r2, [r3]
+
+  UI+0x02 0x20000152                         读
+    0x08004408  in param_record_build      0x08004408 ldrb   r2, [r2]
+    0x080046A6  in FUNC_080045ac           0x080046A6 ldrb   r0, [r4, #2]
+    0x080052BE  in FUNC_080051c0           0x080052BE ldrb   r0, [r0]
+    0x08008604  in FUNC_08008504           0x08008604 ldrb   r0, [r4, #2]
+    0x08009D5A  in FUNC_08009d58           0x08009D5A ldrb   r0, [r1, #2]
+    0x08009EFE  in FUNC_08009ee4           0x08009EFE ldrb   r1, [r0]
+    0x0800ACD2  in settings_load_task      0x0800ACD2 ldrb   r0, [r1]
+
+  UI+0x02 0x20000152                         写
+    0x080046AC  in FUNC_080045ac           0x080046AC strb   r1, [r4, #2]
+    0x080046C6  in FUNC_080045ac           0x080046C6 strb   r0, [r4, #2]
+    0x080046CA  in FUNC_080045ac           0x080046CA strb   r2, [r4, #2]
+    0x08004908  in ui_key_14               0x08004908 strb   r1, [r2]
+    0x08008618  in FUNC_08008504           0x08008618 strb   r0, [r4, #2]
+    0x08008622  in FUNC_08008504           0x08008622 strb   r0, [r4, #2]
+    0x0800AD20  in settings_load_task      0x0800AD20 strb   r2, [r1]
+    0x0800CCF2  in settings_expand         0x0800CCF2 strb   r2, [r3]
+
+  UI+0x03 0x20000153                         读
+    0x08003CCE  in FUNC_08003ca4           0x08003CCE ldrb   r0, [r0]
+    0x08003DE4  in FUNC_08003dc4           0x08003DE4 ldrb   r0, [r0]
+    0x08004F84  in FUNC_08004f70           0x08004F84 ldrb   r0, [r0]
+    0x08005CA2  in FUNC_08005c30           0x08005CA2 ldrb   r0, [r0]
+    0x080063A2  in FUNC_080063a0           0x080063A2 ldrb   r1, [r0, #3]
+    0x08009B7E  in ui_key_4                0x08009B7E ldrb   r2, [r0, #3]
+
+  UI+0x04 key_pressed                        读
+    0x080089DA  in ui_key_scan_task        0x080089DA ldrb   r0, [r5, #4]
+
+  UI+0x04 key_pressed                        写
+    0x08008A12  in ui_key_scan_task        0x08008A12 strb   r6, [r5, #4]
+    0x08008A46  in ui_key_scan_task        0x08008A46 strb   r7, [r5, #4]
+
+  UI+0x05 scan_counter                       读
+    0x08008824  in ui_key_scan_task        0x08008824 ldrb   r0, [r5, #5]
+
+  UI+0x05 scan_counter                       写
+    0x0800882A  in ui_key_scan_task        0x0800882A strb   r0, [r5, #5]
+    0x08008832  in ui_key_scan_task        0x08008832 strb   r6, [r5, #5]
+
+  UI+0x06 repeat_counter                     读
+    0x080089E6  in ui_key_scan_task        0x080089E6 ldrb   r0, [r5, #6]
+
+  UI+0x06 repeat_counter                     写
+    0x080089EC  in ui_key_scan_task        0x080089EC strb   r0, [r5, #6]
+    0x08008A14  in ui_key_scan_task        0x08008A14 strb   r6, [r5, #6]
+
+  UI+0x07 repeat_flag                        读
+    0x080089E0  in ui_key_scan_task        0x080089E0 ldrb   r0, [r5, #7]
+
+  UI+0x07 repeat_flag                        写
+    0x080089F2  in ui_key_scan_task        0x080089F2 strb   r7, [r5, #7]
+    0x08008A16  in ui_key_scan_task        0x08008A16 strb   r6, [r5, #7]
+
+  UI+0x08 flag                               读
+    0x08008A2A  in ui_key_scan_task        0x08008A2A ldrb   r0, [r5, #8]
+
+  UI+0x08 flag                               写
+    0x080089F4  in ui_key_scan_task        0x080089F4 strb   r6, [r5, #8]
+    0x08008A34  in ui_key_scan_task        0x08008A34 strb   r6, [r5, #8]
+    0x08008A5E  in ui_key_scan_task        0x08008A5E strb   r7, [r5, #8]
+
+  UI+0x09 0x20000159                         写
+    0x08008A36  in ui_key_scan_task        0x08008A36 strb   r6, [r5, #9]
+
+  UI+0x0A 0x2000015A                         写
+    0x08008A38  in ui_key_scan_task        0x08008A38 strb   r6, [r5, #0xa]
+
+  UI+0x0B 0x2000015B                         写
+    0x08008A3A  in ui_key_scan_task        0x08008A3A strb   r6, [r5, #0xb]
+
+  UI+0x0C menu_flag                          读
+    0x08008A20  in ui_key_scan_task        0x08008A20 ldrb   r0, [r5, #0xc]
+
+  UI+0x0C menu_flag                          写
+    0x080089F6  in ui_key_scan_task        0x080089F6 strb   r6, [r5, #0xc]
+    0x08008A3C  in ui_key_scan_task        0x08008A3C strb   r6, [r5, #0xc]
+    0x08008A9C  in ui_key_scan_task        0x08008A9C strb   r7, [r5, #0xc]
+
+  UI+0x0D 0x2000015D                         读
+    0x08003CAA  in FUNC_08003ca4           0x08003CAA ldrb   r1, [r1]
+    0x08003DCA  in FUNC_08003dc4           0x08003DCA ldrb   r0, [r0]
+    0x080043F2  in param_record_build      0x080043F2 ldrb   r2, [r2]
+    0x08004644  in FUNC_080045ac           0x08004644 ldrb   r0, [r4, #0xd]
+    0x080047AE  in FUNC_080045ac           0x080047AE ldrb   r0, [r4, #0xd]
+    0x08004A98  in FUNC_08004a84           0x08004A98 ldrb   r0, [r0]
+    0x08004AD8  in FUNC_08004ac8           0x08004AD8 ldrb   r2, [r1]
+    0x08004CC4  in FUNC_08004cbc           0x08004CC4 ldrb   r0, [r0]
+    0x08004D08  in FUNC_08004d04           0x08004D08 ldrb   r1, [r1]
+    0x08004D48  in FUNC_08004d3c           0x08004D48 ldrb   r0, [r0]
+    0x08004F7C  in FUNC_08004f70           0x08004F7C ldrb   r0, [r4]
+    0x08004FA8  in FUNC_08004f70           0x08004FA8 ldrb   r0, [r4]
+    0x08004FFA  in FUNC_08004f70           0x08004FFA ldrb   r1, [r4]
+    0x080050BE  in FUNC_08005060           0x080050BE ldrb   r0, [r0]
+    0x08005404  in FUNC_080053f0           0x08005404 ldrb   r0, [r0]
+    0x08005610  in FUNC_0800560c           0x08005610 ldrb   r0, [r0]
+    0x080056DA  in FUNC_080056d4           0x080056DA ldrb   r0, [r0]
+    0x08005B00  in FUNC_08005ae8           0x08005B00 ldrb   r5, [r0]
+    0x08005C48  in FUNC_08005c30           0x08005C48 ldrb   r0, [r0]
+    0x08006280  in FUNC_0800626c           0x08006280 ldrb   r1, [r1]
+    0x080063C4  in FUNC_080063a0           0x080063C4 ldrb   r1, [r0, #0xd]
+    0x0800820A  in FUNC_08008204           0x0800820A ldrb   r0, [r0]
+    0x0800859A  in FUNC_08008504           0x0800859A ldrb   r0, [r4, #0xd]
+    0x080086FC  in FUNC_08008504           0x080086FC ldrb   r0, [r4, #0xd]
+    0x08008AD4  in FUNC_08008ad0           0x08008AD4 ldrb   r0, [r0]
+    0x08008B9E  in FUNC_08008b98           0x08008B9E ldrb   r0, [r0]
+    0x08009394  in display_task            0x08009394 ldrb   r1, [r5]
+    0x080093B0  in display_task            0x080093B0 ldrb   r0, [r5]
+    0x080093EC  in display_task            0x080093EC ldrb   r0, [r5]
+    0x0800957C  in FUNC_08009560           0x0800957C ldrb   r0, [r0]
+    0x08009B82  in ui_key_4                0x08009B82 ldrb   r1, [r1, #0xd]
+    0x08009BE0  in ui_key_4                0x08009BE0 ldrb   r1, [r1, #0xd]
+    0x08009FF4  in FUNC_08009ff0           0x08009FF4 ldrb   r0, [r0]
+    0x0800A0EA  in FUNC_0800a0e4           0x0800A0EA ldrb   r0, [r0]
+    0x0800A358  in FUNC_0800a354           0x0800A358 ldrb   r0, [r0]
+    0x0800A422  in FUNC_0800a41c           0x0800A422 ldrb   r0, [r0]
+    0x0800A62C  in FUNC_0800a628           0x0800A62C ldrb   r0, [r0]
+    0x0800A6F6  in FUNC_0800a6f0           0x0800A6F6 ldrb   r0, [r0]
+    0x0800A9EA  in FUNC_0800a954           0x0800A9EA ldrb   r0, [r0]
+    0x0800AC9A  in settings_load_task      0x0800AC9A ldrb   r1, [r0]
+    0x0800ACA6  in settings_load_task      0x0800ACA6 ldrb   r1, [r0]
+    0x0800AF32  in FUNC_0800ae40           0x0800AF32 ldrb   r3, [r0]
+    0x0800AF38  in FUNC_0800ae40           0x0800AF38 ldrb   r3, [r0]
+    0x0800AF54  in FUNC_0800ae40           0x0800AF54 ldrb   r0, [r0]
+    0x0800B138  in FUNC_0800b134           0x0800B138 ldrb   r3, [r3]
+    0x0800B186  in FUNC_0800b170           0x0800B186 ldrb   r5, [r0]
+    0x0800B5E0  in FUNC_0800b5dc           0x0800B5E0 ldrb   r0, [r0]
+    0x0800B6AA  in FUNC_0800b6a4           0x0800B6AA ldrb   r0, [r0]
+    0x0800B88C  in FUNC_0800b888           0x0800B88C ldrb   r0, [r0]
+    0x0800B92E  in ui_key_20               0x0800B92E ldrb   r3, [r0, #0xd]
+    0x0800BA06  in FUNC_0800ba00           0x0800BA06 ldrb   r0, [r0]
+    0x0800BC58  in ui_key_80               0x0800BC58 ldrb   r1, [r0, #0xd]
+    0x0800BC6A  in ui_key_80               0x0800BC6A ldrb   r1, [r1, #0xd]
+    0x0800C30C  in ui_menu_task            0x0800C30C ldrb   r0, [r1, #0xd]
+    0x0800C3CA  in FUNC_0800c354           0x0800C3CA ldrb   r0, [r0]
+    0x0800C568  in FUNC_0800c554           0x0800C568 ldrb   r5, [r0]
+
+  UI+0x0D 0x2000015D                         写
+    0x080048EC  in ui_key_14               0x080048EC strb   r0, [r1]
+    0x08005000  in FUNC_08004f70           0x08005000 strb   r1, [r4]
+    0x0800939A  in display_task            0x0800939A strb   r1, [r5]
+    0x08009420  in display_task            0x08009420 strb   r0, [r5]
+    0x08009BE8  in ui_key_4                0x08009BE8 strb   r1, [r0, #0xd]
+    0x08009BF8  in ui_key_4                0x08009BF8 strb   r1, [r0, #0xd]
+    0x0800ACA4  in settings_load_task      0x0800ACA4 strb   r6, [r0]
+    0x0800ACAC  in settings_load_task      0x0800ACAC strb   r1, [r0]
+    0x0800AF3E  in FUNC_0800ae40           0x0800AF3E strb   r3, [r0]
+    0x0800BC72  in ui_key_80               0x0800BC72 strb   r1, [r0, #0xd]
+    0x0800BC7A  in ui_key_80               0x0800BC7A strb   r1, [r0, #0xd]
+    0x0800C318  in ui_menu_task            0x0800C318 strb   r0, [r1, #0xd]
+    0x0800CCDC  in settings_expand         0x0800CCDC strb   r2, [r3]
+
+  UI+0x0E 0x2000015E                         读
+    0x0800427A  in ui_key_100              0x0800427A ldrb   r2, [r0, #0xe]
+    0x080042B0  in ui_key_10               0x080042B0 ldrb   r2, [r0, #0xe]
+    0x08004CD0  in FUNC_08004cbc           0x08004CD0 ldrb   r0, [r0]
+    0x08005B22  in FUNC_08005ae8           0x08005B22 ldrb   r1, [r0]
+    0x080063B6  in FUNC_080063a0           0x080063B6 ldrb   r2, [r0, #0xe]
+    0x08009B96  in ui_key_4                0x08009B96 ldrb   r1, [r0, #0xe]
+    0x0800B918  in ui_key_20               0x0800B918 ldrb   r2, [r0, #0xe]
+    0x0800BC46  in ui_key_80               0x0800BC46 ldrb   r1, [r0, #0xe]
+    0x0800C2EA  in ui_menu_task            0x0800C2EA ldrb   r0, [r1, #0xe]
+    0x0800C58A  in FUNC_0800c554           0x0800C58A ldrb   r1, [r0]
+
+  UI+0x0E 0x2000015E                         写
+    0x08004282  in ui_key_100              0x08004282 strb   r1, [r0, #0xe]
+    0x080042B8  in ui_key_10               0x080042B8 strb   r1, [r0, #0xe]
+    0x08005B28  in FUNC_08005ae8           0x08005B28 strb   r1, [r0]
+    0x08005B32  in FUNC_08005ae8           0x08005B32 strb   r4, [r0]
+    0x08005B50  in FUNC_08005ae8           0x08005B50 strb   r4, [r0]
+    0x080063BE  in FUNC_080063a0           0x080063BE strb   r1, [r0, #0xe]
+    0x08009B9E  in ui_key_4                0x08009B9E strb   r2, [r0, #0xe]
+    0x0800B920  in ui_key_20               0x0800B920 strb   r1, [r0, #0xe]
+    0x0800BC4E  in ui_key_80               0x0800BC4E strb   r2, [r0, #0xe]
+    0x0800C2F2  in ui_menu_task            0x0800C2F2 strb   r2, [r1, #0xe]
+    0x0800C590  in FUNC_0800c554           0x0800C590 strb   r1, [r0]
+    0x0800C59A  in FUNC_0800c554           0x0800C59A strb   r4, [r0]
+    0x0800C5B8  in FUNC_0800c554           0x0800C5B8 strb   r4, [r0]
+
+  UI+0x0F flag                               读
+    0x080042C8  in ui_key_10               0x080042C8 ldrb   r1, [r0, #0xf]
+    0x0800460E  in FUNC_080045ac           0x0800460E ldrb   r0, [r4, #0xf]
+    0x08004614  in FUNC_080045ac           0x08004614 ldrb   r0, [r4, #0xf]
+    0x08004A06  in FUNC_080049f8           0x08004A06 ldrb   r0, [r0]
+    0x08004D62  in FUNC_08004d58           0x08004D62 ldrb   r4, [r0]
+    0x080051C6  in FUNC_080051c0           0x080051C6 ldrb   r0, [r0]
+    0x0800528E  in FUNC_080051c0           0x0800528E ldrb   r0, [r7]
+    0x080052E8  in FUNC_080051c0           0x080052E8 ldrb   r0, [r7]
+    0x08008568  in FUNC_08008504           0x08008568 ldrb   r0, [r4, #0xf]
+    0x0800856E  in FUNC_08008504           0x0800856E ldrb   r0, [r4, #0xf]
+    0x0800B930  in ui_key_20               0x0800B930 ldrb   r2, [r2, #0xf]
+
+  UI+0x0F flag                               写
+    0x08004294  in ui_key_100              0x08004294 strb   r1, [r0, #0xf]
+    0x080042D4  in ui_key_10               0x080042D4 strb   r1, [r0, #0xf]
+    0x08006414  in FUNC_080063a0           0x08006414 strb   r1, [r0, #0xf]
+    0x08008AAE  in ui_key_scan_task        0x08008AAE strb   r6, [r5, #0xf]
+    0x08009BFA  in ui_key_4                0x08009BFA strb   r2, [r0, #0xf]
+    0x0800B95C  in ui_key_20               0x0800B95C strb   r1, [r0, #0xf]
+    0x0800B9F6  in FUNC_0800b9e4           0x0800B9F6 strb   r1, [r0, #0xf]
+    0x0800BC74  in ui_key_80               0x0800BC74 strb   r2, [r0, #0xf]
+
+  UI+0x10 0x20000160                         写
+    0x08009DFE  in FUNC_08009d58           0x08009DFE strb   r0, [r1, #0x10]
+
+  UI+0x11 0x20000161                         读
+    0x08003D12  in FUNC_08003ca4           0x08003D12 ldrb   r1, [r1]
+    0x08003E14  in FUNC_08003dc4           0x08003E14 ldrb   r1, [r1]
+    0x0800440E  in param_record_build      0x0800440E ldrb   r2, [r2]
+    0x080046F6  in FUNC_080045ac           0x080046F6 ldrb   r0, [r4, #0x11]
+    0x08004D5C  in FUNC_08004d58           0x08004D5C ldrb   r2, [r0]
+    0x08005640  in FUNC_0800560c           0x08005640 ldrb   r1, [r1]
+    0x08005700  in FUNC_080056d4           0x08005700 ldrb   r1, [r1]
+    0x08008648  in FUNC_08008504           0x08008648 ldrb   r0, [r4, #0x11]
+    0x08008B04  in FUNC_08008ad0           0x08008B04 ldrb   r1, [r1]
+    0x08008BC4  in FUNC_08008b98           0x08008BC4 ldrb   r1, [r1]
+    0x0800A062  in FUNC_08009ff0           0x0800A062 ldrb   r1, [r1]
+    0x0800A15C  in FUNC_0800a0e4           0x0800A15C ldrb   r1, [r1]
+    0x0800A388  in FUNC_0800a354           0x0800A388 ldrb   r1, [r1]
+    0x0800A448  in FUNC_0800a41c           0x0800A448 ldrb   r1, [r1]
+    0x0800A65C  in FUNC_0800a628           0x0800A65C ldrb   r1, [r1]
+    0x0800A71C  in FUNC_0800a6f0           0x0800A71C ldrb   r1, [r1]
+    0x0800AD66  in settings_load_task      0x0800AD66 ldrb   r1, [r0]
+    0x0800B610  in FUNC_0800b5dc           0x0800B610 ldrb   r1, [r1]
+    0x0800B6D0  in FUNC_0800b6a4           0x0800B6D0 ldrb   r1, [r1]
+
+  UI+0x11 0x20000161                         写
+    0x0800474E  in FUNC_080045ac           0x0800474E strb   r2, [r4, #0x11]
+    0x08004772  in FUNC_080045ac           0x08004772 strb   r3, [r4, #0x11]
+    0x08004790  in FUNC_080045ac           0x08004790 strb   r0, [r4, #0x11]
+    0x08004794  in FUNC_080045ac           0x08004794 strb   r1, [r4, #0x11]
+    0x0800490E  in ui_key_14               0x0800490E strb   r0, [r1]
+    0x080086A4  in FUNC_08008504           0x080086A4 strb   r2, [r4, #0x11]
+    0x080086E6  in FUNC_08008504           0x080086E6 strb   r0, [r4, #0x11]
+    0x080086EA  in FUNC_08008504           0x080086EA strb   r1, [r4, #0x11]
+    0x0800ADC0  in settings_load_task      0x0800ADC0 strb   r6, [r0]
+    0x0800CCF8  in settings_expand         0x0800CCF8 strb   r2, [r3]
+
+  UI+0x12 CFN_OPEN  0x20000162               读
+    0x08004288  in ui_key_100              0x08004288 ldrb   r2, [r0, #0x12]
+    0x080042A4  in ui_key_10               0x080042A4 ldrb   r2, [r0, #0x12]
+    0x080045C2  in FUNC_080045ac           0x080045C2 ldrb   r0, [r4, #0x12]
+    0x080054CE  in FUNC_08005484           0x080054CE ldrb   r1, [r0]
+    0x080063A8  in FUNC_080063a0           0x080063A8 ldrb   r2, [r0, #0x12]
+    0x0800851A  in FUNC_08008504           0x0800851A ldrb   r0, [r4, #0x12]
+    0x08008D0C  in ui_key_1                0x08008D0C ldrb   r1, [r0, #0x12]
+    0x0800939E  in display_task            0x0800939E ldrb   r1, [r1]
+    0x08009B88  in ui_key_4                0x08009B88 ldrb   r1, [r0, #0x12]
+    0x0800B926  in ui_key_20               0x0800B926 ldrb   r2, [r0, #0x12]
+    0x0800BC3A  in ui_key_80               0x0800BC3A ldrb   r1, [r0, #0x12]
+    0x0800C2DE  in ui_menu_task            0x0800C2DE ldrb   r0, [r1, #0x12]
+
+  UI+0x12 CFN_OPEN  0x20000162               写
+    0x08004290  in ui_key_100              0x08004290 strb   r2, [r0, #0x12]
+    0x080042BE  in ui_key_10               0x080042BE strb   r1, [r0, #0x12]
+    0x080054DE  in FUNC_08005484           0x080054DE strb   r4, [r0]
+    0x080063FA  in FUNC_080063a0           0x080063FA strb   r1, [r0, #0x12]
+    0x08008AB2  in ui_key_scan_task        0x08008AB2 strb   r6, [r5, #0x12]
+    0x08008D34  in ui_key_1                0x08008D34 strb   r2, [r0, #0x12]
+    0x08009BD8  in ui_key_4                0x08009BD8 strb   r2, [r0, #0x12]
+    0x0800B9F8  in FUNC_0800b9e4           0x0800B9F8 strb   r1, [r0, #0x12]
+    0x0800BC54  in ui_key_80               0x0800BC54 strb   r2, [r0, #0x12]
+    0x0800C2F8  in ui_menu_task            0x0800C2F8 strb   r2, [r1, #0x12]
+
+  UI+0x13 cfn_state 0x20000163               读
+    0x0800402A  in cfn_render              0x0800402A ldrb   r0, [r5]
+    0x0800403A  in cfn_render              0x0800403A ldrb   r0, [r5]
+    0x0800405A  in cfn_render              0x0800405A ldrb   r0, [r5]
+    0x08004092  in cfn_render              0x08004092 ldrb   r0, [r5]
+    0x080040E0  in cfn_render              0x080040E0 ldrb   r0, [r5]
+    0x080041A4  in cfn_render              0x080041A4 ldrb   r0, [r5]
+    0x080041E2  in cfn_render              0x080041E2 ldrb   r0, [r5]
+    0x080041FE  in cfn_render              0x080041FE ldrb   r0, [r5]
+    0x080045D6  in FUNC_080045ac           0x080045D6 ldrb   r0, [r4, #0x13]
+    0x0800852C  in FUNC_08008504           0x0800852C ldrb   r0, [r4, #0x13]
+    0x0800B94C  in ui_key_20               0x0800B94C ldrb   r1, [r0, #0x13]
+
+  UI+0x13 cfn_state 0x20000163               写
+    0x08004292  in ui_key_100              0x08004292 strb   r1, [r0, #0x13]
+    0x080045DC  in FUNC_080045ac           0x080045DC strb   r1, [r4, #0x13]
+    0x08008534  in FUNC_08008504           0x08008534 strb   r0, [r4, #0x13]
+    0x0800B952  in ui_key_20               0x0800B952 strb   r1, [r0, #0x13]
+
+  UI+0x14 cfn_item  0x20000164               读
+    0x08003FE6  in cfn_render              0x08003FE6 ldrb   r0, [r4]
+    0x08003FF8  in cfn_render              0x08003FF8 ldrb   r0, [r4]
+    0x080045E0  in FUNC_080045ac           0x080045E0 ldrb   r2, [r4, #0x14]
+    0x080045F8  in FUNC_080045ac           0x080045F8 ldrb   r0, [r4, #0x14]
+    0x08008538  in FUNC_08008504           0x08008538 ldrb   r0, [r4, #0x14]
+    0x08008558  in FUNC_08008504           0x08008558 ldrb   r0, [r4, #0x14]
+
+  UI+0x14 cfn_item  0x20000164               写
+    0x08004600  in FUNC_080045ac           0x08004600 strb   r0, [r4, #0x14]
+    0x0800855E  in FUNC_08008504           0x0800855E strb   r0, [r4, #0x14]
+    0x08008564  in FUNC_08008504           0x08008564 strb   r2, [r4, #0x14]
+
+  UI+0x15 repeat    0x20000165               读
+    0x080042C2  in ui_key_10               0x080042C2 ldrb   r1, [r0, #0x15]
+    0x08004414  in param_record_build      0x08004414 ldrb   r2, [r2]
+    0x08004F90  in FUNC_08004f70           0x08004F90 ldrb   r1, [r0]
+    0x08005064  in FUNC_08005060           0x08005064 ldrb   r0, [r0]
+    0x080051D4  in FUNC_080051c0           0x080051D4 ldrb   r1, [r0]
+    0x08005492  in FUNC_08005484           0x08005492 ldrb   r0, [r0]
+    0x08006122  in FUNC_08006118           0x08006122 ldrb   r0, [r0]
+    0x08006192  in FUNC_08006188           0x08006192 ldrb   r0, [r0]
+    0x080063FE  in FUNC_080063a0           0x080063FE ldrb   r2, [r0, #0x15]
+    0x08008CA2  in FUNC_08008c7c           0x08008CA2 ldrb   r0, [r0]
+    0x080093AA  in display_task            0x080093AA ldrb   r0, [r0]
+    0x08009BDE  in ui_key_4                0x08009BDE ldrb   r3, [r0, #0x15]
+    0x0800A7FA  in FUNC_0800a7d4           0x0800A7FA ldrb   r0, [r0]
+    0x0800AA92  in FUNC_0800aa8c           0x0800AA92 ldrb   r0, [r0]
+    0x0800ADDE  in settings_load_task      0x0800ADDE ldrb   r1, [r0]
+    0x0800AE46  in FUNC_0800ae40           0x0800AE46 ldrb   r0, [r0]
+    0x0800B5B4  in FUNC_0800b5b0           0x0800B5B4 ldrb   r0, [r0]
+    0x0800C2FC  in ui_menu_task            0x0800C2FC ldrb   r0, [r1, #0x15]
+    0x0800C68C  in FUNC_0800c680           0x0800C68C ldrb   r2, [r2]
+
+  UI+0x15 repeat    0x20000165               写
+    0x08004924  in ui_key_14               0x08004924 strb   r2, [r1]
+    0x0800ADE4  in settings_load_task      0x0800ADE4 strb   r4, [r0]
+    0x0800C302  in ui_menu_task            0x0800C302 strb   r0, [r1, #0x15]
+    0x0800C308  in ui_menu_task            0x0800C308 strb   r2, [r1, #0x15]
+    0x0800CCFE  in settings_expand         0x0800CCFE strb   r2, [r3]
+
+  UI+0x16 edit      0x20000166               读
+    0x08003D06  in FUNC_08003ca4           0x08003D06 ldrb   r0, [r0]
+    0x08003E08  in FUNC_08003dc4           0x08003E08 ldrb   r1, [r1]
+    0x080043F8  in param_record_build      0x080043F8 ldrb   r2, [r2]
+    0x08004656  in FUNC_080045ac           0x08004656 ldrb   r1, [r4, #0x16]
+    0x08004668  in FUNC_080045ac           0x08004668 ldrb   r1, [r4, #0x16]
+    0x08004F9A  in FUNC_08004f70           0x08004F9A ldrb   r1, [r1]
+    0x0800506C  in FUNC_08005060           0x0800506C ldrb   r5, [r0]
+    0x0800513A  in FUNC_08005060           0x0800513A ldrb   r0, [r0]
+    0x080051DC  in FUNC_080051c0           0x080051DC ldrb   r4, [r0]
+    0x08005638  in FUNC_0800560c           0x08005638 ldrb   r1, [r1]
+    0x080056F8  in FUNC_080056d4           0x080056F8 ldrb   r1, [r1]
+    0x080057BE  in FUNC_080057b8           0x080057BE ldrb   r1, [r1]
+    0x08005BAC  in FUNC_08005ae8           0x08005BAC ldrb   r0, [r0]
+    0x08005C76  in FUNC_08005c30           0x08005C76 ldrb   r1, [r1]
+    0x080061FC  in FUNC_080061f8           0x080061FC ldrb   r1, [r1]
+    0x08006210  in FUNC_080061f8           0x08006210 ldrb   r1, [r1]
+    0x08006270  in FUNC_0800626c           0x08006270 ldrb   r1, [r1]
+    0x08006330  in FUNC_0800632c           0x08006330 ldrb   r1, [r1]
+    0x08006340  in FUNC_0800632c           0x08006340 ldrb   r3, [r3]
+    0x08006404  in FUNC_080063a0           0x08006404 ldrb   r2, [r0, #0x16]
+    0x0800821C  in FUNC_08008204           0x0800821C ldrb   r0, [r0]
+    0x080085AC  in FUNC_08008504           0x080085AC ldrb   r3, [r4, #0x16]
+    0x080085BE  in FUNC_08008504           0x080085BE ldrb   r1, [r4, #0x16]
+    0x08008AFC  in FUNC_08008ad0           0x08008AFC ldrb   r1, [r1]
+    0x08008BBC  in FUNC_08008b98           0x08008BBC ldrb   r1, [r1]
+    0x08008CAA  in FUNC_08008c7c           0x08008CAA ldrb   r1, [r0]
+    0x080093D2  in display_task            0x080093D2 ldrb   r1, [r0]
+    0x080093DE  in display_task            0x080093DE ldrb   r0, [r0]
+    0x08009DC0  in FUNC_08009d58           0x08009DC0 ldrb   r3, [r1, #0x16]
+    0x0800A054  in FUNC_08009ff0           0x0800A054 ldrb   r1, [r1]
+    0x0800A14A  in FUNC_0800a0e4           0x0800A14A ldrb   r1, [r1]
+    0x0800A380  in FUNC_0800a354           0x0800A380 ldrb   r1, [r1]
+    0x0800A440  in FUNC_0800a41c           0x0800A440 ldrb   r1, [r1]
+    0x0800A4FA  in FUNC_0800a4f4           0x0800A4FA ldrb   r1, [r1]
+    0x0800A654  in FUNC_0800a628           0x0800A654 ldrb   r1, [r1]
+    0x0800A714  in FUNC_0800a6f0           0x0800A714 ldrb   r1, [r1]
+    0x0800ADF2  in settings_load_task      0x0800ADF2 ldrb   r1, [r0]
+    0x0800B048  in FUNC_0800ae40           0x0800B048 ldrb   r0, [r0]
+    0x0800B04C  in FUNC_0800ae40           0x0800B04C ldrb   r0, [r0]
+    0x0800B05E  in FUNC_0800ae40           0x0800B05E ldrb   r0, [r0]
+    0x0800B176  in FUNC_0800b170           0x0800B176 ldrb   r6, [r3]
+    0x0800B608  in FUNC_0800b5dc           0x0800B608 ldrb   r1, [r1]
+    0x0800B6C8  in FUNC_0800b6a4           0x0800B6C8 ldrb   r1, [r1]
+    0x0800C31C  in ui_menu_task            0x0800C31C ldrb   r0, [r1, #0x16]
+    0x0800C60C  in FUNC_0800c554           0x0800C60C ldrb   r0, [r0]
+
+  UI+0x16 edit      0x20000166               写
+    0x0800492E  in ui_key_14               0x0800492E strb   r0, [r1]
+    0x0800509E  in FUNC_08005060           0x0800509E strb   r5, [r0]
+    0x08005236  in FUNC_080051c0           0x08005236 strb   r4, [r0]
+    0x0800640A  in FUNC_080063a0           0x0800640A strb   r2, [r0, #0x16]
+    0x08006412  in FUNC_080063a0           0x08006412 strb   r2, [r0, #0x16]
+    0x08008CB6  in FUNC_08008c7c           0x08008CB6 strb   r1, [r0]
+    0x080093DC  in display_task            0x080093DC strb   r2, [r0]
+    0x0800ADF8  in settings_load_task      0x0800ADF8 strb   r4, [r0]
+    0x0800C30A  in ui_menu_task            0x0800C30A strb   r2, [r1, #0x16]
+    0x0800C324  in ui_menu_task            0x0800C324 strb   r0, [r1, #0x16]
+    0x0800CCE2  in settings_expand         0x0800CCE2 strb   r2, [r3]
+
+  UI+0x17 flag                               读
+    0x080089D4  in ui_key_scan_task        0x080089D4 ldrb   r0, [r5, #0x17]
+
+  UI+0x17 flag                               写
+    0x08008A18  in ui_key_scan_task        0x08008A18 strb   r6, [r5, #0x17]
+    0x0800C2B0  in FUNC_0800c248           0x0800C2B0 strb   r4, [r0]
+
+  UI+0x18 0x20000168                         读
+    0x080054D6  in FUNC_08005484           0x080054D6 ldrb   r0, [r0]
+    0x0800B898  in FUNC_0800b888           0x0800B898 ldrb   r0, [r0]
+    0x0800C194  in ui_key_2                0x0800C194 ldrb   r0, [r4, #0x18]
+
+  UI+0x18 0x20000168                         写
+    0x0800B85E  in FUNC_0800b858           0x0800B85E strb   r0, [r1]
+
+  UI+0x19 flag                               读
+    0x08008A70  in ui_key_scan_task        0x08008A70 ldrb   r0, [r5, #0x19]
+
+  UI+0x19 flag                               写
+    0x08008A1A  in ui_key_scan_task        0x08008A1A strb   r6, [r5, #0x19]
+    0x08008A7A  in ui_key_scan_task        0x08008A7A strb   r6, [r5, #0x19]
+    0x080092A6  in display_task            0x080092A6 strb   r5, [r0]
+    0x0800BD84  in FUNC_0800bd68           0x0800BD84 strb   r0, [r1]
+
+  UI+0x1A flag                               读
+    0x080092CC  in display_task            0x080092CC ldrb   r0, [r0]
+
+  UI+0x1A flag                               写
+    0x080089BC  in ui_key_scan_task        0x080089BC strb   r6, [r5, #0x1a]
+    0x08008A1C  in ui_key_scan_task        0x08008A1C strb   r6, [r5, #0x1a]
+    0x0800BD90  in FUNC_0800bd68           0x0800BD90 strb   r0, [r1]
+
+  UI+0x1B 0x2000016B                         读
+    0x0800956E  in FUNC_08009560           0x0800956E ldrb   r0, [r0]
+
+  UI+0x1B 0x2000016B                         写
+    0x0800483C  in FUNC_08004818           0x0800483C strb   r0, [r1]
+    0x08005422  in FUNC_080053f0           0x08005422 strb   r0, [r5]
+    0x08005428  in FUNC_080053f0           0x08005428 strb   r6, [r5]
+    0x0800543E  in FUNC_080053f0           0x0800543E strb   r0, [r5]
+    0x08005444  in FUNC_080053f0           0x08005444 strb   r6, [r5]
+    0x080054E6  in FUNC_08005484           0x080054E6 strb   r0, [r5]
+    0x080054EC  in FUNC_08005484           0x080054EC strb   r4, [r5]
+    0x08005ABC  in FUNC_08005a58           0x08005ABC strb   r0, [r1]
+    0x08005B36  in FUNC_08005ae8           0x08005B36 strb   r4, [r0]
+    0x08005BCC  in FUNC_08005ae8           0x08005BCC strb   r4, [r0]
+    0x0800C1A0  in ui_key_2                0x0800C1A0 strb   r0, [r4, #0x1b]
+    0x0800C59E  in FUNC_0800c554           0x0800C59E strb   r4, [r0]
+
+  UI+0x1C 0x2000016C                         读
+    0x0800441A  in param_record_build      0x0800441A ldrb   r2, [r2]
+    0x08004798  in FUNC_080045ac           0x08004798 ldrb   r0, [r4, #0x1c]
+    0x080086EE  in FUNC_08008504           0x080086EE ldrb   r0, [r4, #0x1c]
+    0x08008CC0  in FUNC_08008c7c           0x08008CC0 ldrb   r0, [r0]
+    0x08009298  in display_task            0x08009298 ldrb   r0, [r0]
+    0x080093E6  in display_task            0x080093E6 ldrb   r0, [r0]
+    0x0800AABE  in FUNC_0800aa8c           0x0800AABE ldrb   r0, [r0]
+    0x0800AB5E  in FUNC_0800aaf4           0x0800AB5E ldrb   r0, [r0]
+    0x0800ADE8  in settings_load_task      0x0800ADE8 ldrb   r1, [r0]
+    0x0800B5C0  in FUNC_0800b5b0           0x0800B5C0 ldrb   r1, [r5]
+    0x0800B5CA  in FUNC_0800b5b0           0x0800B5CA ldrb   r0, [r5]
+
+  UI+0x1C 0x2000016C                         写
+    0x080047A2  in FUNC_080045ac           0x080047A2 strb   r2, [r4, #0x1c]
+    0x080047AC  in FUNC_080045ac           0x080047AC strb   r0, [r4, #0x1c]
+    0x0800492A  in ui_key_14               0x0800492A strb   r1, [r2]
+    0x080086F4  in FUNC_08008504           0x080086F4 strb   r0, [r4, #0x1c]
+    0x080086FA  in FUNC_08008504           0x080086FA strb   r2, [r4, #0x1c]
+    0x0800ADEE  in settings_load_task      0x0800ADEE strb   r4, [r0]
+    0x0800CD04  in settings_expand         0x0800CD04 strb   r2, [r3]
+
+  UI+0x1D 0x2000016D                         读
+    0x08009348  in display_task            0x08009348 ldrb   r1, [r0]
+
+  UI+0x1D 0x2000016D                         写
+    0x08008A1E  in ui_key_scan_task        0x08008A1E strb   r6, [r5, #0x1d]
+    0x0800934E  in display_task            0x0800934E strb   r5, [r0]
+    0x0800BD94  in FUNC_0800bd68           0x0800BD94 strb   r0, [r1]
+    0x0800C27E  in FUNC_0800c248           0x0800C27E strb   r4, [r0]
+
+  UI+0x1E 0x2000016E                         读
+    0x08005D02  in FUNC_08005c30           0x08005D02 ldrb   r0, [r0]
+    0x0800611C  in FUNC_08006118           0x0800611C ldrb   r1, [r0]
+    0x0800618C  in FUNC_08006188           0x0800618C ldrb   r1, [r0]
+    0x0800A95A  in FUNC_0800a954           0x0800A95A ldrb   r0, [r0]
+    0x0800B18E  in FUNC_0800b170           0x0800B18E ldrb   r0, [r0]
+    0x0800C3D2  in FUNC_0800c354           0x0800C3D2 ldrb   r0, [r0]
+
+  UI+0x1E 0x2000016E                         写
+    0x0800BDB2  in FUNC_0800bd68           0x0800BDB2 strb   r4, [r0]
+    0x0800C348  in ui_menu_task            0x0800C348 strb   r2, [r1, #0x1e]
+
+  UI+0x1F 0x2000016F                         读
+    0x08004444  in param_record_build      0x08004444 ldrb   r2, [r2]
+    0x0800462E  in FUNC_080045ac           0x0800462E ldrb   r0, [r4, #0x1f]
+    0x08008584  in FUNC_08008504           0x08008584 ldrb   r0, [r4, #0x1f]
+    0x08008C9A  in FUNC_08008c7c           0x08008C9A ldrb   r0, [r4]
+    0x08008CCE  in FUNC_08008c7c           0x08008CCE ldrb   r0, [r4]
+    0x08008D12  in ui_key_1                0x08008D12 ldrb   r1, [r0, #0x1f]
+    0x0800944E  in display_task            0x0800944E ldrb   r0, [r0]
+    0x08009C54  in FUNC_08009c14           0x08009C54 ldrb   r0, [r1]
+    0x08009C70  in FUNC_08009c14           0x08009C70 ldrb   r0, [r1]
+    0x08009C8C  in FUNC_08009c14           0x08009C8C ldrb   r1, [r1]
+    0x08009CF4  in FUNC_08009cf0           0x08009CF4 ldrb   r3, [r2]
+    0x0800AA30  in FUNC_0800a954           0x0800AA30 ldrb   r0, [r1]
+
+  UI+0x1F 0x2000016F                         写
+    0x08004636  in FUNC_080045ac           0x08004636 strb   r0, [r4, #0x1f]
+    0x0800463A  in FUNC_080045ac           0x0800463A strb   r3, [r4, #0x1f]
+    0x08004932  in ui_key_14               0x08004932 strb   r0, [r1]
+    0x0800858A  in FUNC_08008504           0x0800858A strb   r2, [r4, #0x1f]
+    0x08008590  in FUNC_08008504           0x08008590 strb   r0, [r4, #0x1f]
+    0x08008D1A  in ui_key_1                0x08008D1A strb   r1, [r0, #0x1f]
+    0x08008D3C  in ui_key_1                0x08008D3C strb   r2, [r0, #0x1f]
+    0x08009C78  in FUNC_08009c14           0x08009C78 strb   r0, [r1]
+    0x08009D1A  in FUNC_08009cf0           0x08009D1A strb   r1, [r2]
+    0x0800AA22  in FUNC_0800a954           0x0800AA22 strb   r4, [r1]
+    0x0800AA2C  in FUNC_0800a954           0x0800AA2C strb   r0, [r1]
+    0x0800AF46  in FUNC_0800ae40           0x0800AF46 strb   r1, [r6]
+    0x0800AF4A  in FUNC_0800ae40           0x0800AF4A strb   r7, [r6]
+    0x0800CD2C  in settings_expand         0x0800CD2C strb   r2, [r3]
+
+  UI+0x20 0x20000170                         读
+    0x0800457C  in FUNC_08004500           0x0800457C ldrb   r0, [r4]
+    0x0800458E  in FUNC_08004500           0x0800458E ldrb   r0, [r4]
+
+  UI+0x20 0x20000170                         写
+    0x0800455A  in FUNC_08004500           0x0800455A strb   r7, [r4]
+    0x08004578  in FUNC_08004500           0x08004578 strb   r0, [r4]
+    0x0800459E  in FUNC_08004500           0x0800459E strb   r0, [r4]
+
+  UI+0x21 0x20000171                         读
+    0x08004542  in FUNC_08004500           0x08004542 ldrb   r0, [r4, #1]
+    0x0800455E  in FUNC_08004500           0x0800455E ldrb   r0, [r4, #1]
+
+  UI+0x21 0x20000171                         写
+    0x08004558  in FUNC_08004500           0x08004558 strb   r7, [r4, #1]
+    0x08004574  in FUNC_08004500           0x08004574 strb   r7, [r4, #1]
+    0x080045A0  in FUNC_08004500           0x080045A0 strb   r0, [r4, #1]
+
+  UI+0x22 0x20000172                         读
+    0x08003E88  in FUNC_08003dc4           0x08003E88 ldrh   r0, [r0]
+    0x08004FB4  in FUNC_08004f70           0x08004FB4 ldrh   r0, [r0]
+    0x080063CA  in FUNC_080063a0           0x080063CA ldrh   r1, [r0, #0x22]
+    0x08009BA8  in ui_key_4                0x08009BA8 ldrh   r1, [r0, #0x22]
+
+  UI+0x22 0x20000172                         写
+    0x080063D0  in FUNC_080063a0           0x080063D0 strh   r1, [r0, #0x22]
+    0x080063D8  in FUNC_080063a0           0x080063D8 strh   r1, [r0, #0x22]
+    0x08009BAE  in ui_key_4                0x08009BAE strh   r1, [r0, #0x22]
+    0x08009BB6  in ui_key_4                0x08009BB6 strh   r1, [r0, #0x22]
+
+  UI+0x23 0x20000173                         写
+    0x0800B004  in FUNC_0800ae40           0x0800B004 str    r6, [r3, #4]
+
+  UI+0x24 0x20000174                         读
+    0x08004FBC  in FUNC_08004f70           0x08004FBC ldrh   r0, [r1]
+    0x08005CC6  in FUNC_08005c30           0x08005CC6 ldrh   r0, [r0]
+    0x080063DC  in FUNC_080063a0           0x080063DC ldrh   r1, [r0, #0x24]
+    0x08009BBA  in ui_key_4                0x08009BBA ldrh   r1, [r0, #0x24]
+
+  UI+0x24 0x20000174                         写
+    0x08004FB8  in FUNC_08004f70           0x08004FB8 strh   r2, [r1]
+    0x080063E2  in FUNC_080063a0           0x080063E2 strh   r1, [r0, #0x24]
+    0x080063EA  in FUNC_080063a0           0x080063EA strh   r1, [r0, #0x24]
+    0x080063F6  in FUNC_080063a0           0x080063F6 strh   r2, [r0, #0x24]
+    0x08009BC0  in ui_key_4                0x08009BC0 strh   r1, [r0, #0x24]
+    0x08009BC8  in ui_key_4                0x08009BC8 strh   r1, [r0, #0x24]
+    0x08009BD4  in ui_key_4                0x08009BD4 strh   r2, [r0, #0x24]
+
+  UI+0x26 last_key                           读
+    0x08008A40  in ui_key_scan_task        0x08008A40 ldrh   r0, [r5, #0x26]
+
+  UI+0x26 last_key                           写
+    0x08008A10  in ui_key_scan_task        0x08008A10 strh   r6, [r5, #0x26]
+    0x08008AA0  in ui_key_scan_task        0x08008AA0 strh   r4, [r5, #0x26]
+
+  UI+0x28 0x20000178                         读
+    0x08003CD6  in FUNC_08003ca4           0x08003CD6 ldrh   r0, [r0]
+    0x08003E82  in FUNC_08003dc4           0x08003E82 ldrh   r0, [r0]
+    0x080047B6  in FUNC_080045ac           0x080047B6 ldrh   r0, [r4, #0x28]
+    0x08004FA2  in FUNC_08004f70           0x08004FA2 ldrh   r0, [r0]
+    0x08008700  in FUNC_08008504           0x08008700 ldrh   r0, [r4, #0x28]
+
+  UI+0x28 0x20000178                         写
+    0x080047BE  in FUNC_080045ac           0x080047BE strh   r1, [r4, #0x28]
+    0x080047CC  in FUNC_080045ac           0x080047CC strh   r0, [r4, #0x28]
+    0x08008738  in FUNC_08008504           0x08008738 strh   r0, [r4, #0x28]
+    0x08008746  in FUNC_08008504           0x08008746 strh   r0, [r4, #0x28]
+    0x0800874E  in FUNC_08008504           0x0800874E strh   r0, [r4, #0x28]
+
+  UI+0x2A timer                              读
+    0x0800926A  in display_task            0x0800926A ldrh   r3, [r0]
+
+  UI+0x2A timer                              写
+    0x08008A78  in ui_key_scan_task        0x08008A78 strh   r0, [r5, #0x2a]
+    0x08009276  in display_task            0x08009276 strh   r3, [r0]
+    0x0800BD8A  in FUNC_0800bd68           0x0800BD8A strh   r4, [r1]
+
+  UI+0x2C timer                              读
+    0x0800B9E6  in FUNC_0800b9e4           0x0800B9E6 ldrh   r1, [r0, #0x2c]
+
+  UI+0x2C timer                              写
+    0x080045B4  in FUNC_080045ac           0x080045B4 strh   r0, [r4, #0x2c]
+    0x0800850C  in FUNC_08008504           0x0800850C strh   r0, [r4, #0x2c]
+    0x080089C6  in ui_key_scan_task        0x080089C6 strh   r0, [r5, #0x2c]
+    0x0800B9F2  in FUNC_0800b9e4           0x0800B9F2 strh   r1, [r0, #0x2c]
+
+  UI+0x30 0x20000180                         读
+    0x0800481C  in FUNC_08004818           0x0800481C ldr    r0, [r1]
+    0x08004A88  in FUNC_08004a84           0x08004A88 ldr    r2, [r1]
+
+  UI+0x30 0x20000180                         写
+    0x08004284  in ui_key_100              0x08004284 str    r1, [r0, #0x30]
+    0x080042BA  in ui_key_10               0x080042BA str    r1, [r0, #0x30]
+    0x08004824  in FUNC_08004818           0x08004824 str    r0, [r1]
+    0x08005B7A  in FUNC_08005ae8           0x08005B7A str    r1, [r2]
+    0x080063C0  in FUNC_080063a0           0x080063C0 str    r1, [r0, #0x30]
+    0x08009BA0  in ui_key_4                0x08009BA0 str    r2, [r0, #0x30]
+    0x0800B922  in ui_key_20               0x0800B922 str    r1, [r0, #0x30]
+    0x0800BC50  in ui_key_80               0x0800BC50 str    r2, [r0, #0x30]
+    0x0800C2F4  in ui_menu_task            0x0800C2F4 str    r2, [r1, #0x30]
+    0x0800C5E2  in FUNC_0800c554           0x0800C5E2 str    r1, [r2]
+
+  UI+0x34 0x20000184                         读
+    0x08004424  in param_record_build      0x08004424 ldrb   r3, [r2]
+    0x08004FEC  in FUNC_08004f70           0x08004FEC ldrb   r0, [r0]
+
+  UI+0x34 0x20000184                         写
+    0x0800CD0E  in settings_expand         0x0800CD0E strb   r3, [r2]
+
+  UI+0x35 0x20000185                         读
+    0x08004428  in param_record_build      0x08004428 ldrb   r3, [r2, #1]
+
+  UI+0x35 0x20000185                         写
+    0x0800CD12  in settings_expand         0x0800CD12 strb   r3, [r2, #1]
+
+  UI+0x36 0x20000186                         读
+    0x0800442C  in param_record_build      0x0800442C ldrb   r3, [r2, #2]
+
+  UI+0x36 0x20000186                         写
+    0x0800CD16  in settings_expand         0x0800CD16 strb   r3, [r2, #2]
+
+  UI+0x37 0x20000187                         读
+    0x08004430  in param_record_build      0x08004430 ldrb   r3, [r2, #3]
+
+  UI+0x37 0x20000187                         写
+    0x0800CD1A  in settings_expand         0x0800CD1A strb   r3, [r2, #3]
+
+  UI+0x38 0x20000188                         读
+    0x08004438  in param_record_build      0x08004438 ldrb   r3, [r2, #4]
+    0x0800B008  in FUNC_0800ae40           0x0800B008 ldr    r6, [r4, #4]
+
+  UI+0x38 0x20000188                         写
+    0x0800CD22  in settings_expand         0x0800CD22 strb   r3, [r2, #4]
+
+  UI+0x39 0x20000189                         读
+    0x0800443C  in param_record_build      0x0800443C ldrb   r2, [r2, #5]
+
+  UI+0x39 0x20000189                         写
+    0x0800CD26  in settings_expand         0x0800CD26 strb   r3, [r2, #5]
+
+  UI+0x3A 0x2000018A                         读
+    0x08004450  in param_record_build      0x08004450 ldrb   r4, [r2]
+
+  UI+0x3A 0x2000018A                         写
+    0x0800CD36  in settings_expand         0x0800CD36 strb   r3, [r2]
+
+  UI+0x3B 0x2000018B                         读
+    0x08004454  in param_record_build      0x08004454 ldrb   r4, [r2, #1]
+
+  UI+0x3B 0x2000018B                         写
+    0x0800CD3A  in settings_expand         0x0800CD3A strb   r3, [r2, #1]
+
+  UI+0x3C 0x2000018C                         读
+    0x08004458  in param_record_build      0x08004458 ldrb   r4, [r2, #2]
+
+  UI+0x3C 0x2000018C                         写
+    0x0800CD3E  in settings_expand         0x0800CD3E strb   r3, [r2, #2]
+
+  UI+0x3D 0x2000018D                         读
+    0x0800445C  in param_record_build      0x0800445C ldrb   r4, [r2, #3]
+
+  UI+0x3D 0x2000018D                         写
+    0x0800CD42  in settings_expand         0x0800CD42 strb   r3, [r2, #3]
+
+  UI+0x3E 0x2000018E                         读
+    0x08004464  in param_record_build      0x08004464 ldrb   r4, [r2, #4]
+
+  UI+0x3E 0x2000018E                         写
+    0x0800CD4A  in settings_expand         0x0800CD4A strb   r3, [r2, #4]
+
+  UI+0x3F 0x2000018F                         读
+    0x08004468  in param_record_build      0x08004468 ldrb   r2, [r2, #5]
+
+  UI+0x3F 0x2000018F                         写
+    0x0800CD4E  in settings_expand         0x0800CD4E strb   r3, [r2, #5]
+
+  UI+0x46 0x20000196                         读
+    0x08004BA6  in FUNC_08004ac8           0x08004BA6 ldrb   r1, [r1]
+
+  UI+0x46 0x20000196                         写
+    0x08005C86  in FUNC_08005c30           0x08005C86 strb   r0, [r1]
+    0x08006206  in FUNC_080061f8           0x08006206 strb   r1, [r0]
+    0x0800627C  in FUNC_0800626c           0x0800627C strb   r0, [r1]
+    0x0800633C  in FUNC_0800632c           0x0800633C strb   r0, [r1]
+
+  UI+0x47 0x20000197                         读
+    0x08005B10  in FUNC_08005ae8           0x08005B10 ldrb   r2, [r0]
+    0x0800C578  in FUNC_0800c554           0x0800C578 ldrb   r2, [r0]
+
+  UI+0x47 0x20000197                         写
+    0x0800482E  in FUNC_08004818           0x0800482E strb   r0, [r4]
+    0x08004844  in FUNC_08004818           0x08004844 strb   r0, [r4]
+
+  UI+0x48 0x20000198                         写
+    0x08009D42  in FUNC_08009d2c           0x08009D42 strb   r4, [r0]
+
+  UI+0x49 0x20000199                         读
+    0x0800B8D4  in FUNC_0800b888           0x0800B8D4 ldrb   r1, [r2]
+
+  UI+0x49 0x20000199                         写
+    0x0800B870  in FUNC_0800b858           0x0800B870 strb   r0, [r1]
+    0x0800B8DA  in FUNC_0800b888           0x0800B8DA strb   r1, [r2]
+
+  UI+0x4A 0x2000019A                         读
+    0x0800B8D0  in FUNC_0800b888           0x0800B8D0 ldrb   r0, [r0]
+
+  UI+0x4B 0x2000019B                         读
+    0x08004392  in FUNC_08004358           0x08004392 ldrb   r1, [r6]
+    0x080043AC  in FUNC_08004358           0x080043AC ldrb   r1, [r6]
+    0x0800B8A4  in FUNC_0800b888           0x0800B8A4 ldrb   r0, [r0]
+
+  UI+0x4B 0x2000019B                         写
+    0x08009D32  in FUNC_08009d2c           0x08009D32 strb   r4, [r0]
+    0x0800B86C  in FUNC_0800b858           0x0800B86C strb   r0, [r1]
+
+  UI+0x4C 0x2000019C                         写
+    0x08009D3E  in FUNC_08009d2c           0x08009D3E strb   r4, [r0]
+
+  UI+0x4D 0x2000019D                         写
+    0x08004E1A  in FUNC_08004d58           0x08004E1A strb   r3, [r5]
+
+  UI+0x4E 0x2000019E                         写
+    0x08004E26  in FUNC_08004d58           0x08004E26 strb   r1, [r4]
+    0x08004E66  in FUNC_08004d58           0x08004E66 strb   r3, [r4]
+
+  UI+0x4F 0x2000019F                         写
+    0x08004E28  in FUNC_08004d58           0x08004E28 strb   r3, [r5]
+    0x08004E68  in FUNC_08004d58           0x08004E68 strb   r3, [r5]
+
+  0x20000200                                 读
+    0x080048AA  in FUNC_08004860           0x080048AA ldrb   r1, [r1]
+
+  0x20000202                                 读
+    0x0800500A  in FUNC_08004f70           0x0800500A ldrb   r1, [r2]
+
+  0x20000202                                 写
+    0x08005028  in FUNC_08004f70           0x08005028 strb   r1, [r2]
+
+  0x20000203                                 读
+    0x0800B5BE  in FUNC_0800b5b0           0x0800B5BE ldrb   r0, [r4, #3]
+
+  0x20000203                                 写
+    0x0800B5CC  in FUNC_0800b5b0           0x0800B5CC strb   r0, [r4, #3]
+
+  0x20000205                                 读
+    0x0800922E  in display_task            0x0800922E ldrb   r0, [r0]
+    0x0800AB42  in FUNC_0800aaf4           0x0800AB42 ldrb   r0, [r5, #5]
+    0x0800AB88  in FUNC_0800aaf4           0x0800AB88 ldrb   r0, [r5, #5]
+
+  0x20000205                                 写
+    0x0800AAFC  in FUNC_0800aaf4           0x0800AAFC strb   r0, [r5, #5]
+    0x0800AB94  in FUNC_0800aaf4           0x0800AB94 strb   r0, [r5, #5]
+
+  0x20000206                                 读
+    0x08004898  in FUNC_08004860           0x08004898 ldrb   r0, [r5]
+    0x0800A97E  in FUNC_0800a954           0x0800A97E ldrb   r1, [r6]
+
+  0x20000206                                 写
+    0x08004880  in FUNC_08004860           0x08004880 strb   r0, [r5]
+    0x0800A93C  in FUNC_0800a934           0x0800A93C strb   r4, [r3]
+    0x0800A998  in FUNC_0800a954           0x0800A998 strb   r4, [r6]
+
+  0x20000207                                 读
+    0x0800A9AC  in FUNC_0800a954           0x0800A9AC ldrb   r0, [r6, #1]
+    0x0800AA56  in FUNC_0800a954           0x0800AA56 ldrb   r0, [r6, #1]
+
+  0x20000207                                 写
+    0x08004888  in FUNC_08004860           0x08004888 strb   r0, [r5, #1]
+    0x0800A942  in FUNC_0800a934           0x0800A942 strb   r0, [r3, #1]
+
+  0x20000208                                 读
+    0x0800AA54  in FUNC_0800a954           0x0800AA54 ldrb   r1, [r6, #2]
+
+  0x20000208                                 写
+    0x0800A944  in FUNC_0800a934           0x0800A944 strb   r1, [r3, #2]
+
+  0x20000209                                 读
+    0x0800AA52  in FUNC_0800a954           0x0800AA52 ldrb   r2, [r6, #3]
+
+  0x20000209                                 写
+    0x0800A946  in FUNC_0800a934           0x0800A946 strb   r2, [r3, #3]
+
+  0x2000020C                                 读
+    0x08005020  in FUNC_08004f70           0x08005020 ldrb   r0, [r4]
+
+  0x2000020C                                 写
+    0x0800502C  in FUNC_08004f70           0x0800502C strb   r0, [r4]
+
+  0x2000020D                                 读
+    0x0800BAD6  in FUNC_0800ba5c           0x0800BAD6 ldrb   r0, [r4]
+
+  0x2000020D                                 写
+    0x0800AC12  in FUNC_0800ac0c           0x0800AC12 strb   r0, [r1]
+    0x0800BA8C  in FUNC_0800ba5c           0x0800BA8C strb   r6, [r4]
+    0x0800BAEE  in FUNC_0800ba5c           0x0800BAEE strb   r6, [r4]
+
+  0x2000020E                                 读
+    0x080060CC  in FUNC_080060ac           0x080060CC ldrb   r5, [r5]
+
+  0x2000020E                                 写
+    0x0800CE44  in FUNC_0800cdb0           0x0800CE44 strb   r4, [r0]
+
+  0x2000020F                                 读
+    0x0800A26E  in FUNC_0800a260           0x0800A26E ldrb   r0, [r4]
+
+  0x2000020F                                 写
+    0x0800A274  in FUNC_0800a260           0x0800A274 strb   r0, [r4]
+    0x0800A280  in FUNC_0800a260           0x0800A280 strb   r5, [r4]
+
+  0x20000210                                 读
+    0x0800A286  in FUNC_0800a260           0x0800A286 ldrb   r0, [r4, #1]
+
+  0x20000210                                 写
+    0x0800A28C  in FUNC_0800a260           0x0800A28C strb   r0, [r4, #1]
+    0x0800A29C  in FUNC_0800a260           0x0800A29C strb   r5, [r4, #1]
+    0x0800A2AC  in FUNC_0800a260           0x0800A2AC strb   r5, [r4, #1]
+    0x0800A2BA  in FUNC_0800a260           0x0800A2BA strb   r5, [r4, #1]
+
+  0x20000211                                 读
+    0x0800A2EA  in FUNC_0800a2cc           0x0800A2EA ldrb   r1, [r0, #2]
+
+  0x20000211                                 写
+    0x0800A2F0  in FUNC_0800a2cc           0x0800A2F0 strb   r1, [r0, #2]
+    0x0800A2F8  in FUNC_0800a2cc           0x0800A2F8 strb   r1, [r0, #2]
+
+  0x20000212                                 读
+    0x080055BE  in FUNC_080055bc           0x080055BE ldrb   r1, [r0]
+    0x08009430  in display_task            0x08009430 ldrb   r0, [r0]
+    0x08009C84  in FUNC_08009c14           0x08009C84 ldrb   r0, [r0]
+    0x0800A292  in FUNC_0800a260           0x0800A292 ldrb   r0, [r4, #3]
+    0x0800A2B0  in FUNC_0800a260           0x0800A2B0 ldrb   r0, [r4, #3]
+
+  0x20000212                                 写
+    0x0800A2A0  in FUNC_0800a260           0x0800A2A0 strb   r0, [r4, #3]
+    0x0800A2BC  in FUNC_0800a260           0x0800A2BC strb   r5, [r4, #3]
+
+  0x20000214                                 读
+    0x08009B58  in FUNC_08009b38           0x08009B58 ldrb   r0, [r4]
+    0x0800AC82  in settings_load_task      0x0800AC82 ldrb   r0, [r5]
+
+  0x20000214                                 写
+    0x08009B5E  in FUNC_08009b38           0x08009B5E strb   r0, [r4]
+    0x08009B6A  in FUNC_08009b38           0x08009B6A strb   r5, [r4]
+    0x0800AC62  in settings_load_task      0x0800AC62 strb   r0, [r5]
+    0x0800AC6C  in settings_load_task      0x0800AC6C strb   r0, [r5]
+    0x0800AE00  in settings_load_task      0x0800AE00 strb   r0, [r5]
+
+  0x20000215                                 写
+    0x080043EA  in param_record_build      0x080043EA strb   r2, [r1, #1]
+    0x0800CCD6  in settings_expand         0x0800CCD6 strb   r2, [r3, #1]
+
+  0x20000216                                 读
+    0x08009B40  in FUNC_08009b38           0x08009B40 ldrb   r0, [r4, #2]
+
+  0x20000216                                 写
+    0x08009B48  in FUNC_08009b38           0x08009B48 strb   r5, [r4, #2]
+    0x0800B808  in FUNC_0800b7f4           0x0800B808 strb   r1, [r0, #2]
+
+  0x20000218                                 读
+    0x0800B7F6  in FUNC_0800b7f4           0x0800B7F6 ldrh   r1, [r0, #4]
+
+  0x20000218                                 写
+    0x0800B802  in FUNC_0800b7f4           0x0800B802 strh   r1, [r0, #4]
+    0x0800B814  in FUNC_0800b810           0x0800B814 strh   r0, [r1, #4]
+
+  0x2000021C                                 读
+    0x0800598C  in FUNC_08005974           0x0800598C ldr    r1, [r5, #8]
+    0x08005996  in FUNC_08005974           0x08005996 ldr    r0, [r5, #8]
+
+  0x2000021C                                 写
+    0x08005912  in FUNC_0800590c           0x08005912 str    r0, [r1, #8]
+    0x08005932  in FUNC_08005930           0x08005932 str    r0, [r1, #8]
+    0x08005980  in FUNC_08005974           0x08005980 str    r4, [r5, #8]
+    0x0800599A  in FUNC_08005974           0x0800599A str    r0, [r5, #8]
+
+  0x20000224                                 读
+    0x08004402  in param_record_build      0x08004402 ldr    r2, [r1]
+    0x0800441E  in param_record_build      0x0800441E ldr    r2, [r1]
+    0x08004434  in param_record_build      0x08004434 ldr    r3, [r1]
+    0x0800444A  in param_record_build      0x0800444A ldr    r2, [r1]
+    0x08004460  in param_record_build      0x08004460 ldr    r4, [r1]
+    0x08004470  in param_record_build      0x08004470 ldr    r2, [r1]
+    0x08004486  in param_record_build      0x08004486 ldr    r3, [r1]
+    0x0800449A  in param_record_build      0x0800449A ldr    r1, [r1]
+    0x0800CCD2  in settings_expand         0x0800CCD2 ldrb   r2, [r0]
+    0x0800CCF0  in settings_expand         0x0800CCF0 ldrb   r2, [r0]
+    0x0800CD0C  in settings_expand         0x0800CD0C ldrb   r3, [r0]
+    0x0800CD20  in settings_expand         0x0800CD20 ldrb   r3, [r0]
+    0x0800CD34  in settings_expand         0x0800CD34 ldrb   r3, [r0]
+    0x0800CD48  in settings_expand         0x0800CD48 ldrb   r3, [r0]
+    0x0800CD56  in settings_expand         0x0800CD56 ldrb   r3, [r0]
+    0x0800CD6A  in settings_expand         0x0800CD6A ldrb   r1, [r0]
+
+  0x20000224                                 写
+    0x080043EE  in param_record_build      0x080043EE strb   r2, [r1]
+    0x0800440A  in param_record_build      0x0800440A strb   r2, [r1]
+    0x08004426  in param_record_build      0x08004426 strb   r3, [r1]
+    0x0800443A  in param_record_build      0x0800443A strb   r3, [r1]
+    0x08004452  in param_record_build      0x08004452 strb   r4, [r1]
+    0x08004466  in param_record_build      0x08004466 strb   r4, [r1]
+    0x08004478  in param_record_build      0x08004478 strb   r3, [r1]
+    0x0800448C  in param_record_build      0x0800448C strb   r3, [r1]
+    0x0800CCD0  in settings_expand         0x0800CCD0 str    r2, [r0]
+    0x0800CCEC  in settings_expand         0x0800CCEC str    r2, [r0]
+    0x0800CD08  in settings_expand         0x0800CD08 str    r2, [r0]
+    0x0800CD1E  in settings_expand         0x0800CD1E str    r3, [r0]
+    0x0800CD30  in settings_expand         0x0800CD30 str    r2, [r0]
+    0x0800CD46  in settings_expand         0x0800CD46 str    r3, [r0]
+    0x0800CD52  in settings_expand         0x0800CD52 str    r2, [r0]
+    0x0800CD68  in settings_expand         0x0800CD68 str    r1, [r0]
+
+  0x20000225                                 读
+    0x0800CCDA  in settings_expand         0x0800CCDA ldrb   r2, [r0, #1]
+    0x0800CCF6  in settings_expand         0x0800CCF6 ldrb   r2, [r0, #1]
+    0x0800CD10  in settings_expand         0x0800CD10 ldrb   r3, [r0, #1]
+    0x0800CD24  in settings_expand         0x0800CD24 ldrb   r3, [r0, #1]
+    0x0800CD38  in settings_expand         0x0800CD38 ldrb   r3, [r0, #1]
+    0x0800CD4C  in settings_expand         0x0800CD4C ldrb   r3, [r0, #1]
+    0x0800CD5A  in settings_expand         0x0800CD5A ldrb   r3, [r0, #1]
+    0x0800CD6E  in settings_expand         0x0800CD6E ldrb   r1, [r0, #1]
+
+  0x20000225                                 写
+    0x080043F4  in param_record_build      0x080043F4 strb   r2, [r1, #1]
+    0x08004410  in param_record_build      0x08004410 strb   r2, [r1, #1]
+    0x0800442A  in param_record_build      0x0800442A strb   r3, [r1, #1]
+    0x0800443E  in param_record_build      0x0800443E strb   r2, [r1, #1]
+    0x08004456  in param_record_build      0x08004456 strb   r4, [r1, #1]
+    0x0800446A  in param_record_build      0x0800446A strb   r2, [r1, #1]
+    0x0800447C  in param_record_build      0x0800447C strb   r3, [r1, #1]
+    0x08004490  in param_record_build      0x08004490 strb   r3, [r1, #1]
+
+  0x20000226                                 读
+    0x0800CCE0  in settings_expand         0x0800CCE0 ldrb   r2, [r0, #2]
+    0x0800CCFC  in settings_expand         0x0800CCFC ldrb   r2, [r0, #2]
+    0x0800CD14  in settings_expand         0x0800CD14 ldrb   r3, [r0, #2]
+    0x0800CD2A  in settings_expand         0x0800CD2A ldrb   r2, [r0, #2]
+    0x0800CD3C  in settings_expand         0x0800CD3C ldrb   r3, [r0, #2]
+    0x0800CD5E  in settings_expand         0x0800CD5E ldrb   r3, [r0, #2]
+    0x0800CD72  in settings_expand         0x0800CD72 ldrb   r1, [r0, #2]
+
+  0x20000226                                 写
+    0x080043FA  in param_record_build      0x080043FA strb   r2, [r1, #2]
+    0x08004416  in param_record_build      0x08004416 strb   r2, [r1, #2]
+    0x0800442E  in param_record_build      0x0800442E strb   r3, [r1, #2]
+    0x08004446  in param_record_build      0x08004446 strb   r2, [r1, #2]
+    0x0800445A  in param_record_build      0x0800445A strb   r4, [r1, #2]
+    0x0800446C  in param_record_build      0x0800446C strb   r3, [r1, #2]
+    0x08004480  in param_record_build      0x08004480 strb   r3, [r1, #2]
+    0x08004494  in param_record_build      0x08004494 strb   r3, [r1, #2]
+
+  0x20000227                                 读
+    0x0800CCE6  in settings_expand         0x0800CCE6 ldrb   r2, [r0, #3]
+    0x0800CD02  in settings_expand         0x0800CD02 ldrb   r2, [r0, #3]
+    0x0800CD18  in settings_expand         0x0800CD18 ldrb   r3, [r0, #3]
+    0x0800CD40  in settings_expand         0x0800CD40 ldrb   r3, [r0, #3]
+    0x0800CD62  in settings_expand         0x0800CD62 ldrb   r3, [r0, #3]
+    0x0800CD76  in settings_expand         0x0800CD76 ldrb   r0, [r0, #3]
+
+  0x20000227                                 写
+    0x08004400  in param_record_build      0x08004400 strb   r2, [r1, #3]
+    0x0800441C  in param_record_build      0x0800441C strb   r2, [r1, #3]
+    0x08004432  in param_record_build      0x08004432 strb   r3, [r1, #3]
+    0x08004448  in param_record_build      0x08004448 strb   r3, [r1, #3]
+    0x0800445E  in param_record_build      0x0800445E strb   r4, [r1, #3]
+    0x0800446E  in param_record_build      0x0800446E strb   r3, [r1, #3]
+    0x08004484  in param_record_build      0x08004484 strb   r3, [r1, #3]
+    0x08004498  in param_record_build      0x08004498 strb   r2, [r1, #3]
+
+  settings[0] 0x20000418                     读
+    0x08003C08  in FUNC_08003bec           0x08003C08 ldrb   r4, [r1]
+    0x08004046  in cfn_render              0x08004046 ldrb   r0, [r4]
+    0x08004476  in param_record_build      0x08004476 ldrb   r3, [r2]
+    0x0800945E  in display_task            0x0800945E ldrb   r0, [r4]
+
+  settings[0] 0x20000418                     写
+    0x08004912  in ui_key_14               0x08004912 strb   r0, [r1]
+    0x0800AF1A  in FUNC_0800ae40           0x0800AF1A strb   r1, [r0]
+    0x0800AF1E  in FUNC_0800ae40           0x0800AF1E strb   r7, [r0]
+    0x0800CD58  in settings_expand         0x0800CD58 strb   r3, [r2]
+
+  settings[1] 0x20000419                     读
+    0x08004066  in cfn_render              0x08004066 ldrb   r0, [r4, #1]
+    0x0800447A  in param_record_build      0x0800447A ldrb   r3, [r2, #1]
+    0x08005412  in FUNC_080053f0           0x08005412 ldrb   r1, [r0, #1]
+    0x08009476  in display_task            0x08009476 ldrb   r0, [r4, #1]
+    0x0800BA14  in FUNC_0800ba00           0x0800BA14 ldrb   r1, [r1, #1]
+
+  settings[1] 0x20000419                     写
+    0x08004914  in ui_key_14               0x08004914 strb   r0, [r1, #1]
+    0x0800CD5C  in settings_expand         0x0800CD5C strb   r3, [r2, #1]
+
+  settings[2] 0x2000041A                     读
+    0x0800409E  in cfn_render              0x0800409E ldrb   r0, [r4, #2]
+    0x0800447E  in param_record_build      0x0800447E ldrb   r3, [r2, #2]
+    0x08008CDE  in FUNC_08008c7c           0x08008CDE ldrb   r0, [r0, #2]
+    0x08009470  in display_task            0x08009470 ldrb   r0, [r4, #2]
+    0x0800BB80  in FUNC_0800bb7c           0x0800BB80 ldrb   r1, [r0, #2]
+
+  settings[2] 0x2000041A                     写
+    0x080040AC  in cfn_render              0x080040AC strb   r7, [r4, #2]
+    0x08004916  in ui_key_14               0x08004916 strb   r2, [r1, #2]
+    0x0800CD60  in settings_expand         0x0800CD60 strb   r3, [r2, #2]
+
+  settings[3] 0x2000041B                     读
+    0x080040EC  in cfn_render              0x080040EC ldrb   r0, [r4, #3]
+    0x08004482  in param_record_build      0x08004482 ldrb   r3, [r2, #3]
+    0x08005B52  in FUNC_08005ae8           0x08005B52 ldrb   r0, [r7, #3]
+    0x0800946A  in display_task            0x0800946A ldrb   r0, [r4, #3]
+    0x0800C5BA  in FUNC_0800c554           0x0800C5BA ldrb   r0, [r7, #3]
+
+  settings[3] 0x2000041B                     写
+    0x08004918  in ui_key_14               0x08004918 strb   r0, [r1, #3]
+    0x0800CD64  in settings_expand         0x0800CD64 strb   r3, [r2, #3]
+
+  settings[4] 0x2000041C                     读
+    0x080041B0  in cfn_render              0x080041B0 ldrb   r0, [r4, #4]
+    0x0800448A  in param_record_build      0x0800448A ldrb   r3, [r2, #4]
+    0x08005B16  in FUNC_08005ae8           0x08005B16 ldrb   r6, [r7, #4]
+    0x08009464  in display_task            0x08009464 ldrb   r0, [r4, #4]
+    0x0800C57E  in FUNC_0800c554           0x0800C57E ldrb   r6, [r7, #4]
+
+  settings[4] 0x2000041C                     写
+    0x080041BA  in cfn_render              0x080041BA strb   r7, [r4, #4]
+    0x0800491A  in ui_key_14               0x0800491A strb   r0, [r1, #4]
+    0x0800CD6C  in settings_expand         0x0800CD6C strb   r1, [r2, #4]
+
+  settings[5] 0x2000041D                     读
+    0x080041EE  in cfn_render              0x080041EE ldrb   r0, [r4, #5]
+    0x0800448E  in param_record_build      0x0800448E ldrb   r3, [r2, #5]
+    0x08004ACC  in FUNC_08004ac8           0x08004ACC ldrb   r1, [r4, #5]
+
+  settings[5] 0x2000041D                     写
+    0x0800491C  in ui_key_14               0x0800491C strb   r0, [r1, #5]
+    0x0800CD70  in settings_expand         0x0800CD70 strb   r1, [r2, #5]
+
+  settings[6] 0x2000041E                     读
+    0x0800420A  in cfn_render              0x0800420A ldrb   r0, [r4, #6]
+    0x0800421C  in cfn_render              0x0800421C ldrb   r0, [r4, #6]
+    0x08004492  in param_record_build      0x08004492 ldrb   r3, [r2, #6]
+    0x080045F0  in FUNC_080045ac           0x080045F0 ldrb   r0, [r0, #6]
+    0x080048C4  in FUNC_08004860           0x080048C4 ldrb   r0, [r0, #6]
+    0x08008550  in FUNC_08008504           0x08008550 ldrb   r0, [r1, #6]
+    0x08008AB4  in ui_key_scan_task        0x08008AB4 ldrb   r0, [r0, #6]
+
+  settings[6] 0x2000041E                     写
+    0x0800491E  in ui_key_14               0x0800491E strb   r0, [r1, #6]
+    0x0800CD74  in settings_expand         0x0800CD74 strb   r1, [r2, #6]
+
+  settings[7] 0x2000041F                     读
+    0x08004230  in cfn_render              0x08004230 ldrb   r0, [r4, #7]
+    0x08004496  in param_record_build      0x08004496 ldrb   r2, [r2, #7]
+    0x08004AFC  in FUNC_08004ac8           0x08004AFC ldrb   r2, [r4, #7]
+    0x08004FF4  in FUNC_08004f70           0x08004FF4 ldrb   r0, [r0, #7]
+    0x08005C54  in FUNC_08005c30           0x08005C54 ldrb   r1, [r1, #7]
+    0x08006290  in FUNC_0800626c           0x08006290 ldrb   r2, [r2, #7]
+    0x0800B144  in FUNC_0800b134           0x0800B144 ldrb   r3, [r3, #7]
+
+  settings[7] 0x2000041F                     写
+    0x08004920  in ui_key_14               0x08004920 strb   r0, [r1, #7]
+    0x0800BC7E  in ui_key_80               0x0800BC7E strb   r2, [r1, #7]
+    0x0800CD78  in settings_expand         0x0800CD78 strb   r0, [r2, #7]
+
+------------------------------------------------------------------------------
+[1b] 寄存器偏移访问（基址已知、索引为寄存器；典型如 settings[item]）
+------------------------------------------------------------------------------
+
+  UI+0x1F 0x2000016F                         读(索引)
+    0x0800B002  in FUNC_0800ae40           0x0800B002 ldrh   r1, [r3, r5]            [0x2000016f + r5]
+
+  UI+0x34 0x20000184                         读(索引)
+    0x0800465A  in FUNC_080045ac           0x0800465A ldrb   r0, [r3, r1]            [0x20000184 + r1]
+    0x08004F9C  in FUNC_08004f70           0x08004F9C ldrb   r0, [r0, r1]            [0x20000184 + r1]
+    0x08005078  in FUNC_08005060           0x08005078 ldrb   r0, [r4, r5]            [0x20000184 + r5]
+    0x08005086  in FUNC_08005060           0x08005086 ldrb   r0, [r4, r5]            [0x20000184 + r5]
+    0x080050C4  in FUNC_08005060           0x080050C4 ldrb   r0, [r4, r5]            [0x20000184 + r5]
+    0x080050CE  in FUNC_08005060           0x080050CE ldrb   r0, [r4, r5]            [0x20000184 + r5]
+    0x0800513C  in FUNC_08005060           0x0800513C ldrb   r0, [r4, r0]            [0x20000184 + r0]
+    0x08005BD8  in FUNC_08005ae8           0x08005BD8 ldrb   r0, [r1, r0]            [0x20000184 + r0]
+    0x08005C78  in FUNC_08005c30           0x08005C78 ldrb   r0, [r0, r1]            [0x20000184 + r1]
+    0x08006200  in FUNC_080061f8           0x08006200 ldrb   r1, [r0, r1]            [0x20000184 + r1]
+    0x08006214  in FUNC_080061f8           0x08006214 ldrb   r0, [r0, r1]            [0x20000184 + r1]
+    0x08006272  in FUNC_0800626c           0x08006272 ldrb   r0, [r0, r1]            [0x20000184 + r1]
+    0x080085B0  in FUNC_08008504           0x080085B0 ldrb   r1, [r0, r3]            [0x20000184 + r3]
+    0x0800ACB4  in settings_load_task      0x0800ACB4 ldrb   r3, [r0, r4]            [0x20000184 + 0x1]
+    0x0800C330  in ui_menu_task            0x0800C330 ldrb   r6, [r3, r0]            [0x20000184 + 0x0]
+    0x0800C62E  in FUNC_0800c554           0x0800C62E ldrb   r0, [r1, r0]            [0x20000184 + r0]
+
+  UI+0x34 0x20000184                         写(索引)
+    0x08004662  in FUNC_080045ac           0x08004662 strb   r0, [r3, r1]            [0x20000184 + r1]
+    0x080048F4  in ui_key_14               0x080048F4 strb   r2, [r4, r1]            [0x20000184 + 0x0]
+    0x0800508E  in FUNC_08005060           0x0800508E strb   r6, [r4, r5]            [0x20000184 + r5]
+    0x080050CC  in FUNC_08005060           0x080050CC strb   r0, [r4, r5]            [0x20000184 + r5]
+    0x080050FE  in FUNC_08005060           0x080050FE strb   r6, [r4, r0]            [0x20000184 + r0]
+    0x0800522A  in FUNC_080051c0           0x0800522A strb   r4, [r1, r0]            [0x20000184 + r0]
+    0x080085B8  in FUNC_08008504           0x080085B8 strb   r1, [r0, r3]            [0x20000184 + r3]
+    0x0800ACBA  in settings_load_task      0x0800ACBA strb   r2, [r0, r4]            [0x20000184 + 0x1]
+    0x0800C336  in ui_menu_task            0x0800C336 strb   r5, [r3, r0]            [0x20000184 + 0x0]
+
+  UI+0x3A 0x2000018A                         读(索引)
+    0x0800466C  in FUNC_080045ac           0x0800466C ldrb   r3, [r0, r1]            [0x2000018a + r1]
+    0x080051E8  in FUNC_080051c0           0x080051E8 ldrb   r0, [r5, r4]            [0x2000018a + r4]
+    0x080051F6  in FUNC_080051c0           0x080051F6 ldrb   r0, [r5, r4]            [0x2000018a + r4]
+    0x08005BB2  in FUNC_08005ae8           0x08005BB2 ldrb   r0, [r1, r0]            [0x2000018a + r0]
+    0x08006334  in FUNC_0800632c           0x08006334 ldrb   r0, [r0, r1]            [0x2000018a + r1]
+    0x08006348  in FUNC_0800632c           0x08006348 ldrb   r0, [r0, r3]            [0x2000018a + r3]
+    0x08008224  in FUNC_08008204           0x08008224 ldrb   r0, [r3, r0]            [0x2000018a + r0]
+    0x080085C2  in FUNC_08008504           0x080085C2 ldrb   r5, [r0, r1]            [0x2000018a + r1]
+    0x08009DC4  in FUNC_08009d58           0x08009DC4 ldrb   r2, [r2, r3]            [0x2000018a + r3]
+    0x0800ACBC  in settings_load_task      0x0800ACBC ldrb   r3, [r1, r4]            [0x2000018a + 0x1]
+    0x0800C338  in ui_menu_task            0x0800C338 ldrb   r6, [r4, r0]            [0x2000018a + 0x0]
+    0x0800C612  in FUNC_0800c554           0x0800C612 ldrb   r0, [r1, r0]            [0x2000018a + r0]
+
+  UI+0x3A 0x2000018A                         写(索引)
+    0x08004688  in FUNC_080045ac           0x08004688 strb   r5, [r0, r1]            [0x2000018a + r1]
+    0x080046A2  in FUNC_080045ac           0x080046A2 strb   r3, [r0, r1]            [0x2000018a + r1]
+    0x080048F6  in ui_key_14               0x080048F6 strb   r2, [r3, r1]            [0x2000018a + 0x0]
+    0x080085FC  in FUNC_08008504           0x080085FC strb   r3, [r0, r1]            [0x2000018a + r1]
+    0x0800ACC4  in settings_load_task      0x0800ACC4 strb   r2, [r1, r4]            [0x2000018a + 0x1]
+    0x0800B04E  in FUNC_0800ae40           0x0800B04E strb   r7, [r3, r0]            [0x2000018a + r0]
+    0x0800B060  in FUNC_0800ae40           0x0800B060 strb   r6, [r3, r0]            [0x2000018a + r0]
+    0x0800B064  in FUNC_0800ae40           0x0800B064 strb   r2, [r3, r0]            [0x2000018a + r0]
+    0x0800C33E  in ui_menu_task            0x0800C33E strb   r5, [r4, r0]            [0x2000018a + 0x0]
+
+  settings[0] 0x20000418                     读(索引)
+    0x080045E2  in FUNC_080045ac           0x080045E2 ldrb   r1, [r0, r2]            [0x20000418 + r2]
+    0x0800853C  in FUNC_08008504           0x0800853C ldrb   r3, [r1, r0]            [0x20000418 + r0]
+    0x0800ADCA  in settings_load_task      0x0800ADCA ldrb   r3, [r1, r0]            [0x20000418 + 0x0]
+
+  settings[0] 0x20000418                     写(索引)
+    0x080045EA  in FUNC_080045ac           0x080045EA strb   r1, [r0, r2]            [0x20000418 + r2]
+    0x08008542  in FUNC_08008504           0x08008542 strb   r3, [r1, r0]            [0x20000418 + r0]
+    0x0800854A  in FUNC_08008504           0x0800854A strb   r2, [r1, r0]            [0x20000418 + r0]
+    0x0800ADD2  in settings_load_task      0x0800ADD2 strb   r4, [r1, r0]            [0x20000418 + 0x0]
+
+==============================================================================
+[2] 关注函数被调用点（bl/b 目标）
+==============================================================================
+
+  0x08003FD0 cfn_render            调用点 1 个:
+    0x080093C4  in display_task            0x080093C4 bl     #0x8003fd0
+
+  0x0800B9AC rf_sync_word_func     调用点 4 个:
+    0x080045F2  in FUNC_080045ac           0x080045F2 bl     #0x800b9ac
+    0x080048C6  in FUNC_08004860           0x080048C6 bl     #0x800b9ac
+    0x08008552  in FUNC_08008504           0x08008552 bl     #0x800b9ac
+    0x08008AB6  in ui_key_scan_task        0x08008AB6 bl     #0x800b9ac
+
+  0x0800B820 flash_store_params    调用点 2 个:
+    0x08009B6C  in FUNC_08009b38           0x08009B6C bl     #0x800b820
+    0x0800AE02  in settings_load_task      0x0800AE02 bl     #0x800b820
+
+  0x0800CCC8 settings_expand       调用点 1 个:
+    0x0800AC94  in settings_load_task      0x0800AC94 bl     #0x800ccc8
+
+  0x080043E4 param_record_build    调用点 2 个:
+    0x08009B4C  in FUNC_08009b38           0x08009B4C bl     #0x80043e4
+    0x0800B826  in flash_store_params      0x0800B826 bl     #0x80043e4
+
+  0x0800B578 FUNC_0800b578         调用点 0 个:
+
+  0x0800CC64 FUNC_0800cc64         调用点 2 个:
+    0x0800BDB4  in FUNC_0800bd68           0x0800BDB4 bl     #0x800cc64
+    0x0800C2A8  in FUNC_0800c248           0x0800C2A8 bl     #0x800cc64
+
+  0x0800C2D8 ui_menu_task          调用点 1 个:
+    0x08008A26  in ui_key_scan_task        0x08008A26 bl     #0x800c2d8
+
+  0x08009B38 FUNC_08009b38         调用点 1 个:
+    0x0800CE9A  in FUNC_0800cdb0           0x0800CE9A bl     #0x8009b38
+
+  0x0800B7F4 FUNC_0800b7f4         调用点 1 个:
+    0x08009B3A  in FUNC_08009b38           0x08009B3A bl     #0x800b7f4
+
+  0x08005974 FUNC_08005974         调用点 1 个:
+    0x0800B848  in flash_store_params      0x0800B848 bl     #0x8005974
+
+==============================================================================
+[3] 关键函数反汇编
+==============================================================================
+
+; ================= FUNC 0x08008818 (ui_key_scan_task) 299 insns ================
+0x08008818: f0b5               {r4, r5, r6, r7, lr}        
+0x0800881A: 85b0               sp, #0x14                   
+0x0800881C: 0024               r4, #0                      
+0x0800881E: 03f0e1f8           #0x800b9e4                  
+0x08008822: a64d               r5, [pc, #0x298]               ; lit 0x20000150
+0x08008824: 6879               r0, [r5, #5]                
+0x08008826: 401c               r0, r0, #1                  
+0x08008828: c0b2               r0, r0                      
+0x0800882A: 6871               r0, [r5, #5]                
+0x0800882C: 0428               r0, #4                      
+0x0800882E: 7dd9               #0x800892c                  
+0x08008830: 0026               r6, #0                      
+0x08008832: 6e71               r6, [r5, #5]                
+0x08008834: 0820               r0, #8                      
+0x08008836: 0127               r7, #1                      
+0x08008838: 0090               r0, [sp]                    
+0x0800883A: 0296               r6, [sp, #8]                
+0x0800883C: 6946               r1, sp                      
+0x0800883E: 0197               r7, [sp, #4]                
+0x08008840: 0396               r6, [sp, #0xc]              
+0x08008842: 9f48               r0, [pc, #0x27c]               ; lit 0x48000400
+0x08008844: fef77afa           #0x8006d3c                  
+0x08008848: 1020               r0, #0x10                   
+0x0800884A: 6a46               r2, sp                      
+0x0800884C: c1c2               r2!, {r0, r6, r7}           
+0x0800884E: 6946               r1, sp                      
+0x08008850: 9b48               r0, [pc, #0x26c]               ; lit 0x48000400
+0x08008852: fef773fa           #0x8006d3c                  
+0x08008856: 2020               r0, #0x20                   
+0x08008858: 6a46               r2, sp                      
+0x0800885A: c1c2               r2!, {r0, r6, r7}           
+0x0800885C: 6946               r1, sp                      
+0x0800885E: 9848               r0, [pc, #0x260]               ; lit 0x48000400
+0x08008860: fef76cfa           #0x8006d3c                  
+0x08008864: 9649               r1, [pc, #0x258]               ; lit 0x48000400
+0x08008866: 0820               r0, #8                      
+0x08008868: 8862               r0, [r1, #0x28]             
+0x0800886A: 0320               r0, #3                      
+0x0800886C: 03f07cff           #0x800c768                  
+0x08008870: b902               r1, r7, #0xa                
+0x08008872: 9448               r0, [pc, #0x250]               ; lit 0x48000800
+0x08008874: fef70efb           #0x8006e94                  
+0x08008878: 0028               r0, #0                      
+0x0800887A: 00d1               #0x800887e                  
+0x0800887C: 0124               r4, #1                      
+0x0800887E: 0121               r1, #1                      
+0x08008880: c902               r1, r1, #0xb                
+0x08008882: 9048               r0, [pc, #0x240]               ; lit 0x48000800
+0x08008884: fef706fb           #0x8006e94                  
+0x08008888: 0028               r0, #0                      
+0x0800888A: 01d1               #0x8008890                  
+0x0800888C: 0220               r0, #2                      
+0x0800888E: 0443               r4, r0                      
+0x08008890: 0121               r1, #1                      
+0x08008892: 0903               r1, r1, #0xc                
+0x08008894: 8b48               r0, [pc, #0x22c]               ; lit 0x48000800
+0x08008896: fef7fdfa           #0x8006e94                  
+0x0800889A: 0028               r0, #0                      
+0x0800889C: 01d1               #0x80088a2                  
+0x0800889E: 0420               r0, #4                      
+0x080088A0: 0443               r4, r0                      
+0x080088A2: 1020               r0, #0x10                   
+0x080088A4: 0090               r0, [sp]                    
+0x080088A6: 0296               r6, [sp, #8]                
+0x080088A8: 6946               r1, sp                      
+0x080088AA: 0197               r7, [sp, #4]                
+0x080088AC: 0396               r6, [sp, #0xc]              
+0x080088AE: 8448               r0, [pc, #0x210]               ; lit 0x48000400
+0x080088B0: fef744fa           #0x8006d3c                  
+0x080088B4: 0820               r0, #8                      
+0x080088B6: 6a46               r2, sp                      
+0x080088B8: c1c2               r2!, {r0, r6, r7}           
+0x080088BA: 6946               r1, sp                      
+0x080088BC: 8048               r0, [pc, #0x200]               ; lit 0x48000400
+0x080088BE: fef73dfa           #0x8006d3c                  
+0x080088C2: 2020               r0, #0x20                   
+0x080088C4: 6a46               r2, sp                      
+0x080088C6: c1c2               r2!, {r0, r6, r7}           
+0x080088C8: 6946               r1, sp                      
+0x080088CA: 7d48               r0, [pc, #0x1f4]               ; lit 0x48000400
+0x080088CC: fef736fa           #0x8006d3c                  
+0x080088D0: 7b49               r1, [pc, #0x1ec]               ; lit 0x48000400
+0x080088D2: 1020               r0, #0x10                   
+0x080088D4: 8862               r0, [r1, #0x28]             
+0x080088D6: 0320               r0, #3                      
+0x080088D8: 03f046ff           #0x800c768                  
+0x080088DC: 0121               r1, #1                      
+0x080088DE: 8902               r1, r1, #0xa                
+0x080088E0: 7848               r0, [pc, #0x1e0]               ; lit 0x48000800
+0x080088E2: fef7d7fa           #0x8006e94                  
+0x080088E6: 0028               r0, #0                      
+0x080088E8: 01d1               #0x80088ee                  
+0x080088EA: 0820               r0, #8                      
+0x080088EC: 0443               r4, r0                      
+0x080088EE: 0121               r1, #1                      
+0x080088F0: c902               r1, r1, #0xb                
+0x080088F2: 7448               r0, [pc, #0x1d0]               ; lit 0x48000800
+0x080088F4: fef7cefa           #0x8006e94                  
+0x080088F8: 0028               r0, #0                      
+0x080088FA: 01d1               #0x8008900                  
+0x080088FC: 1020               r0, #0x10                   
+0x080088FE: 0443               r4, r0                      
+0x08008900: 0121               r1, #1                      
+0x08008902: 0903               r1, r1, #0xc                
+0x08008904: 6f48               r0, [pc, #0x1bc]               ; lit 0x48000800
+0x08008906: fef7c5fa           #0x8006e94                  
+0x0800890A: 0028               r0, #0                      
+0x0800890C: 01d1               #0x8008912                  
+0x0800890E: 2020               r0, #0x20                   
+0x08008910: 0443               r4, r0                      
+0x08008912: 2020               r0, #0x20                   
+0x08008914: 0090               r0, [sp]                    
+0x08008916: 0296               r6, [sp, #8]                
+0x08008918: 6946               r1, sp                      
+0x0800891A: 0197               r7, [sp, #4]                
+0x0800891C: 0396               r6, [sp, #0xc]              
+0x0800891E: 6848               r0, [pc, #0x1a0]               ; lit 0x48000400
+0x08008920: fef70cfa           #0x8006d3c                  
+0x08008924: 0820               r0, #8                      
+0x08008926: 6946               r1, sp                      
+0x08008928: 6a46               r2, sp                      
+0x0800892A: 00e0               #0x800892e                  
+0x0800892E: c1c2               r2!, {r0, r6, r7}           
+0x08008930: 6348               r0, [pc, #0x18c]               ; lit 0x48000400
+0x08008932: fef703fa           #0x8006d3c                  
+0x08008936: 1020               r0, #0x10                   
+0x08008938: 6a46               r2, sp                      
+0x0800893A: c1c2               r2!, {r0, r6, r7}           
+0x0800893C: 6946               r1, sp                      
+0x0800893E: 6048               r0, [pc, #0x180]               ; lit 0x48000400
+0x08008940: fef7fcf9           #0x8006d3c                  
+0x08008944: 5e49               r1, [pc, #0x178]               ; lit 0x48000400
+0x08008946: 1020               r0, #0x10                   
+0x08008948: 8862               r0, [r1, #0x28]             
+0x0800894A: 0a20               r0, #0xa                    
+0x0800894C: 03f00cff           #0x800c768                  
+0x08008950: 0121               r1, #1                      
+0x08008952: 8902               r1, r1, #0xa                
+0x08008954: 5b48               r0, [pc, #0x16c]               ; lit 0x48000800
+0x08008956: fef79dfa           #0x8006e94                  
+0x0800895A: 0028               r0, #0                      
+0x0800895C: 01d1               #0x8008962                  
+0x0800895E: 4020               r0, #0x40                   
+0x08008960: 0443               r4, r0                      
+0x08008962: 0121               r1, #1                      
+0x08008964: c902               r1, r1, #0xb                
+0x08008966: 5748               r0, [pc, #0x15c]               ; lit 0x48000800
+0x08008968: fef794fa           #0x8006e94                  
+0x0800896C: 0028               r0, #0                      
+0x0800896E: 01d1               #0x8008974                  
+0x08008970: 8020               r0, #0x80                   
+0x08008972: 0443               r4, r0                      
+0x08008974: 0121               r1, #1                      
+0x08008976: 0903               r1, r1, #0xc                
+0x08008978: 5248               r0, [pc, #0x148]               ; lit 0x48000800
+0x0800897A: fef78bfa           #0x8006e94                  
+0x0800897E: 0028               r0, #0                      
+0x08008980: 02d1               #0x8008988                  
+0x08008982: ff20               r0, #0xff                   
+0x08008984: 0130               r0, #1                      
+0x08008986: 0443               r4, r0                      
+0x08008988: 0820               r0, #8                      
+0x0800898A: 0090               r0, [sp]                    
+0x0800898C: 0196               r6, [sp, #4]                
+0x0800898E: 6946               r1, sp                      
+0x08008990: 0296               r6, [sp, #8]                
+0x08008992: 4b48               r0, [pc, #0x12c]               ; lit 0x48000400
+0x08008994: fef7d2f9           #0x8006d3c                  
+0x08008998: 1020               r0, #0x10                   
+0x0800899A: 6a46               r2, sp                      
+0x0800899C: c1c2               r2!, {r0, r6, r7}           
+0x0800899E: 6946               r1, sp                      
+0x080089A0: 4748               r0, [pc, #0x11c]               ; lit 0x48000400
+0x080089A2: fef7cbf9           #0x8006d3c                  
+0x080089A6: 2020               r0, #0x20                   
+0x080089A8: 6a46               r2, sp                      
+0x080089AA: c1c2               r2!, {r0, r6, r7}           
+0x080089AC: 6946               r1, sp                      
+0x080089AE: 4448               r0, [pc, #0x110]               ; lit 0x48000400
+0x080089B0: fef7c4f9           #0x8006d3c                  
+0x080089B4: 002c               r4, #0                      
+0x080089B6: 2bd0               #0x8008a10                  
+0x080089B8: 6007               r0, r4, #0x1d               
+0x080089BA: 00d4               #0x80089be                  
+0x080089BC: ae76               r6, [r5, #0x1a]             
+0x080089BE: faf797ff           #0x80038f0                  
+0x080089C2: 7d20               r0, #0x7d                   
+0x080089C4: 0001               r0, r0, #4                  
+0x080089C6: a885               r0, [r5, #0x2c]             
+0x080089C8: 03f03af8           #0x800ba40                  
+0x080089CC: 02f020ff           #0x800b810                  
+0x080089D0: 3d48               r0, [pc, #0xf4]                ; lit 0x200001D1
+0x080089D2: 0670               r6, [r0]                    
+0x080089D4: e87d               r0, [r5, #0x17]             
+0x080089D6: 0128               r0, #1                      
+0x080089D8: 18d0               #0x8008a0c                  
+0x080089DA: 2879               r0, [r5, #4]                
+0x080089DC: 0028               r0, #0                      
+0x080089DE: 2fd0               #0x8008a40                  
+0x080089E0: e879               r0, [r5, #7]                
+0x080089E2: 0028               r0, #0                      
+0x080089E4: 12d1               #0x8008a0c                  
+0x080089E6: a879               r0, [r5, #6]                
+0x080089E8: 401c               r0, r0, #1                  
+0x080089EA: c0b2               r0, r0                      
+0x080089EC: a871               r0, [r5, #6]                
+0x080089EE: 3228               r0, #0x32                   
+0x080089F0: 0cd9               #0x8008a0c                  
+0x080089F2: ef71               r7, [r5, #7]                
+0x080089F4: 2e72               r6, [r5, #8]                
+0x080089F6: 2e73               r6, [r5, #0xc]              
+0x080089F8: 102c               r4, #0x10                   
+0x080089FA: 53d0               #0x8008aa4                  
+0x080089FC: 142c               r4, #0x14                   
+0x080089FE: 54d0               #0x8008aaa                  
+0x08008A00: 202c               r4, #0x20                   
+0x08008A02: 03d0               #0x8008a0c                  
+0x08008A04: 802c               r4, #0x80                   
+0x08008A06: 01d1               #0x8008a0c                  
+0x08008A08: 03f014f9           #0x800bc34                  
+0x08008A0C: 05b0               sp, #0x14                   
+0x08008A0E: f0bd               {r4, r5, r6, r7, pc}        
+0x0800892C: 6ee0               #0x8008a0c                  
+0x08008A10: ee84               r6, [r5, #0x26]             
+0x08008A12: 2e71               r6, [r5, #4]                
+0x08008A14: ae71               r6, [r5, #6]                
+0x08008A16: ee71               r6, [r5, #7]                
+0x08008A18: ee75               r6, [r5, #0x17]             
+0x08008A1A: 6e76               r6, [r5, #0x19]             
+0x08008A1C: ae76               r6, [r5, #0x1a]             
+0x08008A1E: 6e77               r6, [r5, #0x1d]             
+0x08008A20: 287b               r0, [r5, #0xc]              
+0x08008A22: 0128               r0, #1                      
+0x08008A24: 01d1               #0x8008a2a                  
+0x08008A26: 03f057fc           #0x800c2d8                  
+0x08008A2A: 287a               r0, [r5, #8]                
+0x08008A2C: 0128               r0, #1                      
+0x08008A2E: 01d1               #0x8008a34                  
+0x08008A30: fdf7b6fc           #0x80063a0                  
+0x08008A34: 2e72               r6, [r5, #8]                
+0x08008A36: 6e72               r6, [r5, #9]                
+0x08008A38: ae72               r6, [r5, #0xa]              
+0x08008A3A: ee72               r6, [r5, #0xb]              
+0x08008A3C: 2e73               r6, [r5, #0xc]              
+0x08008A3E: e5e7               #0x8008a0c                  
+0x08008A40: e88c               r0, [r5, #0x26]             
+0x08008A42: 8442               r4, r0                      
+0x08008A44: 2cd1               #0x8008aa0                  
+0x08008A46: 2f71               r7, [r5, #4]                
+0x08008A48: 202c               r4, #0x20                   
+0x08008A4A: 1ed0               #0x8008a8a                  
+0x08008A4C: 09dc               #0x8008a62                  
+0x08008A4E: 012c               r4, #1                      
+0x08008A50: 18d0               #0x8008a84                  
+0x08008A52: 022c               r4, #2                      
+0x08008A54: 1cd0               #0x8008a90                  
+0x08008A56: 042c               r4, #4                      
+0x08008A58: 11d0               #0x8008a7e                  
+0x08008A5A: 102c               r4, #0x10                   
+0x08008A5C: d6d1               #0x8008a0c                  
+0x08008A5E: 2f72               r7, [r5, #8]                
+0x08008A60: d4e7               #0x8008a0c                  
+0x08008AA4: fbf7fcfb           #0x80042a0                  
+0x08008AA8: b0e7               #0x8008a0c                  
+0x08008AAA: fbf71bff           #0x80048e4                  
+0x08008AAE: ee73               r6, [r5, #0xf]              
+0x08008AB0: 0648               r0, [pc, #0x18]                ; lit 0x20000418
+0x08008AB2: ae74               r6, [r5, #0x12]             
+0x08008AB4: 8079               r0, [r0, #6]                
+0x08008AB6: 02f079ff           #0x800b9ac                  
+0x08008ABA: a7e7               #0x8008a0c                  
+0x08008AA0: ec84               r4, [r5, #0x26]             
+0x08008AA2: b3e7               #0x8008a0c                  
+0x08008A8A: 02f03fff           #0x800b90c                  
+0x08008A8E: bde7               #0x8008a0c                  
+0x08008A62: 802c               r4, #0x80                   
+0x08008A64: 1ad0               #0x8008a9c                  
+0x08008A66: ff3c               r4, #0xff                   
+0x08008A68: 641e               r4, r4, #1                  
+0x08008A6A: 14d0               #0x8008a96                  
+0x08008A6C: 012c               r4, #1                      
+0x08008A6E: cdd1               #0x8008a0c                  
+0x08008A70: 687e               r0, [r5, #0x19]             
+0x08008A72: 0128               r0, #1                      
+0x08008A74: cad1               #0x8008a0c                  
+0x08008A76: 3c20               r0, #0x3c                   
+0x08008A78: 6885               r0, [r5, #0x2a]             
+0x08008A7A: 6e76               r6, [r5, #0x19]             
+0x08008A7C: c6e7               #0x8008a0c                  
+0x08008A84: 00f040f9           #0x8008d08                  
+0x08008A88: c0e7               #0x8008a0c                  
+0x08008A90: 03f07efb           #0x800c190                  
+0x08008A94: bae7               #0x8008a0c                  
+0x08008A7E: 01f07df8           #0x8009b7c                  
+0x08008A82: c3e7               #0x8008a0c                  
+0x08008A9C: 2f73               r7, [r5, #0xc]              
+0x08008A9E: b5e7               #0x8008a0c                  
+0x08008A96: fbf7ebfb           #0x8004270                  
+0x08008A9A: b7e7               #0x8008a0c                  
+
+; ================= FUNC 0x0800C2D8 (ui_menu_task) 59 insns ================
+0x0800C2D8: 70b5               {r4, r5, r6, lr}            
+0x0800C2DA: 1d49               r1, [pc, #0x74]                ; lit 0x20000150
+0x0800C2DC: 0022               r2, #0                      
+0x0800C2DE: 887c               r0, [r1, #0x12]             
+0x0800C2E0: 0128               r0, #1                      
+0x0800C2E2: 09d0               #0x800c2f8                  
+0x0800C2E4: 0878               r0, [r1]                    
+0x0800C2E6: 0128               r0, #1                      
+0x0800C2E8: 02d0               #0x800c2f0                  
+0x0800C2EA: 887b               r0, [r1, #0xe]              
+0x0800C2EC: 0028               r0, #0                      
+0x0800C2EE: 05d0               #0x800c2fc                  
+0x0800C2F0: 0a70               r2, [r1]                    
+0x0800C2F2: 8a73               r2, [r1, #0xe]              
+0x0800C2F4: 0a63               r2, [r1, #0x30]             
+0x0800C2F6: 70bd               {r4, r5, r6, pc}            
+0x0800C2F8: 8a74               r2, [r1, #0x12]             
+0x0800C2FA: 70bd               {r4, r5, r6, pc}            
+0x0800C2FC: 487d               r0, [r1, #0x15]             
+0x0800C2FE: 401c               r0, r0, #1                  
+0x0800C300: c0b2               r0, r0                      
+0x0800C302: 4875               r0, [r1, #0x15]             
+0x0800C304: 0128               r0, #1                      
+0x0800C306: 09d9               #0x800c31c                  
+0x0800C308: 4a75               r2, [r1, #0x15]             
+0x0800C30A: 8a75               r2, [r1, #0x16]             
+0x0800C30C: 487b               r0, [r1, #0xd]              
+0x0800C30E: 8307               r3, r0, #0x1e               
+0x0800C310: 09d1               #0x800c326                  
+0x0800C312: 8008               r0, r0, #2                  
+0x0800C314: 8000               r0, r0, #2                  
+0x0800C316: 401c               r0, r0, #1                  
+0x0800C318: 4873               r0, [r1, #0xd]              
+0x0800C31A: 04e0               #0x800c326                  
+0x0800C326: 0a4b               r3, [pc, #0x28]                ; lit 0x20000150
+0x0800C328: 0020               r0, #0                      
+0x0800C32A: 3433               r3, #0x34                   
+0x0800C32C: 5025               r5, #0x50                   
+0x0800C32E: 9c1d               r4, r3, #6                  
+0x0800C330: 1e5c               r6, [r3, r0]                
+0x0800C332: ff2e               r6, #0xff                   
+0x0800C334: 00d1               #0x800c338                  
+0x0800C336: 1d54               r5, [r3, r0]                
+0x0800C338: 265c               r6, [r4, r0]                
+0x0800C33A: ff2e               r6, #0xff                   
+0x0800C33C: 00d1               #0x800c340                  
+0x0800C33E: 2554               r5, [r4, r0]                
+0x0800C340: 401c               r0, r0, #1                  
+0x0800C342: c0b2               r0, r0                      
+0x0800C344: 0628               r0, #6                      
+0x0800C346: f3d3               #0x800c330                  
+0x0800C348: 8a77               r2, [r1, #0x1e]             
+0x0800C34A: fef79ffb           #0x800aa8c                  
+0x0800C34E: 70bd               {r4, r5, r6, pc}            
+0x0800C31C: 887d               r0, [r1, #0x16]             
+0x0800C31E: 0028               r0, #0                      
+0x0800C320: 01d1               #0x800c326                  
+0x0800C322: 0120               r0, #1                      
+0x0800C324: 8875               r0, [r1, #0x16]             
+
+; ================= FUNC 0x08004270 (ui_key_100) 22 insns ================
+0x08004270: 0a48               r0, [pc, #0x28]                ; lit 0x20000150
+0x08004272: 0021               r1, #0                      
+0x08004274: 0278               r2, [r0]                    
+0x08004276: 012a               r2, #1                      
+0x08004278: 02d0               #0x8004280                  
+0x0800427A: 827b               r2, [r0, #0xe]              
+0x0800427C: 002a               r2, #0                      
+0x0800427E: 03d0               #0x8004288                  
+0x08004280: 0170               r1, [r0]                    
+0x08004282: 8173               r1, [r0, #0xe]              
+0x08004284: 0163               r1, [r0, #0x30]             
+0x08004286: 7047               lr                          
+0x08004288: 827c               r2, [r0, #0x12]             
+0x0800428A: 002a               r2, #0                      
+0x0800428C: 04d0               #0x8004298                  
+0x0800428E: 0022               r2, #0                      
+0x08004290: 8274               r2, [r0, #0x12]             
+0x08004292: c174               r1, [r0, #0x13]             
+0x08004294: c173               r1, [r0, #0xf]              
+0x08004296: 7047               lr                          
+0x08004298: 0122               r2, #1                      
+0x0800429A: f9e7               #0x8004290                  
+
+; ================= FUNC 0x080042A0 (ui_key_10) 28 insns ================
+0x080042A0: 0d48               r0, [pc, #0x34]                ; lit 0x20000150
+0x080042A2: 0021               r1, #0                      
+0x080042A4: 827c               r2, [r0, #0x12]             
+0x080042A6: 012a               r2, #1                      
+0x080042A8: 09d0               #0x80042be                  
+0x080042AA: 0278               r2, [r0]                    
+0x080042AC: 012a               r2, #1                      
+0x080042AE: 02d0               #0x80042b6                  
+0x080042B0: 827b               r2, [r0, #0xe]              
+0x080042B2: 002a               r2, #0                      
+0x080042B4: 05d0               #0x80042c2                  
+0x080042B6: 0170               r1, [r0]                    
+0x080042B8: 8173               r1, [r0, #0xe]              
+0x080042BA: 0163               r1, [r0, #0x30]             
+0x080042BC: 7047               lr                          
+0x080042BE: 8174               r1, [r0, #0x12]             
+0x080042C0: 7047               lr                          
+0x080042C2: 417d               r1, [r0, #0x15]             
+0x080042C4: 0029               r1, #0                      
+0x080042C6: fbd0               #0x80042c0                  
+0x080042C8: c17b               r1, [r0, #0xf]              
+0x080042CA: 0a29               r1, #0xa                    
+0x080042CC: 01d0               #0x80042d2                  
+0x080042CE: 0a21               r1, #0xa                    
+0x080042D0: 00e0               #0x80042d4                  
+0x080042D4: c173               r1, [r0, #0xf]              
+0x080042D6: 7047               lr                          
+0x080042D2: 0021               r1, #0                      
+
+; ================= FUNC 0x0800B90C (ui_key_20) 46 insns ================
+0x0800B90C: 10b5               {r4, lr}                    
+0x0800B90E: 1648               r0, [pc, #0x58]                ; lit 0x20000150
+0x0800B910: 0021               r1, #0                      
+0x0800B912: 0278               r2, [r0]                    
+0x0800B914: 012a               r2, #1                      
+0x0800B916: 02d0               #0x800b91e                  
+0x0800B918: 827b               r2, [r0, #0xe]              
+0x0800B91A: 002a               r2, #0                      
+0x0800B91C: 03d0               #0x800b926                  
+0x0800B91E: 0170               r1, [r0]                    
+0x0800B920: 8173               r1, [r0, #0xe]              
+0x0800B922: 0163               r1, [r0, #0x30]             
+0x0800B924: 10bd               {r4, pc}                    
+0x0800B926: 827c               r2, [r0, #0x12]             
+0x0800B928: 012a               r2, #1                      
+0x0800B92A: 0fd0               #0x800b94c                  
+0x0800B92C: 0e4a               r2, [pc, #0x38]                ; lit 0x20000150
+0x0800B92E: 437b               r3, [r0, #0xd]              
+0x0800B930: d27b               r2, [r2, #0xf]              
+0x0800B932: 9c07               r4, r3, #0x1e               
+0x0800B934: 0fd0               #0x800b956                  
+0x0800B936: 9b07               r3, r3, #0x1e               
+0x0800B938: 9b0f               r3, r3, #0x1e               
+0x0800B93A: 012b               r3, #1                      
+0x0800B93C: 0ed0               #0x800b95c                  
+0x0800B93E: 022b               r3, #2                      
+0x0800B940: f0d1               #0x800b924                  
+0x0800B942: 002a               r2, #0                      
+0x0800B944: 0cd0               #0x800b960                  
+0x0800B946: 032a               r2, #3                      
+0x0800B948: 0cd0               #0x800b964                  
+0x0800B94A: 07e0               #0x800b95c                  
+0x0800B95C: c173               r1, [r0, #0xf]              
+0x0800B95E: 10bd               {r4, pc}                    
+0x0800B94C: c17c               r1, [r0, #0x13]             
+0x0800B94E: 0122               r2, #1                      
+0x0800B950: 5140               r1, r2                      
+0x0800B952: c174               r1, [r0, #0x13]             
+0x0800B954: 10bd               {r4, pc}                    
+0x0800B956: 002a               r2, #0                      
+0x0800B958: 00d1               #0x800b95c                  
+0x0800B95A: 0621               r1, #6                      
+0x0800B960: 0321               r1, #3                      
+0x0800B962: fbe7               #0x800b95c                  
+0x0800B964: 0421               r1, #4                      
+0x0800B966: f9e7               #0x800b95c                  
+
+; ================= FUNC 0x0800BC34 (ui_key_80) 39 insns ================
+0x0800BC34: 10b5               {r4, lr}                    
+0x0800BC36: 1348               r0, [pc, #0x4c]                ; lit 0x20000150
+0x0800BC38: 0022               r2, #0                      
+0x0800BC3A: 817c               r1, [r0, #0x12]             
+0x0800BC3C: 0129               r1, #1                      
+0x0800BC3E: 09d0               #0x800bc54                  
+0x0800BC40: 0178               r1, [r0]                    
+0x0800BC42: 0129               r1, #1                      
+0x0800BC44: 02d0               #0x800bc4c                  
+0x0800BC46: 817b               r1, [r0, #0xe]              
+0x0800BC48: 0029               r1, #0                      
+0x0800BC4A: 05d0               #0x800bc58                  
+0x0800BC4C: 0270               r2, [r0]                    
+0x0800BC4E: 8273               r2, [r0, #0xe]              
+0x0800BC50: 0263               r2, [r0, #0x30]             
+0x0800BC52: 10bd               {r4, pc}                    
+0x0800BC54: 8274               r2, [r0, #0x12]             
+0x0800BC56: 10bd               {r4, pc}                    
+0x0800BC58: 417b               r1, [r0, #0xd]              
+0x0800BC5A: 8b07               r3, r1, #0x1e               
+0x0800BC5C: 9b0f               r3, r3, #0x1e               
+0x0800BC5E: 022b               r3, #2                      
+0x0800BC60: 08d0               #0x800bc74                  
+0x0800BC62: c906               r1, r1, #0x1b               
+0x0800BC64: 8c0f               r4, r1, #0x1e               
+0x0800BC66: 0749               r1, [pc, #0x1c]                ; lit 0x20000150
+0x0800BC68: e723               r3, #0xe7                   
+0x0800BC6A: 497b               r1, [r1, #0xd]              
+0x0800BC6C: 1940               r1, r3                      
+0x0800BC6E: 002c               r4, #0                      
+0x0800BC70: 02d0               #0x800bc78                  
+0x0800BC72: 4173               r1, [r0, #0xd]              
+0x0800BC74: c273               r2, [r0, #0xf]              
+0x0800BC76: 10bd               {r4, pc}                    
+0x0800BC78: 1031               r1, #0x10                   
+0x0800BC7A: 4173               r1, [r0, #0xd]              
+0x0800BC7C: 0249               r1, [pc, #8]                   ; lit 0x20000418
+0x0800BC7E: ca71               r2, [r1, #7]                
+0x0800BC80: f8e7               #0x800bc74                  
+
+; ================= FUNC 0x08008D08 (ui_key_1) 33 insns ================
+0x08008D08: 1048               r0, [pc, #0x40]                ; lit 0x20000150
+0x08008D0A: 0022               r2, #0                      
+0x08008D0C: 817c               r1, [r0, #0x12]             
+0x08008D0E: 0129               r1, #1                      
+0x08008D10: 10d0               #0x8008d34                  
+0x08008D12: c17f               r1, [r0, #0x1f]             
+0x08008D14: 0e4b               r3, [pc, #0x38]                ; lit 0x200001D0
+0x08008D16: 491c               r1, r1, #1                  
+0x08008D18: c9b2               r1, r1                      
+0x08008D1A: c177               r1, [r0, #0x1f]             
+0x08008D1C: 1b78               r3, [r3]                    
+0x08008D1E: 012b               r3, #1                      
+0x08008D20: 05d0               #0x8008d2e                  
+0x08008D22: 022b               r3, #2                      
+0x08008D24: 08d0               #0x8008d38                  
+0x08008D26: 042b               r3, #4                      
+0x08008D28: 06d0               #0x8008d38                  
+0x08008D2A: 052b               r3, #5                      
+0x08008D2C: 04d0               #0x8008d38                  
+0x08008D2E: 0129               r1, #1                      
+0x08008D30: 04d8               #0x8008d3c                  
+0x08008D32: 05e0               #0x8008d40                  
+0x08008D40: 0029               r1, #0                      
+0x08008D42: fcd0               #0x8008d3e                  
+0x08008D44: 0348               r0, [pc, #0xc]                 ; lit 0x200001F4
+0x08008D46: 0170               r1, [r0]                    
+0x08008D48: 7047               lr                          
+0x08008D34: 8274               r2, [r0, #0x12]             
+0x08008D36: 7047               lr                          
+0x08008D38: 0329               r1, #3                      
+0x08008D3A: 01d9               #0x8008d40                  
+0x08008D3C: c277               r2, [r0, #0x1f]             
+0x08008D3E: 7047               lr                          
+
+; ================= FUNC 0x0800C190 (ui_key_2) 9 insns ================
+0x0800C190: 10b5               {r4, lr}                    
+0x0800C192: 044c               r4, [pc, #0x10]                ; lit 0x20000150
+0x0800C194: 207e               r0, [r4, #0x18]             
+0x0800C196: 0028               r0, #0                      
+0x0800C198: 03d1               #0x800c1a2                  
+0x0800C19A: f9f7a5fc           #0x8005ae8                  
+0x0800C19E: 0020               r0, #0                      
+0x0800C1A0: e076               r0, [r4, #0x1b]             
+0x0800C1A2: 10bd               {r4, pc}                    
+
+; ================= FUNC 0x08009B7C (ui_key_4) 73 insns ================
+0x08009B7C: 2448               r0, [pc, #0x90]                ; lit 0x20000150
+0x08009B7E: c278               r2, [r0, #3]                
+0x08009B80: 0146               r1, r0                      
+0x08009B82: 497b               r1, [r1, #0xd]              
+0x08009B84: 012a               r2, #1                      
+0x08009B86: 0dd0               #0x8009ba4                  
+0x08009B88: 817c               r1, [r0, #0x12]             
+0x08009B8A: 0022               r2, #0                      
+0x08009B8C: 0129               r1, #1                      
+0x08009B8E: 23d0               #0x8009bd8                  
+0x08009B90: 0178               r1, [r0]                    
+0x08009B92: 0129               r1, #1                      
+0x08009B94: 02d0               #0x8009b9c                  
+0x08009B96: 817b               r1, [r0, #0xe]              
+0x08009B98: 0029               r1, #0                      
+0x08009B9A: 1fd0               #0x8009bdc                  
+0x08009B9C: 0270               r2, [r0]                    
+0x08009B9E: 8273               r2, [r0, #0xe]              
+0x08009BA0: 0263               r2, [r0, #0x30]             
+0x08009BA2: 7047               lr                          
+0x08009BA4: c906               r1, r1, #0x1b               
+0x08009BA6: 08d5               #0x8009bba                  
+0x08009BA8: 418c               r1, [r0, #0x22]             
+0x08009BAA: 491c               r1, r1, #1                  
+0x08009BAC: 89b2               r1, r1                      
+0x08009BAE: 4184               r1, [r0, #0x22]             
+0x08009BB0: 3229               r1, #0x32                   
+0x08009BB2: f6d9               #0x8009ba2                  
+0x08009BB4: 3221               r1, #0x32                   
+0x08009BB6: 4184               r1, [r0, #0x22]             
+0x08009BB8: 7047               lr                          
+0x08009BD8: 8274               r2, [r0, #0x12]             
+0x08009BDA: 7047               lr                          
+0x08009BDC: 0c49               r1, [pc, #0x30]                ; lit 0x20000150
+0x08009BDE: 437d               r3, [r0, #0x15]             
+0x08009BE0: 497b               r1, [r1, #0xd]              
+0x08009BE2: 491c               r1, r1, #1                  
+0x08009BE4: c9b2               r1, r1                      
+0x08009BE6: 002b               r3, #0                      
+0x08009BE8: 4173               r1, [r0, #0xd]              
+0x08009BEA: 08d0               #0x8009bfe                  
+0x08009BEC: 8b07               r3, r1, #0x1e               
+0x08009BEE: 9b0f               r3, r3, #0x1e               
+0x08009BF0: 022b               r3, #2                      
+0x08009BF2: 02d9               #0x8009bfa                  
+0x08009BF4: 8908               r1, r1, #2                  
+0x08009BF6: 8900               r1, r1, #2                  
+0x08009BF8: 4173               r1, [r0, #0xd]              
+0x08009BFA: c273               r2, [r0, #0xf]              
+0x08009BFC: 7047               lr                          
+0x08009BBA: 818c               r1, [r0, #0x24]             
+0x08009BBC: 491d               r1, r1, #5                  
+0x08009BBE: 89b2               r1, r1                      
+0x08009BC0: 8184               r1, [r0, #0x24]             
+0x08009BC2: 6429               r1, #0x64                   
+0x08009BC4: 02d2               #0x8009bcc                  
+0x08009BC6: 6421               r1, #0x64                   
+0x08009BC8: 8184               r1, [r0, #0x24]             
+0x08009BCA: 7047               lr                          
+0x08009BFE: 8b07               r3, r1, #0x1e               
+0x08009C00: 9b0f               r3, r3, #0x1e               
+0x08009C02: 022b               r3, #2                      
+0x08009C04: f9d9               #0x8009bfa                  
+0x08009C06: 8908               r1, r1, #2                  
+0x08009C08: 8900               r1, r1, #2                  
+0x08009C0A: 491c               r1, r1, #1                  
+0x08009C0C: f4e7               #0x8009bf8                  
+0x08009BCC: ff22               r2, #0xff                   
+0x08009BCE: 4b32               r2, #0x4b                   
+0x08009BD0: 9142               r1, r2                      
+0x08009BD2: fad9               #0x8009bca                  
+0x08009BD4: 8284               r2, [r0, #0x24]             
+0x08009BD6: 7047               lr                          
+
+; ================= FUNC 0x08003FD0 (cfn_render) 283 insns ================
+0x08003FD0: f8b5               {r3, r4, r5, r6, r7, lr}    
+0x08003FD2: 0021               r1, #0                      
+0x08003FD4: 0120               r0, #1                      
+0x08003FD6: 08f069fe           #0x800ccac                  
+0x08003FDA: 1221               r1, #0x12                   
+0x08003FDC: 0f20               r0, #0xf                    
+0x08003FDE: 05f0b7f8           #0x8009150                  
+0x08003FE2: 9e4c               r4, [pc, #0x278]               ; lit 0x20000164
+0x08003FE4: 1021               r1, #0x10                   
+0x08003FE6: 2078               r0, [r4]                    
+0x08003FE8: 401c               r0, r0, #1                  
+0x08003FEA: c0b2               r0, r0                      
+0x08003FEC: 05f0e6f8           #0x80091bc                  
+0x08003FF0: 0a21               r1, #0xa                    
+0x08003FF2: 0320               r0, #3                      
+0x08003FF4: 08f05afe           #0x800ccac                  
+0x08003FF8: 2078               r0, [r4]                    
+0x08003FFA: 994d               r5, [pc, #0x264]               ; lit 0x20000163
+0x08003FFC: 994e               r6, [pc, #0x264]               ; lit 0x2000011C
+0x08003FFE: 9a4c               r4, [pc, #0x268]               ; lit 0x20000418
+0x08004000: 0028               r0, #0                      
+0x08004002: 16d0               #0x8004032                  
+0x08004004: 0128               r0, #1                      
+0x08004006: 20d0               #0x800404a                  
+0x08004008: 0027               r7, #0                      
+0x0800400A: 0228               r0, #2                      
+0x0800400C: 39d0               #0x8004082                  
+0x0800400E: 0328               r0, #3                      
+0x08004010: 5ed0               #0x80040d0                  
+0x08004012: 0428               r0, #4                      
+0x08004014: 7ed0               #0x8004114                  
+0x08004016: 0528               r0, #5                      
+0x08004018: 7dd0               #0x8004116                  
+0x0800401A: 0628               r0, #6                      
+0x0800401C: 7cd0               #0x8004118                  
+0x0800401E: 0728               r0, #7                      
+0x08004020: 2ed1               #0x8004080                  
+0x08004022: 1c21               r1, #0x1c                   
+0x08004024: 0120               r0, #1                      
+0x08004026: 08f041fe           #0x800ccac                  
+0x0800402A: 2878               r0, [r5]                    
+0x0800402C: 0128               r0, #1                      
+0x0800402E: 74d0               #0x800411a                  
+0x08004030: fee0               #0x8004230                  
+0x08004230: e079               r0, [r4, #7]                
+0x08004232: 0028               r0, #0                      
+0x08004234: 06d0               #0x8004244                  
+0x08004236: 0321               r1, #3                      
+0x08004238: 0020               r0, #0                      
+0x0800423A: 04f07bfe           #0x8008f34                  
+0x0800423E: 0521               r1, #5                      
+0x08004240: 1a20               r0, #0x1a                   
+0x08004242: 1be7               #0x800407c                  
+0x0800407C: 04f090ff           #0x8008fa0                  
+0x08004080: f8bd               {r3, r4, r5, r6, r7, pc}    
+0x08004032: 0b21               r1, #0xb                    
+0x08004034: 0020               r0, #0                      
+0x08004036: 08f039fe           #0x800ccac                  
+0x0800403A: 2878               r0, [r5]                    
+0x0800403C: 0128               r0, #1                      
+0x0800403E: 02d1               #0x8004046                  
+0x08004040: f078               r0, [r6, #3]                
+0x08004042: 0028               r0, #0                      
+0x08004044: 1cd0               #0x8004080                  
+0x08004046: 2078               r0, [r4]                    
+0x08004048: d2e0               #0x80041f0                  
+0x080041F0: 0128               r0, #1                      
+0x080041F2: 20d0               #0x8004236                  
+0x080041F4: 26e0               #0x8004244                  
+0x08004244: 0321               r1, #3                      
+0x08004246: 0020               r0, #0                      
+0x08004248: 04f074fe           #0x8008f34                  
+0x0800424C: 0521               r1, #5                      
+0x0800424E: 0f20               r0, #0xf                    
+0x08004250: 04f0a6fe           #0x8008fa0                  
+0x08004254: 0721               r1, #7                      
+0x08004256: 0f20               r0, #0xf                    
+0x08004258: 37e7               #0x80040ca                  
+0x080040CA: 04f09fff           #0x800900c                  
+0x080040CE: f8bd               {r3, r4, r5, r6, r7, pc}    
+0x0800404A: 0c21               r1, #0xc                    
+0x0800404C: 0020               r0, #0                      
+0x0800404E: 08f02dfe           #0x800ccac                  
+0x08004052: 0d21               r1, #0xd                    
+0x08004054: 0020               r0, #0                      
+0x08004056: 08f029fe           #0x800ccac                  
+0x0800405A: 2878               r0, [r5]                    
+0x0800405C: 0128               r0, #1                      
+0x0800405E: 02d1               #0x8004066                  
+0x08004060: f078               r0, [r6, #3]                
+0x08004062: 0028               r0, #0                      
+0x08004064: 0cd0               #0x8004080                  
+0x08004066: 6078               r0, [r4, #1]                
+0x08004068: 0028               r0, #0                      
+0x0800406A: 20d0               #0x80040ae                  
+0x0800406C: 0128               r0, #1                      
+0x0800406E: 02d0               #0x8004076                  
+0x08004070: 0321               r1, #3                      
+0x08004072: 0520               r0, #5                      
+0x08004074: ace0               #0x80041d0                  
+0x080041D0: 04f0b0fe           #0x8008f34                  
+0x080041D4: 0521               r1, #5                      
+0x080041D6: 0220               r0, #2                      
+0x080041D8: 50e7               #0x800407c                  
+0x08004082: 0b21               r1, #0xb                    
+0x08004084: 0220               r0, #2                      
+0x08004086: 08f011fe           #0x800ccac                  
+0x0800408A: 0e21               r1, #0xe                    
+0x0800408C: 0020               r0, #0                      
+0x0800408E: 08f00dfe           #0x800ccac                  
+0x08004092: 2878               r0, [r5]                    
+0x08004094: 0128               r0, #1                      
+0x08004096: 02d1               #0x800409e                  
+0x08004098: f078               r0, [r6, #3]                
+0x0800409A: 0028               r0, #0                      
+0x0800409C: f0d0               #0x8004080                  
+0x0800409E: a078               r0, [r4, #2]                
+0x080040A0: 0128               r0, #1                      
+0x080040A2: 05d0               #0x80040b0                  
+0x080040A4: 0228               r0, #2                      
+0x080040A6: 06d0               #0x80040b6                  
+0x080040A8: 0328               r0, #3                      
+0x080040AA: 0bd0               #0x80040c4                  
+0x080040AC: a770               r7, [r4, #2]                
+0x080040AE: c9e0               #0x8004244                  
+0x080040D0: 0521               r1, #5                      
+0x080040D2: 0020               r0, #0                      
+0x080040D4: 08f0eafd           #0x800ccac                  
+0x080040D8: 0b21               r1, #0xb                    
+0x080040DA: 0120               r0, #1                      
+0x080040DC: 08f0e6fd           #0x800ccac                  
+0x080040E0: 2878               r0, [r5]                    
+0x080040E2: 0128               r0, #1                      
+0x080040E4: 02d1               #0x80040ec                  
+0x080040E6: f078               r0, [r6, #3]                
+0x080040E8: 0028               r0, #0                      
+0x080040EA: f0d0               #0x80040ce                  
+0x080040EC: e078               r0, [r4, #3]                
+0x080040EE: 5f49               r1, [pc, #0x17c]               ; lit 0x0800D05C
+0x080040F0: 4000               r0, r0, #1                  
+0x080040F2: 085a               r0, [r1, r0]                
+0x080040F4: 0028               r0, #0                      
+0x080040F6: 61d0               #0x80041bc                  
+0x080040F8: 7d21               r1, #0x7d                   
+0x080040FA: c900               r1, r1, #3                  
+0x080040FC: 8842               r0, r1                      
+0x080040FE: 24d2               #0x800414a                  
+0x08004100: 6421               r1, #0x64                   
+0x08004102: fef7f5ff           #0x80030f0                  
+0x08004106: 0c46               r4, r1                      
+0x08004108: c5b2               r5, r0                      
+0x0800410A: 2046               r0, r4                      
+0x0800410C: 0a21               r1, #0xa                    
+0x0800410E: fef7efff           #0x80030f0                  
+0x08004112: 03e0               #0x800411c                  
+0x0800411C: 0646               r6, r0                      
+0x0800411E: 2046               r0, r4                      
+0x08004120: 0a21               r1, #0xa                    
+0x08004122: fef7e5ff           #0x80030f0                  
+0x08004126: 0c46               r4, r1                      
+0x08004128: 0521               r1, #5                      
+0x0800412A: 2846               r0, r5                      
+0x0800412C: 04f038ff           #0x8008fa0                  
+0x08004130: 0721               r1, #7                      
+0x08004132: 0320               r0, #3                      
+0x08004134: 08f0bafd           #0x800ccac                  
+0x08004138: 0721               r1, #7                      
+0x0800413A: 3046               r0, r6                      
+0x0800413C: 04f066ff           #0x800900c                  
+0x08004140: 0921               r1, #9                      
+0x08004142: 2046               r0, r4                      
+0x08004144: 04f098ff           #0x8009078                  
+0x08004148: f8bd               {r3, r4, r5, r6, r7, pc}    
+0x08004114: 3ae0               #0x800418c                  
+0x0800418C: 0021               r1, #0                      
+0x0800418E: 0320               r0, #3                      
+0x08004190: 08f08cfd           #0x800ccac                  
+0x08004194: 0021               r1, #0                      
+0x08004196: 0846               r0, r1                      
+0x08004198: 08f088fd           #0x800ccac                  
+0x0800419C: 0121               r1, #1                      
+0x0800419E: 0020               r0, #0                      
+0x080041A0: 08f084fd           #0x800ccac                  
+0x080041A4: 2878               r0, [r5]                    
+0x080041A6: 0128               r0, #1                      
+0x080041A8: 02d1               #0x80041b0                  
+0x080041AA: f078               r0, [r6, #3]                
+0x080041AC: 0028               r0, #0                      
+0x080041AE: cbd0               #0x8004148                  
+0x080041B0: 2079               r0, [r4, #4]                
+0x080041B2: 0128               r0, #1                      
+0x080041B4: 03d0               #0x80041be                  
+0x080041B6: 0228               r0, #2                      
+0x080041B8: 08d0               #0x80041cc                  
+0x080041BA: 2771               r7, [r4, #4]                
+0x080041BC: 42e0               #0x8004244                  
+0x08004116: 60e0               #0x80041da                  
+0x080041DA: 0021               r1, #0                      
+0x080041DC: 0220               r0, #2                      
+0x080041DE: 08f065fd           #0x800ccac                  
+0x080041E2: 2878               r0, [r5]                    
+0x080041E4: 0128               r0, #1                      
+0x080041E6: 02d1               #0x80041ee                  
+0x080041E8: f078               r0, [r6, #3]                
+0x080041EA: 0028               r0, #0                      
+0x080041EC: acd0               #0x8004148                  
+0x080041EE: 6079               r0, [r4, #5]                
+0x08004118: 6de0               #0x80041f6                  
+0x080041F6: 1f21               r1, #0x1f                   
+0x080041F8: 0020               r0, #0                      
+0x080041FA: 08f057fd           #0x800ccac                  
+0x080041FE: 2878               r0, [r5]                    
+0x08004200: 0128               r0, #1                      
+0x08004202: 02d1               #0x800420a                  
+0x08004204: f078               r0, [r6, #3]                
+0x08004206: 0028               r0, #0                      
+0x08004208: 9ed0               #0x8004148                  
+0x0800420A: a079               r0, [r4, #6]                
+0x0800420C: 0028               r0, #0                      
+0x0800420E: 19d0               #0x8004244                  
+0x08004210: 0a21               r1, #0xa                    
+0x08004212: fef76dff           #0x80030f0                  
+0x08004216: 0521               r1, #5                      
+0x08004218: 04f0c2fe           #0x8008fa0                  
+0x0800421C: a079               r0, [r4, #6]                
+0x0800421E: 0a21               r1, #0xa                    
+0x08004220: fef766ff           #0x80030f0                  
+0x08004224: 0846               r0, r1                      
+0x08004226: 0721               r1, #7                      
+0x08004228: 4fe7               #0x80040ca                  
+0x0800411A: 86e0               #0x800422a                  
+0x0800422A: f078               r0, [r6, #3]                
+0x0800422C: 0028               r0, #0                      
+0x0800422E: 8bd0               #0x8004148                  
+0x08004076: 0321               r1, #3                      
+0x08004078: 0520               r0, #5                      
+0x0800407A: a2e0               #0x80041c2                  
+0x080041C2: 04f0b7fe           #0x8008f34                  
+0x080041C6: 0521               r1, #5                      
+0x080041C8: 0120               r0, #1                      
+0x080041CA: 57e7               #0x800407c                  
+0x080040B0: 0521               r1, #5                      
+0x080040B2: 0320               r0, #3                      
+0x080040B4: 01e0               #0x80040ba                  
+0x080040BA: 04f071ff           #0x8008fa0                  
+0x080040BE: 0721               r1, #7                      
+0x080040C0: 0020               r0, #0                      
+0x080040C2: 02e0               #0x80040ca                  
+0x080040B6: 0521               r1, #5                      
+0x080040B8: 0620               r0, #6                      
+0x080040C4: 0521               r1, #5                      
+0x080040C6: 0920               r0, #9                      
+0x080040C8: f7e7               #0x80040ba                  
+0x0800414A: 0a21               r1, #0xa                    
+0x0800414C: fef7d0ff           #0x80030f0                  
+0x08004150: 6421               r1, #0x64                   
+0x08004152: fef7cdff           #0x80030f0                  
+0x08004156: 0c46               r4, r1                      
+0x08004158: c5b2               r5, r0                      
+0x0800415A: 2046               r0, r4                      
+0x0800415C: 0a21               r1, #0xa                    
+0x0800415E: fef7c7ff           #0x80030f0                  
+0x08004162: 0646               r6, r0                      
+0x08004164: 2046               r0, r4                      
+0x08004166: 0a21               r1, #0xa                    
+0x08004168: fef7c2ff           #0x80030f0                  
+0x0800416C: 0c46               r4, r1                      
+0x0800416E: 0321               r1, #3                      
+0x08004170: 2846               r0, r5                      
+0x08004172: 04f0dffe           #0x8008f34                  
+0x08004176: 0521               r1, #5                      
+0x08004178: 3046               r0, r6                      
+0x0800417A: 04f011ff           #0x8008fa0                  
+0x0800417E: 0721               r1, #7                      
+0x08004180: 0320               r0, #3                      
+0x08004182: 08f093fd           #0x800ccac                  
+0x08004186: 0721               r1, #7                      
+0x08004188: 2046               r0, r4                      
+0x0800418A: 9ee7               #0x80040ca                  
+0x080041BE: 0321               r1, #3                      
+0x080041C0: 1a20               r0, #0x1a                   
+0x080041CC: 0321               r1, #3                      
+0x080041CE: 1a20               r0, #0x1a                   

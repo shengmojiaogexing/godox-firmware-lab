@@ -1,0 +1,27 @@
+﻿扫描 BL 指向: 0x08004ac8, 0x08004f70, 0x08005c30, 0x0800626c, 0x08008504, 0x0800b170
+
+== 0x08004ac8 FUNC_08004ac8  callers=1 ==
+   08004fee  in FUNC_08004f70 @08004f70
+
+== 0x08004f70 FUNC_08004f70  callers=2 ==
+   08009406  in display_task @08009228
+   08009424  in display_task @08009228
+
+== 0x08005c30 FUNC_08005c30  callers=1 ==
+   08005f96  in measurement_task @08005f6c
+
+== 0x0800626c level_table_lookup_b  callers=7 ==
+   08003cb8  in FUNC_08003ca4 @08003ca4
+   0800561e  in level_table_lookup_m @0800560c
+   08008ae2  in level_table_lookup_d @08008ad0
+   0800a002  in level_table_lookup_f @08009ff0
+   0800a366  in level_table_lookup_h @0800a354
+   0800a63a  in level_table_lookup_j @0800a628
+   0800b5ee  in power_level_mode1 @0800b5dc
+
+== 0x08008504 flash_trigger_state_machine  callers=2 ==
+   0800454e  in flash_power_task @08004500
+   0800456a  in flash_power_task @08004500
+
+== 0x0800b170 rf_rx_crc  callers=1 ==
+   0800aa58  in FUNC_0800a954 @0800a954

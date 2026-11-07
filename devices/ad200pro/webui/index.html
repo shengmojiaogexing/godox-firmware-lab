@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23131a23'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%234c9aff'/%3E%3C/svg%3E">
+<title>GODOX AD200 Pro · 固件调试器</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header id="topbar">
+  <div class="brand">
+    <span class="logo">GODOX</span>
+    <span class="brand-text">
+      <span class="title">AD200 Pro 固件调试器</span>
+      <span class="subtitle">Cortex-M0 · 基址 0x08003000 · Web Debugger</span>
+    </span>
+  </div>
+
+  <div class="toolbar">
+    <button id="btnReset" class="btn" title="复位固件 (F7)">⟲ 复位</button>
+    <button id="btnRun" class="btn primary" title="运行 (F5)">▶ 运行</button>
+    <button id="btnPause" class="btn" title="暂停 (F6)">⏸ 暂停</button>
+    <button id="btnStep" class="btn" title="单步执行 (F8)">⤼ 单步</button>
+    <span class="toolbar-group">
+      <label for="stepN">步进</label>
+      <input id="stepN" type="number" min="1" max="1000000" step="1" value="100" title="一次执行的指令条数">
+      <button id="btnStepN" class="btn" title="执行 N 条指令 (Shift+F8)">执行 N</button>
+    </span>
+    <button id="btnRefreshAll" class="btn ghost" title="刷新所有视图">↻ 刷新</button>
+  </div>
+
+  <div class="statusline">
+    <span id="connDot" class="dot off"></span>
+    <span id="connText" class="conn-text">模拟器未连接</span>
+    <span class="divider"></span>
+    <span class="stat"><span class="k">状态</span><span id="runState" class="v state-pill s-unknown">—</span></span>
+    <span class="stat"><span class="k">PC</span><span id="pcText" class="v mono">—</span></span>
+    <span class="stat"><span class="k">指令数</span><span id="insnText" class="v mono">0</span></span>
+    <span class="stat"><span class="k">uptime</span><span id="uptimeText" class="v mono">0 ms</span></span>
+    <span id="stopReasonText" class="stop-reason"></span>
+  </div>
+
+  <div class="top-actions">
+    <button id="btnHelp" class="icon-btn" title="帮助与快捷键">?</button>
+    <button id="btnSettings" class="icon-btn" title="连接设置">⚙</button>
+    <div id="settingsPop" class="popover hidden">
+      <h3>连接设置</h3>
+      <label class="pop-label" for="apiBase">后端 API 地址</label>
+      <input id="apiBase" class="mono" placeholder="留空 = 当前页面同源" spellcheck="false">
+      <p class="pop-hint">默认留空，使用当前页面的源（真实后端 8765 / mock 8766）。<br>
+        例如跨端口联调可填 <code>http://127.0.0.1:8765</code>。</p>
+      <div class="pop-actions">
+        <button id="btnApiApply" class="btn small primary">应用并重连</button>
+        <button id="btnApiReset" class="btn small ghost">恢复同源</button>
+      </div>
+    </div>
+    <div id="helpPop" class="popover help hidden">
+      <h3>快捷键</h3>
+      <table class="kbd-table">
+        <tr><td><kbd>F5</kbd></td><td>运行</td></tr>
+        <tr><td><kbd>F6</kbd></td><td>暂停</td></tr>
+        <tr><td><kbd>F7</kbd></td><td>复位</td></tr>
+        <tr><td><kbd>F8</kbd></td><td>单步 1 条</td></tr>
+        <tr><td><kbd>Shift</kbd>+<kbd>F8</kbd></td><td>执行 N 条（N 取步进输入框）</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>关闭弹窗</td></tr>
+      </table>
+      <h3>操作提示</h3>
+      <ul class="pop-list">
+        <li>点击反汇编行：设置 / 清除断点。</li>
+        <li>点击内存字节：输入十六进制后回车写入。</li>
+        <li>虚拟整机面板可注入电池、电容、温度、按键与 RF 接收数据。</li>
+        <li>Trace 可按类型过滤，自动滚动可关闭。</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div id="banner" class="banner hidden">
+  <span class="banner-icon">⚠</span>
+  <span id="bannerText">模拟器未连接</span>
+  <button id="bannerRetry" class="btn small">重试</button>
+</div>
+
+<main id="layout">
+  <!-- ============ 左栏：寄存器 / NVIC / 断点 ============ -->
+  <aside class="column col-left">
+    <section class="panel" id="panelRegs">
+      <header class="panel-head">
+        <h2>寄存器</h2>
+        <span class="hint">R0–R15 · xPSR · PRIMASK</span>
+      </header>
+      <div class="panel-body">
+        <table class="reg-table"><tbody id="regBody"></tbody></table>
+      </div>
+    </section>
+
+    <section class="panel" id="panelNvic">
+      <header class="panel-head">
+        <h2>NVIC 中断</h2>
+        <span class="hint">使能 / 挂起</span>
+      </header>
+      <div class="panel-body">
+        <div class="irq-group">
+          <div class="irq-label">使能 <span id="irqEnabledCount" class="count">0</span></div>
+          <div id="irqEnabledList" class="chips"></div>
+        </div>
+        <div class="irq-group">
+          <div class="irq-label">挂起 <span id="irqPendingCount" class="count">0</span></div>
+          <div id="irqPendingList" class="chips"></div>
+        </div>
+        <p class="hint">SysTick 记为 −1；悬停可看中断名。</p>
+      </div>
+    </section>
+
+    <section class="panel flex1" id="panelBps">
+      <header class="panel-head">
+        <h2>断点</h2>
+        <span class="hint" id="bpCount">0 个</span>
+      </header>
+      <div class="panel-body scroll">
+        <ul id="bpList" class="bp-list"></ul>
+      </div>
+    </section>
+  </aside>
+
+  <!-- ============ 中栏：反汇编 / 内存 ============ -->
+  <section class="column col-center">
+    <section class="panel flex1" id="panelDisasm">
+      <header class="panel-head">
+        <h2>反汇编</h2>
+        <div class="head-tools">
+          <label class="check"><input type="checkbox" id="followPc" checked> 跟随 PC</label>
+          <input id="disasmAddr" class="addr-input mono" spellcheck="false" value="0x0800CDB0" title="反汇编起始地址">
+          <button id="btnDisasmGo" class="btn small">跳转</button>
+          <button id="btnDisasmRefresh" class="btn small ghost">刷新</button>
+        </div>
+      </header>
+      <div class="panel-body scroll" id="disasmScroll">
+        <table class="disasm-table">
+          <thead>
+            <tr><th class="c-bp"></th><th class="c-addr">地址</th><th class="c-bytes">字节</th><th class="c-text">指令</th></tr>
+          </thead>
+          <tbody id="disasmBody"></tbody>
+        </table>
+      </div>
+      <footer class="panel-foot">点击指令行：设置 / 清除断点<span id="disasmFooterInfo"></span></footer>
+    </section>
+
+    <section class="panel flex1" id="panelMem">
+      <header class="panel-head">
+        <h2>内存</h2>
+        <div class="head-tools">
+          <input id="memAddr" class="addr-input mono" spellcheck="false" value="0x20000000" title="内存起始地址">
+          <button id="btnMemGo" class="btn small">跳转</button>
+          <button id="btnMemPrev" class="btn small ghost" title="上一页 −0x100">◀</button>
+          <button id="btnMemNext" class="btn small ghost" title="下一页 +0x100">▶</button>
+          <button id="btnMemPc" class="btn small ghost">到 PC</button>
+          <button id="btnMemSp" class="btn small ghost">到 SP</button>
+          <button id="btnMemRefresh" class="btn small ghost">刷新</button>
+        </div>
+      </header>
+      <div class="panel-body scroll" id="memScroll">
+        <table class="mem-table">
+          <thead>
+            <tr><th class="c-addr">地址</th><th class="c-hex" colspan="16">00–0F</th><th class="c-ascii">ASCII</th></tr>
+          </thead>
+          <tbody id="memBody"></tbody>
+        </table>
+      </div>
+      <footer class="panel-foot">点击字节编辑：输入两位十六进制后回车写入</footer>
+    </section>
+  </section>
+
+  <!-- ============ 右栏：虚拟整机 ============ -->
+  <aside class="column col-right">
+    <section class="panel" id="panelDevice">
+      <header class="panel-head">
+        <h2>虚拟整机</h2>
+        <span id="powerState" class="hint">电源 —</span>
+      </header>
+      <div class="panel-body">
+        <div class="slider-row">
+          <label for="batterySlider">电池电压</label>
+          <input id="batterySlider" type="range" min="2000" max="18000" step="10" value="3700" title="电池电压（mV）：单节 3.7V / 整包 14.4V 均可">
+          <span id="batteryVal" class="val mono">3700 mV</span>
+        </div>
+        <div class="slider-row">
+          <label for="capSlider">电容电压</label>
+          <input id="capSlider" type="range" min="0" max="400" step="1" value="330">
+          <span id="capVal" class="val mono">330 V</span>
+        </div>
+        <div class="slider-row">
+          <label for="tempSlider">温度</label>
+          <input id="tempSlider" type="range" min="-20" max="80" step="0.5" value="25">
+          <span id="tempVal" class="val mono">25.0 °C</span>
+        </div>
+
+        <div class="subhead">按键 <span class="hint">按住即注入按下事件</span></div>
+        <div id="buttonPad" class="button-pad"></div>
+
+        <div class="subhead">RF 接收（十六进制）</div>
+        <div class="rf-row">
+          <input id="rfHex" class="mono" placeholder="例如 01 23 45 67" spellcheck="false">
+          <button id="btnRfSend" class="btn small primary">发送</button>
+        </div>
+        <div id="rfInfo" class="rf-info mono">RX — / TX —</div>
+      </div>
+    </section>
+
+    <section class="panel" id="panelGpio">
+      <header class="panel-head">
+        <h2>GPIO 引脚</h2>
+        <div class="legend">
+          <span class="lg lg-in">输入</span>
+          <span class="lg lg-out">输出</span>
+          <span class="lg lg-af">复用</span>
+          <span class="lg lg-ana">模拟</span>
+        </div>
+      </header>
+      <div class="panel-body">
+        <div id="gpioTable" class="gpio-table"></div>
+      </div>
+    </section>
+
+    <section class="panel flex1" id="panelAdc">
+      <header class="panel-head">
+        <h2>ADC 通道</h2>
+        <span class="hint" id="adcHint">原始值 / 电压</span>
+      </header>
+      <div class="panel-body scroll">
+        <div id="adcList" class="adc-list"></div>
+      </div>
+    </section>
+  </aside>
+</main>
+
+<!-- ============ 底部：Trace / 调用栈 / 控制台 ============ -->
+<footer id="bottom">
+  <section class="panel panel-trace">
+    <header class="panel-head">
+      <h2>Trace 日志</h2>
+      <div id="traceFilters" class="trace-filters"></div>
+      <div class="head-tools">
+        <label class="check"><input type="checkbox" id="traceAutoScroll" checked> 自动滚动</label>
+        <button id="btnTraceClear" class="btn small ghost">清空视图</button>
+      </div>
+    </header>
+    <div class="panel-body scroll" id="traceScroll">
+      <div id="traceLog" class="trace-log"></div>
+    </div>
+  </section>
+
+  <div class="bottom-side">
+    <section class="panel">
+      <header class="panel-head">
+        <h2>调用栈</h2>
+        <button id="btnBtRefresh" class="btn small ghost">刷新</button>
+      </header>
+      <div class="panel-body scroll">
+        <div id="backtraceList" class="bt-list"></div>
+      </div>
+    </section>
+    <section class="panel">
+      <header class="panel-head">
+        <h2>固件控制台</h2>
+        <button id="btnConsoleClear" class="btn small ghost">清空</button>
+      </header>
+      <div class="panel-body scroll" id="consoleScroll">
+        <pre id="consoleText" class="console-text">（等待固件控制台输出…）</pre>
+      </div>
+    </section>
+  </div>
+</footer>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

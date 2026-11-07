@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Godox X3-C v1.38 固件调试模拟机</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">◈</div>
+      <div class="brand-text">
+        <h1>Godox X3-C v1.38 固件模拟机</h1>
+        <div class="brand-sub">Artery AT32F435 · Cortex-M4F · 基址 0x08004800 · LCD 368×448 RGB565</div>
+      </div>
+    </div>
+
+    <div class="conn">
+      <span id="connDot" class="conn-dot"></span>
+      <span id="connText" class="conn-text">未连接</span>
+      <span id="modeBadge" class="mode-badge live">LIVE</span>
+      <span id="runState" class="run-state paused">已暂停</span>
+    </div>
+
+    <div class="toolbar" role="toolbar" aria-label="调试控制">
+      <button id="btnReset" class="btn" title="复位 (F8)">⟲ Reset</button>
+      <button id="btnRun" class="btn primary" title="运行 (F5)">▶ Run</button>
+      <button id="btnPause" class="btn" title="暂停 (F5)">❚❚ Pause</button>
+      <button id="btnStep" class="btn" title="单步 (F10)">⏭ Step</button>
+      <button id="btnStepOver" class="btn" title="Step Over：跳过 bl 调用">⤼ Step Over</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="stat-label">指令计数</span><b id="insnCount">0</b></div>
+      <div class="stat"><span class="stat-label">异常</span><b id="faultVal">0</b></div>
+      <div class="stat"><span class="stat-label">IPC</span><b id="ipcVal">—</b></div>
+      <div class="stat"><span class="stat-label">耗时</span><b id="rttVal">—</b></div>
+    </div>
+
+    <div class="goto">
+      <label for="gotoAddr">地址</label>
+      <input id="gotoAddr" type="text" placeholder="0x08004AF8" spellcheck="false" autocomplete="off">
+      <button id="btnGoto" class="btn small">跳转</button>
+    </div>
+  </header>
+
+  <div id="connBanner" class="banner" hidden>
+    <span class="banner-icon">⚠</span>
+    <span id="bannerText"></span>
+    <span class="banner-actions">
+      <button id="btnRetry" class="btn small">重试连接</button>
+      <button id="btnSwitchMock" class="btn small primary">切换到 MOCK 演示</button>
+    </span>
+  </div>
+
+  <main class="layout">
+    <!-- ================= 左列：寄存器 + 外设访问 ================= -->
+    <aside class="col col-left">
+      <section class="panel regs-panel">
+        <div class="panel-head">
+          <h2>寄存器</h2>
+          <span class="panel-sub">r0–r12 · sp · lr · pc</span>
+        </div>
+        <div class="flags-row">
+          <div id="flagRow" class="flag-wrap"></div>
+        </div>
+        <div id="regGrid" class="reg-grid"></div>
+        <div id="funcInfo" class="func-info"></div>
+      </section>
+
+      <section class="panel periph-panel">
+        <div class="panel-head">
+          <h2>外设访问</h2>
+          <input id="logFilter" class="filter-input" placeholder="过滤寄存器 / 地址" spellcheck="false" autocomplete="off">
+          <span id="logCount" class="panel-sub">0 条</span>
+        </div>
+        <div id="periphList" class="plog-list"></div>
+      </section>
+    </aside>
+
+    <!-- ================= 中列：反汇编 ================= -->
+    <section class="col col-center">
+      <section class="panel disasm-panel">
+        <div class="panel-head">
+          <h2>反汇编</h2>
+          <span id="disasmRange" class="panel-sub">—</span>
+          <div class="disasm-tools">
+            <button id="btnDisasmUp" class="mini" title="向上滚动">▲</button>
+            <button id="btnDisasmDown" class="mini" title="向下滚动">▼</button>
+            <label class="follow-chk"><input id="chkFollow" type="checkbox" checked> 跟随 PC</label>
+            <button id="btnFollowPc" class="mini active" title="回到 PC 并跟随">⌖ PC</button>
+          </div>
+        </div>
+        <div class="disasm-head">
+          <span class="d-pc"></span>
+          <span class="d-bp" title="断点列"></span>
+          <span class="d-addr">地址</span>
+          <span class="d-bytes">字节</span>
+          <span class="d-mnem">助记符</span>
+          <span class="d-op">操作数</span>
+        </div>
+        <div id="disasmBody" class="disasm-body"></div>
+      </section>
+    </section>
+
+    <!-- ================= 右列：内存 + 调用栈 + UART ================= -->
+    <aside class="col col-right">
+      <section class="panel mem-panel">
+        <div class="panel-head">
+          <h2>内存</h2>
+          <span id="memInfo" class="panel-sub">—</span>
+        </div>
+        <div class="mem-controls">
+          <input id="memAddrInput" type="text" placeholder="08004800" spellcheck="false" autocomplete="off">
+          <button id="btnMemGo" class="btn small">Go</button>
+          <button id="btnMemPrev" class="btn small">−256B</button>
+          <button id="btnMemNext" class="btn small">+256B</button>
+        </div>
+        <div class="mem-quick">
+          <button class="mini" data-mem-quick="pc" title="内存跳到 PC">PC</button>
+          <button class="mini" data-mem-quick="sp" title="内存跳到 SP">SP</button>
+          <button class="mini" data-mem-quick="ram" title="RAM 0x20000000">RAM</button>
+          <button class="mini" data-mem-quick="lcd" title="LCD 帧缓冲 0x20001000">LCD</button>
+          <button class="mini" data-mem-quick="uart" title="UART 缓冲 0x20000400">UART</button>
+        </div>
+        <div id="memTable" class="mem-table"></div>
+      </section>
+
+      <section class="panel stack-panel">
+        <div class="panel-head">
+          <h2>调用栈</h2>
+          <span class="panel-sub">可选</span>
+        </div>
+        <div id="callstack" class="stack-list"></div>
+      </section>
+
+      <section class="panel console-panel">
+        <div class="panel-head">
+          <h2>输出控制台</h2>
+          <span class="panel-sub">UART 串口</span>
+        </div>
+        <div id="uartConsole" class="uart-console"></div>
+      </section>
+    </aside>
+  </main>
+
+  <!-- ================= 底部：LCD 屏幕 + 虚拟输入 ================= -->
+  <footer class="lcd-bar">
+    <section class="panel lcd-panel">
+      <div class="panel-head">
+        <h2>LCD 屏幕</h2>
+        <span id="lcdMeta" class="panel-sub">未连接</span>
+        <span id="lcdFps" class="panel-sub"></span>
+        <button id="btnScreenSave" class="mini" title="把当前 LCD 画面保存为 PNG（POST /api/cmd screen_save）">保存画面</button>
+      </div>
+      <div id="lcdSaveResult" class="lcd-save-result" hidden></div>
+      <div id="lcdWrap" class="lcd-wrap">
+        <canvas id="lcdCanvas" width="320" height="240" hidden></canvas>
+        <div id="lcdEmpty" class="lcd-empty"></div>
+      </div>
+    </section>
+
+    <section class="panel inputs-panel">
+      <div class="panel-head">
+        <h2>虚拟输入</h2>
+        <span class="panel-sub">注入按钮 / 电压</span>
+        <span id="inputsSource" class="panel-sub inputs-source">—</span>
+      </div>
+      <div class="inputs-body">
+        <div class="battery-row">
+          <span class="io-label">电量</span>
+          <input id="batterySlider" type="range" min="2600" max="4200" step="10" value="3700"
+                 aria-label="电池电压 mV">
+          <span id="batteryVal" class="io-val">3.70 V · 69%</span>
+        </div>
+        <div id="keyPad" class="keys-row">
+          <button type="button" class="key-btn" data-key="power">电源<span>power</span></button>
+          <button type="button" class="key-btn" data-key="mode">模式<span>mode</span></button>
+          <button type="button" class="key-btn" data-key="set">设置<span>set</span></button>
+          <button type="button" class="key-btn" data-key="up">上<span>up</span></button>
+          <button type="button" class="key-btn" data-key="down">下<span>down</span></button>
+          <button type="button" class="key-btn" data-key="key2">备用<span>key2</span></button>
+        </div>
+        <div class="inputs-foot">
+          <label class="pulse-chk"><input id="pulseMode" type="checkbox"> 脉冲 80ms</label>
+          <span class="inputs-hint">按住 = key(down)，松开 = key_up；脉冲模式点击 = key_press</span>
+        </div>
+        <div id="inputStatus" class="input-status">—</div>
+      </div>
+    </section>
+
+    <section class="panel side-panel">
+      <div class="panel-head"><h2>操作提示</h2><span class="panel-sub">快捷键</span></div>
+      <ul class="shortcut-list">
+        <li><kbd>F5</kbd><span>运行 / 暂停</span></li>
+        <li><kbd>F10</kbd><span>单步</span></li>
+        <li><kbd>F8</kbd><span>复位</span></li>
+        <li><kbd>Ctrl</kbd>+<kbd>G</kbd><span>跳转地址</span></li>
+        <li><kbd>滚轮</kbd><span>反汇编窗口滚动</span></li>
+        <li><kbd>断点列</kbd><span>点击红点切换断点</span></li>
+      </ul>
+      <div class="side-hint">
+        <div><b>接口</b> <span id="apiHint">127.0.0.1:8765</span></div>
+        <div><b>Mock</b> URL 加 <code>?mock=1</code> 可离线自测</div>
+        <div><b>日志</b> 外设面板按寄存器 / 地址过滤</div>
+      </div>
+    </section>
+  </footer>
+
+  <div id="toast" class="toast" hidden></div>
+</div>
+
+<script src="mock.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

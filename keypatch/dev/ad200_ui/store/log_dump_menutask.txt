@@ -1,0 +1,64 @@
+﻿==============================================================================
+range 0x0800c2d8 .. 0x0800c354  ui_menu_task
+==============================================================================
+0800c2d8: 70b5       push {r4, r5, r6, lr}          <ui_menu_task>
+0800c2da: 1d49       ldr r1, [pc, #0x74]            ; lit@0800c350 = 0x20000150 (ram)
+0800c2dc: 0022       movs r2, #0                 
+0800c2de: 887c       ldrb r0, [r1, #0x12]        
+0800c2e0: 0128       cmp r0, #1                  
+0800c2e2: 09d0       beq #0x800c2f8              
+0800c2e4: 0878       ldrb r0, [r1]               
+0800c2e6: 0128       cmp r0, #1                  
+0800c2e8: 02d0       beq #0x800c2f0              
+0800c2ea: 887b       ldrb r0, [r1, #0xe]         
+0800c2ec: 0028       cmp r0, #0                  
+0800c2ee: 05d0       beq #0x800c2fc              
+0800c2f0: 0a70       strb r2, [r1]               
+0800c2f2: 8a73       strb r2, [r1, #0xe]         
+0800c2f4: 0a63       str r2, [r1, #0x30]         
+0800c2f6: 70bd       pop {r4, r5, r6, pc}        
+0800c2f8: 8a74       strb r2, [r1, #0x12]        
+0800c2fa: 70bd       pop {r4, r5, r6, pc}        
+0800c2fc: 487d       ldrb r0, [r1, #0x15]        
+0800c2fe: 401c       adds r0, r0, #1             
+0800c300: c0b2       uxtb r0, r0                 
+0800c302: 4875       strb r0, [r1, #0x15]        
+0800c304: 0128       cmp r0, #1                  
+0800c306: 09d9       bls #0x800c31c              
+0800c308: 4a75       strb r2, [r1, #0x15]        
+0800c30a: 8a75       strb r2, [r1, #0x16]        
+0800c30c: 487b       ldrb r0, [r1, #0xd]         
+0800c30e: 8307       lsls r3, r0, #0x1e          
+0800c310: 09d1       bne #0x800c326              
+0800c312: 8008       lsrs r0, r0, #2             
+0800c314: 8000       lsls r0, r0, #2             
+0800c316: 401c       adds r0, r0, #1             
+0800c318: 4873       strb r0, [r1, #0xd]         
+0800c31a: 04e0       b #0x800c326                
+0800c31c: 887d       ldrb r0, [r1, #0x16]        
+0800c31e: 0028       cmp r0, #0                  
+0800c320: 01d1       bne #0x800c326              
+0800c322: 0120       movs r0, #1                 
+0800c324: 8875       strb r0, [r1, #0x16]        
+0800c326: 0a4b       ldr r3, [pc, #0x28]            ; lit@0800c350 = 0x20000150 (ram)
+0800c328: 0020       movs r0, #0                 
+0800c32a: 3433       adds r3, #0x34              
+0800c32c: 5025       movs r5, #0x50              
+0800c32e: 9c1d       adds r4, r3, #6             
+0800c330: 1e5c       ldrb r6, [r3, r0]           
+0800c332: ff2e       cmp r6, #0xff               
+0800c334: 00d1       bne #0x800c338              
+0800c336: 1d54       strb r5, [r3, r0]           
+0800c338: 265c       ldrb r6, [r4, r0]           
+0800c33a: ff2e       cmp r6, #0xff               
+0800c33c: 00d1       bne #0x800c340              
+0800c33e: 2554       strb r5, [r4, r0]           
+0800c340: 401c       adds r0, r0, #1             
+0800c342: c0b2       uxtb r0, r0                 
+0800c344: 0628       cmp r0, #6                  
+0800c346: f3d3       blo #0x800c330              
+0800c348: 8a77       strb r2, [r1, #0x1e]        
+0800c34a: fef79ffb   bl #0x800aa8c               
+0800c34e: 70bd       pop {r4, r5, r6, pc}        
+0800c350: 5001       lsls r0, r2, #5             
+0800c352: 0020       movs r0, #0                 

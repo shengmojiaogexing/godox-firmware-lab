@@ -1,0 +1,19 @@
+{
+    "projectName":  "X3C",
+    "ghidra":  "D:\\ghidra_12.2_PUBLIC",
+    "jdk":  "D:\\jdk25",
+    "scripts":  "D:\\ghidra_scripts",
+    "programs":  {
+                     "hotshoe":  {
+                                     "name":  "hotshoe_blob.bin",
+                                     "file":  "C:\\x3c_tools\\hotshoe_blob.bin",
+                                     "base":  "0x08002000"
+                                 },
+                     "main":  {
+                                  "name":  "X3_C_v1.38_app.bin",
+                                  "file":  "C:\\x3c\\X3_C_v1.38_app.bin",
+                                  "base":  "0x08004800"
+                              }
+                 },
+    "project":  "D:\\ghidra_project"
+}

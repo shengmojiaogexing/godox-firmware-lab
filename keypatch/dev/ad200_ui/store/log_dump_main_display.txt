@@ -1,0 +1,418 @@
+﻿==============================================================================
+range 0x0800cdb0 .. 0x0800cec4  main
+==============================================================================
+0800cdb0: 08b5       push {r3, lr}                  <main>
+0800cdb2: 3c4a       ldr r2, [pc, #0xf0]            ; lit@0800cea4 = 0x08003000 (flash)
+0800cdb4: 3c4b       ldr r3, [pc, #0xf0]            ; lit@0800cea8 = 0x20000000 (ram)
+0800cdb6: 0020       movs r0, #0                 
+0800cdb8: 8100       lsls r1, r0, #2             
+0800cdba: 8c18       adds r4, r1, r2             
+0800cdbc: 2468       ldr r4, [r4]                
+0800cdbe: 5c50       str r4, [r3, r1]            
+0800cdc0: 401c       adds r0, r0, #1             
+0800cdc2: 3028       cmp r0, #0x30               
+0800cdc4: f8d3       blo #0x800cdb8              
+0800cdc6: 3948       ldr r0, [pc, #0xe4]            ; lit@0800ceac = 0x40010000 (periph)
+0800cdc8: 0168       ldr r1, [r0]                
+0800cdca: 0322       movs r2, #3                 
+0800cdcc: 1143       orrs r1, r2                 
+0800cdce: 0160       str r1, [r0]                
+0800cdd0: faf738f9   bl #0x8007044               
+0800cdd4: fef760ff   bl #0x800bc98               
+0800cdd8: fcf7befc   bl #0x8009758               
+0800cddc: fcf7a8fc   bl #0x8009730               
+0800cde0: fcf7eefd   bl #0x80099c0               
+0800cde4: fcf758fc   bl #0x8009698               
+0800cde8: fcf77afd   bl #0x80098e0               
+0800cdec: fcf7a6fd   bl #0x800993c               
+0800cdf0: fcf72cfe   bl #0x8009a4c               
+0800cdf4: fcf75afe   bl #0x8009aac               
+0800cdf8: fcf7f8fd   bl #0x80099ec               
+0800cdfc: 2c4c       ldr r4, [pc, #0xb0]            ; lit@0800ceb0 = 0x40021000 (periph)
+0800cdfe: e169       ldr r1, [r4, #0x1c]         
+0800ce00: 2004       lsls r0, r4, #0x10          
+0800ce02: 0143       orrs r1, r0                 
+0800ce04: e161       str r1, [r4, #0x1c]         
+0800ce06: e169       ldr r1, [r4, #0x1c]         
+0800ce08: 0140       ands r1, r0                 
+0800ce0a: 0120       movs r0, #1                 
+0800ce0c: 80f31088   msr primask, r0             
+0800ce10: 2848       ldr r0, [pc, #0xa0]            ; lit@0800ceb4 = 0x200002e4 (ram)
+0800ce12: 0091       str r1, [sp]                
+0800ce14: faf70cfe   bl #0x8007a30               
+0800ce18: 2748       ldr r0, [pc, #0x9c]            ; lit@0800ceb8 = 0x20000248 (ram)
+0800ce1a: faf7cff8   bl #0x8006fbc               
+0800ce1e: 2648       ldr r0, [pc, #0x98]            ; lit@0800ceb8 = 0x20000248 (ram)
+0800ce20: faf7a2f8   bl #0x8006f68               
+0800ce24: fdf7fefe   bl #0x800ac24               
+0800ce28: fdf716ff   bl #0x800ac58               
+0800ce2c: fef79cff   bl #0x800bd68               
+0800ce30: fdf760fe   bl #0x800aaf4               
+0800ce34: 606a       ldr r0, [r4, #0x24]         
+0800ce36: 0121       movs r1, #1                 
+0800ce38: c905       lsls r1, r1, #0x17          
+0800ce3a: 0843       orrs r0, r1                 
+0800ce3c: 6062       str r0, [r4, #0x24]         
+0800ce3e: 1f48       ldr r0, [pc, #0x7c]            ; lit@0800cebc = 0x2000020e (ram)
+0800ce40: 0024       movs r4, #0                 
+0800ce42: 1f4d       ldr r5, [pc, #0x7c]            ; lit@0800cec0 = 0x200001cf (ram)
+0800ce44: 0470       strb r4, [r0]               
+0800ce46: 0020       movs r0, #0                 
+0800ce48: 80f31088   msr primask, r0             
+0800ce4c: 2878       ldrb r0, [r5]               
+0800ce4e: 0128       cmp r0, #1                  
+0800ce50: f9d1       bne #0x800ce46              
+0800ce52: 2c70       strb r4, [r5]               
+0800ce54: 1848       ldr r0, [pc, #0x60]            ; lit@0800ceb8 = 0x20000248 (ram)
+0800ce56: faf787f8   bl #0x8006f68               
+0800ce5a: fbf7ddfc   bl #0x8008818               
+0800ce5e: f7f74ffb   bl #0x8004500               
+0800ce62: f6f799fb   bl #0x8003598               
+0800ce66: f8f7cdfd   bl #0x8005a04               
+0800ce6a: f9f77ff8   bl #0x8005f6c               
+0800ce6e: f6f715fd   bl #0x800389c               
+0800ce72: f6f747fd   bl #0x8003904               
+0800ce76: fcf7d7f9   bl #0x8009228               
+0800ce7a: f9f74df9   bl #0x8006118               
+0800ce7e: fbf771fa   bl #0x8008364               
+0800ce82: fef795fb   bl #0x800b5b0               
+0800ce86: fdf721fa   bl #0x800a2cc               
+0800ce8a: f6f7affe   bl #0x8003bec               
+0800ce8e: fff7f7fb   bl #0x800c680               
+0800ce92: fef7b5fd   bl #0x800ba00               
+0800ce96: fcf72bff   bl #0x8009cf0               
+0800ce9a: fcf74dfe   bl #0x8009b38               
+0800ce9e: fef7ddfd   bl #0x800ba5c               
+0800cea2: d0e7       b #0x800ce46                
+0800cea4: 0030       adds r0, #0                 
+0800cea6: 0008       lsrs r0, r0, #0x20          
+0800cea8: 0000       movs r0, r0                 
+0800ceaa: 0020       movs r0, #0                 
+0800ceac: 0000       movs r0, r0                 
+0800ceae: 0140       ands r1, r0                 
+0800ceb0: 0010       asrs r0, r0, #0x20          
+0800ceb2: 0240       ands r2, r0                 
+0800ceb4: e402       lsls r4, r4, #0xb           
+0800ceb6: 0020       movs r0, #0                 
+0800ceb8: 4802       lsls r0, r1, #9             
+0800ceba: 0020       movs r0, #0                 
+0800cebc: 0e02       lsls r6, r1, #8             
+0800cebe: 0020       movs r0, #0                 
+0800cec0: cf01       lsls r7, r1, #7             
+0800cec2: 0020       movs r0, #0                 
+==============================================================================
+range 0x08009228 .. 0x080094e0  display_task
+==============================================================================
+08009228: f8b5       push {r3, r4, r5, r6, r7, lr}   <display_task>
+0800922a: 9948       ldr r0, [pc, #0x264]           ; lit@08009490 = 0x20000205 (ram)
+0800922c: 0025       movs r5, #0                 
+0800922e: 0078       ldrb r0, [r0]               
+08009230: 9849       ldr r1, [pc, #0x260]           ; lit@08009494 = 0x20000408 (ram)
+08009232: 0128       cmp r0, #1                  
+08009234: 29d0       beq #0x800928a              
+08009236: 984c       ldr r4, [pc, #0x260]           ; lit@08009498 = 0x2000011c (ram)
+08009238: 2078       ldrb r0, [r4]               
+0800923a: 401c       adds r0, r0, #1             
+0800923c: c0b2       uxtb r0, r0                 
+0800923e: 2070       strb r0, [r4]               
+08009240: 0a28       cmp r0, #0xa                
+08009242: 7dd3       blo #0x8009340              
+08009244: 2570       strb r5, [r4]               
+08009246: a078       ldrb r0, [r4, #2]           
+08009248: 0122       movs r2, #1                 
+0800924a: 401c       adds r0, r0, #1             
+0800924c: c0b2       uxtb r0, r0                 
+0800924e: a070       strb r0, [r4, #2]           
+08009250: 0a28       cmp r0, #0xa                
+08009252: 03d3       blo #0x800925c              
+08009254: a570       strb r5, [r4, #2]           
+08009256: e078       ldrb r0, [r4, #3]           
+08009258: 5040       eors r0, r2                 
+0800925a: e070       strb r0, [r4, #3]           
+0800925c: 0020       movs r0, #0                 
+0800925e: 0d54       strb r5, [r1, r0]           
+08009260: 401c       adds r0, r0, #1             
+08009262: c0b2       uxtb r0, r0                 
+08009264: 1028       cmp r0, #0x10               
+08009266: fad3       blo #0x800925e              
+08009268: 8c48       ldr r0, [pc, #0x230]           ; lit@0800949c = 0x2000017a (ram)
+0800926a: 0388       ldrh r3, [r0]               
+0800926c: 002b       cmp r3, #0                  
+0800926e: 1ed0       beq #0x80092ae              
+08009270: 5b1e       subs r3, r3, #1             
+08009272: 1b04       lsls r3, r3, #0x10          
+08009274: 1b0c       lsrs r3, r3, #0x10          
+08009276: 0380       strh r3, [r0]               
+08009278: 14d0       beq #0x80092a4              
+0800927a: 0020       movs r0, #0                 
+0800927c: ff22       movs r2, #0xff              
+0800927e: 0a54       strb r2, [r1, r0]           
+08009280: 401c       adds r0, r0, #1             
+08009282: c0b2       uxtb r0, r0                 
+08009284: 1028       cmp r0, #0x10               
+08009286: fad3       blo #0x800927e              
+08009288: fce0       b #0x8009484                
+0800928a: 0020       movs r0, #0                 
+0800928c: 0d54       strb r5, [r1, r0]           
+0800928e: 401c       adds r0, r0, #1             
+08009290: c0b2       uxtb r0, r0                 
+08009292: 1028       cmp r0, #0x10               
+08009294: fad3       blo #0x800928c              
+08009296: 8248       ldr r0, [pc, #0x208]           ; lit@080094a0 = 0x2000016c (ram)
+08009298: 0078       ldrb r0, [r0]               
+0800929a: fbf7adfb   bl #0x80049f8               
+0800929e: 1f21       movs r1, #0x1f              
+080092a0: 0020       movs r0, #0                 
+080092a2: ede0       b #0x8009480                
+080092a4: 7f48       ldr r0, [pc, #0x1fc]           ; lit@080094a4 = 0x20000169 (ram)
+080092a6: 0570       strb r5, [r0]               
+080092a8: 7f48       ldr r0, [pc, #0x1fc]           ; lit@080094a8 = 0x200001c2 (ram)
+080092aa: 0270       strb r2, [r0]               
+080092ac: eae0       b #0x8009484                
+080092ae: fcf785f9   bl #0x80055bc               
+080092b2: 2079       ldrb r0, [r4, #4]           
+080092b4: 0028       cmp r0, #0                  
+080092b6: 08d0       beq #0x80092ca              
+080092b8: 1221       movs r1, #0x12              
+080092ba: 0e20       movs r0, #0xe               
+080092bc: fff748ff   bl #0x8009150               
+080092c0: 2079       ldrb r0, [r4, #4]           
+080092c2: 0007       lsls r0, r0, #0x1c          
+080092c4: 000f       lsrs r0, r0, #0x1c          
+080092c6: 1021       movs r1, #0x10              
+080092c8: 59e0       b #0x800937e                
+080092ca: 7848       ldr r0, [pc, #0x1e0]           ; lit@080094ac = 0x2000016a (ram)
+080092cc: 0078       ldrb r0, [r0]               
+080092ce: 0128       cmp r0, #1                  
+080092d0: 23d0       beq #0x800931a              
+080092d2: 774f       ldr r7, [pc, #0x1dc]           ; lit@080094b0 = 0x200001d0 (ram)
+080092d4: 774e       ldr r6, [pc, #0x1dc]           ; lit@080094b4 = 0x200001d1 (ram)
+080092d6: 3878       ldrb r0, [r7]               
+080092d8: 0028       cmp r0, #0                  
+080092da: 02d0       beq #0x80092e2              
+080092dc: 3178       ldrb r1, [r6]               
+080092de: 0029       cmp r1, #0                  
+080092e0: 55d0       beq #0x800938e              
+080092e2: 0121       movs r1, #1                 
+080092e4: 0f20       movs r0, #0xf               
+080092e6: fff781fd   bl #0x8008dec               
+080092ea: 0321       movs r1, #3                 
+080092ec: 1b20       movs r0, #0x1b              
+080092ee: fff721fe   bl #0x8008f34               
+080092f2: 0521       movs r1, #5                 
+080092f4: 0a20       movs r0, #0xa               
+080092f6: fff753fe   bl #0x8008fa0               
+080092fa: 0721       movs r1, #7                 
+080092fc: 0520       movs r0, #5                 
+080092fe: fff785fe   bl #0x800900c               
+08009302: 0921       movs r1, #9                 
+08009304: 1c20       movs r0, #0x1c              
+08009306: fff7b7fe   bl #0x8009078               
+0800930a: 3078       ldrb r0, [r6]               
+0800930c: 0028       cmp r0, #0                  
+0800930e: 20d0       beq #0x8009352              
+08009310: 401e       subs r0, r0, #1             
+08009312: 3070       strb r0, [r6]               
+08009314: 1221       movs r1, #0x12              
+08009316: 3878       ldrb r0, [r7]               
+08009318: 36e0       b #0x8009388                
+0800931a: 0121       movs r1, #1                 
+0800931c: 1320       movs r0, #0x13              
+0800931e: fff765fd   bl #0x8008dec               
+08009322: 0321       movs r1, #3                 
+08009324: 0220       movs r0, #2                 
+08009326: 03f0c1fc   bl #0x800ccac               
+0800932a: 0721       movs r1, #7                 
+0800932c: 0320       movs r0, #3                 
+0800932e: 03f0bdfc   bl #0x800ccac               
+08009332: 0521       movs r1, #5                 
+08009334: 0120       movs r0, #1                 
+08009336: fff733fe   bl #0x8008fa0               
+0800933a: 0721       movs r1, #7                 
+0800933c: 0620       movs r0, #6                 
+0800933e: 00e0       b #0x8009342                
+08009340: a5e0       b #0x800948e                
+08009342: fff763fe   bl #0x800900c               
+08009346: 5c48       ldr r0, [pc, #0x170]           ; lit@080094b8 = 0x2000016d (ram)
+08009348: 0178       ldrb r1, [r0]               
+0800934a: 0129       cmp r1, #1                  
+0800934c: 00d1       bne #0x8009350              
+0800934e: 0570       strb r5, [r0]               
+08009350: 98e0       b #0x8009484                
+08009352: 6078       ldrb r0, [r4, #1]           
+08009354: 401c       adds r0, r0, #1             
+08009356: c0b2       uxtb r0, r0                 
+08009358: 6070       strb r0, [r4, #1]           
+0800935a: 1428       cmp r0, #0x14               
+0800935c: 01d3       blo #0x8009362              
+0800935e: 6570       strb r5, [r4, #1]           
+08009360: 01e0       b #0x8009366                
+08009362: 0528       cmp r0, #5                  
+08009364: 02d8       bhi #0x800936c              
+08009366: 1221       movs r1, #0x12              
+08009368: 1d20       movs r0, #0x1d              
+0800936a: 0de0       b #0x8009388                
+0800936c: 0a28       cmp r0, #0xa                
+0800936e: 02d8       bhi #0x8009376              
+08009370: 1021       movs r1, #0x10              
+08009372: 1d20       movs r0, #0x1d              
+08009374: 03e0       b #0x800937e                
+08009376: 0f28       cmp r0, #0xf                
+08009378: 04d8       bhi #0x8009384              
+0800937a: 1021       movs r1, #0x10              
+0800937c: 1920       movs r0, #0x19              
+0800937e: fff71dff   bl #0x80091bc               
+08009382: 7fe0       b #0x8009484                
+08009384: 1221       movs r1, #0x12              
+08009386: 1920       movs r0, #0x19              
+08009388: fff7e2fe   bl #0x8009150               
+0800938c: 7ae0       b #0x8009484                
+0800938e: 4b4d       ldr r5, [pc, #0x12c]           ; lit@080094bc = 0x2000015d (ram)
+08009390: 0428       cmp r0, #4                  
+08009392: 03d1       bne #0x800939c              
+08009394: 2978       ldrb r1, [r5]               
+08009396: ef23       movs r3, #0xef              
+08009398: 1940       ands r1, r3                 
+0800939a: 2970       strb r1, [r5]               
+0800939c: 4849       ldr r1, [pc, #0x120]           ; lit@080094c0 = 0x20000162 (ram)
+0800939e: 0978       ldrb r1, [r1]               
+080093a0: 0129       cmp r1, #1                  
+080093a2: 0fd0       beq #0x80093c4              
+080093a4: 0528       cmp r0, #5                  
+080093a6: 10d0       beq #0x80093ca              
+080093a8: 4648       ldr r0, [pc, #0x118]           ; lit@080094c4 = 0x20000165 (ram)
+080093aa: 0078       ldrb r0, [r0]               
+080093ac: 0128       cmp r0, #1                  
+080093ae: 0fd0       beq #0x80093d0              
+080093b0: 2878       ldrb r0, [r5]               
+080093b2: 8107       lsls r1, r0, #0x1e          
+080093b4: 31d0       beq #0x800941a              
+080093b6: 8007       lsls r0, r0, #0x1e          
+080093b8: 800f       lsrs r0, r0, #0x1e          
+080093ba: 0128       cmp r0, #1                  
+080093bc: 32d0       beq #0x8009424              
+080093be: 0228       cmp r0, #2                  
+080093c0: 33d0       beq #0x800942a              
+080093c2: 34e0       b #0x800942e                
+080093c4: faf704fe   bl #0x8003fd0               
+080093c8: 5ce0       b #0x8009484                
+080093ca: fff757fc   bl #0x8008c7c               
+080093ce: 59e0       b #0x8009484                
+080093d0: 3d48       ldr r0, [pc, #0xf4]            ; lit@080094c8 = 0x20000166 (ram)
+080093d2: 0178       ldrb r1, [r0]               
+080093d4: 0529       cmp r1, #5                  
+080093d6: 01d8       bhi #0x80093dc              
+080093d8: 0029       cmp r1, #0                  
+080093da: 00d1       bne #0x80093de              
+080093dc: 0270       strb r2, [r0]               
+080093de: 0078       ldrb r0, [r0]               
+080093e0: fbf748fc   bl #0x8004c74               
+080093e4: 2e48       ldr r0, [pc, #0xb8]            ; lit@080094a0 = 0x2000016c (ram)
+080093e6: 0078       ldrb r0, [r0]               
+080093e8: fbf706fb   bl #0x80049f8               
+080093ec: 2878       ldrb r0, [r5]               
+080093ee: 8107       lsls r1, r0, #0x1e          
+080093f0: 06d0       beq #0x8009400              
+080093f2: 8007       lsls r0, r0, #0x1e          
+080093f4: 800f       lsrs r0, r0, #0x1e          
+080093f6: 0128       cmp r0, #1                  
+080093f8: 05d0       beq #0x8009406              
+080093fa: 0228       cmp r0, #2                  
+080093fc: 06d0       beq #0x800940c              
+080093fe: 07e0       b #0x8009410                
+08009400: fbf79cfc   bl #0x8004d3c               
+08009404: 04e0       b #0x8009410                
+08009406: fbf7b3fd   bl #0x8004f70               
+0800940a: 01e0       b #0x8009410                
+0800940c: fbf7ccfe   bl #0x80051a8               
+08009410: 1f21       movs r1, #0x1f              
+08009412: 0020       movs r0, #0                 
+08009414: 03f04afc   bl #0x800ccac               
+08009418: 09e0       b #0x800942e                
+0800941a: 8008       lsrs r0, r0, #2             
+0800941c: 8000       lsls r0, r0, #2             
+0800941e: 401c       adds r0, r0, #1             
+08009420: 2870       strb r0, [r5]               
+08009422: 04e0       b #0x800942e                
+08009424: fbf7a4fd   bl #0x8004f70               
+08009428: 01e0       b #0x800942e                
+0800942a: fbf7bdfe   bl #0x80051a8               
+0800942e: 2748       ldr r0, [pc, #0x9c]            ; lit@080094cc = 0x20000212 (ram)
+08009430: 0078       ldrb r0, [r0]               
+08009432: 0128       cmp r0, #1                  
+08009434: 03d0       beq #0x800943e              
+08009436: 2648       ldr r0, [pc, #0x98]            ; lit@080094d0 = 0x200001a8 (ram)
+08009438: 0078       ldrb r0, [r0]               
+0800943a: 0128       cmp r0, #1                  
+0800943c: 06d1       bne #0x800944c              
+0800943e: e078       ldrb r0, [r4, #3]           
+08009440: 0128       cmp r0, #1                  
+08009442: 03d1       bne #0x800944c              
+08009444: 1221       movs r1, #0x12              
+08009446: 0020       movs r0, #0                 
+08009448: 03f030fc   bl #0x800ccac               
+0800944c: 2148       ldr r0, [pc, #0x84]            ; lit@080094d4 = 0x2000016f (ram)
+0800944e: 0078       ldrb r0, [r0]               
+08009450: fbf71cfc   bl #0x8004c8c               
+08009454: 2048       ldr r0, [pc, #0x80]            ; lit@080094d8 = 0x200001bd (ram)
+08009456: 0078       ldrb r0, [r0]               
+08009458: fbf784fa   bl #0x8004964               
+0800945c: 1f4c       ldr r4, [pc, #0x7c]            ; lit@080094dc = 0x20000418 (SETTINGS base)
+0800945e: 2078       ldrb r0, [r4]               
+08009460: fbf7c2fa   bl #0x80049e8               
+08009464: 2079       ldrb r0, [r4, #4]           
+08009466: fbf729fc   bl #0x8004cbc               
+0800946a: e078       ldrb r0, [r4, #3]           
+0800946c: fbf70afb   bl #0x8004a84               
+08009470: a078       ldrb r0, [r4, #2]           
+08009472: fbf75bfc   bl #0x8004d2c               
+08009476: 6078       ldrb r0, [r4, #1]           
+08009478: fbf744fc   bl #0x8004d04               
+0800947c: 0a21       movs r1, #0xa               
+0800947e: 0320       movs r0, #3                 
+08009480: 03f014fc   bl #0x800ccac               
+08009484: 1022       movs r2, #0x10              
+08009486: 0349       ldr r1, [pc, #0xc]             ; lit@08009494 = 0x20000408 (ram)
+08009488: 0020       movs r0, #0                 
+0800948a: fef7adff   bl #0x80083e8               
+0800948e: f8bd       pop {r3, r4, r5, r6, r7, pc}
+08009490: 0502       lsls r5, r0, #8             
+08009492: 0020       movs r0, #0                 
+08009494: 0804       lsls r0, r1, #0x10          
+08009496: 0020       movs r0, #0                 
+08009498: 1c01       lsls r4, r3, #4             
+0800949a: 0020       movs r0, #0                 
+0800949c: 7a01       lsls r2, r7, #5             
+0800949e: 0020       movs r0, #0                 
+080094a0: 6c01       lsls r4, r5, #5             
+080094a2: 0020       movs r0, #0                 
+080094a4: 6901       lsls r1, r5, #5             
+080094a6: 0020       movs r0, #0                 
+080094a8: c201       lsls r2, r0, #7             
+080094aa: 0020       movs r0, #0                 
+080094ac: 6a01       lsls r2, r5, #5             
+080094ae: 0020       movs r0, #0                 
+080094b0: d001       lsls r0, r2, #7             
+080094b2: 0020       movs r0, #0                 
+080094b4: d101       lsls r1, r2, #7             
+080094b6: 0020       movs r0, #0                 
+080094b8: 6d01       lsls r5, r5, #5             
+080094ba: 0020       movs r0, #0                 
+080094bc: 5d01       lsls r5, r3, #5             
+080094be: 0020       movs r0, #0                 
+080094c0: 6201       lsls r2, r4, #5             
+080094c2: 0020       movs r0, #0                 
+080094c4: 6501       lsls r5, r4, #5             
+080094c6: 0020       movs r0, #0                 
+080094c8: 6601       lsls r6, r4, #5             
+080094ca: 0020       movs r0, #0                 
+080094cc: 1202       lsls r2, r2, #8             
+080094ce: 0020       movs r0, #0                 
+080094d0: a801       lsls r0, r5, #6             
+080094d2: 0020       movs r0, #0                 
+080094d4: 6f01       lsls r7, r5, #5             
+080094d6: 0020       movs r0, #0                 
+080094d8: bd01       lsls r5, r7, #6             
+080094da: 0020       movs r0, #0                 
+080094dc: 1804       lsls r0, r3, #0x10          
+080094de: 0020       movs r0, #0                 

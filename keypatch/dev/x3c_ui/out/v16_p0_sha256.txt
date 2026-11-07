@@ -1,0 +1,69 @@
+X3-C v1.38 UI 补丁 —— page 0（主界面）版
+==============================================================================
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_ui_A2p0_fallback.bin
+说明   : A2-p0：page0 调用点 wrapper + 长按轮询（不建控件）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 891 字节
+sha256 : 4ba62c404e21d165b4adc58f2f9dde3d1870e0d3e0e2486e7b7b14c47d131103
+验证   : PASS（16/16）
+   [PASS] page0 调用点 0x08014C56: bl #0x80f1100（应为 bl wrapper0 0x80F1100）
+   [PASS] wrapper0 反汇编: push {r4, lr}; mov r4, r0; bl #0x80f1000; mov r0, r4; bl #0x80345b4; pop {r4, pc}（应为 push{r4,lr}; mov r4,r0; bl poll; mov r0,r4; bl 0x080345B4; pop{r4,pc}）
+   [PASS] fallback poll: 句柄表字面量/按下位/长按阈值/动作调用 均正确=True
+   [PASS] fallback poll 桩执行: 按住锁磁贴 7 tick -> 触发 1 次（期望 1，阈值 5）；松开再按 -> 累计 2 次（期望 2）；按住设置页签 7 tick -> 广播 1 次（期望 1）
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_patch.bin
+说明   : C-p0 / 主成品：A2-p0 + 磁贴（builder 后追加，父窗口=句柄表[0]）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1333 字节
+sha256 : c983c1343c31de0e6acb0966f016ac0f7008c8067924e371e3ef6637fab2e5bc
+验证   : PASS（20/20）
+   [PASS] page0 调用点 0x08014C56: bl #0x80f1100（应为 bl wrapper0 0x80F1100）
+   [PASS] wrapper0 反汇编: push {r4, lr}; mov r4, r0; bl #0x80f1000; mov r0, r4; bl #0x80345b4; pop {r4, pc}（应为 push{r4,lr}; mov r4,r0; bl poll; mov r0,r4; bl 0x080345B4; pop{r4,pc}）
+   [PASS] fallback poll: 句柄表字面量/按下位/长按阈值/动作调用 均正确=True
+   [PASS] fallback poll 桩执行: 按住锁磁贴 7 tick -> 触发 1 次（期望 1，阈值 5）；松开再按 -> 累计 2 次（期望 2）；按住设置页签 7 tick -> 广播 1 次（期望 1）
+   [PASS] builder 调用点 0x080349A4: bl #0x80f1200（应为 bl wrapper1 0x80F1200）
+   [PASS] wrapper1 反汇编: push {r4, lr}; bl #0x80079e8; bl #0x80f1300; pop {r4, pc}（应为 push{r4,lr}; bl 0x080079E8; bl tiles; pop{r4,pc}）
+   [PASS] tiles0: 父窗口取自 0x20042740（字面量=True）、2×建磁贴、2×文本、0 个图标子控件、父窗口判 0=True
+   [PASS] page0 tiles 桩执行: parent=0x20042100 正确=True；建磁贴 2 个；setter 24 次（期望 24）；文本指针正确=True
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_ui_Cp0_full.bin
+说明   : C-p0（同上，另存名）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1333 字节
+sha256 : c983c1343c31de0e6acb0966f016ac0f7008c8067924e371e3ef6637fab2e5bc
+验证   : PASS（20/20）
+   [PASS] page0 调用点 0x08014C56: bl #0x80f1100（应为 bl wrapper0 0x80F1100）
+   [PASS] wrapper0 反汇编: push {r4, lr}; mov r4, r0; bl #0x80f1000; mov r0, r4; bl #0x80345b4; pop {r4, pc}（应为 push{r4,lr}; mov r4,r0; bl poll; mov r0,r4; bl 0x080345B4; pop{r4,pc}）
+   [PASS] fallback poll: 句柄表字面量/按下位/长按阈值/动作调用 均正确=True
+   [PASS] fallback poll 桩执行: 按住锁磁贴 7 tick -> 触发 1 次（期望 1，阈值 5）；松开再按 -> 累计 2 次（期望 2）；按住设置页签 7 tick -> 广播 1 次（期望 1）
+   [PASS] builder 调用点 0x080349A4: bl #0x80f1200（应为 bl wrapper1 0x80F1200）
+   [PASS] wrapper1 反汇编: push {r4, lr}; bl #0x80079e8; bl #0x80f1300; pop {r4, pc}（应为 push{r4,lr}; bl 0x080079E8; bl tiles; pop{r4,pc}）
+   [PASS] tiles0: 父窗口取自 0x20042740（字面量=True）、2×建磁贴、2×文本、0 个图标子控件、父窗口判 0=True
+   [PASS] page0 tiles 桩执行: parent=0x20042100 正确=True；建磁贴 2 个；setter 24 次（期望 24）；文本指针正确=True
+
+文件   : D:\神牛\keypatch\out\X3_C_v1.38_app_keyD798_pergroup.bin
+说明   : C-p0 + A–E 逐组广播（KEY=0xD798）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1469 字节
+sha256 : fc681a2f19b05443b692d50124e15f2cbdecbff99c19c0016f90fc78c1e554f5
+验证   : PASS（20/20）
+   [PASS] page0 调用点 0x08014C56: bl #0x80f1100（应为 bl wrapper0 0x80F1100）
+   [PASS] wrapper0 反汇编: push {r4, lr}; mov r4, r0; bl #0x80f1000; mov r0, r4; bl #0x80345b4; pop {r4, pc}（应为 push{r4,lr}; mov r4,r0; bl poll; mov r0,r4; bl 0x080345B4; pop{r4,pc}）
+   [PASS] fallback poll: 句柄表字面量/按下位/长按阈值/动作调用 均正确=True
+   [PASS] fallback poll 桩执行: 按住锁磁贴 7 tick -> 触发 1 次（期望 1，阈值 5）；松开再按 -> 累计 2 次（期望 2）；按住设置页签 7 tick -> 广播 1 次（期望 1）
+   [PASS] builder 调用点 0x080349A4: bl #0x80f1200（应为 bl wrapper1 0x80F1200）
+   [PASS] wrapper1 反汇编: push {r4, lr}; bl #0x80079e8; bl #0x80f1300; pop {r4, pc}（应为 push{r4,lr}; bl 0x080079E8; bl tiles; pop{r4,pc}）
+   [PASS] tiles0: 父窗口取自 0x20042740（字面量=True）、2×建磁贴、2×文本、0 个图标子控件、父窗口判 0=True
+   [PASS] page0 tiles 桩执行: parent=0x20042100 正确=True；建磁贴 2 个；setter 24 次（期望 24）；文本指针正确=True
+
+文件   : D:\神牛\keypatch\out\X3_C_v1.38_app_keyD798_A2p0.bin
+说明   : A2-p0 + 逐组广播（KEY=0xD798）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1027 字节
+sha256 : 41beda990c233af33f56e76cecc187ad268bdfbf877963561639ebca7fe54155
+验证   : PASS（16/16）
+   [PASS] page0 调用点 0x08014C56: bl #0x80f1100（应为 bl wrapper0 0x80F1100）
+   [PASS] wrapper0 反汇编: push {r4, lr}; mov r4, r0; bl #0x80f1000; mov r0, r4; bl #0x80345b4; pop {r4, pc}（应为 push{r4,lr}; mov r4,r0; bl poll; mov r0,r4; bl 0x080345B4; pop{r4,pc}）
+   [PASS] fallback poll: 句柄表字面量/按下位/长按阈值/动作调用 均正确=True
+   [PASS] fallback poll 桩执行: 按住锁磁贴 7 tick -> 触发 1 次（期望 1，阈值 5）；松开再按 -> 累计 2 次（期望 2）；按住设置页签 7 tick -> 广播 1 次（期望 1）

@@ -1,0 +1,11 @@
+{
+  "program": "X3_C_v1.38_app.bin",
+  "language": "ARM:LE:32:Cortex",
+  "image_base": "0x00000000",
+  "functions": 1431,
+  "decompiled": 1418,
+  "decompile_failed": 13,
+  "instructions": 86575,
+  "strings": 1036,
+  "memory_blocks": 1
+}

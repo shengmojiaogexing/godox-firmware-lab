@@ -1,0 +1,40 @@
+﻿扫描 BL 指向: 0x080043e4, 0x080048e4, 0x0800587c, 0x08005974, 0x0800ac58, 0x0800b7f4, 0x0800b820, 0x0800c740, 0x0800cc40, 0x0800cc64, 0x0800ccc8
+
+== 0x080043e4 FUNC_080043e4  callers=2 ==
+   08009b4c  in ui_factory_reset_task @08009b38
+   0800b826  in flash_store_params @0800b820
+
+== 0x080048e4 ui_key_14  callers=2 ==
+   08008aaa  in ui_key_scan_task @08008818
+   0800acf2  in settings_load_task @0800ac58
+
+== 0x0800587c flash_erase_param_page  callers=3 ==
+   08009b64  in ui_factory_reset_task @08009b38
+   0800acf6  in settings_load_task @0800ac58
+   0800adfa  in settings_load_task @0800ac58
+
+== 0x08005974 flash_write_params  callers=1 ==
+   0800b848  in flash_store_params @0800b820
+
+== 0x0800ac58 settings_load_task  callers=1 ==
+   0800ce28  in main @0800cdb0
+
+== 0x0800b7f4 flash_erase_params  callers=1 ==
+   08009b3a  in ui_factory_reset_task @08009b38
+
+== 0x0800b820 flash_store_params  callers=2 ==
+   08009b6c  in ui_factory_reset_task @08009b38
+   0800ae02  in settings_load_task @0800ac58
+
+== 0x0800c740 flash_params_default  callers=1 ==
+   08009b50  in ui_factory_reset_task @08009b38
+
+== 0x0800cc40 settings_flag_set  callers=1 ==
+   0800cc98  in settings_save @0800cc64
+
+== 0x0800cc64 settings_save  callers=2 ==
+   0800bdb4  in app_state_init @0800bd68
+   0800c2a8  in board_init @0800c248
+
+== 0x0800ccc8 settings_validate  callers=1 ==
+   0800ac94  in settings_load_task @0800ac58

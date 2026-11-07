@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<Config>
+    <help_url>www.godox.com</help_url>
+    <language>
+		<Type>中文</Type>
+		<Language_ID>language1</Language_ID>
+		<firmware_url>https://www.godox.com/Downloads/G3_firmwares.json</firmware_url>
+		<Title>Godox固件升级软件 V2.0</Title>
+		<SelectFileButton>本地文件</SelectFileButton>
+		<SelectWebFileButton>网络文件</SelectWebFileButton>
+		<SelectUpdatedDetailsButton>详细修改记录</SelectUpdatedDetailsButton>
+		<UpdateButton>升级</UpdateButton>
+		<ExitButtio>退出</ExitButtio>
+		<HelpButtio>帮助</HelpButtio>
+		<OpenButtio>打开</OpenButtio>
+		<CancelButtio>取消</CancelButtio>
+		<Notice>打开文件失败</Notice>
+		<Notice>文件大小不合格</Notice>
+		<Notice>读取文件失败</Notice>
+		<Notice>打开文件成功</Notice>
+		<Notice>连接设备成功</Notice>
+		<Notice>设备断开连接</Notice>
+		<Notice>请先连接设备</Notice>
+		<Notice>请先打开文件</Notice>
+		<Notice>更新设备失败</Notice>
+		<Notice>更新设备成功</Notice>
+		<Notice>选择的固件与设备不匹配</Notice>
+		<Notice>网络错误</Notice>
+		<Notice>选中的固件: </Notice>
+		<Notice>固件说明: </Notice>
+		<Notice>更新内容: </Notice>
+		<Notice>注意事项: </Notice>
+		<Notice>查找:</Notice>
+		<Notice>版本号: </Notice>
+		<Notice>发布日期: </Notice>
+		
+	</language>
+	<language>
+		<Type>English</Type>
+		<Language_ID>language2</Language_ID>
+		<firmware_url>https://www.godox.com/Downloads/G3_firmwares.json</firmware_url>
+		<Title>Godox Firmware Updater V2.0</Title>
+		<SelectFileButton>Local File</SelectFileButton>
+		<SelectWebFileButton>Web File</SelectWebFileButton>
+		<SelectUpdatedDetailsButton>Details</SelectUpdatedDetailsButton>
+		<UpdateButton>Update</UpdateButton>
+		<ExitButtio>Exit</ExitButtio>
+		<HelpButtio>Help</HelpButtio>
+		<OpenButtio>Open</OpenButtio>
+		<CancelButtio>Cancel</CancelButtio>
+		<Notice>Open file error</Notice>
+		<Notice>File size error</Notice>
+		<Notice>Read file error</Notice>
+		<Notice>Open file success</Notice>
+		<Notice>Device connected</Notice>
+		<Notice>Device disconnected</Notice>
+		<Notice>Please connect device</Notice>
+		<Notice>Please select file</Notice>
+		<Notice>Update device error</Notice>
+		<Notice>Update device success</Notice>
+		<Notice>The selected firmware is not for this device</Notice>
+		<Notice>Network Error</Notice>
+		<Notice>Selected Firmware:</Notice>
+		<Notice>Firmware Description:</Notice>
+		<Notice>Updates: </Notice>
+		<Notice>Remark: </Notice>
+		<Notice>Search:</Notice>
+		<Notice>Version Number: </Notice>
+		<Notice>Release Date: </Notice>
+		
+	</language>
+</Config>

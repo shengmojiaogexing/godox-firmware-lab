@@ -1,0 +1,2 @@
+name,start,end,size,initialized,read,write,execute
+ram,0x08002000,0x08007e1b,24092,true,true,true,true

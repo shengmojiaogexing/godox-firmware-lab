@@ -1,0 +1,17 @@
+﻿扫描 BL 指向: 0x08005ae8, 0x0800b134
+
+== 0x08005ae8 FUNC_08005ae8  callers=5 ==
+   0800483e  in FUNC_08004818 @08004818
+   08005424  in EXTI0_1_IRQHandler @080053f0
+   08005440  in EXTI0_1_IRQHandler @080053f0
+   080054e8  in EXTI4_15_IRQHandler @08005484
+   0800c19a  in ui_key_2 @0800c190
+
+== 0x0800b134 muldiv_scale  callers=7 ==
+   08003cc4  in FUNC_08003ca4 @08003ca4
+   0800562a  in level_table_lookup_m @0800560c
+   08008aee  in level_table_lookup_d @08008ad0
+   0800a00e  in level_table_lookup_f @08009ff0
+   0800a372  in level_table_lookup_h @0800a354
+   0800a646  in level_table_lookup_j @0800a628
+   0800b5fa  in power_level_mode1 @0800b5dc

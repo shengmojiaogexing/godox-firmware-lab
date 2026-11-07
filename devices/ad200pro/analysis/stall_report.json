@@ -1,0 +1,1259 @@
+{
+ "pc": "0x0800ce4c",
+ "pc_name": "main+0x9c",
+ "hot_mmio": [
+  {
+   "addr": "0x40002010",
+   "type": "mmio_read",
+   "name": "TIM14_SR",
+   "count": 120
+  },
+  {
+   "addr": "0x4000200c",
+   "type": "mmio_read",
+   "name": "TIM14_DIER",
+   "count": 120
+  },
+  {
+   "addr": "0x4800080c",
+   "type": "mmio_read",
+   "name": "GPIOC_PUPDR",
+   "count": 30
+  },
+  {
+   "addr": "0x4800080c",
+   "type": "mmio_write",
+   "name": "GPIOC_PUPDR",
+   "count": 30
+  },
+  {
+   "addr": "0x40002010",
+   "type": "mmio_write",
+   "name": "TIM14_SR",
+   "count": 15
+  }
+ ],
+ "regs": {
+  "r0": "0x00000000",
+  "r1": "0x00800000",
+  "r2": "0x00000001",
+  "r3": "0x00000001",
+  "r4": "0x00000000",
+  "r5": "0x200001cf",
+  "r6": "0x0800e404",
+  "r7": "0x00000000",
+  "r8": "0x00000000",
+  "r9": "0x00000000",
+  "r10": "0x00000000",
+  "r11": "0x00000000",
+  "r12": "0x00000200",
+  "sp": "0x200008a8",
+  "lr": "0x0800ab1f",
+  "pc": "0x0800ce4c",
+  "xpsr": "0xa0000000",
+  "primask": "0x00000000",
+  "ipsr": "0x00000000"
+ },
+ "mmio": [
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250484
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250492
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250502
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250512
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250520
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250542
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250550
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250572
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250580
+  },
+  {
+   "type": "irq_exit",
+   "addr": null,
+   "name": null,
+   "pc": 134270540
+  },
+  {
+   "type": "irq_enter",
+   "addr": null,
+   "name": "IRQ19",
+   "pc": 134266336
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961624,
+   "name": "GPIOC_BSRR",
+   "pc": 134246050
+  },
+  {
+   "type": "gpio_change",
+   "addr": null,
+   "name": "GPIOC_ODR",
+   "pc": 0
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262366
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262372
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262380
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262382
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262390
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250254
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250266
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250312
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250320
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250378
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250426
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250434
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250484
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250492
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250502
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250512
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250520
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250542
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250550
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250572
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250580
+  },
+  {
+   "type": "irq_exit",
+   "addr": null,
+   "name": null,
+   "pc": 134270540
+  },
+  {
+   "type": "irq_enter",
+   "addr": null,
+   "name": "IRQ19",
+   "pc": 134266336
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961624,
+   "name": "GPIOC_BSRR",
+   "pc": 134246050
+  },
+  {
+   "type": "gpio_change",
+   "addr": null,
+   "name": "GPIOC_ODR",
+   "pc": 0
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262366
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262372
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262380
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262382
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262390
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250254
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250266
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250312
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250320
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250378
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250426
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250434
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250484
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250492
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250502
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250512
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250520
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250542
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250550
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250572
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250580
+  },
+  {
+   "type": "irq_exit",
+   "addr": null,
+   "name": null,
+   "pc": 134270540
+  },
+  {
+   "type": "irq_enter",
+   "addr": null,
+   "name": "IRQ19",
+   "pc": 134266336
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961624,
+   "name": "GPIOC_BSRR",
+   "pc": 134246050
+  },
+  {
+   "type": "gpio_change",
+   "addr": null,
+   "name": "GPIOC_ODR",
+   "pc": 0
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262366
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262372
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262380
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262382
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262390
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250254
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250266
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250312
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250320
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250378
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250426
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250434
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250484
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250492
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250502
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250512
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250520
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250542
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250550
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250572
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250580
+  },
+  {
+   "type": "irq_exit",
+   "addr": null,
+   "name": null,
+   "pc": 134270540
+  },
+  {
+   "type": "irq_enter",
+   "addr": null,
+   "name": "IRQ19",
+   "pc": 134266336
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961624,
+   "name": "GPIOC_BSRR",
+   "pc": 134246050
+  },
+  {
+   "type": "gpio_change",
+   "addr": null,
+   "name": "GPIOC_ODR",
+   "pc": 0
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262366
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262372
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262380
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262382
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262390
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250254
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250266
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250312
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250320
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250378
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250426
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250434
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250484
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250492
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250502
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250512
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250520
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250542
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250550
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250572
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250580
+  },
+  {
+   "type": "irq_exit",
+   "addr": null,
+   "name": null,
+   "pc": 134270540
+  },
+  {
+   "type": "irq_enter",
+   "addr": null,
+   "name": "IRQ19",
+   "pc": 134266336
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961624,
+   "name": "GPIOC_BSRR",
+   "pc": 134246050
+  },
+  {
+   "type": "gpio_change",
+   "addr": null,
+   "name": "GPIOC_ODR",
+   "pc": 0
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262366
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262372
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262380
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262382
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262390
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250254
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250266
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250312
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250320
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250378
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250426
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250434
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250484
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250492
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250502
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250512
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250520
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250542
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250550
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250572
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250580
+  },
+  {
+   "type": "irq_exit",
+   "addr": null,
+   "name": null,
+   "pc": 134270540
+  },
+  {
+   "type": "irq_enter",
+   "addr": null,
+   "name": "IRQ19",
+   "pc": 134266336
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961624,
+   "name": "GPIOC_BSRR",
+   "pc": 134246050
+  },
+  {
+   "type": "gpio_change",
+   "addr": null,
+   "name": "GPIOC_ODR",
+   "pc": 0
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262366
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262372
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262380
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262382
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262390
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250254
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250266
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250312
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250320
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250378
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250426
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250434
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250484
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250492
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250502
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250512
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250520
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250542
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250550
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250572
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250580
+  },
+  {
+   "type": "irq_exit",
+   "addr": null,
+   "name": null,
+   "pc": 134270540
+  },
+  {
+   "type": "irq_enter",
+   "addr": null,
+   "name": "IRQ19",
+   "pc": 134266336
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961624,
+   "name": "GPIOC_BSRR",
+   "pc": 134246050
+  },
+  {
+   "type": "gpio_change",
+   "addr": null,
+   "name": "GPIOC_ODR",
+   "pc": 0
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262366
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961600,
+   "name": "GPIOC_MODER",
+   "pc": 134262370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262372
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262380
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262382
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1207961612,
+   "name": "GPIOC_PUPDR",
+   "pc": 134262390
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250254
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250266
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250312
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250320
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250370
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250378
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250426
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250434
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250484
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250492
+  },
+  {
+   "type": "mmio_write",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250502
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250512
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250520
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250542
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250550
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750032,
+   "name": "TIM14_SR",
+   "pc": 134250572
+  },
+  {
+   "type": "mmio_read",
+   "addr": 1073750028,
+   "name": "TIM14_DIER",
+   "pc": 134250580
+  },
+  {
+   "type": "irq_exit",
+   "addr": null,
+   "name": null,
+   "pc": 134270540
+  },
+  {
+   "type": "note",
+   "addr": null,
+   "name": "stall",
+   "pc": 134270540
+  }
+ ]
+}

@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Syntax check (engine + studio)
+        run: |
+          python -m compileall -q keypatch/keypatch.py keypatch/common.py keypatch/selftest.py keypatch/devices
+          test -f keypatch/container.py && python -m compileall -q keypatch/container.py
+          python -m compileall -q studio
+
+      - name: Device registry
+        run: python keypatch/keypatch.py list
+
+      - name: Studio API tests
+        # 原厂固件不在仓库里，涉及固件/生成的用例会自动 skip；
+        # 这里覆盖设备注册、密钥校验、静态资源、路径穿越防护等逻辑。
+        run: python studio/tests/test_api.py -v
+
+      - name: Studio front-end smoke (server + static)
+        run: |
+          python studio/server.py --port 18780 &
+          sleep 2
+          curl -fsS http://127.0.0.1:18780/api/health
+          curl -fsS http://127.0.0.1:18780/ | grep -q "神牛密钥工坊"

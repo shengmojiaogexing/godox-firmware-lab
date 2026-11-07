@@ -1,0 +1,38 @@
+X3-C v1.38 UI 补丁 v1.4 —— 安全阶梯三档（磁贴创建挪到页 1 尾部）
+==============================================================================
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_ui_A_noTiles.bin
+说明   : A 诊断档：只装轮询+跳板，不建磁贴（验证是否安全）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 880 字节
+sha256 : 8d91daafe0af560796b61248a359cadfba4c38bd4c796e0f7b6773bd45b1699c
+验证   : PASS（19/19）
+   [PASS] tile_mode=none：不建磁贴（诊断/安全档），无 0x08006220 调用=True
+   [PASS] tile_mode=none（诊断/安全档）：不创建磁贴，跳过磁贴桩测试
+   [PASS] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_ui_B_minimal.bin
+说明   : B 最小档：只建磁贴+设文本（无属性序列/图标）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1022 字节
+sha256 : 44c6ee4f429c707e8eb03d1033778a0c3ebb7a1589434ecaa3a6e00c5ba54c44
+验证   : PASS（19/19）
+   [PASS] tile_mode=minimal icon=False: 共 4 个 bl；2×建磁贴、2×文本、图标调用=0；原厂 setter 全部出现=True
+   [PASS] ui_quickpanel_ext 桩执行: parent(r5)=0x20042100 正确=True；磁贴 2 个 [(537141504, 1, 40, 288), (537141504, 1, 176, 288)]；属性 setter 序列与原厂(0x08007B16-0x08007BD2)一致=True（1 个/片 × 2 片）；关键参数=True；返回颜色 0x00000000（期望 0x00332211）；r6(0x200004C7) RAM 未被写=True
+   [PASS] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_ui_C_full.bin
+说明   : C 完整档：原厂完整属性序列（无图标子控件）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1294 字节
+sha256 : 7cd01131d51f58eb8abdac4c45da025867d81168255e44412c17cac671ebd38f
+验证   : PASS（19/19）
+   [PASS] tile_mode=full icon=False: 共 34 个 bl；2×建磁贴、2×文本、图标调用=0；原厂 setter 全部出现=True
+   [PASS] ui_quickpanel_ext 桩执行: parent(r5)=0x20042100 正确=True；磁贴 2 个 [(537141504, 1, 40, 288), (537141504, 1, 176, 288)]；属性 setter 序列与原厂(0x08007B16-0x08007BD2)一致=True（13 个/片 × 2 片）；关键参数=True；返回颜色 0x00000000（期望 0x00332211）；r6(0x200004C7) RAM 未被写=True
+   [PASS] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）
+
+文件   : D:\神牛\keypatch\out\X3_C_v1.38_app_keyD798_pergroup.bin
+说明   : 逐组 A–E 广播备选（v1.4 full，KEY=0xD798）
+长度   : 1021468
+sha256 : fb806bed351062e28c48bbf780d6cf8edbb79c2851c814633eb97fb4b7564b43
+验证   : PASS（19/19）

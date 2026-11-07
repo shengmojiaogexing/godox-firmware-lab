@@ -1,0 +1,49 @@
+﻿==============================================================================
+AD200 Pro V1.60 F8/settings[7] 补丁候选点校验
+image : D:\神牛\AD200pro-RE\samples\AD200pro_V1.60.bin
+size  : 46380  sha256: fc0f77f1eb1c9f9d6f1f96d15daa5722ae33a57fceffe1da02739530dd798bd0
+==============================================================================
+
+OK @0x08004afc  FUNC_08004AC8（时长/数值显示，选 0x0800D412/… 备用表）
+   before: e279     ldrb     r2, [r4, #7]
+   after : 0022     movs     r2, #0
+
+OK @0x08004ff4  FUNC_08004F70（显示页 1：清 g_mode bit4 + 页面标志）
+   before: c079     ldrb     r0, [r0, #7]
+   after : 0020     movs     r0, #0
+
+OK @0x08005c54  FUNC_08005C30（measurement_task 调用：闪光时长/能量换算）
+   before: c979     ldrb     r1, [r1, #7]
+   after : 0021     movs     r1, #0
+
+OK @0x08006290  level_table_lookup_b（功率/时长表选择，被 7 处 power_level_* 调用）
+   before: d279     ldrb     r2, [r2, #7]
+   after : 0022     movs     r2, #0
+
+OK @0x0800b144  muldiv_scale（功率缩放计算，同样被 7 处 power_level_* 调用）
+   before: db79     ldrb     r3, [r3, #7]
+   after : 0023     movs     r3, #0
+
+OK @0x0800b228  RF 远程设置处理 0x0800B170（r2==1 分支）
+   before: d279     ldrb     r2, [r2, #7]
+   after : 0022     movs     r2, #0
+
+OK @0x0800bc7e  ui_key_80(0x0800BC34)：g_mode bits4-5 0→1 时 strb 0 → settings[7]
+   before: ca71     strb     r2, [r1, #7]
+   after : 00bf     nop      
+
+OK @0x0800854e  flash_trigger_state_machine 0x08008504（编辑 +）：仅 idx==6 才 sync
+   before: 02d1     bne      #0x8008556
+   after : 00bf     nop      
+
+OK @0x080045ee  flash_charge_state_machine 0x080045AC（编辑 -）：仅 idx==6 才 sync
+   before: 02d1     bne      #0x80045f6
+   after : 00bf     nop      
+
+==============================================================================
+全部候选点原始字节/编码校验通过。
+A 组=6 处 readers 屏蔽；B 组=1 处防静默清零；C 组=2 处立即重设同步字（可选）
+写出候选镜像: D:\神牛\keypatch\dev\ad200_ui\store\cand_reader_mask.bin (46380 B)
+写出候选镜像: D:\神牛\keypatch\dev\ad200_ui\store\cand_plus_toggle.bin (46380 B)
+注意：候选镜像只用于验证，不替代 Lead 的 devices/ad200.py 正式补丁。
+原厂 bin 未修改，sha256=fc0f77f1eb1c9f9d6f1f96d15daa5722ae33a57fceffe1da02739530dd798bd0

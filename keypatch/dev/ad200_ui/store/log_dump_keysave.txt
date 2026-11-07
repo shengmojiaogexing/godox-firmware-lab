@@ -1,0 +1,129 @@
+﻿==============================================================================
+range 0x0800bc34 .. 0x0800bc8c  ui_key_80
+==============================================================================
+0800bc34: 10b5       push {r4, lr}                  <ui_key_80>
+0800bc36: 1348       ldr r0, [pc, #0x4c]            ; lit@0800bc84 = 0x20000150 (ram)
+0800bc38: 0022       movs r2, #0                 
+0800bc3a: 817c       ldrb r1, [r0, #0x12]        
+0800bc3c: 0129       cmp r1, #1                  
+0800bc3e: 09d0       beq #0x800bc54              
+0800bc40: 0178       ldrb r1, [r0]               
+0800bc42: 0129       cmp r1, #1                  
+0800bc44: 02d0       beq #0x800bc4c              
+0800bc46: 817b       ldrb r1, [r0, #0xe]         
+0800bc48: 0029       cmp r1, #0                  
+0800bc4a: 05d0       beq #0x800bc58              
+0800bc4c: 0270       strb r2, [r0]               
+0800bc4e: 8273       strb r2, [r0, #0xe]         
+0800bc50: 0263       str r2, [r0, #0x30]         
+0800bc52: 10bd       pop {r4, pc}                
+0800bc54: 8274       strb r2, [r0, #0x12]        
+0800bc56: 10bd       pop {r4, pc}                
+0800bc58: 417b       ldrb r1, [r0, #0xd]         
+0800bc5a: 8b07       lsls r3, r1, #0x1e          
+0800bc5c: 9b0f       lsrs r3, r3, #0x1e          
+0800bc5e: 022b       cmp r3, #2                  
+0800bc60: 08d0       beq #0x800bc74              
+0800bc62: c906       lsls r1, r1, #0x1b          
+0800bc64: 8c0f       lsrs r4, r1, #0x1e          
+0800bc66: 0749       ldr r1, [pc, #0x1c]            ; lit@0800bc84 = 0x20000150 (ram)
+0800bc68: e723       movs r3, #0xe7              
+0800bc6a: 497b       ldrb r1, [r1, #0xd]         
+0800bc6c: 1940       ands r1, r3                 
+0800bc6e: 002c       cmp r4, #0                  
+0800bc70: 02d0       beq #0x800bc78              
+0800bc72: 4173       strb r1, [r0, #0xd]         
+0800bc74: c273       strb r2, [r0, #0xf]         
+0800bc76: 10bd       pop {r4, pc}                
+0800bc78: 1031       adds r1, #0x10              
+0800bc7a: 4173       strb r1, [r0, #0xd]         
+0800bc7c: 0249       ldr r1, [pc, #8]               ; lit@0800bc88 = 0x20000418 (SETTINGS base)
+0800bc7e: ca71       strb r2, [r1, #7]           
+0800bc80: f8e7       b #0x800bc74                
+0800bc82: 0000       movs r0, r0                 
+0800bc84: 5001       lsls r0, r2, #5             
+0800bc86: 0020       movs r0, #0                 
+0800bc88: 1804       lsls r0, r3, #0x10          
+0800bc8a: 0020       movs r0, #0                 
+==============================================================================
+range 0x0800b96c .. 0x0800b9ac  rf_write_pair
+==============================================================================
+0800b96c: 10b5       push {r4, lr}                  <rf_write_pair>
+0800b96e: 0446       mov r4, r0                  
+0800b970: 0d48       ldr r0, [pc, #0x34]            ; lit@0800b9a8 = 0x0800e382 (flash)
+0800b972: 015d       ldrb r1, [r0, r4]           
+0800b974: 0d20       movs r0, #0xd               
+0800b976: 01f094f8   bl #0x800caa2               
+0800b97a: 0b48       ldr r0, [pc, #0x2c]            ; lit@0800b9a8 = 0x0800e382 (flash)
+0800b97c: 2030       adds r0, #0x20              
+0800b97e: 015d       ldrb r1, [r0, r4]           
+0800b980: 0e20       movs r0, #0xe               
+0800b982: 01f08ef8   bl #0x800caa2               
+0800b986: 0848       ldr r0, [pc, #0x20]            ; lit@0800b9a8 = 0x0800e382 (flash)
+0800b988: 4030       adds r0, #0x40              
+0800b98a: 015d       ldrb r1, [r0, r4]           
+0800b98c: 0f20       movs r0, #0xf               
+0800b98e: 01f088f8   bl #0x800caa2               
+0800b992: 1420       movs r0, #0x14              
+0800b994: 00f048ff   bl #0x800c828               
+0800b998: 3320       movs r0, #0x33              
+0800b99a: 01f0e3f8   bl #0x800cb64               
+0800b99e: 7d20       movs r0, #0x7d              
+0800b9a0: c000       lsls r0, r0, #3             
+0800b9a2: 00f041ff   bl #0x800c828               
+0800b9a6: 10bd       pop {r4, pc}                
+0800b9a8: 82e3       b #0x800c0b0                
+0800b9aa: 0008       lsrs r0, r0, #0x20          
+==============================================================================
+range 0x0800cc40 .. 0x0800cc64  settings_flag_set
+==============================================================================
+0800cc40: 10b5       push {r4, lr}                  <settings_flag_set>
+0800cc42: 0020       movs r0, #0                 
+0800cc44: 0649       ldr r1, [pc, #0x18]            ; lit@0800cc60 = 0x20000408 (ram)
+0800cc46: 0246       mov r2, r0                  
+0800cc48: 0a54       strb r2, [r1, r0]           
+0800cc4a: 401c       adds r0, r0, #1             
+0800cc4c: c0b2       uxtb r0, r0                 
+0800cc4e: 1028       cmp r0, #0x10               
+0800cc50: fad3       blo #0x800cc48              
+0800cc52: 1022       movs r2, #0x10              
+0800cc54: 0249       ldr r1, [pc, #8]               ; lit@0800cc60 = 0x20000408 (ram)
+0800cc56: 0020       movs r0, #0                 
+0800cc58: fbf7c6fb   bl #0x80083e8               
+0800cc5c: 10bd       pop {r4, pc}                
+0800cc5e: 0000       movs r0, r0                 
+0800cc60: 0804       lsls r0, r1, #0x10          
+0800cc62: 0020       movs r0, #0                 
+==============================================================================
+range 0x0800cc64 .. 0x0800ccac  settings_save
+==============================================================================
+0800cc64: 30b5       push {r4, r5, lr}              <settings_save>
+0800cc66: 0f24       movs r4, #0xf               
+0800cc68: 0f4d       ldr r5, [pc, #0x3c]            ; lit@0800cca8 = 0x48000400 (gpio)
+0800cc6a: a401       lsls r4, r4, #6             
+0800cc6c: 85b0       sub sp, #0x14               
+0800cc6e: 0122       movs r2, #1                 
+0800cc70: 2146       mov r1, r4                  
+0800cc72: 2846       mov r0, r5                  
+0800cc74: faf713f9   bl #0x8006e9e               
+0800cc78: 0121       movs r1, #1                 
+0800cc7a: 0020       movs r0, #0                 
+0800cc7c: 0191       str r1, [sp, #4]            
+0800cc7e: 0391       str r1, [sp, #0xc]          
+0800cc80: 0290       str r0, [sp, #8]            
+0800cc82: 0094       str r4, [sp]                
+0800cc84: 6946       mov r1, sp                  
+0800cc86: 2846       mov r0, r5                  
+0800cc88: faf758f8   bl #0x8006d3c               
+0800cc8c: 0120       movs r0, #1                 
+0800cc8e: 00f041f9   bl #0x800cf14               
+0800cc92: 2920       movs r0, #0x29              
+0800cc94: 00f03ef9   bl #0x800cf14               
+0800cc98: fff7d2ff   bl #0x800cc40               
+0800cc9c: 0320       movs r0, #3                 
+0800cc9e: 00f039f9   bl #0x800cf14               
+0800cca2: 05b0       add sp, #0x14               
+0800cca4: 30bd       pop {r4, r5, pc}            
+0800cca6: 0000       movs r0, r0                 
+0800cca8: 0004       lsls r0, r0, #0x10          
+0800ccaa: 0048       ldr r0, [pc, #0]               ; lit@0800ccac = 0x2280084b (other)

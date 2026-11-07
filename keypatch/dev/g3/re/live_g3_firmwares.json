@@ -1,0 +1,2105 @@
+{
+    "Firmwares": [
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X3",
+                "language1": "X3系列发射器",
+                "language2": "X3 Transimitter"
+            },
+            "device_id": "X3C",
+            "firmware_url": "X3C_V1.35_APP.zip",
+            "release_date": "2025/07/16",
+            "remark": {
+                "language1": "X3C 无线发射器, 适用于佳能相机",
+                "language2": "X3C wireless control(Transimitter) for Canon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、优化控制处理和相机连接。",
+                "language2": "1. Optimize control processing and camera connection."
+            },
+            "update_contents_url": "X3C Firmware Instructions.pdf",
+            "version": "V1.35"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X3",
+                "language1": "X3系列发射器",
+                "language2": "X3 Transtmitter"
+            },
+            "device_id": "X3N",
+            "firmware_url": "X3N_V1.22_APP.zip",
+            "release_date": "2025/07/16",
+            "remark": {
+                "language1": "X3N 无线发射器, 适用于尼康相机",
+                "language2": "X3N wireless control(Transimitter) for Nikon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、优化控制处理和相机连接。",
+                "language2": "1. Optimize control processing and camera connection."
+            },
+            "update_contents_url": "X3N Firmware Instructions.pdf",
+            "version": "V1.22"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X3",
+                "language1": "X3系列发射器",
+                "language2": "X3 Transtmitter"
+            },
+            "device_id": "X3S",
+            "firmware_url": "X3S_V1.22_APP.zip",
+            "release_date": "2025/07/16",
+            "remark": {
+                "language1": "X3S 无线发射器, 适用于索尼相机",
+                "language2": "X3S wireless control(Transimitter) for Sony Cameras"
+            },
+            "update_contents": {
+                "language1": "1、优化控制处理和相机连接。",
+                "language2": "1. Optimize control processing and camera connection."
+            },
+            "update_contents_url": "X3S Firmware Instructions.pdf",
+            "version": "V1.22"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X3",
+                "language1": "X3系列发射器",
+                "language2": "X3 Transtmitter"
+            },
+            "device_id": "X3F",
+            "firmware_url": "X3F_V1.19_APP.zip",
+            "release_date": "2025/07/16",
+            "remark": {
+                "language1": "X3F 无线发射器, 适用于富士相机",
+                "language2": "X3F wireless control(Transimitter) for Fuji Cameras"
+            },
+            "update_contents": {
+                "language1": "1、优化控制处理和相机连接。",
+                "language2": "1. Optimize control processing and camera connection."
+            },
+            "update_contents_url": "X3F Firmware Instructions.pdf",
+            "version": "V1.19"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X3",
+                "language1": "X3系列发射器",
+                "language2": "X3 Transtmitter"
+            },
+            "device_id": "X3O",
+            "firmware_url": "X3O_V1.09_APP.zip",
+            "release_date": "2025/07/16",
+            "remark": {
+                "language1": "X3O 无线发射器, 适用于奥林巴斯/松下相机",
+                "language2": "X3O wireless control(Transimitter) for Olympus/Panasonic Cameras"
+            },
+            "update_contents": {
+                "language1": "1、优化控制处理和相机连接。",
+                "language2": "1. Optimize control processing and camera connection."
+            },
+            "update_contents_url": "X3O Firmware Instructions.pdf",
+            "version": "V1.09"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X3",
+                "language1": "X3系列发射器",
+                "language2": "X3 Transtmitter"
+            },
+            "device_id": "X3L",
+            "firmware_url": "X3L_V1.09_APP.zip",
+            "release_date": "2025/07/16",
+            "remark": {
+                "language1": "X3L 无线发射器, 适用于徕卡相机",
+                "language2": "X3L wireless control(Transimitter) for Leica Cameras"
+            },
+            "update_contents": {
+                "language1": "1、优化控制处理和相机连接。",
+                "language2": "1. Optimize control processing and camera connection."
+            },
+            "update_contents_url": "X3L Firmware Instructions.pdf",
+            "version": "V1.09"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "XPROII",
+                "language1": "XProII系列发射器",
+                "language2": "XProII Transtmitter"
+            },
+            "device_id": "XProIIC",
+            "firmware_url": "XProIIC_V1.40.zip",
+            "release_date": "2023/07/19",
+            "remark": {
+                "language1": "XProII 无线发射器, 适用于佳能相机",
+                "language2": "XProII wireless control(Transimitter) for Canon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、修复在单组设置界面，调入用户预设值后导致的显示错乱、不可切换组别的问题。",
+                "language2": "1. Fixing the issue of incorrect display and the inability to switch groups in the single-group setting interface, which is caused by adjusting the user's preset values."
+            },
+            "update_contents_url": "XProIIC_V1.40.pdf",
+            "version": "V1.40"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "XPROII",
+                "language1": "XProII系列发射器",
+                "language2": "XProII Transtmitter"
+            },
+            "device_id": "XProIIN",
+            "firmware_url": "XProIIN_V1.50.zip",
+            "release_date": "2024/08/07",
+            "remark": {
+                "language1": "XProIIN 无线发射器, 适用于尼康相机",
+                "language2": "XProIIN wireless control(Transimitter) for Nikon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、修复了在Z9，Z6III相机上使用时，无法正常引闪的问题。\n2、修复一些小问题。",
+                "language2": "1. Fixed the issue where the Z9 and Z6III cameras could not trigger the flash properly.\n2. Fixed some minor issues."
+            },
+            "update_contents_url": "XProIIN_V1.50.pdf",
+            "version": "V1.50"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "XPROII",
+                "language1": "XProII系列发射器",
+                "language2": "XProII Transtmitter"
+            },
+            "device_id": "XProIIS",
+            "firmware_url": "XProIIS_V1.30.zip",
+            "release_date": "2023/07/19",
+            "remark": {
+                "language1": "XProIIS 无线发射器, 适用于索尼相机",
+                "language2": "XProIIS wireless control(Transimitter) for Sony Cameras"
+            },
+            "update_contents": {
+                "language1": "1、修复在单组设置界面，调入用户预设值后导致的显示错乱、不可切换组别的问题。",
+                "language2": "1. Fixing the issue of incorrect display and the inability to switch groups in the single-group setting interface, which is caused by adjusting the user's preset values."
+            },
+            "update_contents_url": "XProIIS_V1.30.pdf",
+            "version": "V1.30"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "XPROII",
+                "language1": "XProII系列发射器",
+                "language2": "XProII Transtmitter"
+            },
+            "device_id": "XProIIF",
+            "firmware_url": "XProIIF_V1.40.zip",
+            "release_date": "2023/07/19",
+            "remark": {
+                "language1": "XProIIF 无线发射器, 适用于富士相机",
+                "language2": "XProIIF wireless control(Transimitter) for Fuji Cameras"
+            },
+            "update_contents": {
+                "language1": "1、修复在单组设置界面，调入用户预设值后导致的显示错乱、不可切换组别的问题。",
+                "language2": "1. Fixing the issue of incorrect display and the inability to switch groups in the single-group setting interface, which is caused by adjusting the user's preset values."
+            },
+            "update_contents_url": "XProIIF_V1.40.pdf",
+            "version": "V1.40"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "XPROII",
+                "language1": "XProII系列发射器",
+                "language2": "XProII Transtmitter"
+            },
+            "device_id": "XProIIO",
+            "firmware_url": "XProIIO_V1.40.zip",
+            "release_date": "2023/07/19",
+            "remark": {
+                "language1": "XProIIO 无线发射器, 适用于奥林巴斯/松下相机",
+                "language2": "XProIIO wireless control(Transimitter) for Olympus/Panasonic Cameras"
+            },
+            "update_contents": {
+                "language1": "1、修复在单组设置界面，调入用户预设值后导致的显示错乱、不可切换组别的问题。",
+                "language2": "1. Fixing the issue of incorrect display and the inability to switch groups in the single-group setting interface, which is caused by adjusting the user's preset values."
+            },
+            "update_contents_url": "XProIIO_V1.40.pdf",
+            "version": "V1.40"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "XPROII",
+                "language1": "XProII系列发射器",
+                "language2": "XProII Transtmitter"
+            },
+            "device_id": "XProIIL",
+            "firmware_url": "XProIIL_V1.40.zip",
+            "release_date": "2023/07/19",
+            "remark": {
+                "language1": "XProIIL 无线发射器, 适用于徕卡相机",
+                "language2": "XProIIL wireless control(Transimitter) for Leica Cameras"
+            },
+            "update_contents": {
+                "language1": "1、修复在单组设置界面，调入用户预设值后导致的显示错乱、不可切换组别的问题。",
+                "language2": "1. Fixing the issue of incorrect display and the inability to switch groups in the single-group setting interface, which is caused by adjusting the user's preset values."
+            },
+            "update_contents_url": "XProIIL_V1.40.pdf",
+            "version": "V1.40"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "XPRO",
+                "language1": "XPro系列发射器",
+                "language2": "XPro Transtmitter"
+            },
+            "device_id": "XProP",
+            "firmware_url": "XProP_V1.2.zip",
+            "release_date": "2020/11/07",
+            "remark": {
+                "language1": "XProP 无线发射器, 适用于宾得徕卡相机",
+                "language2": "XProP wireless control(Transimitter) for Pentax Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加功率值小数形态显示。",
+                "language2": "1. To add the decimal display form of power value."
+            },
+            "update_contents_url": "XProP_V1.2.pdf",
+            "version": "V1.20"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TC",
+            "firmware_url": "X2TC_V1.40.zip",
+            "release_date": "2022/06/30",
+            "remark": {
+                "language1": "X2TC 无线发射器, 适用于佳能相机",
+                "language2": "X2TC wireless control(Transimitter) for Canon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、配合手机APP的更新",
+                "language2": "1. Updated according to GodoxFlash APP on smartphone"
+            },
+            "update_contents_url": "X2TC_V1.40.pdf",
+            "version": "V1.40"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TN",
+            "firmware_url": "X2TN_V1.40.zip",
+            "release_date": "2024/08/07",
+            "remark": {
+                "language1": "X2TN 无线发射器, 适用于尼康相机",
+                "language2": "X2TN wireless control(Transimitter) for Nikon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、修复了在Z9，Z6III相机上使用时，无法正常引闪的问题。\n2、修复在频闪模式下，快门速度不受限制的问题。\n3、修复一些小问题。",
+                "language2": "1. Fixed the issue where the Z9 and Z6III cameras could not trigger the flash properly.\n2. Fixed some minor issues."
+            },
+            "update_contents_url": "X2TN_V1.40.pdf",
+            "version": "V1.40"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TS",
+            "firmware_url": "X2TS_V1.40.zip",
+            "release_date": "2022/06/30",
+            "remark": {
+                "language1": "X2TS 无线发射器, 适用于索尼相机",
+                "language2": "X2TS wireless control(Transimitter) for Sony Cameras"
+            },
+            "update_contents": {
+                "language1": "1、配合手机APP的更新。 ",
+                "language2": "1、Updated according to GodoxFlash APP on smartphone."
+            },
+            "update_contents_url": "X2TS_V1.40.pdf",
+            "version": "V1.40"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TF",
+            "firmware_url": "X2TF_V1.40.zip",
+            "release_date": "2022/08/22",
+            "remark": {
+                "language1": "X2TF 无线发射器, 适用于富士相机",
+                "language2": "X2TF wireless control(Transimitter) for Fuji Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对 X-S10，GFX100S，X-H2S 相机的支持",
+                "language2": "1. To add compatibility with X-S10，GFX100S，X-H2S cameras"
+            },
+            "update_contents_url": "X2TF_V1.40.pdf",
+            "version": "V1.40"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TO",
+            "firmware_url": "X2TO_V1.30.zip",
+            "release_date": "2022/06/30",
+            "remark": {
+                "language1": "X2TO 无线发射器, 适用于奥林巴斯/松下相机",
+                "language2": "X2TO wireless control(Transimitter) for Olympus/Panasonic Cameras"
+            },
+            "update_contents": {
+                "language1": "1、配合手机APP的更新。 ",
+                "language2": "1、Updated according to GodoxFlash APP on smartphone."
+            },
+            "update_contents_url": "X2TO_V1.30.pdf",
+            "version": "V1.30"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TP",
+            "firmware_url": "X2TP_V1.30.zip",
+            "release_date": "2022/08/02",
+            "remark": {
+                "language1": "X2TP 无线发射器, 适用于宾得索尼相机",
+                "language2": "X2TP wireless control(Transimitter) for Pentax Cameras"
+            },
+            "update_contents": {
+                "language1": "1、修复V1.2固件升级后无法设置CH值的问题。",
+                "language2": "1、Bug fixed, Can not set the CH value after upgrade to V1.20."
+            },
+            "update_contents_url": "X2TP_V1.30.pdf",
+            "version": "V1.30"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TC_Z01",
+            "firmware_url": "X2TC_Z01_V1.40.zip",
+            "release_date": "2022/06/30",
+            "remark": {
+                "language1": "X2TC 无线发射器, 适用于佳能相机，有Z01标记",
+                "language2": "X2TC wireless control(Transimitter) for Canon Cameras，with Z01 symbol."
+            },
+            "update_contents": {
+                "language1": "1、配合手机APP的更新",
+                "language2": "1. Updated according to GodoxFlash APP on smartphone"
+            },
+            "update_contents_url": "X2TC_Z01_V1.40.pdf",
+            "version": "V1.40"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TN_Z01",
+            "firmware_url": "X2TN_Z01_V1.30.zip",
+            "release_date": "2024/08/07",
+            "remark": {
+                "language1": "X2TN 无线发射器, 适用于尼康相机，有Z01标记",
+                "language2": "X2TN wireless control(Transimitter) for Nikon Cameras，with Z01 symbol."
+            },
+            "update_contents": {
+                "language1": "1、修复了在Z9，Z6III相机上使用时，无法正常引闪的问题。\n2、修复在频闪模式下，快门速度不受限制的问题。\n3、修复一些小问题。",
+                "language2": "1. Fixed the issue where the Z9 and Z6III cameras could not trigger the flash properly.\n2. Fixed some minor issues."
+            },
+            "update_contents_url": "X2TN_Z01_V1.30.pdf",
+            "version": "V1.30"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TS_Z01",
+            "firmware_url": "X2TS_Z01_V1.40.zip",
+            "release_date": "2022/06/30",
+            "remark": {
+                "language1": "X2TS 无线发射器, 适用于索尼相机，有Z01标记",
+                "language2": "X2TS wireless control(Transimitter) for Sony Cameras，with Z01 symbol."
+            },
+            "update_contents": {
+                "language1": "1、配合手机APP的更新。 ",
+                "language2": "1、Updated according to GodoxFlash APP on smartphone."
+            },
+            "update_contents_url": "X2TS_Z01_V1.40.pdf",
+            "version": "V1.04"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X2T",
+                "language1": "X2系列发射器",
+                "language2": "X2 Transtmitter"
+            },
+            "device_id": "X2TC_Z02",
+            "firmware_url": "X2TC_Z02_V1.01.zip",
+            "release_date": "2025/07/22",
+            "remark": {
+                "language1": "X2TC 无线发射器, 适用于佳能相机，有Z02标记",
+                "language2": "X2TC wireless control(Transimitter) for Canon Cameras，with Z02 symbol."
+            },
+            "update_contents": {
+                "language1": "1. 增加对EOS R 系列相机的支持（需要接收端也支持）。",
+                "language2": "1. Add support to EOS R series cameras (Receiver side must already supported)."
+            },
+            "update_contents_url": "X2TC_Z02 Firmware Instructions.pdf",
+            "version": "V1.01"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "XR",
+                "language1": "XR接收器",
+                "language2": "XR Receiver"
+            },
+            "device_id": "XR",
+            "firmware_url": "XR_V1.00.zip",
+            "release_date": "2025/7/23",
+            "remark": {
+                "language1": "XR 无线接收器, 适用于佳能/尼康机顶闪光灯",
+                "language2": "XR wireless control(Receiver) for Canon/Nikon Speedlite"
+            },
+            "update_contents": {
+                "language1": "初始量产版本",
+                "language2": "First Production version"
+            },
+            "update_contents_url": "XR Firmware Instructions.pdf",
+            "version": "V1.00"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "XR",
+                "language1": "XR接收器",
+                "language2": "XR Receiver"
+            },
+            "device_id": "XRS",
+            "firmware_url": "XRS_V1.00.zip",
+            "release_date": "2025/7/23",
+            "remark": {
+                "language1": "XRS 无线接收器, 适用于索尼机顶闪光灯",
+                "language2": "XRS wireless control(Receiver) for Sony Speedlite"
+            },
+            "update_contents": {
+                "language1": "初始量产版本",
+                "language2": "First Production version"
+            },
+            "update_contents_url": "XRS Firmware Instructions.pdf",
+            "version": "V1.00"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X1R",
+                "language1": "X1R 接收器",
+                "language2": "X1R Receiver"
+            },
+            "device_id": "X1RC",
+            "firmware_url": "X1RC_V26.zip",
+            "release_date": "2022/06/15",
+            "remark": {
+                "language1": "X1RC 无线接收器, 适用于佳能机顶闪光灯",
+                "language2": "X1RC wireless control(Receiver) for Canon Speedlite"
+            },
+            "update_contents": {
+                "language1": "1、修复一些小问题。",
+                "language2": "1. Fixed some minor issues."
+            },
+            "update_contents_url": "X1RC_V26.pdf",
+            "version": "V26"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X1R",
+                "language1": "X1R接收器",
+                "language2": "X1R Receiver"
+            },
+            "device_id": "X1RN",
+            "firmware_url": "X1RN_V22.zip",
+            "release_date": "2024/06/05",
+            "remark": {
+                "language1": "X1RN 无线接收器, 适用于尼康机顶闪光灯",
+                "language2": "X1RN wireless control(Receiver) for Nikon Speedlite"
+            },
+            "update_contents": {
+                "language1": "1、修复发射器端按TEST按钮引闪后，高速闪光时可能出现的闪光不正常的问题。修复接收器顶部热靴安装的闪灯显示屏不规则开启背光的问题。\n2、修复一些小问题。",
+                "language2": "1. Fixed the issue where abnormal flash behavior might occur on the receiver when triggering high-speed flash after pressing the TEST button. Resolved the problem of irregular backlight activation on the flash display screen mounted on the top hot shoe of the receiver.\n2. Fixed some minor issues."
+            },
+            "update_contents_url": "X1RN_V22.pdf",
+            "version": "V22"
+        },
+        {
+            "category1": {
+                "id": "Control_System",
+                "language1": "遥控系统",
+                "language2": "Control System"
+            },
+            "category2": {
+                "id": "Wireless_Trigger",
+                "language1": "无线引闪器",
+                "language2": "Wireless Trigger"
+            },
+            "category3": {
+                "id": "X1R",
+                "language1": "X1R接收器",
+                "language2": "X1R Receiver"
+            },
+            "device_id": "X1RS",
+            "firmware_url": "X1RS_V05.zip",
+            "release_date": "2024/06/05",
+            "remark": {
+                "language1": "X1RS 无线接收器, 适用于索尼机顶闪光灯",
+                "language2": "X1RS wireless control(Receiver) for Sony Speedlite"
+            },
+            "update_contents": {
+                "language1": "1、用户可设置 RF ID。方式：同时按住CH 和 GR 按钮开机，进入 RF ID 设置界面，短按或长按 CH 按钮，增大ID 值；短按或长按 GR 按钮，减少 ID 值。等待 5s 后关机，ID值已设置并保存。正常开机，ID值影响 RF 接收。\n2、修复一些小问题。",
+                "language2": "1. The customer can set RF ID. Operation: press the CH and GR button simultaneously and power it on to enter the RF ID setting interface. Short or long press the CH button to add the ID value while short or long press the GR button to decrease. Power off the flash trigger after 5s, and ID value can be set and saved. Then, power it on, and the ID value will affect RF reception."
+            },
+            "update_contents_url": "X1RS_V05.pdf",
+            "version": "V05"
+        },
+        {
+            "category1": {
+                "id": "AUDIO",
+                "language1": "影音系统",
+                "language2": "Audio"
+            },
+            "category2": {
+                "id": "Wireless_Microphone",
+                "language1": "无线麦克风",
+                "language2": "Wireless Microphone"
+            },
+            "category3": {
+                "id": "WMicS1",
+                "language1": "WMicS1 UHF无线麦克风",
+                "language2": "UHF Wireless Microphone System WMicS1"
+            },
+            "device_id": "WMicS1_TX",
+            "firmware_url": "WMicS1_TX_V2.00_20.zip",
+            "release_date": "2021/08/04",
+            "remark": {
+                "language1": "WMicS1 发射器",
+                "language2": "WMicS1 Transmitter"
+            },
+            "update_contents": {
+                "language1": "1、优化晶振频率选择。",
+                "language2": "1. Optimize crystal frequency selection."
+            },
+            "update_contents_url": "WMicS1_TX_V2.00_20.pdf",
+            "version": "V2.00_20"
+        },
+        {
+            "category1": {
+                "id": "AUDIO",
+                "language1": "影音系统",
+                "language2": "Audio"
+            },
+            "category2": {
+                "id": "Wireless_Microphone",
+                "language1": "无线麦克风",
+                "language2": "Wireless Microphone"
+            },
+            "category3": {
+                "id": "WMicS1",
+                "language1": "WMicS1 UHF无线麦克风",
+                "language2": "UHF Wireless Microphone System WMicS1"
+            },
+            "device_id": "WMicS1_RX",
+            "firmware_url": "WMicS1_RX_V2.00_21.zip",
+            "release_date": "2023/08/28",
+            "remark": {
+                "language1": "WMicS1 接收器",
+                "language2": "WMicS1 Receiver"
+            },
+            "update_contents": {
+                "language1": "1、提升接收机无线接收性能。",
+                "language2": "1. Improve receiver wireless reception performance."
+            },
+            "update_contents_url": "WMicS1_RX_V2.00_21.pdf",
+            "version": "V2.00_21"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Studio_Packs",
+                "language1": "影室闪光灯",
+                "language2": "Studio Packs"
+            },
+            "category3": {
+                "id": "Power_Packs",
+                "language1": "电箱",
+                "language2": "Power Packs"
+            },
+            "device_id": "P2400",
+            "firmware_url": "P2400_GODOX_V2.7.zip",
+            "release_date": "2026/7/6",
+            "remark": {
+                "language1": "P2400 电箱",
+                "language2": "P2400"
+            },
+            "update_contents": {
+                "language1": "1、优化最优色温模式。\n2、菜单增加2.4G无线同步功能，可直接同步发射器的通道和识别号，无需手动设置通道和识别号。\n3、2.4G默认通道改为21，和发射器默认通道一致。",
+                "language2": "1.Optimize the optimal color temperature mode.\n2.Add a 2.4G wireless synchronization function to the menu. It can directly synchronize the transmitter’s channel and ID without manual configuration.\n3.The default 2.4G channel is revised to 21 to match the transmitter’s default channel."
+            },
+            "update_contents_url": "P2400 Firmware Instructions V2.7.pdf",
+            "version": "V2.7"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Outdoor_Flashes",
+                "language1": "外拍灯系列",
+                "language2": "Outdoor Flashes"
+            },
+            "category3": {
+                "id": "",
+                "language1": "",
+                "language2": ""
+            },
+            "device_id": "AD100Pro",
+            "firmware_url": "AD100Pro_V1.2.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "AD100 Pro 外拍灯",
+                "language2": "Pocket Flash AD100Pro"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "AD100Pro_V1.2.pdf",
+            "version": "V1.2"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Outdoor_Flashes",
+                "language1": "外拍灯系列",
+                "language2": "Outdoor Flashes"
+            },
+            "category3": {
+                "id": "",
+                "language1": "",
+                "language2": ""
+            },
+            "device_id": "AD200Pro",
+            "firmware_url": "AD200Pro_V1.6.zip",
+            "release_date": "2024/05/22",
+            "remark": {
+                "language1": "AD200 Pro 外拍灯",
+                "language2": "Pocket Flash AD200Pro"
+            },
+            "update_contents": {
+                "language1": "1、兼容AD-S200闪光灯头。",
+                "language2": "1. To add compatibility with the AD-S200 flash light head."
+            },
+            "update_contents_url": "AD200Pro_V1.6.pdf",
+            "version": "V1.6"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Outdoor_Flashes",
+                "language1": "外拍灯系列",
+                "language2": "Outdoor Flashes"
+            },
+            "category3": {
+                "id": "",
+                "language1": "",
+                "language2": ""
+            },
+            "device_id": "AD200Pro_A",
+            "firmware_url": "AD200Pro_A_V1.6(for Version A).zip",
+            "release_date": "2024/05/22",
+            "remark": {
+                "language1": "AD200 Pro 外拍灯，有version A 贴纸。",
+                "language2": "Pocket Flash AD200Pro with sticker \"Version A\"."
+            },
+            "update_contents": {
+                "language1": "1、兼容AD-S200闪光灯头。",
+                "language2": "1. To add compatibility with the AD-S200 flash light head."
+            },
+            "update_contents_url": "AD200Pro_A_V1.6(for Version A).pdf",
+            "version": "V1.6"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Outdoor_Flashes",
+                "language1": "外拍灯系列",
+                "language2": "Outdoor Flashes"
+            },
+            "category3": {
+                "id": "",
+                "language1": "",
+                "language2": ""
+            },
+            "device_id": "AD200ProII",
+            "firmware_url": "AD200ProII_V1.03.zip",
+            "release_date": "2024/09/27",
+            "remark": {
+                "language1": "AD200ProII 外拍灯",
+                "language2": "Pocket Flash AD200ProII"
+            },
+            "update_contents": {
+                "language1": "1、增加433MHz引闪器功能。",
+                "language2": "1. Added 433 MHz triggering functionality."
+            },
+            "update_contents_url": "AD200ProII_V1.03.pdf",
+            "version": "V1.03"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Outdoor_Flashes",
+                "language1": "外拍灯系列",
+                "language2": "Outdoor Flashes"
+            },
+            "category3": {
+                "id": "",
+                "language1": "",
+                "language2": ""
+            },
+            "device_id": "AD300Pro",
+            "firmware_url": "AD300Pro_V1.2.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "AD300 Pro 外拍灯",
+                "language2": "Outdoor Flash AD300Pro"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "AD300Pro_V1.2.pdf",
+            "version": "V1.2"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Outdoor_Flashes",
+                "language1": "外拍灯系列",
+                "language2": "Outdoor Flashes"
+            },
+            "category3": {
+                "id": "",
+                "language1": "",
+                "language2": ""
+            },
+            "device_id": "AD400Pro",
+            "firmware_url": "AD400Pro_V1.4.zip",
+            "release_date": "2023/08/11",
+            "remark": {
+                "language1": "AD400 Pro 外拍灯",
+                "language2": "WITSTRO All-in-One Outdoor Flash AD400Pro"
+            },
+            "update_contents": {
+                "language1": "1、菜单增加GROUP选项，拓展组别最大至16组。",
+                "language2": "1. To add GROUP to the menu, with Controllable Receiver Groups increased to 16."
+            },
+            "update_contents_url": "AD400Pro_V1.4.pdf",
+            "version": "V1.4"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Outdoor_Flashes",
+                "language1": "外拍灯系列",
+                "language2": "Outdoor Flashes"
+            },
+            "category3": {
+                "id": "",
+                "language1": "",
+                "language2": ""
+            },
+            "device_id": "AD600ProII",
+            "firmware_url": "AD600ProII_V1.07.zip",
+            "release_date": "2024/10/21",
+            "remark": {
+                "language1": "AD600 ProII 外拍灯",
+                "language2": "WITSTRO All-in-One Outdoor Flash AD600ProII"
+            },
+            "update_contents": {
+                "language1": "1、增加433MHz引闪器功能。\n2、修复连接灯头延长线后风扇一直开启的问题。 ",
+                "language2": "1. Added 433 MHz triggering functionality.\n2. Fixed the issue where the fan remained on after connecting the head extension cable."
+            },
+            "update_contents_url": "AD600ProII_V1.07.pdf",
+            "version": "V1.07"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Outdoor_Flashes",
+                "language1": "外拍灯系列",
+                "language2": "Outdoor Flashes"
+            },
+            "category3": {
+                "id": "",
+                "language1": "",
+                "language2": ""
+            },
+            "device_id": "AD1200Pro",
+            "firmware_url": "AD1200Pro_V1.2.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "TTL电箱套装 AD1200Pro",
+                "language2": "1200Ws TTL Power Pack Kit AD1200Pro"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "AD1200Pro_V1.2.pdf",
+            "version": "V1.2"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Lux_Retro_Flashs",
+                "language1": "Lux 系列复古灯",
+                "language2": "Lux Series Retro Camera Flashes"
+            },
+            "category3": {
+                "id": "",
+                "language1": "",
+                "language2": ""
+            },
+            "device_id": "Lux_Master",
+            "firmware_url": "Lux_Master_V1.02.zip",
+            "release_date": "2024/05/09",
+            "remark": {
+                "language1": "Lux Master 复古灯",
+                "language2": "Lux Master"
+            },
+            "update_contents": {
+                "language1": "1、改善屏幕触摸。",
+                "language2": "1. Improve screen touch."
+            },
+            "update_contents_url": "Lux_Master Firmware Instructions.pdf",
+            "version": "V1.02"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V1",
+                "language1": "V1 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V1 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V1C",
+            "firmware_url": "V1C_V1.9.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "V1C 机顶灯, 适用于佳能相机",
+                "language2": "V1C Camera Flash for Canon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V1C_V1.9.pdf",
+            "version": "V1.9"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V1",
+                "language1": "V1 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V1 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V1N",
+            "firmware_url": "V1N_V1.6.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "V1N 机顶灯, 适用于尼康相机",
+                "language2": "V1N Camera Flash for Nikon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V1N_V1.6.pdf",
+            "version": "V1.6"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V1",
+                "language1": "V1 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V1 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V1S",
+            "firmware_url": "V1S_V1.8.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "V1S 机顶灯, 适用于索尼相机",
+                "language2": "V1S Camera Flash for Sony Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V1S_V1.8.pdf",
+            "version": "V1.8"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V1",
+                "language1": "V1 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V1 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V1F",
+            "firmware_url": "V1F_V1.3.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "V1F 机顶灯, 适用于富士相机",
+                "language2": "V1F Camera Flash for Fuji Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V1F_V1.3.pdf",
+            "version": "V1.3"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V1",
+                "language1": "V1 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V1 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V1O",
+            "firmware_url": "V1O_V1.3.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "V1O 机顶灯, 适用于奥林巴斯/松下相机",
+                "language2": "V1O Camera Flash for Olympus/Panasonic Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V1O_V1.3.pdf",
+            "version": "V1.3"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V1",
+                "language1": "V1 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V1 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V1P",
+            "firmware_url": "V1P_V1.2.zip",
+            "release_date": "2020/07/16",
+            "remark": {
+                "language1": "V1P 机顶灯, 适用于宾得相机",
+                "language2": "V1P Camera Flash for Pentax Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加 Mode 按键锁住功能（长按 MODE 按键 2 秒）。\n2、替换字符，RX 替换 Slave。",
+                "language2": "1. To add the lock function by pressing the MODE button for 2 seconds.\n 2. To replace the display sign “Slave” with \"RX\"."
+            },
+            "update_contents_url": "V1P_V1.2.pdf",
+            "version": "V1.2"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V860III",
+                "language1": "V860III 系列TTL锂电机顶闪光灯",
+                "language2": "V860III series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V860IIIC",
+            "firmware_url": "V860IIIC_V1.3.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "V860III C 机顶灯, 适用于佳能相机",
+                "language2": "V860III C Camera Flash for Canon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V860IIIC_V1.3.pdf",
+            "version": "V1.3"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V860III",
+                "language1": "V860III 系列TTL锂电机顶闪光灯",
+                "language2": "V860III series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V860IIIN",
+            "firmware_url": "V860IIIN_V1.1.zip",
+            "release_date": "2022/08/17",
+            "remark": {
+                "language1": "V860III N 机顶灯, 适用于尼康相机",
+                "language2": "V860III N Camera Flash for Nikon Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V860IIIN_V1.1.pdf",
+            "version": "V1.1"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V860III",
+                "language1": "V860III 系列TTL锂电机顶闪光灯",
+                "language2": "V860III series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V860IIIS",
+            "firmware_url": "V860IIIS_V1.1.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "V860III S 机顶灯, 适用于索尼相机",
+                "language2": "V860III S Camera Flash for Sony Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V860IIIS_V1.1.pdf",
+            "version": "V1.1"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V860III",
+                "language1": "V860III 系列TTL锂电机顶闪光灯",
+                "language2": "V860III series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V860IIIF",
+            "firmware_url": "V860IIIF_V1.1.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "V860III F 机顶灯, 适用于富士相机",
+                "language2": "V860III F Camera Flash for Fuji Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V860IIIF_V1.1.pdf",
+            "version": "V1.1"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V860III",
+                "language1": "V860III 系列TTL锂电机顶闪光灯",
+                "language2": "V860III series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V860IIIO",
+            "firmware_url": "V860IIIO_V1.1.zip",
+            "release_date": "2022/08/16",
+            "remark": {
+                "language1": "V860III O 机顶灯, 适用于奥林巴斯/松下相机",
+                "language2": "V860III O Camera Flash for Olympus/Panasonic Cameras"
+            },
+            "update_contents": {
+                "language1": "1、增加对徕卡引闪器的兼容。",
+                "language2": "1. To add compatibility with Flash Trigger for Leica."
+            },
+            "update_contents_url": "V860IIIO_V1.1.pdf",
+            "version": "V1.1"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V100",
+                "language1": "V100 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V100 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V100C",
+            "firmware_url": "V100C_V1.11.zip",
+            "release_date": "2025/11/26",
+            "remark": {
+                "language1": "V100C 机顶灯, 适用于佳能相机",
+                "language2": "V100C Camera Flash for Canon Cameras"
+            },
+            "update_contents": {
+                "language1": "1. 新增功能：SU-1开关掉电存储；屏幕锁定掉电存储；可在菜单中关闭开机锁定，开机无需解锁。\n2. 优化跳闪TTL。",
+                "language2": "1.New Features: SU-1 switch power-off memory; screen lock power-off memory; support disabling power-on lock in the menu (no unlock required on startup).\n2.Optimize Bounce Flash TTL."
+            },
+            "update_contents_url": "V100C Firmware Instructions.pdf",
+            "version": "V1.11"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V100",
+                "language1": "V100 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V100 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V100N",
+            "firmware_url": "V100N_V1.05.zip",
+            "release_date": "2026/4/10",
+            "remark": {
+                "language1": "V100N 机顶灯, 适用于尼康相机",
+                "language2": "V100N Camera Flash for Nikon Cameras"
+            },
+            "update_contents": {
+                "language1": "修复闪光灯在尼康Z8和Z9相机上使用时漏闪的问题。",
+                "language2": "Fixed the intermittent misfiring issue when using the flash with Nikon Z8 and Z9 cameras."
+            },
+            "update_contents_url": "V100N Firmware Instructions.pdf",
+            "version": "V1.05"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V100",
+                "language1": "V100 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V100 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V100S",
+            "firmware_url": "V100S_V1.06.zip",
+            "release_date": "2025/11/26",
+            "remark": {
+                "language1": "V100S 机顶灯, 适用于索尼相机",
+                "language2": "V100S Camera Flash for Sony Cameras"
+            },
+            "update_contents": {
+                "language1": "新增功能：SU-1开关掉电存储；屏幕锁定掉电存储；可在菜单中关闭开机锁定，开机无需解锁。",
+                "language2": "New Features: SU-1 switch power-off memory; screen lock power-off memory; support disabling power-on lock in the menu (no unlock required on startup)."
+            },
+            "update_contents_url": "V100S Firmware Instructions.pdf",
+            "version": "V1.06"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V100",
+                "language1": "V100 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V100 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V100F",
+            "firmware_url": "V100F_V1.03.zip",
+            "release_date": "2025/11/26",
+            "remark": {
+                "language1": "V100F 机顶灯, 适用于富士相机",
+                "language2": "V100F Camera Flash for Fuji Cameras"
+            },
+            "update_contents": {
+                "language1": "新增功能：SU-1开关掉电存储；屏幕锁定掉电存储；可在菜单中关闭开机锁定，开机无需解锁。",
+                "language2": "New Features: SU-1 switch power-off memory; screen lock power-off memory; support disabling power-on lock in the menu (no unlock required on startup)."
+            },
+            "update_contents_url": "V100F Firmware Instructions.pdf",
+            "version": "V1.03"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V100",
+                "language1": "V100 系列TTL锂电圆头机顶闪光灯",
+                "language2": "V100 series TTL Li-ion Round Head Camera Flash"
+            },
+            "device_id": "V100O",
+            "firmware_url": "V100O_V1.04.zip",
+            "release_date": "2025/11/26",
+            "remark": {
+                "language1": "V100O 机顶灯, 适用于奥林巴斯/松下相机",
+                "language2": "V100O Camera Flash for Olympus/Panasonic Cameras"
+            },
+            "update_contents": {
+                "language1": "新增功能：SU-1开关掉电存储；屏幕锁定掉电存储；可在菜单中关闭开机锁定，开机无需解锁。",
+                "language2": "New Features: SU-1 switch power-off memory; screen lock power-off memory; support disabling power-on lock in the menu (no unlock required on startup)."
+            },
+            "update_contents_url": "V100O Firmware Instructions.pdf",
+            "version": "V1.04"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V480",
+                "language1": "V480 系列TTL锂电机顶闪光灯",
+                "language2": "V480 series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V480C",
+            "firmware_url": "V480C_V1.03.zip",
+            "release_date": "2026/02/11",
+            "remark": {
+                "language1": "V480C 机顶灯, 适用于佳能相机",
+                "language2": "V480C Camera Flash for Canon Cameras"
+            },
+            "update_contents": {
+                "language1": "1.新增功能：屏幕锁定掉电存储。可在菜单中关闭开机锁定，开机无需解锁。菜单增加无线引闪距离，可选择近距离引闪。\n2.解决佳能R1、R6 Mark III、R50 V、PowerShot V1相机高速同步兼容问题。",
+                "language2": "1. New Features: Screen lock power-off memory. Support disabling power-on lock in the menu (no unlock required on startup).Added wireless flash triggering distance options in the menu, allowing selection of short-range triggering.\n2. Resolves high-speed sync compatibility issues with Canon R1, R6 Mark III, R50 V, and PowerShot V1 cameras."
+            },
+            "update_contents_url": "V480C Firmware Instructions.pdf",
+            "version": "V1.03"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V480",
+                "language1": "V480 系列TTL锂电机顶闪光灯",
+                "language2": "V480 series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V480N",
+            "firmware_url": "V480N_V1.04.zip",
+            "release_date": "2026/4/10",
+            "remark": {
+                "language1": "V480N 机顶灯, 适用于尼康相机",
+                "language2": "V480N Camera Flash for Nikon Cameras"
+            },
+            "update_contents": {
+                "language1": "修复闪光灯在尼康Z8和Z9相机上使用时漏闪的问题。",
+                "language2": "Fixed the intermittent misfiring issue when using the flash with Nikon Z8 and Z9 cameras."
+            },
+            "update_contents_url": "V480N Firmware Instructions.pdf",
+            "version": "V1.04"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V480",
+                "language1": "V480 系列TTL锂电机顶闪光灯",
+                "language2": "V480 series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V480S",
+            "firmware_url": "V480S_V1.03.zip",
+            "release_date": "2026/02/11",
+            "remark": {
+                "language1": "V480S 机顶灯, 适用于索尼相机",
+                "language2": "V480S Camera Flash for Sony Cameras"
+            },
+            "update_contents": {
+                "language1": "新增功能：屏幕锁定掉电存储。可在菜单中关闭开机锁定，开机无需解锁。菜单增加无线引闪距离，可选择近距离引闪。",
+                "language2": "New Features: Screen lock power-off memory.Support disabling power-on lock in the menu (no unlock required on startup).Added wireless flash triggering distance options in the menu, allowing selection of short-range triggering."
+            },
+            "update_contents_url": "V480S Firmware Instructions.pdf",
+            "version": "V1.03"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V480",
+                "language1": "V480 系列TTL锂电机顶闪光灯",
+                "language2": "V480 series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V480F",
+            "firmware_url": "V480F_V1.03.zip",
+            "release_date": "2026/02/11",
+            "remark": {
+                "language1": "V480F 机顶灯, 适用于富士相机",
+                "language2": "V480F Camera Flash for Fuji Cameras"
+            },
+            "update_contents": {
+                "language1": "新增功能：屏幕锁定掉电存储。可在菜单中关闭开机锁定，开机无需解锁。菜单增加无线引闪距离，可选择近距离引闪。",
+                "language2": "New Features: Screen lock power-off memory.Support disabling power-on lock in the menu (no unlock required on startup).Added wireless flash triggering distance options in the menu, allowing selection of short-range triggering."
+            },
+            "update_contents_url": "V480F Firmware Instructions.pdf",
+            "version": "V1.03"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V480",
+                "language1": "V480 系列TTL锂电机顶闪光灯",
+                "language2": "V480 series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V480O",
+            "firmware_url": "V480O_V1.03.zip",
+            "release_date": "2026/02/11",
+            "remark": {
+                "language1": "V480O 机顶灯, 适用于奥林巴斯/松下相机",
+                "language2": "V480O Camera Flash for Olympus/Panasonic Cameras"
+            },
+            "update_contents": {
+                "language1": "新增功能：屏幕锁定掉电存储。可在菜单中关闭开机锁定，开机无需解锁。菜单增加无线引闪距离，可选择近距离引闪。",
+                "language2": "New Features: Screen lock power-off memory.Support disabling power-on lock in the menu (no unlock required on startup).Added wireless flash triggering distance options in the menu, allowing selection of short-range triggering."
+            },
+            "update_contents_url": "V480O Firmware Instructions.pdf",
+            "version": "V1.03"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "V1mid",
+                "language1": "V1mid 系列TTL锂电机顶闪光灯",
+                "language2": "V1mid series TTL Li-ion Camera Flash"
+            },
+            "device_id": "V1midN",
+            "firmware_url": "V1midN_V1.01.zip",
+            "release_date": "2026/4/10",
+            "remark": {
+                "language1": "V1midN 机顶灯, 适用于尼康相机",
+                "language2": "V1midN Camera Flash for Nikon Cameras"
+            },
+            "update_contents": {
+                "language1": "修复闪光灯在尼康Z8和Z9相机上使用时漏闪的问题。",
+                "language2": "Fixed the intermittent misfiring issue when using the flash with Nikon Z8 and Z9 cameras."
+            },
+            "update_contents_url": "V1midN Firmware Instructions.pdf",
+            "version": "V1.01"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "iT30Pro",
+                "language1": "iT30Pro 系列TTL锂电机顶闪光灯",
+                "language2": "iT30Pro series TTL Li-ion Camera Flash"
+            },
+            "device_id": "iT30ProC",
+            "firmware_url": "iT30ProC_V1.02.zip",
+            "release_date": "2026/02/11",
+            "remark": {
+                "language1": "iT30ProC 机顶灯, 适用于佳能相机",
+                "language2": "iT30ProC Camera Flash for Canon Cameras"
+            },
+            "update_contents": {
+                "language1": "1.新增功能：屏幕锁定掉电存储。可在菜单中关闭开机锁定，开机无需解锁。\n2.解决佳能R1、R6 Mark III、R50 V、PowerShot V1相机高速同步兼容问题。",
+                "language2": "1. New Features: screen lock power-off memory. support disabling power-on lock in the menu (no unlock required on startup).\n2. Resolves high-speed sync compatibility issues with Canon R1, R6 Mark III, R50 V, and PowerShot V1 cameras."
+            },
+            "update_contents_url": "iT30ProC Firmware Instructions.pdf",
+            "version": "V1.02"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "iT30Pro",
+                "language1": "iT30Pro 系列TTL锂电机顶闪光灯",
+                "language2": "iT30Pro series TTL Li-ion Camera Flash"
+            },
+            "device_id": "iT30ProN",
+            "firmware_url": "iT30ProN_V1.02.zip",
+            "release_date": "2026/4/10",
+            "remark": {
+                "language1": "iT30ProN 机顶灯, 适用于尼康相机",
+                "language2": "iT30ProN Camera Flash for Nikon Cameras"
+            },
+            "update_contents": {
+                "language1": "修复闪光灯在尼康Z8和Z9相机上使用时漏闪的问题。",
+                "language2": "Fixed the intermittent misfiring issue when using the flash with Nikon Z8 and Z9 cameras."
+            },
+            "update_contents_url": "iT30ProN Firmware Instructions.pdf",
+            "version": "V1.02"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "iT30Pro",
+                "language1": "iT30Pro 系列TTL锂电机顶闪光灯",
+                "language2": "iT30Pro series TTL Li-ion Camera Flash"
+            },
+            "device_id": "iT30ProS",
+            "firmware_url": "iT30ProS_V1.07.zip",
+            "release_date": "2026/02/11",
+            "remark": {
+                "language1": "iT30ProS 机顶灯, 适用于索尼相机",
+                "language2": "iT30ProS Camera Flash for Sony Cameras"
+            },
+            "update_contents": {
+                "language1": "新增功能：屏幕锁定掉电存储。可在菜单中关闭开机锁定，开机无需解锁。",
+                "language2": "New Features: screen lock power-off memory. support disabling power-on lock in the menu (no unlock required on startup)."
+            },
+            "update_contents_url": "iT30ProS Firmware Instructions.pdf",
+            "version": "V1.07"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "iT30Pro",
+                "language1": "iT30Pro 系列TTL锂电机顶闪光灯",
+                "language2": "iT30Pro series TTL Li-ion Camera Flash"
+            },
+            "device_id": "iT30ProF",
+            "firmware_url": "iT30ProF_V1.02.zip",
+            "release_date": "2026/02/11",
+            "remark": {
+                "language1": "iT30ProF 机顶灯, 适用于富士相机",
+                "language2": "iT30ProF Camera Flash for Fuji Cameras"
+            },
+            "update_contents": {
+                "language1": "新增功能：屏幕锁定掉电存储。可在菜单中关闭开机锁定，开机无需解锁。",
+                "language2": "New Features: screen lock power-off memory. support disabling power-on lock in the menu (no unlock required on startup)."
+            },
+            "update_contents_url": "iT30ProF Firmware Instructions.pdf",
+            "version": "V1.02"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "iT30Pro",
+                "language1": "iT30Pro 系列TTL锂电机顶闪光灯",
+                "language2": "iT30Pro series TTL Li-ion Camera Flash"
+            },
+            "device_id": "iT30ProO",
+            "firmware_url": "iT30ProO_V1.01.zip",
+            "release_date": "2026/02/11",
+            "remark": {
+                "language1": "iT30ProO 机顶灯, 适用于奥林巴斯/松下相机",
+                "language2": "iT30ProO Camera Flash for Olympus/Panasonic Cameras"
+            },
+            "update_contents": {
+                "language1": "新增功能：屏幕锁定掉电存储。可在菜单中关闭开机锁定，开机无需解锁。",
+                "language2": "New Features: screen lock power-off memory. support disabling power-on lock in the menu (no unlock required on startup)."
+            },
+            "update_contents_url": "iT30ProO Firmware Instructions.pdf",
+            "version": "V1.01"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "iT30Pro",
+                "language1": "iT30Pro 系列TTL锂电机顶闪光灯",
+                "language2": "iT30Pro series TTL Li-ion Camera Flash"
+            },
+            "device_id": "iT30ProL",
+            "firmware_url": "iT30ProL_V1.01.zip",
+            "release_date": "2026/10/12",
+            "remark": {
+                "language1": "iT30ProL 机顶灯, 适用于徕卡相机",
+                "language2": "iT30ProL Camera Flash for Leica Cameras"
+            },
+            "update_contents": {
+                "language1": "修复与徕卡M11相机的兼容问题。",
+                "language2": "Improved compatibility with the Leica M11 camera."
+            },
+            "update_contents_url": "iT30ProL Firmware Instructions.pdf",
+            "version": "V1.01"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "iT32",
+                "language1": "iT32 系列TTL锂电机顶闪光灯",
+                "language2": "iT32 series TTL Li-ion Camera Flash"
+            },
+            "device_id": "iT32",
+            "firmware_url": "iT32_V1.18.zip",
+            "release_date": "2026/10/12",
+            "remark": {
+                "language1": "iT32 机顶灯，需要配合X5使用。",
+                "language2": "iT32 Camera Flash,requires X5 for operation."
+            },
+            "update_contents": {
+                "language1": "1.修复X5C、X5Cm在相机Auto模式不能引闪从机的问题。\n2.修复与徕卡M11相机的兼容问题。",
+                "language2": "1.Fixed an issue where the X5C and X5Cm failed to trigger slave flashes when the camera was set to Auto mode.\n2.Improved compatibility with the Leica M11 camera."
+            },
+            "update_contents_url": "iT32 Firmware Instructions.pdf",
+            "version": "V1.18"
+        },
+        {
+            "category1": {
+                "id": "FLASH",
+                "language1": "闪光系统",
+                "language2": "Flash System"
+            },
+            "category2": {
+                "id": "Camera_Flashes",
+                "language1": "机顶闪光灯",
+                "language2": "Camera Flashes"
+            },
+            "category3": {
+                "id": "iT32王者荣耀合作款",
+                "language1": "iT32 系列TTL锂电机顶闪光灯",
+                "language2": "iT32 series TTL Li-ion Camera Flash"
+            },
+            "device_id": "iT32_Honor_of_Kings",
+            "firmware_url": "iT32_V1.18_王者荣耀.zip",
+            "release_date": "2026/10/12",
+            "remark": {
+                "language1": "iT32 机顶灯，需要配合X5使用；王者荣耀合作款，功能与普通款一致，增加了开机动画。",
+                "language2": "iT32 Camera Flash,requires X5 for operation;Honor of Kings."
+            },
+            "update_contents": {
+                "language1": "1.修复X5C、X5Cm在相机Auto模式不能引闪从机的问题。\n2.修复与徕卡M11相机的兼容问题。",
+                "language2": "1.Fixed an issue where the X5C and X5Cm failed to trigger slave flashes when the camera was set to Auto mode.\n2.Improved compatibility with the Leica M11 camera."
+            },
+            "update_contents_url": "iT32 Firmware Instructions.pdf",
+            "version": "V1.18"
+        }
+    ],
+    "base_url": "/Downloads/G3_V2.0_bins"
+}

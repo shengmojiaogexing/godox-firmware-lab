@@ -1,0 +1,94 @@
+// 0x080031a0 FUN_080031a0 size=376
+
+void FUN_080031a0(void)
+
+{
+  undefined2 local_28;
+  undefined1 local_26;
+  undefined1 local_25;
+  undefined1 local_24;
+  undefined1 local_23;
+  undefined4 local_20;
+  undefined1 local_1c;
+  undefined1 local_1b;
+  undefined1 local_1a;
+  
+  FUN_08003950(0x460000);
+  FUN_08003980(DAT_08003318);
+  local_28 = 0x1c00;
+  local_26 = 3;
+  local_23 = 0;
+  FUN_08002f10(&DAT_48000000,&local_28);
+  local_28 = 3;
+  local_26 = 0;
+  local_23 = 0;
+  FUN_08002f10(DAT_0800331c,&local_28);
+  FUN_08002fca(&DAT_48000000,8);
+  FUN_08002f0c(&DAT_48000000,1);
+  FUN_08002f0c(&DAT_48000000,0x102);
+  FUN_08002f0c(DAT_08003320,3);
+  FUN_08002fca(DAT_08003320,0xa8);
+  local_28 = 0x10b;
+  local_26 = 1;
+  local_25 = 0;
+  local_24 = 3;
+  local_23 = 0;
+  FUN_08002f10(&DAT_48000000,&local_28);
+  local_28 = 4;
+  local_26 = 0;
+  local_23 = 2;
+  FUN_08002f10(&DAT_48000000,&local_28);
+  local_28 = 0x8200;
+  local_26 = 0;
+  local_23 = 1;
+  FUN_08002f10(&DAT_48000000,&local_28);
+  local_28 = 0x83;
+  local_26 = 1;
+  local_25 = 0;
+  local_24 = 3;
+  local_23 = 0;
+  FUN_08002f10(DAT_08003320,&local_28);
+  local_28 = 0x10;
+  local_26 = 0;
+  local_23 = 1;
+  FUN_08002f10(DAT_08003320,&local_28);
+  local_28 = 0x40;
+  local_26 = 1;
+  local_25 = 0;
+  local_24 = 3;
+  local_23 = 0;
+  FUN_08002f10(DAT_08003320,&local_28);
+  FUN_08002fca(DAT_08003320,0x28);
+  local_28 = 0x28;
+  local_26 = 1;
+  local_25 = 0;
+  local_24 = 3;
+  local_23 = 1;
+  FUN_08002f10(DAT_08003320,&local_28);
+  local_28 = 0x10;
+  local_26 = 0;
+  local_23 = 1;
+  FUN_08002f10(DAT_08003320,&local_28);
+  FUN_080042d4(0,9);
+  FUN_080042d4(0,0xf);
+  FUN_080042d4(1,2);
+  local_20 = 0x200;
+  local_1a = 1;
+  local_1c = 0;
+  local_1b = 1;
+  FUN_08002c90(&local_20);
+  local_20 = 0x8000;
+  local_1a = 1;
+  local_1c = 0;
+  local_1b = 1;
+  FUN_08002c90(&local_20);
+  local_20 = 4;
+  local_1a = 1;
+  local_1c = 0;
+  local_1b = 1;
+  FUN_08002c90(&local_20);
+  FUN_080037f4(6,0);
+  FUN_080037f4(7,0);
+  return;
+}
+

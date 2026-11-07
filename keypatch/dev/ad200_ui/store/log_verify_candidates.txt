@@ -1,0 +1,56 @@
+﻿==============================================================================
+候选镜像回归 / 语义验证
+==============================================================================
+
+== V1 启动回归: 原厂 ==
+  [PASS] 原厂 到达主循环且继续运行 300k 无 fault  reason='insn_limit' total=80000
+
+== V1 启动回归: cand_reader_mask ==
+  [PASS] cand_reader_mask 到达主循环且继续运行 300k 无 fault  reason='insn_limit' total=80000
+
+== V1 启动回归: cand_plus_toggle ==
+  [PASS] cand_plus_toggle 到达主循环且继续运行 300k 无 fault  reason='insn_limit' total=80000
+
+== V2 F8=1 时 level_table_lookup_b(0x0800626C) 返回值 ==
+  原厂=360 (0x0168)  cand_reader_mask=210  cand_plus_toggle=210
+  [PASS] 候选镜像的 F8 读者已不再走稳定色温备用表
+  [PASS] 候选镜像返回值与 F8=0 时的原厂行为一致
+
+== V3 builder 持久化不受屏蔽影响 ==
+  原厂                 rec[24:32]=01 02 03 44 02 01 07 01 rec[31]=1
+  cand_reader_mask   rec[24:32]=01 02 03 44 02 01 07 01 rec[31]=1
+  cand_plus_toggle   rec[24:32]=01 02 03 44 02 01 07 01 rec[31]=1
+  [PASS] 三个镜像 builder 记录字节 31 仍等于 settings[7]=1
+
+== V4 F8 渲染仍读 settings[7]（ON/OFF 显示保留）==
+  原厂                 reader PC=['0x8004230']
+  [PASS] 原厂 F8 渲染读 settings[7]
+  cand_reader_mask   reader PC=['0x8004230']
+  [PASS] cand_reader_mask F8 渲染读 settings[7]
+  cand_plus_toggle   reader PC=['0x8004230']
+  [PASS] cand_plus_toggle F8 渲染读 settings[7]
+
+== V5 ui_key_80 静默清零：B 组 NOP 是否阻断 ==
+  原厂                 调用后 settings[7]=0
+  cand_reader_mask   调用后 settings[7]=0
+  cand_plus_toggle   调用后 settings[7]=1
+  [PASS] 原厂 ui_key_80 会清 settings[7]（复现静默关开关）
+  [PASS] cand_reader_mask（仅 A 组）仍会被清 → 需 B 组
+  [PASS] cand_plus_toggle（含 B 组）不再清 settings[7]
+
+== V6 改 F8 后是否立即重设同步字（C 组 NOP 效果）==
+  编辑+ 0x08008504 原厂                 item=7: sync 调用次数=0 settings[7]=1
+  编辑+ 0x08008504 cand_reader_mask   item=7: sync 调用次数=0 settings[7]=1
+  编辑+ 0x08008504 cand_plus_toggle   item=7: sync 调用次数=1 settings[7]=1
+  [PASS] 编辑+ 0x08008504: 原厂改 F8 不调 sync
+  [PASS] 编辑+ 0x08008504: cand_plus_toggle 改 F8 会调 1 次 sync(settings[6]) 且 F8=1
+  [PASS] 编辑+ 0x08008504: item=6(F7) 原厂/候选都调 1 次 sync  orig=1 cand=1
+  编辑- 0x080045AC 原厂                 item=7: sync 调用次数=0 settings[7]=1
+  编辑- 0x080045AC cand_reader_mask   item=7: sync 调用次数=0 settings[7]=1
+  编辑- 0x080045AC cand_plus_toggle   item=7: sync 调用次数=1 settings[7]=1
+  [PASS] 编辑- 0x080045AC: 原厂改 F8 不调 sync
+  [PASS] 编辑- 0x080045AC: cand_plus_toggle 改 F8 会调 1 次 sync(settings[6]) 且 F8=1
+  [PASS] 编辑- 0x080045AC: item=6(F7) 原厂/候选都调 1 次 sync  orig=1 cand=1
+
+==============================================================================
+结果: 全部 PASS

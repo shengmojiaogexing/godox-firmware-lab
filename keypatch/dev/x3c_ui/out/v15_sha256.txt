@@ -1,0 +1,63 @@
+X3-C v1.38 UI 补丁 v1.5（页 1 钩子改为调用点 wrapper）
+==============================================================================
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_patch.bin
+说明   : 主成品（ALL 组，磁贴完整属性序列）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1290 字节
+sha256 : 20511964a52478eb7a77599917cb1078fbd2e4aec4e7bde4b77a05f94ae6ee7f
+验证   : PASS（21/21）
+   [PASS] tile_mode=full icon=False: 共 34 个 bl；2×建磁贴、2×文本、图标调用=0；原厂 setter 全部出现=True
+   [PASS] 0x0800FE78 保持原厂首指令 2de9fc41（实际 2de9fc41）
+   [PASS] UI tick 调用点 0x08014C1E: bl #0x80f1100（应为 bl wrapper 0x80F1100）
+   [PASS] wrapper 反汇编: push {r4, lr}; bl #0x80f1000; bl #0x800fe78; pop {r4, pc}（应为 push {r4,lr}; bl poll; bl 0x0800FE78; pop {r4,pc}）
+   [PASS] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_ui_A_noTiles.bin
+说明   : A 诊断档：修好的钩子 + 轮询，不建控件
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 876 字节
+sha256 : 18a159455ddeb2cdfe821f9e6e35f3fb2701e7da9d3feb2cb0cafeb693f04d4a
+验证   : PASS（20/20）
+   [PASS] tile_mode=none：不建磁贴（诊断/安全档），无 0x08006220 调用=True
+   [PASS] tile_mode=none（诊断/安全档）：不创建磁贴，跳过磁贴桩测试
+   [PASS] 0x0800FE78 保持原厂首指令 2de9fc41（实际 2de9fc41）
+   [PASS] UI tick 调用点 0x08014C1E: bl #0x80f1100（应为 bl wrapper 0x80F1100）
+   [PASS] wrapper 反汇编: push {r4, lr}; bl #0x80f1000; bl #0x800fe78; pop {r4, pc}（应为 push {r4,lr}; bl poll; bl 0x0800FE78; pop {r4,pc}）
+   [PASS] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_ui_B_minimal.bin
+说明   : B 最小档：建磁贴+文本
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1018 字节
+sha256 : 30ed02830c8def63a210334d3a050273e4acc246e25409d6fdf9d98a788573a8
+验证   : PASS（21/21）
+   [PASS] tile_mode=minimal icon=False: 共 4 个 bl；2×建磁贴、2×文本、图标调用=0；原厂 setter 全部出现=True
+   [PASS] 0x0800FE78 保持原厂首指令 2de9fc41（实际 2de9fc41）
+   [PASS] UI tick 调用点 0x08014C1E: bl #0x80f1100（应为 bl wrapper 0x80F1100）
+   [PASS] wrapper 反汇编: push {r4, lr}; bl #0x80f1000; bl #0x800fe78; pop {r4, pc}（应为 push {r4,lr}; bl poll; bl 0x0800FE78; pop {r4,pc}）
+   [PASS] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）
+
+文件   : D:\神牛\keypatch\dev\x3c_ui\out\X3_C_v1.38_app_ui_C_full.bin
+说明   : C 完整档：磁贴+原厂完整属性序列（=主成品）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1290 字节
+sha256 : 20511964a52478eb7a77599917cb1078fbd2e4aec4e7bde4b77a05f94ae6ee7f
+验证   : PASS（21/21）
+   [PASS] tile_mode=full icon=False: 共 34 个 bl；2×建磁贴、2×文本、图标调用=0；原厂 setter 全部出现=True
+   [PASS] 0x0800FE78 保持原厂首指令 2de9fc41（实际 2de9fc41）
+   [PASS] UI tick 调用点 0x08014C1E: bl #0x80f1100（应为 bl wrapper 0x80F1100）
+   [PASS] wrapper 反汇编: push {r4, lr}; bl #0x80f1000; bl #0x800fe78; pop {r4, pc}（应为 push {r4,lr}; bl poll; bl 0x0800FE78; pop {r4,pc}）
+   [PASS] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）
+
+文件   : D:\神牛\keypatch\out\X3_C_v1.38_app_keyD798_pergroup.bin
+说明   : 逐组 A–E 广播备选（KEY=0xD798）
+长度   : 1021468（原厂 1021468，不变=True）
+差异   : 1426 字节
+sha256 : efd29690727e6ebd4ecaf6c7167fdb9b224b774ea61539ff29b119e5dc3a844c
+验证   : PASS（21/21）
+   [PASS] tile_mode=full icon=False: 共 34 个 bl；2×建磁贴、2×文本、图标调用=0；原厂 setter 全部出现=True
+   [PASS] 0x0800FE78 保持原厂首指令 2de9fc41（实际 2de9fc41）
+   [PASS] UI tick 调用点 0x08014C1E: bl #0x80f1100（应为 bl wrapper 0x80F1100）
+   [PASS] wrapper 反汇编: push {r4, lr}; bl #0x80f1000; bl #0x800fe78; pop {r4, pc}（应为 push {r4,lr}; bl poll; bl 0x0800FE78; pop {r4,pc}）
+   [PASS] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）

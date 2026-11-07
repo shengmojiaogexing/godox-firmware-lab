@@ -1,0 +1,60 @@
+﻿== 同步字设置函数 0x0800B96C..0x0800B9E4 反汇编对比 ==
+原厂 : D:\神牛\work\samples\AD200pro_V1.60.bin
+补丁 : D:\神牛\keypatch\out\AD200pro_V1.60_key6B21.bin
+条目数: 原厂 48 / 补丁 48
+
+原厂 (before)                                          | 补丁 (after)
+----------------------------------------------------------------------------------------------------------------------------
+0x0800B96C  10 b5       push    {r4, lr}             | 0x0800B96C  10 b5       push    {r4, lr}  
+0x0800B96E  04 46       mov     r4, r0               | 0x0800B96E  04 46       mov     r4, r0  
+0x0800B970  0d 48       ldr     r0, [pc, #0x34]      | 0x0800B970  0d 48       ldr     r0, [pc, #0x34]  
+0x0800B972  01 5d       ldrb    r1, [r0, r4]         | 0x0800B972  01 5d       ldrb    r1, [r0, r4]  
+0x0800B974  0d 20       movs    r0, #0xd             | 0x0800B974  0d 20       movs    r0, #0xd  
+0x0800B976  01 f0 94 f8 bl      #0x800caa2           | 0x0800B976  01 f0 94 f8 bl      #0x800caa2  
+0x0800B97A  0b 48       ldr     r0, [pc, #0x2c]      | 0x0800B97A  0b 48       ldr     r0, [pc, #0x2c]  
+0x0800B97C  20 30       adds    r0, #0x20            | 0x0800B97C  20 30       adds    r0, #0x20  
+0x0800B97E  01 5d       ldrb    r1, [r0, r4]         | 0x0800B97E  01 5d       ldrb    r1, [r0, r4]  
+0x0800B980  0e 20       movs    r0, #0xe             | 0x0800B980  0e 20       movs    r0, #0xe  
+0x0800B982  01 f0 8e f8 bl      #0x800caa2           | 0x0800B982  01 f0 8e f8 bl      #0x800caa2  
+0x0800B986  08 48       ldr     r0, [pc, #0x20]      | 0x0800B986  08 48       ldr     r0, [pc, #0x20]  
+0x0800B988  40 30       adds    r0, #0x40            | 0x0800B988  40 30       adds    r0, #0x40  
+0x0800B98A  01 5d       ldrb    r1, [r0, r4]         | 0x0800B98A  01 5d       ldrb    r1, [r0, r4]  
+0x0800B98C  0f 20       movs    r0, #0xf             | 0x0800B98C  0f 20       movs    r0, #0xf  
+0x0800B98E  01 f0 88 f8 bl      #0x800caa2           | 0x0800B98E  01 f0 88 f8 bl      #0x800caa2  
+0x0800B992  14 20       movs    r0, #0x14            | 0x0800B992  14 20       movs    r0, #0x14  
+0x0800B994  00 f0 48 ff bl      #0x800c828           | 0x0800B994  00 f0 48 ff bl      #0x800c828  
+0x0800B998  33 20       movs    r0, #0x33            | 0x0800B998  33 20       movs    r0, #0x33  
+0x0800B99A  01 f0 e3 f8 bl      #0x800cb64           | 0x0800B99A  01 f0 e3 f8 bl      #0x800cb64  
+0x0800B99E  7d 20       movs    r0, #0x7d            | 0x0800B99E  7d 20       movs    r0, #0x7d  
+0x0800B9A0  c0 00       lsls    r0, r0, #3           | 0x0800B9A0  c0 00       lsls    r0, r0, #3  
+0x0800B9A2  00 f0 41 ff bl      #0x800c828           | 0x0800B9A2  00 f0 41 ff bl      #0x800c828  
+0x0800B9A6  10 bd       pop     {r4, pc}             | 0x0800B9A6  10 bd       pop     {r4, pc}  
+0x0800B9A8  82 e3       b       #0x800c0b0           | 0x0800B9A8  82 e3       b       #0x800c0b0  
+0x0800B9AA  00 08       lsrs    r0, r0, #0x20        | 0x0800B9AA  00 08       lsrs    r0, r0, #0x20  
+0x0800B9AC  0c 4a       ldr     r2, [pc, #0x30]      | 0x0800B9AC  0c 4a       ldr     r2, [pc, #0x30]  
+0x0800B9AE  10 b5       push    {r4, lr}             | 0x0800B9AE  10 b5       push    {r4, lr}  
+0x0800B9B0  41 1c       adds    r1, r0, #1           | 0x0800B9B0  01 21       movs    r1, #1 *
+0x0800B9B2  10 46       mov     r0, r2               | 0x0800B9B2  10 46       mov     r0, r2  
+0x0800B9B4  f7 f7 9c fb bl      #0x80030f0           | 0x0800B9B4  f7 f7 9c fb bl      #0x80030f0  
+0x0800B9B8  04 46       mov     r4, r0               | 0x0800B9B8  04 46       mov     r4, r0  
+0x0800B9BA  01 0a       lsrs    r1, r0, #8           | 0x0800B9BA  01 0a       lsrs    r1, r0, #8  
+0x0800B9BC  04 20       movs    r0, #4               | 0x0800B9BC  04 20       movs    r0, #4  
+0x0800B9BE  01 f0 70 f8 bl      #0x800caa2           | 0x0800B9BE  01 f0 70 f8 bl      #0x800caa2  
+0x0800B9C2  e1 b2       uxtb    r1, r4               | 0x0800B9C2  e1 b2       uxtb    r1, r4  
+0x0800B9C4  05 20       movs    r0, #5               | 0x0800B9C4  05 20       movs    r0, #5  
+0x0800B9C6  01 f0 6c f8 bl      #0x800caa2           | 0x0800B9C6  01 f0 6c f8 bl      #0x800caa2  
+0x0800B9CA  14 20       movs    r0, #0x14            | 0x0800B9CA  14 20       movs    r0, #0x14  
+0x0800B9CC  00 f0 2c ff bl      #0x800c828           | 0x0800B9CC  00 f0 2c ff bl      #0x800c828  
+0x0800B9D0  33 20       movs    r0, #0x33            | 0x0800B9D0  33 20       movs    r0, #0x33  
+0x0800B9D2  01 f0 c7 f8 bl      #0x800cb64           | 0x0800B9D2  01 f0 c7 f8 bl      #0x800cb64  
+0x0800B9D6  7d 20       movs    r0, #0x7d            | 0x0800B9D6  7d 20       movs    r0, #0x7d  
+0x0800B9D8  c0 00       lsls    r0, r0, #3           | 0x0800B9D8  c0 00       lsls    r0, r0, #3  
+0x0800B9DA  00 f0 25 ff bl      #0x800c828           | 0x0800B9DA  00 f0 25 ff bl      #0x800c828  
+0x0800B9DE  10 bd       pop     {r4, pc}             | 0x0800B9DE  10 bd       pop     {r4, pc}  
+0x0800B9E0  68 c3       stm     r3!, {r3, r5, r6}    | 0x0800B9E0  21 6b       ldr     r1, [r4, #0x30] *
+0x0800B9E2  00 00       movs    r0, r0               | 0x0800B9E2  00 00       movs    r0, r0  
+
+(*) = 补丁点字节差异
+全镜像差异偏移: ['0x89b0', '0x89b1', '0x89e0', '0x89e1']
+  off+0x89B0: 41 1c 10 46 f7 f7 9c fb -> 01 21 10 46 f7 f7 9c fb   # 0x0800B9B0 adds r1,r0,#1 -> movs r1,#1
+  off+0x89E0: 68 c3 00 00 05 48 81 8d -> 21 6b 00 00 05 48 81 8d   # 0x0800B9E0 字面量 50024 -> KEY 0x6B21

@@ -1,0 +1,15 @@
+// 0x0803a7e4 FUN_0803a7e4 size=58
+
+void FUN_0803a7e4(void)
+
+{
+  FUN_0803a738(0);
+  FUN_0803a700();
+  FUN_0803a78c();
+  FUN_0801bd04(DAT_0803a820,1);
+  FUN_0803a204(1);
+  FUN_08035c78(0x43,0);
+  FUN_0803b398(DAT_0803a82c,1,0,DAT_0803a828,DAT_0803a824);
+  return;
+}
+

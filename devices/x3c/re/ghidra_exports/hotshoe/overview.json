@@ -1,0 +1,11 @@
+{
+  "program": "hotshoe_blob.bin",
+  "language": "ARM:LE:32:Cortex",
+  "image_base": "0x00000000",
+  "functions": 162,
+  "decompiled": 157,
+  "decompile_failed": 5,
+  "instructions": 6846,
+  "strings": 101,
+  "memory_blocks": 1
+}

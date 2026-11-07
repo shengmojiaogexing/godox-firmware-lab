@@ -1,0 +1,75 @@
+﻿==============================================================================
+range 0x08008504 .. 0x08008580  flash_trigger_state_machine
+==============================================================================
+08008504: 70b5       push {r4, r5, r6, lr}          <flash_trigger_state_machine>
+08008506: 7d20       movs r0, #0x7d              
+08008508: 954c       ldr r4, [pc, #0x254]           ; lit@08008760 = 0x20000150 (ram)
+0800850a: 0001       lsls r0, r0, #4             
+0800850c: a085       strh r0, [r4, #0x2c]        
+0800850e: fbf7eff9   bl #0x80038f0               
+python.exe : Traceback (most recent call last):
+At line:1 char:160
++ ... NG='utf-8'; & D:\神牛\AD200pro-RE\python\python.exe D:\神牛\keypatch\dev\ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+08008512: 03f095fa   bl #0x800ba40               
+  File "D:\神牛\keypatch\dev\ad200_ui\store\dump_funcs.py", line 120, in <module>
+08008516: 03f07bf9   bl #0x800b810               
+0800851a: a07c       ldrb r0, [r4, #0x12]        
+0800851c: 0022       movs r2, #0                 
+0800851e: 0128       cmp r0, #1                  
+08008520: 04d0       beq #0x800852c              
+08008522: 9048       ldr r0, [pc, #0x240]           ; lit@08008764 = 0x200001d0 (ram)
+08008524: 0078       ldrb r0, [r0]               
+08008526: 0528       cmp r0, #5                  
+08008528: 1ed0       beq #0x8008568              
+0800852a: 20e0       b #0x800856e                
+0800852c: e07c       ldrb r0, [r4, #0x13]        
+0800852e: 0028       cmp r0, #0                  
+08008530: 12d0       beq #0x8008558              
+08008532: 0120       movs r0, #1                 
+08008534: e074       strb r0, [r4, #0x13]        
+08008536: 8c49       ldr r1, [pc, #0x230]           ; lit@08008768 = 0x20000418 (SETTINGS base)
+08008538: 207d       ldrb r0, [r4, #0x14]        
+0800853a: 8c4c       ldr r4, [pc, #0x230]           ; lit@0800876c = 0x0800e314 (flash)
+0800853c: 0b5c       ldrb r3, [r1, r0]           
+0800853e: 5b1c       adds r3, r3, #1             
+08008540: dbb2       uxtb r3, r3                 
+08008542: 0b54       strb r3, [r1, r0]           
+08008544: 245c       ldrb r4, [r4, r0]           
+08008546: a342       cmp r3, r4                  
+08008548: 00d9       bls #0x800854c              
+0800854a: 0a54       strb r2, [r1, r0]           
+0800854c: 0628       cmp r0, #6                  
+0800854e: 02d1       bne #0x8008556              
+08008550: 8879       ldrb r0, [r1, #6]           
+08008552: 03f02bfa   bl #0x800b9ac               
+08008556: 70bd       pop {r4, r5, r6, pc}        
+08008558: 207d       ldrb r0, [r4, #0x14]        
+0800855a: 401c       adds r0, r0, #1             
+0800855c: c0b2       uxtb r0, r0                 
+0800855e: 2075       strb r0, [r4, #0x14]        
+08008560: 0728       cmp r0, #7                  
+08008562: f8d9       bls #0x8008556              
+08008564: 2275       strb r2, [r4, #0x14]        
+08008566: 70bd       pop {r4, r5, r6, pc}        
+08008568: e07b       ldrb r0, [r4, #0xf]         
+0800856a: 0028       cmp r0, #0                  
+0800856c: 0ad0       beq #0x8008584              
+0800856e: e07b       ldrb r0, [r4, #0xf]         
+08008570: 0628       cmp r0, #6                  
+08008572: 69d0       beq #0x8008648              
+08008574: 0edc       bgt #0x8008594              
+08008576: 0028       cmp r0, #0                  
+08008578: 0fd0       beq #0x800859a              
+0800857a: 0328       cmp r0, #3                  
+0800857c: 42d0       beq #0x8008604              
+0800857e: 0428       cmp r0, #4                  
+    sys.exit(main(sys.argv))
+             ^^^^^^^^^^^^^^
+  File "D:\神牛\keypatch\dev\ad200_ui\store\dump_funcs.py", line 109, in main
+    addr = int(a, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '0x08008504:0x08008580'

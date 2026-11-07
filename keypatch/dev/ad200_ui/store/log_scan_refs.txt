@@ -1,0 +1,238 @@
+﻿==============================================================================
+AD200 Pro V1.60  settings[7] 独立静态复核
+==============================================================================
+image : D:\神牛\AD200pro-RE\samples\AD200pro_V1.60.bin
+size  : 46380 (0xb52c)
+sha256: fc0f77f1eb1c9f9d6f1f96d15daa5722ae33a57fceffe1da02739530dd798bd0
+base  : 0x08003000 .. 0x0800e52b
+settings base = 0x20000418, settings[7] = 0x2000041f
+
+-- 字面量引用计数（全镜像线性扫描，295 个不同取值）--
+  settings[0] 基址               0x20000418  refs=28
+      insn 08003c04 (lit@08003c5c)  ldr r1, [pc, #0x54]  in ui_power_switch_task @08003bec
+      insn 08003ffe (lit@08004268)  ldr r4, [pc, #0x268] in FUNC_08003fd0 @08003fd0
+      insn 08004474 (lit@080044cc)  ldr r2, [pc, #0x54]  in FUNC_080043e4 @080043e4
+      insn 080045de (lit@08004808)  ldr r0, [pc, #0x228] in flash_charge_state_machine @080045ac
+      insn 080048c2 (lit@080048e0)  ldr r0, [pc, #0x1c]  in rf_init @08004860
+      insn 08004910 (lit@08004950)  ldr r1, [pc, #0x3c]  in ui_key_14 @080048e4
+      insn 08004aca (lit@08004c40)  ldr r4, [pc, #0x174] in FUNC_08004ac8 @08004ac8
+      insn 08004ff2 (lit@08005050)  ldr r0, [pc, #0x5c]  in FUNC_08004f70 @08004f70
+      insn 0800540e (lit@08005468)  ldr r0, [pc, #0x58]  in EXTI0_1_IRQHandler @080053f0
+      insn 08005b0e (lit@08005bf4)  ldr r7, [pc, #0xe4]  in FUNC_08005ae8 @08005ae8
+      insn 08005c52 (lit@08005e80)  ldr r1, [pc, #0x22c] in FUNC_08005c30 @08005c30
+      insn 0800628e (lit@08006314)  ldr r2, [pc, #0x84]  in level_table_lookup_b @0800626c
+      insn 08008536 (lit@08008768)  ldr r1, [pc, #0x230] in flash_trigger_state_machine @08008504
+      insn 08008ab0 (lit@08008acc)  ldr r0, [pc, #0x18]  in ui_key_scan_task @08008818
+      insn 08008cdc (lit@08008d04)  ldr r0, [pc, #0x24]  in FUNC_08008c7c @08008c7c
+      insn 0800945c (lit@080094dc)  ldr r4, [pc, #0x7c]  in display_task @08009228
+      insn 0800a9ae (lit@0800aa74)  ldr r1, [pc, #0xc4]  in FUNC_0800a954 @0800a954
+      insn 0800adc4 (lit@0800ae30)  ldr r1, [pc, #0x68]  in settings_load_task @0800ac58
+      insn 0800af14 (lit@0800b118)  ldr r0, [pc, #0x200] in FUNC_0800ae40 @0800ae40
+      insn 0800b142 (lit@0800b168)  ldr r3, [pc, #0x24]  in muldiv_scale @0800b134
+      insn 0800b226 (lit@0800b4b0)  ldr r2, [pc, #0x288] in rf_rx_crc @0800b170
+      insn 0800b474 (lit@0800b4b0)  ldr r0, [pc, #0x38]  in rf_rx_crc @0800b170
+      insn 0800b47e (lit@0800b4b0)  ldr r0, [pc, #0x30]  in rf_rx_crc @0800b170
+      insn 0800ba12 (lit@0800ba3c)  ldr r1, [pc, #0x28]  in charge_enable_task @0800ba00
+      insn 0800bb7e (lit@0800bbbc)  ldr r0, [pc, #0x3c]  in reinit_prepare @0800bb7c
+      insn 0800bc7c (lit@0800bc88)  ldr r1, [pc, #8]     in ui_key_80 @0800bc34
+      insn 0800c576 (lit@0800c648)  ldr r7, [pc, #0xd0]  in rf_rx_process @0800c554
+      insn 0800cd54 (lit@0800cdac)  ldr r2, [pc, #0x54]  in settings_validate @0800ccc8
+  settings[7] 地址               0x2000041f  refs=0
+  settings[6] (=F7 ID)         0x2000041e  refs=0
+  UI 结构基址                      0x20000150  refs=26
+      insn 08004270 (lit@0800429c)  ldr r0, [pc, #0x28]  in ui_key_100 @08004270
+      insn 080042a0 (lit@080042d8)  ldr r0, [pc, #0x34]  in ui_key_10 @080042a0
+      insn 080045b0 (lit@08004800)  ldr r4, [pc, #0x24c] in flash_charge_state_machine @080045ac
+      insn 08004654 (lit@08004800)  ldr r3, [pc, #0x1a8] in flash_charge_state_machine @080045ac
+      insn 08004666 (lit@08004800)  ldr r0, [pc, #0x198] in flash_charge_state_machine @080045ac
+      insn 08004a8a (lit@08004abc)  ldr r1, [pc, #0x30]  in FUNC_08004a84 @08004a84
+      insn 08005b80 (lit@08005c10)  ldr r1, [pc, #0x8c]  in FUNC_08005ae8 @08005ae8
+      insn 080063a0 (lit@08006418)  ldr r0, [pc, #0x74]  in adc_result_update @080063a0
+      insn 08008508 (lit@08008760)  ldr r4, [pc, #0x254] in flash_trigger_state_machine @08008504
+      insn 080085aa (lit@08008760)  ldr r0, [pc, #0x1b4] in flash_trigger_state_machine @08008504
+      insn 080085bc (lit@08008760)  ldr r0, [pc, #0x1a0] in flash_trigger_state_machine @08008504
+      insn 08008822 (lit@08008abc)  ldr r5, [pc, #0x298] in ui_key_scan_task @08008818
+      insn 08008d08 (lit@08008d4c)  ldr r0, [pc, #0x40]  in ui_key_1 @08008d08
+      insn 08009b7c (lit@08009c10)  ldr r0, [pc, #0x90]  in ui_key_4 @08009b7c
+      insn 08009bdc (lit@08009c10)  ldr r1, [pc, #0x30]  in ui_key_4 @08009b7c
+      insn 08009d58 (lit@08009e0c)  ldr r1, [pc, #0xb0]  in FUNC_08009d58 @08009d58
+      insn 08009dbe (lit@08009e0c)  ldr r2, [pc, #0x4c]  in FUNC_08009d58 @08009d58
+      insn 0800b90e (lit@0800b968)  ldr r0, [pc, #0x58]  in ui_key_20 @0800b90c
+      insn 0800b92c (lit@0800b968)  ldr r2, [pc, #0x38]  in ui_key_20 @0800b90c
+      insn 0800b9e4 (lit@0800b9fc)  ldr r0, [pc, #0x14]  in rf_status_read @0800b9e4
+      insn 0800bc36 (lit@0800bc84)  ldr r0, [pc, #0x4c]  in ui_key_80 @0800bc34
+      insn 0800bc66 (lit@0800bc84)  ldr r1, [pc, #0x1c]  in ui_key_80 @0800bc34
+      insn 0800c192 (lit@0800c1a4)  ldr r4, [pc, #0x10]  in ui_key_2 @0800c190
+      insn 0800c2da (lit@0800c350)  ldr r1, [pc, #0x74]  in ui_menu_task @0800c2d8
+      insn 0800c326 (lit@0800c350)  ldr r3, [pc, #0x28]  in ui_menu_task @0800c2d8
+      insn 0800c5e8 (lit@0800c664)  ldr r1, [pc, #0x78]  in rf_rx_process @0800c554
+  参数块镜像 0x20000464             0x20000464  refs=4
+      insn 08005910 (lit@0800592c)  ldr r3, [pc, #0x18]  in flash_read_params @0800590c
+      insn 0800597e (lit@080059b0)  ldr r6, [pc, #0x30]  in flash_write_params @08005974
+      insn 0800ac7a (lit@0800ae10)  ldr r0, [pc, #0x194] in settings_load_task @0800ac58
+      insn 0800ccca (lit@0800cd7c)  ldr r1, [pc, #0xb0]  in settings_validate @0800ccc8
+  builder record 源 0x20000484  0x20000484  refs=4
+      insn 08009b4a (lit@08009b78)  ldr r0, [pc, #0x2c]  in ui_factory_reset_task @08009b38
+      insn 0800b824 (lit@0800b850)  ldr r0, [pc, #0x28]  in flash_store_params @0800b820
+      insn 0800b82a (lit@0800b850)  ldr r0, [pc, #0x24]  in flash_store_params @0800b820
+      insn 0800c742 (lit@0800c764)  ldr r4, [pc, #0x20]  in flash_params_default @0800c740
+  flash 参数页 0x0801F000         0x0801f000  refs=3
+      insn 08005888 (lit@0800589c)  ldr r1, [pc, #0x10]  in flash_erase_param_page @0800587c
+      insn 0800ac72 (lit@0800ae0c)  ldr r1, [pc, #0x198] in settings_load_task @0800ac58
+      insn 0800b844 (lit@0800b854)  ldr r0, [pc, #0xc]   in flash_store_params @0800b820
+  flash 标志页 0x0801F800         0x0801f800  refs=1
+      insn 0800ac38 (lit@0800ac50)  ldr r0, [pc, #0x14]  in boot_reason_check @0800ac24
+
+-- 立即数 0x418/0x41F 引用: 0 --
+
+-- 通过 settings 基址字面量加载并访问 settings[] 的代码 --
+   （基址加载点 28 处，涉及函数 26 个）
+
+  [ui_power_switch_task @08003bec]
+  08003c08  read  settings[0]    (byte +0x00)  ldrb r4, [r1]           in ui_power_switch_task @08003bec
+
+  [FUNC_08003fd0 @08003fd0]
+  08004046  read  settings[0]    (byte +0x00)  ldrb r0, [r4]           in FUNC_08003fd0 @08003fd0
+  08004066  read  settings[0]+1  (byte +0x01)  ldrb r0, [r4, #1]       in FUNC_08003fd0 @08003fd0
+  0800409e  read  settings[0]+2  (byte +0x02)  ldrb r0, [r4, #2]       in FUNC_08003fd0 @08003fd0
+  080040ac  write settings[0]+2  (byte +0x02)  strb r7, [r4, #2]       in FUNC_08003fd0 @08003fd0
+  080040ec  read  settings[0]+3  (byte +0x03)  ldrb r0, [r4, #3]       in FUNC_08003fd0 @08003fd0
+
+  [FUNC_080043e4 @080043e4]
+  08004476  read  settings[0]    (byte +0x00)  ldrb r3, [r2]           in FUNC_080043e4 @080043e4
+  0800447a  read  settings[0]+1  (byte +0x01)  ldrb r3, [r2, #1]       in FUNC_080043e4 @080043e4
+  0800447e  read  settings[0]+2  (byte +0x02)  ldrb r3, [r2, #2]       in FUNC_080043e4 @080043e4
+  08004482  read  settings[0]+3  (byte +0x03)  ldrb r3, [r2, #3]       in FUNC_080043e4 @080043e4
+  0800448a  read  settings[1]    (byte +0x04)  ldrb r3, [r2, #4]       in FUNC_080043e4 @080043e4
+  0800448e  read  settings[1]+1  (byte +0x05)  ldrb r3, [r2, #5]       in FUNC_080043e4 @080043e4
+  08004492  read  settings[1]+2  (byte +0x06)  ldrb r3, [r2, #6]       in FUNC_080043e4 @080043e4
+  08004496  read  settings[1]+3  (byte +0x07)  ldrb r2, [r2, #7]       in FUNC_080043e4 @080043e4
+
+  [flash_charge_state_machine @080045ac]
+  080045f0  read  settings[1]+2  (byte +0x06)  ldrb r0, [r0, #6]       in flash_charge_state_machine @080045ac
+
+  [rf_init @08004860]
+  080048c4  read  settings[1]+2  (byte +0x06)  ldrb r0, [r0, #6]       in rf_init @08004860
+
+  [ui_key_14 @080048e4]
+  08004912  write settings[0]    (byte +0x00)  strb r0, [r1]           in ui_key_14 @080048e4
+  08004914  write settings[0]+1  (byte +0x01)  strb r0, [r1, #1]       in ui_key_14 @080048e4
+  08004916  write settings[0]+2  (byte +0x02)  strb r2, [r1, #2]       in ui_key_14 @080048e4
+  08004918  write settings[0]+3  (byte +0x03)  strb r0, [r1, #3]       in ui_key_14 @080048e4
+  0800491a  write settings[1]    (byte +0x04)  strb r0, [r1, #4]       in ui_key_14 @080048e4
+  0800491c  write settings[1]+1  (byte +0x05)  strb r0, [r1, #5]       in ui_key_14 @080048e4
+  0800491e  write settings[1]+2  (byte +0x06)  strb r0, [r1, #6]       in ui_key_14 @080048e4
+  08004920  write settings[1]+3  (byte +0x07)  strb r0, [r1, #7]       in ui_key_14 @080048e4
+
+  [FUNC_08004ac8 @08004ac8]
+  08004acc  read  settings[1]+1  (byte +0x05)  ldrb r1, [r4, #5]       in FUNC_08004ac8 @08004ac8
+  08004afc  read  settings[1]+3  (byte +0x07)  ldrb r2, [r4, #7]       in FUNC_08004ac8 @08004ac8
+
+  [FUNC_08004f70 @08004f70]
+  08004ff4  read  settings[1]+3  (byte +0x07)  ldrb r0, [r0, #7]       in FUNC_08004f70 @08004f70
+
+  [EXTI0_1_IRQHandler @080053f0]
+  08005412  read  settings[0]+1  (byte +0x01)  ldrb r1, [r0, #1]       in EXTI0_1_IRQHandler @080053f0
+
+  [FUNC_08005ae8 @08005ae8]
+  08005b16  read  settings[1]    (byte +0x04)  ldrb r6, [r7, #4]       in FUNC_08005ae8 @08005ae8
+  08005b52  read  settings[0]+3  (byte +0x03)  ldrb r0, [r7, #3]       in FUNC_08005ae8 @08005ae8
+
+  [FUNC_08005c30 @08005c30]
+  08005c54  read  settings[1]+3  (byte +0x07)  ldrb r1, [r1, #7]       in FUNC_08005c30 @08005c30
+
+  [level_table_lookup_b @0800626c]
+  08006290  read  settings[1]+3  (byte +0x07)  ldrb r2, [r2, #7]       in level_table_lookup_b @0800626c
+
+  [flash_trigger_state_machine @08008504]
+  08008550  read  settings[1]+2  (byte +0x06)  ldrb r0, [r1, #6]       in flash_trigger_state_machine @08008504
+
+  [ui_key_scan_task @08008818]
+  08008ab4  read  settings[1]+2  (byte +0x06)  ldrb r0, [r0, #6]       in ui_key_scan_task @08008818
+
+  [FUNC_08008c7c @08008c7c]
+  08008cde  read  settings[0]+2  (byte +0x02)  ldrb r0, [r0, #2]       in FUNC_08008c7c @08008c7c
+
+  [display_task @08009228]
+  0800945e  read  settings[0]    (byte +0x00)  ldrb r0, [r4]           in display_task @08009228
+  08009464  read  settings[1]    (byte +0x04)  ldrb r0, [r4, #4]       in display_task @08009228
+  0800946a  read  settings[0]+3  (byte +0x03)  ldrb r0, [r4, #3]       in display_task @08009228
+  08009470  read  settings[0]+2  (byte +0x02)  ldrb r0, [r4, #2]       in display_task @08009228
+  08009476  read  settings[0]+1  (byte +0x01)  ldrb r0, [r4, #1]       in display_task @08009228
+
+  [FUNC_0800ae40 @0800ae40]
+  0800af1a  write settings[0]    (byte +0x00)  strb r1, [r0]           in FUNC_0800ae40 @0800ae40
+  0800af1e  write settings[0]    (byte +0x00)  strb r7, [r0]           in FUNC_0800ae40 @0800ae40
+
+  [muldiv_scale @0800b134]
+  0800b144  read  settings[1]+3  (byte +0x07)  ldrb r3, [r3, #7]       in muldiv_scale @0800b134
+
+  [rf_rx_crc @0800b170]
+  0800b228  read  settings[1]+3  (byte +0x07)  ldrb r2, [r2, #7]       in rf_rx_crc @0800b170
+  0800b476  write settings[0]    (byte +0x00)  strb r2, [r0]           in rf_rx_crc @0800b170
+  0800b480  write settings[0]+1  (byte +0x01)  strb r2, [r0, #1]       in rf_rx_crc @0800b170
+
+  [charge_enable_task @0800ba00]
+  0800ba14  read  settings[0]+1  (byte +0x01)  ldrb r1, [r1, #1]       in charge_enable_task @0800ba00
+
+  [reinit_prepare @0800bb7c]
+  0800bb80  read  settings[0]+2  (byte +0x02)  ldrb r1, [r0, #2]       in reinit_prepare @0800bb7c
+
+  [ui_key_80 @0800bc34]
+  0800bc7e  write settings[1]+3  (byte +0x07)  strb r2, [r1, #7]       in ui_key_80 @0800bc34
+
+  [rf_rx_process @0800c554]
+  0800c57e  read  settings[1]    (byte +0x04)  ldrb r6, [r7, #4]       in rf_rx_process @0800c554
+  0800c5ba  read  settings[0]+3  (byte +0x03)  ldrb r0, [r7, #3]       in rf_rx_process @0800c554
+
+  [settings_validate @0800ccc8]
+  0800cd58  write settings[0]    (byte +0x00)  strb r3, [r2]           in settings_validate @0800ccc8
+  0800cd5c  write settings[0]+1  (byte +0x01)  strb r3, [r2, #1]       in settings_validate @0800ccc8
+  0800cd60  write settings[0]+2  (byte +0x02)  strb r3, [r2, #2]       in settings_validate @0800ccc8
+  0800cd64  write settings[0]+3  (byte +0x03)  strb r3, [r2, #3]       in settings_validate @0800ccc8
+  0800cd6c  write settings[1]    (byte +0x04)  strb r1, [r2, #4]       in settings_validate @0800ccc8
+  0800cd70  write settings[1]+1  (byte +0x05)  strb r1, [r2, #5]       in settings_validate @0800ccc8
+  0800cd74  write settings[1]+2  (byte +0x06)  strb r1, [r2, #6]       in settings_validate @0800ccc8
+  0800cd78  write settings[1]+3  (byte +0x07)  strb r0, [r2, #7]       in settings_validate @0800ccc8
+
+==============================================================================
+== settings[7] (0x2000041F) 访问者汇总 ==
+==============================================================================
+  read  @08004496 in FUNC_080043e4            @080043e4  ldrb r2, [r2, #7]
+  write @08004920 in ui_key_14                @080048e4  strb r0, [r1, #7]
+  read  @08004afc in FUNC_08004ac8            @08004ac8  ldrb r2, [r4, #7]
+  read  @08004ff4 in FUNC_08004f70            @08004f70  ldrb r0, [r0, #7]
+  read  @08005c54 in FUNC_08005c30            @08005c30  ldrb r1, [r1, #7]
+  read  @08006290 in level_table_lookup_b     @0800626c  ldrb r2, [r2, #7]
+  read  @0800b144 in muldiv_scale             @0800b134  ldrb r3, [r3, #7]
+  read  @0800b228 in rf_rx_crc                @0800b170  ldrb r2, [r2, #7]
+  write @0800bc7e in ui_key_80                @0800bc34  strb r2, [r1, #7]
+  write @0800cd78 in settings_validate        @0800ccc8  strb r0, [r2, #7]
+
+-- 每个函数对 settings 字节的读(read)/写(write)汇总 --
+  ui_power_switch_task       @08003bec  read=['+0x00'] write=[] 
+  FUNC_08003fd0              @08003fd0  read=['+0x00', '+0x01', '+0x02', '+0x03'] write=['+0x02'] 
+  FUNC_080043e4              @080043e4  read=['+0x00', '+0x01', '+0x02', '+0x03', '+0x04', '+0x05', '+0x06', '+0x07'] write=[] 
+  flash_charge_state_machine @080045ac  read=['+0x06'] write=[] 
+  rf_init                    @08004860  read=['+0x06'] write=[] 
+  ui_key_14                  @080048e4  read=[] write=['+0x00', '+0x01', '+0x02', '+0x03', '+0x04', '+0x05', '+0x06', '+0x07'] 
+  FUNC_08004ac8              @08004ac8  read=['+0x05', '+0x07'] write=[] 
+  FUNC_08004f70              @08004f70  read=['+0x07'] write=[] 
+  EXTI0_1_IRQHandler         @080053f0  read=['+0x01'] write=[] 
+  FUNC_08005ae8              @08005ae8  read=['+0x03', '+0x04'] write=[] 
+  FUNC_08005c30              @08005c30  read=['+0x07'] write=[] 
+  level_table_lookup_b       @0800626c  read=['+0x07'] write=[] 
+  flash_trigger_state_machine @08008504  read=['+0x06'] write=[] 
+  ui_key_scan_task           @08008818  read=['+0x06'] write=[] 
+  FUNC_08008c7c              @08008c7c  read=['+0x02'] write=[] 
+  display_task               @08009228  read=['+0x00', '+0x01', '+0x02', '+0x03', '+0x04'] write=[] 
+  FUNC_0800ae40              @0800ae40  read=[] write=['+0x00'] 
+  muldiv_scale               @0800b134  read=['+0x07'] write=[] 
+  rf_rx_crc                  @0800b170  read=['+0x07'] write=['+0x00', '+0x01'] 
+  charge_enable_task         @0800ba00  read=['+0x01'] write=[] 
+  reinit_prepare             @0800bb7c  read=['+0x02'] write=[] 
+  ui_key_80                  @0800bc34  read=[] write=['+0x07'] 
+  rf_rx_process              @0800c554  read=['+0x03', '+0x04'] write=[] 
+  settings_validate          @0800ccc8  read=[] write=['+0x00', '+0x01', '+0x02', '+0x03', '+0x04', '+0x05', '+0x06', '+0x07'] 
+
+JSON 写出: D:\神牛\keypatch\dev\ad200_ui\store\scan_refs.json

@@ -1,0 +1,1723 @@
+X3-C v1.38 UI 原型补丁（密钥开关 + 广播引闪）v1
+==============================================================================
+原厂镜像 : D:\神牛\work\samples\X3_C_v1.38_app.bin (1021468 字节, sha256 45fdd9522c432f4be60a470741d3e5c12a7ee629eb2b277aed5187639f85ef62)
+补丁镜像 : 长度 1021468（不变）；与原厂差异 1348 字节
+KEY_ON   : 0x20001080（RAM，上电默认 0 / 关）
+
+一、补丁点（11 个）
+地址           字节数        说明
+0x080F0000   28         ui_key_toggle(): 翻转 KEY_ON 标志 0x20001080（fw-x3c 双发读这个字节）
+0x080F0020   88         ui_broadcast_allch(): 32 频道广播（SYNC=KEY）
+0x080F0100   88         ui_broadcast_allid(): 全频道 + 全 ID 扫描（慢）
+0x080F0200   480        自绘字模 24x24：密/钥/广/播/全（480 字节）
+0x080F0400   45         UTF-8 标签：密钥 / 广播 / 全频道 / 全ID / KEY ON / KEY OFF
+0x080F0500   26         快捷面板标签 ASCII: KEY / BCAST / BROADCAST
+0x080F0800   492        ui_quickpanel_ext(): 建 KEY / BROADCAST 两个磁贴（接管 FUN_080079E8 尾部 bl）
+0x08008236   4          快捷面板：bl 0x08027fe0 -> bl 0x080F0800（加 KEY/BROADCAST 磁贴）
+0x080F1000   112        ui_tiles_poll(): 轮询磁贴按下 -> consume + ui_key_toggle / ui_broadcast_allch（句柄 RAM 0x20001084 / 0x20001088）
+0x080F1100   16         page1 入口跳板：push{r0-r3,lr}; bl poll; pop; 原 push.w; b.w 0x0800FE7C
+0x0800FE78   4          页 1 入口 -> b.w 0x080F0A00（100ms 轮询两个新磁贴的点击）
+
+二、自动验证
+[PASS] 镜像长度 1021468 字节（应 1021468，原位补丁）
+[PASS] 与原厂差异 1348 字节；注入区内 1348，区外（原厂代码）0（必须 0）
+[PASS] ui_key_toggle @0x080F0000: push {r4, r5, lr}; movs r4, #1; ldr r0, [pc, #0x10]; ldrb r1, [r0]; movs r2, #1; ands r1, r2
+[PASS] ui_broadcast_allch @0x080F0020: push {r4, r5, r6, lr}; movs r4, #0; ldr r5, [pc, #0x48]; ldr r6, [pc, #0x4c]; mov r0, r4; bl #0x8014814
+[PASS] ui_broadcast_allid @0x080F0100: push {r4, r5, r6, lr}; movs r4, #0; ldr r5, [pc, #0x4c]; mov r0, r4; bl #0x8014814; movs r0, #4
+[PASS] ui_key_toggle() 调 2 次: 标志 0x20001080 0->1->0，返回 1/0（期望 1->0）
+[PASS] ui_broadcast_allch(): 频道 32；同步字 64 次（KEY 交替=True）；功率帧 32 个([80],0xD1,30)=True；造型灯帧 32 个([80],0xB1,1)=True；TEST 32
+[PASS] 字模区 0x080F0200 已写入（96 字节/字，非零字节 42）
+[PASS] 标签区 UTF-8 首项 = '密钥'（应为 '密钥'）
+[PASS] 挂载点 0x08008236: bl #0x80f0800（应为 bl 0x80F0800）
+[PASS] FUN_080079E8 内差异偏移 = ['0x03A36', '0x03A38', '0x03A39']（应恰好是挂载点 4 字节）
+[PASS] ui_quickpanel_ext 共 39 个 bl；2×建磁贴、2×文本、2×图标(0x0802553E)，且原厂属性 setter 全部出现=True
+[PASS] ui_quickpanel_ext 桩执行: parent(r5)=0x20042100 正确=True；磁贴 2 个 [(537141504, 1, 40, 288), (537141504, 1, 176, 288)]；属性 setter 序列与原厂(0x08007B16-0x08007BD2)一致=True（14 个/片 × 2 片）；关键参数=True；返回颜色 0x00332211（期望 0x00332211）；r6(0x200004C7) RAM 未被写=True
+[PASS] 底部页签布局补丁默认未应用（0x08007E7C/0x0800807A/0x08008084 与原厂一致 → 仍是原厂 2 个页签）
+[PASS] 页 1 入口 0x0800FE78: b.w #0x80f1100（应为 b.w 0x80F1100）
+[PASS] 跳板反汇编: push {r0, r1, r2, r3, lr}; bl #0x80f1000; pop {r0, r1, r2, r3, pc}; push.w {r2, r3, r4, r5, r6, r7, r8, lr}; b.w #0x800fe7c（应含 push{r0-r3,lr}; bl poll; pop; 原 push.w; b.w）
+[PASS] ui_tiles_poll: 动作调用 ['0x080F0000', '0x080F0020']（期望 ['0x080F0000', '0x080F0020']）；按下判定 `ldrh r1,[r0,#0x28]`+`ands r1,r6(=8)`=True
+[PASS] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）
+[PASS] ui_broadcast_allid 全 ID 扫描: 步长 1、上限 100 = True（期望 True）
+总判定: PASS
+
+三、补丁后 FUN_080079E8（快捷面板构建）尾部反汇编
+  08008220  5c 20        movs r0, #0x5c
+  08008222  cd e9 00 01  strd r0, r1, [sp]
+  08008226  4f f4 d9 73  mov.w r3, #0x1b2
+  0800822a  8a 22        movs r2, #0x8a
+  0800822c  01 21        movs r1, #1
+  0800822e  48 46        mov r0, sb
+  08008230  08 f0 4c fc  bl #0x8010acc
+  08008234  04 46        mov r4, r0
+  08008236  e8 f0 e3 fa  bl #0x80f0800
+  0800823a  01 46        mov r1, r0
+  0800823c  04 90        str r0, [sp, #0x10]
+  0800823e  00 22        movs r2, #0
+  08008240  20 46        mov r0, r4
+  08008242  29 f0 9b f9  bl #0x803157c
+  08008246  00 22        movs r2, #0
+  08008248  ff 21        movs r1, #0xff
+  0800824a  20 46        mov r0, r4
+  0800824c  0b b0        add sp, #0x2c
+  0800824e  35 e0        b #0x80082bc
+
+四、注入函数 ui_quickpanel_ext @0x080F0800（照抄原厂磁贴完整属性序列）
+  080f0800  70 b5        push {r4, r5, r6, lr}
+  080f0802  37 f7 ed fb  bl #0x8027fe0
+  080f0806  06 46        mov r6, r0
+  080f0808  82 b0        sub sp, #8
+  080f080a  68 48        ldr r0, [pc, #0x1a0]
+  080f080c  00 90        str r0, [sp]
+  080f080e  68 48        ldr r0, [pc, #0x1a0]
+  080f0810  01 90        str r0, [sp, #4]
+  080f0812  28 46        mov r0, r5
+  080f0814  01 21        movs r1, #1
+  080f0816  67 4a        ldr r2, [pc, #0x19c]
+  080f0818  67 4b        ldr r3, [pc, #0x19c]
+  080f081a  15 f7 01 fd  bl #0x8006220
+  080f081e  02 b0        add sp, #8
+  080f0820  04 46        mov r4, r0
+  080f0822  27 20        movs r0, #0x27
+  080f0824  27 21        movs r1, #0x27
+  080f0826  27 22        movs r2, #0x27
+  080f0828  37 f7 b2 fa  bl #0x8027d90
+  080f082c  01 46        mov r1, r0
+  080f082e  00 22        movs r2, #0
+  080f0830  20 46        mov r0, r4
+  080f0832  40 f7 a3 fe  bl #0x803157c
+  080f0836  ff 21        movs r1, #0xff
+  080f0838  00 22        movs r2, #0
+  080f083a  20 46        mov r0, r4
+  080f083c  40 f7 aa fe  bl #0x8031594
+  080f0840  ff 21        movs r1, #0xff
+  080f0842  04 22        movs r2, #4
+  080f0844  20 46        mov r0, r4
+  080f0846  40 f7 e9 fe  bl #0x803161c
+  080f084a  37 f7 c9 fb  bl #0x8027fe0
+  080f084e  01 46        mov r1, r0
+  080f0850  04 22        movs r2, #4
+  080f0852  20 46        mov r0, r4
+  080f0854  40 f7 d6 fe  bl #0x8031604
+  080f0858  02 21        movs r1, #2
+  080f085a  04 22        movs r2, #4
+  080f085c  20 46        mov r0, r4
+  080f085e  40 f7 e7 fe  bl #0x8031630
+  080f0862  04 21        movs r1, #4
+  080f0864  04 22        movs r2, #4
+  080f0866  20 46        mov r0, r4
+  080f0868  40 f7 dd fe  bl #0x8031626
+  080f086c  00 21        movs r1, #0
+  080f086e  00 22        movs r2, #0
+  080f0870  20 46        mov r0, r4
+  080f0872  40 f7 a0 fe  bl #0x80315b6
+  080f0876  02 21        movs r1, #2
+  080f0878  00 22        movs r2, #0
+  080f087a  20 46        mov r0, r4
+  080f087c  40 f7 a0 fe  bl #0x80315c0
+  080f0880  00 21        movs r1, #0
+  080f0882  04 22        movs r2, #4
+  080f0884  20 46        mov r0, r4
+  080f0886  40 f7 96 fe  bl #0x80315b6
+  080f088a  02 21        movs r1, #2
+  080f088c  04 22        movs r2, #4
+  080f088e  20 46        mov r0, r4
+  080f0890  40 f7 96 fe  bl #0x80315c0
+  080f0894  37 f7 a4 fb  bl #0x8027fe0
+  080f0898  01 46        mov r1, r0
+  080f089a  04 22        movs r2, #4
+  080f089c  20 46        mov r0, r4
+  080f089e  40 f7 7e fe  bl #0x803159e
+  080f08a2  6c 21        movs r1, #0x6c
+  080f08a4  00 22        movs r2, #0
+  080f08a6  20 46        mov r0, r4
+  080f08a8  40 f7 f5 fe  bl #0x8031696
+  080f08ac  37 f7 98 fb  bl #0x8027fe0
+  080f08b0  84 b0        sub sp, #0x10
+  080f08b2  01 90        str r0, [sp, #4]
+  080f08b4  41 49        ldr r1, [pc, #0x104]
+  080f08b6  00 91        str r1, [sp]
+  080f08b8  41 49        ldr r1, [pc, #0x104]
+  080f08ba  02 91        str r1, [sp, #8]
+  080f08bc  09 21        movs r1, #9
+  080f08be  00 22        movs r2, #0
+  080f08c0  00 23        movs r3, #0
+  080f08c2  20 46        mov r0, r4
+  080f08c4  34 f7 3b fe  bl #0x802553e
+  080f08c8  04 b0        add sp, #0x10
+  080f08ca  20 46        mov r0, r4
+  080f08cc  3d 49        ldr r1, [pc, #0xf4]
+  080f08ce  00 22        movs r2, #0
+  080f08d0  3d f7 53 f8  bl #0x802d97a
+  080f08d4  3c 49        ldr r1, [pc, #0xf0]
+  080f08d6  0c 60        str r4, [r1]
+  080f08d8  82 b0        sub sp, #8
+  080f08da  3c 48        ldr r0, [pc, #0xf0]
+  080f08dc  00 90        str r0, [sp]
+  080f08de  3c 48        ldr r0, [pc, #0xf0]
+  080f08e0  01 90        str r0, [sp, #4]
+  080f08e2  28 46        mov r0, r5
+  080f08e4  01 21        movs r1, #1
+  080f08e6  3b 4a        ldr r2, [pc, #0xec]
+  080f08e8  3b 4b        ldr r3, [pc, #0xec]
+  080f08ea  15 f7 99 fc  bl #0x8006220
+  080f08ee  02 b0        add sp, #8
+  080f08f0  04 46        mov r4, r0
+  080f08f2  27 20        movs r0, #0x27
+  080f08f4  27 21        movs r1, #0x27
+  080f08f6  27 22        movs r2, #0x27
+  080f08f8  37 f7 4a fa  bl #0x8027d90
+  080f08fc  01 46        mov r1, r0
+  080f08fe  00 22        movs r2, #0
+  080f0900  20 46        mov r0, r4
+  080f0902  40 f7 3b fe  bl #0x803157c
+  080f0906  ff 21        movs r1, #0xff
+  080f0908  00 22        movs r2, #0
+  080f090a  20 46        mov r0, r4
+  080f090c  40 f7 42 fe  bl #0x8031594
+  080f0910  ff 21        movs r1, #0xff
+  080f0912  04 22        movs r2, #4
+  080f0914  20 46        mov r0, r4
+  080f0916  40 f7 81 fe  bl #0x803161c
+  080f091a  37 f7 61 fb  bl #0x8027fe0
+  080f091e  01 46        mov r1, r0
+  080f0920  04 22        movs r2, #4
+  080f0922  20 46        mov r0, r4
+  080f0924  40 f7 6e fe  bl #0x8031604
+  080f0928  02 21        movs r1, #2
+  080f092a  04 22        movs r2, #4
+  080f092c  20 46        mov r0, r4
+  080f092e  40 f7 7f fe  bl #0x8031630
+  080f0932  04 21        movs r1, #4
+  080f0934  04 22        movs r2, #4
+  080f0936  20 46        mov r0, r4
+  080f0938  40 f7 75 fe  bl #0x8031626
+  080f093c  00 21        movs r1, #0
+  080f093e  00 22        movs r2, #0
+  080f0940  20 46        mov r0, r4
+  080f0942  40 f7 38 fe  bl #0x80315b6
+  080f0946  02 21        movs r1, #2
+  080f0948  00 22        movs r2, #0
+  080f094a  20 46        mov r0, r4
+  080f094c  40 f7 38 fe  bl #0x80315c0
+  080f0950  00 21        movs r1, #0
+  080f0952  04 22        movs r2, #4
+  080f0954  20 46        mov r0, r4
+  080f0956  40 f7 2e fe  bl #0x80315b6
+  080f095a  02 21        movs r1, #2
+  080f095c  04 22        movs r2, #4
+  080f095e  20 46        mov r0, r4
+  080f0960  40 f7 2e fe  bl #0x80315c0
+  080f0964  37 f7 3c fb  bl #0x8027fe0
+  080f0968  01 46        mov r1, r0
+  080f096a  04 22        movs r2, #4
+  080f096c  20 46        mov r0, r4
+  080f096e  40 f7 16 fe  bl #0x803159e
+  080f0972  6c 21        movs r1, #0x6c
+  080f0974  00 22        movs r2, #0
+  080f0976  20 46        mov r0, r4
+  080f0978  40 f7 8d fe  bl #0x8031696
+  080f097c  37 f7 30 fb  bl #0x8027fe0
+  080f0980  84 b0        sub sp, #0x10
+  080f0982  01 90        str r0, [sp, #4]
+  080f0984  15 49        ldr r1, [pc, #0x54]
+  080f0986  00 91        str r1, [sp]
+  080f0988  15 49        ldr r1, [pc, #0x54]
+  080f098a  02 91        str r1, [sp, #8]
+  080f098c  09 21        movs r1, #9
+  080f098e  00 22        movs r2, #0
+  080f0990  00 23        movs r3, #0
+  080f0992  20 46        mov r0, r4
+  080f0994  34 f7 d3 fd  bl #0x802553e
+  080f0998  04 b0        add sp, #0x10
+  080f099a  20 46        mov r0, r4
+  080f099c  11 49        ldr r1, [pc, #0x44]
+  080f099e  00 22        movs r2, #0
+  080f09a0  3c f7 eb ff  bl #0x802d97a
+  080f09a4  10 49        ldr r1, [pc, #0x40]
+  080f09a6  0c 60        str r4, [r1]
+  080f09a8  30 46        mov r0, r6
+  080f09aa  70 bd        pop {r4, r5, r6, pc}
+  080f09ac  80 00        lsls r0, r0, #2
+  080f09ae  00 00        movs r0, r0
+  080f09b0  2c 00        movs r4, r5
+  080f09b2  00 00        movs r0, r0
+  080f09b4  28 00        movs r0, r5
+  080f09b6  00 00        movs r0, r0
+  080f09b8  20 01        lsls r0, r4, #4
+  080f09ba  00 00        movs r0, r0
+  080f09bc  90 b0        sub sp, #0x40
+  080f09be  06 08        lsrs r6, r0, #0x20
+  080f09c0  20 7e        ldrb r0, [r4, #0x18]
+  080f09c2  00 08        lsrs r0, r0, #0x20
+  080f09c4  00 05        lsls r0, r0, #0x14
+  080f09c6  0f 08        lsrs r7, r1, #0x20
+  080f09c8  84 10        asrs r4, r0, #2
+  080f09ca  00 20        movs r0, #0
+  080f09cc  80 00        lsls r0, r0, #2
+  080f09ce  00 00        movs r0, r0
+  080f09d0  2c 00        movs r4, r5
+  080f09d2  00 00        movs r0, r0
+  080f09d4  b0 00        lsls r0, r6, #2
+  080f09d6  00 00        movs r0, r0
+  080f09d8  20 01        lsls r0, r4, #4
+  080f09da  00 00        movs r0, r0
+  080f09dc  90 b0        sub sp, #0x40
+  080f09de  06 08        lsrs r6, r0, #0x20
+  080f09e0  20 7e        ldrb r0, [r4, #0x18]
+  080f09e2  00 08        lsrs r0, r0, #0x20
+  080f09e4  10 05        lsls r0, r2, #0x14
+  080f09e6  0f 08        lsrs r7, r1, #0x20
+  080f09e8  88 10        asrs r0, r1, #2
+  080f09ea  00 20        movs r0, #0
+
+五、注入函数 ui_key_toggle @0x080F0000
+  080f0000  30 b5        push {r4, r5, lr}
+  080f0002  01 24        movs r4, #1
+  080f0004  04 48        ldr r0, [pc, #0x10]
+  080f0006  01 78        ldrb r1, [r0]
+  080f0008  01 22        movs r2, #1
+  080f000a  11 40        ands r1, r2
+  080f000c  61 40        eors r1, r4
+  080f000e  01 70        strb r1, [r0]
+  080f0010  0d 46        mov r5, r1
+  080f0012  28 46        mov r0, r5
+  080f0014  30 bd        pop {r4, r5, pc}
+  080f0016  00 00        movs r0, r0
+
+六、注入函数 ui_broadcast_allch @0x080F0020
+  080f0020  70 b5        push {r4, r5, r6, lr}
+  080f0022  00 24        movs r4, #0
+  080f0024  12 4d        ldr r5, [pc, #0x48]
+  080f0026  13 4e        ldr r6, [pc, #0x4c]
+  080f0028  20 46        mov r0, r4
+  080f002a  24 f7 f3 fb  bl #0x8014814
+  080f002e  04 20        movs r0, #4
+  080f0030  29 0a        lsrs r1, r5, #8
+  080f0032  33 f7 85 fa  bl #0x8023540
+  080f0036  05 20        movs r0, #5
+  080f0038  e9 b2        uxtb r1, r5
+  080f003a  33 f7 81 fa  bl #0x8023540
+  080f003e  32 79        ldrb r2, [r6, #4]
+  080f0040  52 06        lsls r2, r2, #0x19
+  080f0042  52 0e        lsrs r2, r2, #0x19
+  080f0044  50 20        movs r0, #0x50
+  080f0046  d1 21        movs r1, #0xd1
+  080f0048  21 f7 00 fc  bl #0x801184c
+  080f004c  32 78        ldrb r2, [r6]
+  080f004e  00 2a        cmp r2, #0
+  080f0050  01 d0        beq #0x80f0056
+  080f0052  00 22        movs r2, #0
+  080f0054  00 e0        b #0x80f0058
+  080f0056  01 22        movs r2, #1
+  080f0058  50 20        movs r0, #0x50
+  080f005a  b1 21        movs r1, #0xb1
+
+七、差异字节清单（文件偏移, 原 -> 新）
+  0x003A36 (va 0x08008236)  1f -> e8
+  0x003A38 (va 0x08008238)  d3 -> e3
+  0x003A39 (va 0x08008239)  fe -> fa
+  0x00B678 (va 0x0800FE78)  2d -> e1
+  0x00B679 (va 0x0800FE79)  e9 -> f0
+  0x00B67A (va 0x0800FE7A)  fc -> 42
+  0x00B67B (va 0x0800FE7B)  41 -> b9
+  0x0EB800 (va 0x080F0000)  ff -> 30
+  0x0EB801 (va 0x080F0001)  ff -> b5
+  0x0EB802 (va 0x080F0002)  ff -> 01
+  0x0EB803 (va 0x080F0003)  ff -> 24
+  0x0EB804 (va 0x080F0004)  ff -> 04
+  0x0EB805 (va 0x080F0005)  ff -> 48
+  0x0EB806 (va 0x080F0006)  ff -> 01
+  0x0EB807 (va 0x080F0007)  ff -> 78
+  0x0EB808 (va 0x080F0008)  ff -> 01
+  0x0EB809 (va 0x080F0009)  ff -> 22
+  0x0EB80A (va 0x080F000A)  ff -> 11
+  0x0EB80B (va 0x080F000B)  ff -> 40
+  0x0EB80C (va 0x080F000C)  ff -> 61
+  0x0EB80D (va 0x080F000D)  ff -> 40
+  0x0EB80E (va 0x080F000E)  ff -> 01
+  0x0EB80F (va 0x080F000F)  ff -> 70
+  0x0EB810 (va 0x080F0010)  ff -> 0d
+  0x0EB811 (va 0x080F0011)  ff -> 46
+  0x0EB812 (va 0x080F0012)  ff -> 28
+  0x0EB813 (va 0x080F0013)  ff -> 46
+  0x0EB814 (va 0x080F0014)  ff -> 30
+  0x0EB815 (va 0x080F0015)  ff -> bd
+  0x0EB816 (va 0x080F0016)  ff -> 00
+  0x0EB817 (va 0x080F0017)  ff -> 00
+  0x0EB818 (va 0x080F0018)  ff -> 80
+  0x0EB819 (va 0x080F0019)  ff -> 10
+  0x0EB81A (va 0x080F001A)  ff -> 00
+  0x0EB81B (va 0x080F001B)  ff -> 20
+  0x0EB820 (va 0x080F0020)  ff -> 70
+  0x0EB821 (va 0x080F0021)  ff -> b5
+  0x0EB822 (va 0x080F0022)  ff -> 00
+  0x0EB823 (va 0x080F0023)  ff -> 24
+  0x0EB824 (va 0x080F0024)  ff -> 12
+  0x0EB825 (va 0x080F0025)  ff -> 4d
+  0x0EB826 (va 0x080F0026)  ff -> 13
+  0x0EB827 (va 0x080F0027)  ff -> 4e
+  0x0EB828 (va 0x080F0028)  ff -> 20
+  0x0EB829 (va 0x080F0029)  ff -> 46
+  0x0EB82A (va 0x080F002A)  ff -> 24
+  0x0EB82B (va 0x080F002B)  ff -> f7
+  0x0EB82C (va 0x080F002C)  ff -> f3
+  0x0EB82D (va 0x080F002D)  ff -> fb
+  0x0EB82E (va 0x080F002E)  ff -> 04
+  0x0EB82F (va 0x080F002F)  ff -> 20
+  0x0EB830 (va 0x080F0030)  ff -> 29
+  0x0EB831 (va 0x080F0031)  ff -> 0a
+  0x0EB832 (va 0x080F0032)  ff -> 33
+  0x0EB833 (va 0x080F0033)  ff -> f7
+  0x0EB834 (va 0x080F0034)  ff -> 85
+  0x0EB835 (va 0x080F0035)  ff -> fa
+  0x0EB836 (va 0x080F0036)  ff -> 05
+  0x0EB837 (va 0x080F0037)  ff -> 20
+  0x0EB838 (va 0x080F0038)  ff -> e9
+  0x0EB839 (va 0x080F0039)  ff -> b2
+  0x0EB83A (va 0x080F003A)  ff -> 33
+  0x0EB83B (va 0x080F003B)  ff -> f7
+  0x0EB83C (va 0x080F003C)  ff -> 81
+  0x0EB83D (va 0x080F003D)  ff -> fa
+  0x0EB83E (va 0x080F003E)  ff -> 32
+  0x0EB83F (va 0x080F003F)  ff -> 79
+  0x0EB840 (va 0x080F0040)  ff -> 52
+  0x0EB841 (va 0x080F0041)  ff -> 06
+  0x0EB842 (va 0x080F0042)  ff -> 52
+  0x0EB843 (va 0x080F0043)  ff -> 0e
+  0x0EB844 (va 0x080F0044)  ff -> 50
+  0x0EB845 (va 0x080F0045)  ff -> 20
+  0x0EB846 (va 0x080F0046)  ff -> d1
+  0x0EB847 (va 0x080F0047)  ff -> 21
+  0x0EB848 (va 0x080F0048)  ff -> 21
+  0x0EB849 (va 0x080F0049)  ff -> f7
+  0x0EB84A (va 0x080F004A)  ff -> 00
+  0x0EB84B (va 0x080F004B)  ff -> fc
+  0x0EB84C (va 0x080F004C)  ff -> 32
+  0x0EB84D (va 0x080F004D)  ff -> 78
+  0x0EB84E (va 0x080F004E)  ff -> 00
+  0x0EB84F (va 0x080F004F)  ff -> 2a
+  0x0EB850 (va 0x080F0050)  ff -> 01
+  0x0EB851 (va 0x080F0051)  ff -> d0
+  0x0EB852 (va 0x080F0052)  ff -> 00
+  0x0EB853 (va 0x080F0053)  ff -> 22
+  0x0EB854 (va 0x080F0054)  ff -> 00
+  0x0EB855 (va 0x080F0055)  ff -> e0
+  0x0EB856 (va 0x080F0056)  ff -> 01
+  0x0EB857 (va 0x080F0057)  ff -> 22
+  0x0EB858 (va 0x080F0058)  ff -> 50
+  0x0EB859 (va 0x080F0059)  ff -> 20
+  0x0EB85A (va 0x080F005A)  ff -> b1
+  0x0EB85B (va 0x080F005B)  ff -> 21
+  0x0EB85C (va 0x080F005C)  ff -> 21
+  0x0EB85D (va 0x080F005D)  ff -> f7
+  0x0EB85E (va 0x080F005E)  ff -> f6
+  0x0EB85F (va 0x080F005F)  ff -> fb
+  0x0EB860 (va 0x080F0060)  ff -> 09
+  0x0EB861 (va 0x080F0061)  ff -> 20
+  0x0EB862 (va 0x080F0062)  ff -> 21
+  0x0EB863 (va 0x080F0063)  ff -> f7
+  0x0EB864 (va 0x080F0064)  ff -> 25
+  0x0EB865 (va 0x080F0065)  ff -> fc
+  0x0EB866 (va 0x080F0066)  ff -> 01
+  0x0EB867 (va 0x080F0067)  ff -> 34
+  0x0EB868 (va 0x080F0068)  ff -> 20
+  0x0EB869 (va 0x080F0069)  ff -> 2c
+  0x0EB86A (va 0x080F006A)  ff -> dd
+  0x0EB86B (va 0x080F006B)  ff -> d3
+  0x0EB86C (va 0x080F006C)  ff -> 70
+  0x0EB86D (va 0x080F006D)  ff -> bd
+  0x0EB86E (va 0x080F006E)  ff -> 00
+  0x0EB86F (va 0x080F006F)  ff -> 00
+  0x0EB870 (va 0x080F0070)  ff -> 21
+  0x0EB871 (va 0x080F0071)  ff -> 6b
+  0x0EB872 (va 0x080F0072)  ff -> 00
+  0x0EB873 (va 0x080F0073)  ff -> 00
+  0x0EB874 (va 0x080F0074)  ff -> 68
+  0x0EB875 (va 0x080F0075)  ff -> 0b
+  0x0EB876 (va 0x080F0076)  ff -> 00
+  0x0EB877 (va 0x080F0077)  ff -> 20
+  0x0EB900 (va 0x080F0100)  ff -> 70
+  0x0EB901 (va 0x080F0101)  ff -> b5
+  0x0EB902 (va 0x080F0102)  ff -> 00
+  0x0EB903 (va 0x080F0103)  ff -> 24
+  0x0EB904 (va 0x080F0104)  ff -> 13
+  0x0EB905 (va 0x080F0105)  ff -> 4d
+  0x0EB906 (va 0x080F0106)  ff -> 20
+  0x0EB907 (va 0x080F0107)  ff -> 46
+  0x0EB908 (va 0x080F0108)  ff -> 24
+  0x0EB909 (va 0x080F0109)  ff -> f7
+  0x0EB90A (va 0x080F010A)  ff -> 84
+  0x0EB90B (va 0x080F010B)  ff -> fb
+  0x0EB90C (va 0x080F010C)  ff -> 04
+  0x0EB90D (va 0x080F010D)  ff -> 20
+  0x0EB90E (va 0x080F010E)  ff -> 29
+  0x0EB90F (va 0x080F010F)  ff -> 0a
+  0x0EB910 (va 0x080F0110)  ff -> 33
+  0x0EB911 (va 0x080F0111)  ff -> f7
+  0x0EB912 (va 0x080F0112)  ff -> 16
+  0x0EB913 (va 0x080F0113)  ff -> fa
+  0x0EB914 (va 0x080F0114)  ff -> 05
+  0x0EB915 (va 0x080F0115)  ff -> 20
+  0x0EB916 (va 0x080F0116)  ff -> e9
+  0x0EB917 (va 0x080F0117)  ff -> b2
+  0x0EB918 (va 0x080F0118)  ff -> 33
+  0x0EB919 (va 0x080F0119)  ff -> f7
+  0x0EB91A (va 0x080F011A)  ff -> 12
+  0x0EB91B (va 0x080F011B)  ff -> fa
+  0x0EB91C (va 0x080F011C)  ff -> 50
+  0x0EB91D (va 0x080F011D)  ff -> 20
+  0x0EB91E (va 0x080F011E)  ff -> b1
+  0x0EB91F (va 0x080F011F)  ff -> 21
+  0x0EB920 (va 0x080F0120)  ff -> 00
+  0x0EB921 (va 0x080F0121)  ff -> 22
+  0x0EB922 (va 0x080F0122)  ff -> 21
+  0x0EB923 (va 0x080F0123)  ff -> f7
+  0x0EB924 (va 0x080F0124)  ff -> 93
+  0x0EB925 (va 0x080F0125)  ff -> fb
+  0x0EB926 (va 0x080F0126)  ff -> 09
+  0x0EB927 (va 0x080F0127)  ff -> 20
+  0x0EB928 (va 0x080F0128)  ff -> 21
+  0x0EB929 (va 0x080F0129)  ff -> f7
+  0x0EB92A (va 0x080F012A)  ff -> c2
+  0x0EB92B (va 0x080F012B)  ff -> fb
+  0x0EB92C (va 0x080F012C)  ff -> 00
+  0x0EB92D (va 0x080F012D)  ff -> 26
+  0x0EB92E (va 0x080F012E)  ff -> 30
+  0x0EB92F (va 0x080F012F)  ff -> 46
+  0x0EB930 (va 0x080F0130)  ff -> 24
+  0x0EB931 (va 0x080F0131)  ff -> f7
+  0x0EB932 (va 0x080F0132)  ff -> 98
+  0x0EB933 (va 0x080F0133)  ff -> fb
+  0x0EB934 (va 0x080F0134)  ff -> 50
+  0x0EB935 (va 0x080F0135)  ff -> 20
+  0x0EB936 (va 0x080F0136)  ff -> b1
+  0x0EB937 (va 0x080F0137)  ff -> 21
+  0x0EB938 (va 0x080F0138)  ff -> 00
+  0x0EB939 (va 0x080F0139)  ff -> 22
+  0x0EB93A (va 0x080F013A)  ff -> 21
+  0x0EB93B (va 0x080F013B)  ff -> f7
+  0x0EB93C (va 0x080F013C)  ff -> 87
+  0x0EB93D (va 0x080F013D)  ff -> fb
+  0x0EB93E (va 0x080F013E)  ff -> 09
+  0x0EB93F (va 0x080F013F)  ff -> 20
+  0x0EB940 (va 0x080F0140)  ff -> 21
+  0x0EB941 (va 0x080F0141)  ff -> f7
+  0x0EB942 (va 0x080F0142)  ff -> b6
+  0x0EB943 (va 0x080F0143)  ff -> fb
+  0x0EB944 (va 0x080F0144)  ff -> 01
+  0x0EB945 (va 0x080F0145)  ff -> 36
+  0x0EB946 (va 0x080F0146)  ff -> 64
+  0x0EB947 (va 0x080F0147)  ff -> 2e
+  0x0EB948 (va 0x080F0148)  ff -> f1
+  0x0EB949 (va 0x080F0149)  ff -> d3
+  0x0EB94A (va 0x080F014A)  ff -> 01
+  0x0EB94B (va 0x080F014B)  ff -> 34
+  0x0EB94C (va 0x080F014C)  ff -> 20
+  0x0EB94D (va 0x080F014D)  ff -> 2c
+  0x0EB94E (va 0x080F014E)  ff -> da
+  0x0EB94F (va 0x080F014F)  ff -> d3
+  0x0EB950 (va 0x080F0150)  ff -> 70
+  0x0EB951 (va 0x080F0151)  ff -> bd
+  0x0EB952 (va 0x080F0152)  ff -> 00
+  0x0EB953 (va 0x080F0153)  ff -> 00
+  0x0EB954 (va 0x080F0154)  ff -> 21
+  0x0EB955 (va 0x080F0155)  ff -> 6b
+  0x0EB956 (va 0x080F0156)  ff -> 00
+  0x0EB957 (va 0x080F0157)  ff -> 00
+  0x0EBA00 (va 0x080F0200)  ff -> 00
+  0x0EBA01 (va 0x080F0201)  ff -> 00
+  0x0EBA02 (va 0x080F0202)  ff -> 00
+  0x0EBA03 (va 0x080F0203)  ff -> 00
+  0x0EBA04 (va 0x080F0204)  ff -> 00
+  0x0EBA05 (va 0x080F0205)  ff -> 00
+  0x0EBA06 (va 0x080F0206)  ff -> 60
+  0x0EBA07 (va 0x080F0207)  ff -> 00
+  0x0EBA08 (va 0x080F0208)  ff -> 00
+  0x0EBA09 (va 0x080F0209)  ff -> 00
+  0x0EBA0A (va 0x080F020A)  ff -> 78
+  0x0EBA0B (va 0x080F020B)  ff -> 00
+  0x0EBA0C (va 0x080F020C)  ff -> 00
+  0x0EBA0D (va 0x080F020D)  ff -> 00
+  0x0EBA0E (va 0x080F020E)  ff -> f8
+  0x0EBA0F (va 0x080F020F)  ff -> 00
+  0x0EBA10 (va 0x080F0210)  ff -> 00
+  0x0EBA11 (va 0x080F0211)  ff -> 00
+  0x0EBA12 (va 0x080F0212)  ff -> fc
+  0x0EBA13 (va 0x080F0213)  ff -> 00
+  0x0EBA14 (va 0x080F0214)  ff -> 00
+  0x0EBA15 (va 0x080F0215)  ff -> 00
+  0x0EBA16 (va 0x080F0216)  ff -> fe
+  0x0EBA17 (va 0x080F0217)  ff -> 01
+  0x0EBA18 (va 0x080F0218)  ff -> 00
+  0x0EBA19 (va 0x080F0219)  ff -> 00
+  0x0EBA1A (va 0x080F021A)  ff -> cf
+  0x0EBA1B (va 0x080F021B)  ff -> 03
+  0x0EBA1C (va 0x080F021C)  ff -> 00
+  0x0EBA1D (va 0x080F021D)  ff -> c0
+  0x0EBA1E (va 0x080F021E)  ff -> 87
+  0x0EBA1F (va 0x080F021F)  ff -> 0f
+  0x0EBA20 (va 0x080F0220)  ff -> 00
+  0x0EBA21 (va 0x080F0221)  ff -> f0
+  0x0EBA22 (va 0x080F0222)  ff -> 03
+  0x0EBA23 (va 0x080F0223)  ff -> 1f
+  0x0EBA24 (va 0x080F0224)  ff -> 00
+  0x0EBA25 (va 0x080F0225)  ff -> fe
+  0x0EBA26 (va 0x080F0226)  ff -> 01
+  0x0EBA27 (va 0x080F0227)  ff -> 7e
+  0x0EBA28 (va 0x080F0228)  ff -> 00
+  0x0EBA29 (va 0x080F0229)  ff -> fc
+  0x0EBA2B (va 0x080F022B)  ff -> 7f
+  0x0EBA2C (va 0x080F022C)  ff -> 00
+  0x0EBA2D (va 0x080F022D)  ff -> dc
+  0x0EBA2F (va 0x080F022F)  ff -> 7f
+  0x0EBA30 (va 0x080F0230)  ff -> 00
+  0x0EBA31 (va 0x080F0231)  ff -> 00
+  0x0EBA32 (va 0x080F0232)  ff -> 78
+  0x0EBA33 (va 0x080F0233)  ff -> 00
+  0x0EBA34 (va 0x080F0234)  ff -> 00
+  0x0EBA35 (va 0x080F0235)  ff -> 00
+  0x0EBA36 (va 0x080F0236)  ff -> 78
+  0x0EBA37 (va 0x080F0237)  ff -> 00
+  0x0EBA38 (va 0x080F0238)  ff -> 00
+  0x0EBA39 (va 0x080F0239)  ff -> 00
+  0x0EBA3A (va 0x080F023A)  ff -> 78
+  0x0EBA3B (va 0x080F023B)  ff -> 00
+  0x0EBA3C (va 0x080F023C)  ff -> 00
+  0x0EBA3D (va 0x080F023D)  ff -> f0
+  0x0EBA3F (va 0x080F023F)  ff -> 1f
+  0x0EBA40 (va 0x080F0240)  ff -> 00
+  0x0EBA41 (va 0x080F0241)  ff -> f0
+  0x0EBA43 (va 0x080F0243)  ff -> 1f
+  0x0EBA44 (va 0x080F0244)  ff -> 00
+  0x0EBA45 (va 0x080F0245)  ff -> 00
+  0x0EBA46 (va 0x080F0246)  ff -> 78
+  0x0EBA47 (va 0x080F0247)  ff -> 00
+  0x0EBA48 (va 0x080F0248)  ff -> 00
+  0x0EBA49 (va 0x080F0249)  ff -> 00
+  0x0EBA4A (va 0x080F024A)  ff -> 78
+  0x0EBA4B (va 0x080F024B)  ff -> 00
+  0x0EBA4C (va 0x080F024C)  ff -> 00
+  0x0EBA4D (va 0x080F024D)  ff -> 00
+  0x0EBA4E (va 0x080F024E)  ff -> 78
+  0x0EBA4F (va 0x080F024F)  ff -> 00
+  0x0EBA50 (va 0x080F0250)  ff -> 00
+  0x0EBA51 (va 0x080F0251)  ff -> 00
+  0x0EBA52 (va 0x080F0252)  ff -> 78
+  0x0EBA53 (va 0x080F0253)  ff -> 00
+  0x0EBA54 (va 0x080F0254)  ff -> 00
+  0x0EBA55 (va 0x080F0255)  ff -> f8
+  0x0EBA57 (va 0x080F0257)  ff -> 7f
+  0x0EBA58 (va 0x080F0258)  ff -> 00
+  0x0EBA59 (va 0x080F0259)  ff -> f8
+  0x0EBA5B (va 0x080F025B)  ff -> 7f
+  0x0EBA5C (va 0x080F025C)  ff -> 00
+  0x0EBA5D (va 0x080F025D)  ff -> 00
+  0x0EBA5E (va 0x080F025E)  ff -> 00
+  0x0EBA5F (va 0x080F025F)  ff -> 00
+  0x0EBA60 (va 0x080F0260)  ff -> 00
+  0x0EBA61 (va 0x080F0261)  ff -> 00
+  0x0EBA62 (va 0x080F0262)  ff -> 18
+  0x0EBA63 (va 0x080F0263)  ff -> 00
+  0x0EBA64 (va 0x080F0264)  ff -> 00
+  0x0EBA65 (va 0x080F0265)  ff -> 00
+  0x0EBA66 (va 0x080F0266)  ff -> 3c
+  0x0EBA67 (va 0x080F0267)  ff -> 00
+  0x0EBA68 (va 0x080F0268)  ff -> 00
+  0x0EBA69 (va 0x080F0269)  ff -> fc
+  0x0EBA6B (va 0x080F026B)  ff -> 3f
+  0x0EBA6C (va 0x080F026C)  ff -> 00
+  0x0EBA6D (va 0x080F026D)  ff -> fe
+  0x0EBA6F (va 0x080F026F)  ff -> 3f
+  0x0EBA70 (va 0x080F0270)  ff -> 00
+  0x0EBA71 (va 0x080F0271)  ff -> fe
+  0x0EBA73 (va 0x080F0273)  ff -> 3f
+  0x0EBA74 (va 0x080F0274)  ff -> 00
+  0x0EBA75 (va 0x080F0275)  ff -> 1e
+  0x0EBA76 (va 0x080F0276)  ff -> 78
+  0x0EBA77 (va 0x080F0277)  ff -> 38
+  0x0EBA78 (va 0x080F0278)  ff -> 00
+  0x0EBA79 (va 0x080F0279)  ff -> de
+  0x0EBA7A (va 0x080F027A)  ff -> 3d
+  0x0EBA7B (va 0x080F027B)  ff -> 38
+  0x0EBA7C (va 0x080F027C)  ff -> 00
+  0x0EBA7D (va 0x080F027D)  ff -> f8
+  0x0EBA7E (va 0x080F027E)  ff -> df
+  0x0EBA7F (va 0x080F027F)  ff -> 1f
+  0x0EBA80 (va 0x080F0280)  ff -> 00
+  0x0EBA81 (va 0x080F0281)  ff -> fc
+  0x0EBA82 (va 0x080F0282)  ff -> c7
+  0x0EBA83 (va 0x080F0283)  ff -> 1f
+  0x0EBA84 (va 0x080F0284)  ff -> 00
+  0x0EBA85 (va 0x080F0285)  ff -> 1e
+  0x0EBA86 (va 0x080F0286)  ff -> df
+  0x0EBA87 (va 0x080F0287)  ff -> 1d
+  0x0EBA88 (va 0x080F0288)  ff -> 00
+  0x0EBA89 (va 0x080F0289)  ff -> ee
+  0x0EBA8A (va 0x080F028A)  ff -> fe
+  0x0EBA8B (va 0x080F028B)  ff -> 3d
+  0x0EBA8C (va 0x080F028C)  ff -> 00
+  0x0EBA8D (va 0x080F028D)  ff -> fe
+  0x0EBA8E (va 0x080F028E)  ff -> f8
+  0x0EBA8F (va 0x080F028F)  ff -> 19
+  0x0EBA90 (va 0x080F0290)  ff -> 00
+  0x0EBA91 (va 0x080F0291)  ff -> e0
+  0x0EBA93 (va 0x080F0293)  ff -> 07
+  0x0EBA94 (va 0x080F0294)  ff -> 00
+  0x0EBA95 (va 0x080F0295)  ff -> e0
+  0x0EBA97 (va 0x080F0297)  ff -> 7f
+  0x0EBA98 (va 0x080F0298)  ff -> 00
+  0x0EBA99 (va 0x080F0299)  ff -> 00
+  0x0EBA9A (va 0x080F029A)  ff -> 1c
+  0x0EBA9B (va 0x080F029B)  ff -> 7e
+  0x0EBA9C (va 0x080F029C)  ff -> 00
+  0x0EBA9D (va 0x080F029D)  ff -> 38
+  0x0EBA9E (va 0x080F029E)  ff -> 1c
+  0x0EBA9F (va 0x080F029F)  ff -> 7e
+  0x0EBAA0 (va 0x080F02A0)  ff -> 00
+  0x0EBAA1 (va 0x080F02A1)  ff -> 38
+  0x0EBAA2 (va 0x080F02A2)  ff -> 1c
+  0x0EBAA3 (va 0x080F02A3)  ff -> 0e
+  0x0EBAA4 (va 0x080F02A4)  ff -> 00
+  0x0EBAA5 (va 0x080F02A5)  ff -> 38
+  0x0EBAA6 (va 0x080F02A6)  ff -> 1c
+  0x0EBAA7 (va 0x080F02A7)  ff -> 0e
+  0x0EBAA8 (va 0x080F02A8)  ff -> 00
+  0x0EBAA9 (va 0x080F02A9)  ff -> 38
+  0x0EBAAA (va 0x080F02AA)  ff -> 1c
+  0x0EBAAB (va 0x080F02AB)  ff -> 0e
+  0x0EBAAC (va 0x080F02AC)  ff -> 00
+  0x0EBAAD (va 0x080F02AD)  ff -> 38
+  0x0EBAAE (va 0x080F02AE)  ff -> 1c
+  0x0EBAAF (va 0x080F02AF)  ff -> 0e
+  0x0EBAB0 (va 0x080F02B0)  ff -> 00
+  0x0EBAB1 (va 0x080F02B1)  ff -> f8
+  0x0EBAB3 (va 0x080F02B3)  ff -> 0f
+  0x0EBAB4 (va 0x080F02B4)  ff -> 00
+  0x0EBAB5 (va 0x080F02B5)  ff -> f8
+  0x0EBAB7 (va 0x080F02B7)  ff -> 0f
+  0x0EBAB8 (va 0x080F02B8)  ff -> 00
+  0x0EBAB9 (va 0x080F02B9)  ff -> 38
+  0x0EBABA (va 0x080F02BA)  ff -> 00
+  0x0EBABB (va 0x080F02BB)  ff -> 00
+  0x0EBABC (va 0x080F02BC)  ff -> 00
+  0x0EBABD (va 0x080F02BD)  ff -> 00
+  0x0EBABE (va 0x080F02BE)  ff -> 00
+  0x0EBABF (va 0x080F02BF)  ff -> 00
+  0x0EBAC0 (va 0x080F02C0)  ff -> 00
+  0x0EBAC1 (va 0x080F02C1)  ff -> 00
+  0x0EBAC2 (va 0x080F02C2)  ff -> 00
+  0x0EBAC3 (va 0x080F02C3)  ff -> 00
+  0x0EBAC4 (va 0x080F02C4)  ff -> 00
+  0x0EBAC5 (va 0x080F02C5)  ff -> 00
+  0x0EBAC6 (va 0x080F02C6)  ff -> 1c
+  0x0EBAC7 (va 0x080F02C7)  ff -> 00
+  0x0EBAC8 (va 0x080F02C8)  ff -> 00
+  0x0EBAC9 (va 0x080F02C9)  ff -> 00
+  0x0EBACA (va 0x080F02CA)  ff -> 3c
+  0x0EBACB (va 0x080F02CB)  ff -> 00
+  0x0EBACC (va 0x080F02CC)  ff -> 00
+  0x0EBACD (va 0x080F02CD)  ff -> 00
+  0x0EBACE (va 0x080F02CE)  ff -> 1e
+  0x0EBACF (va 0x080F02CF)  ff -> 00
+  0x0EBAD0 (va 0x080F02D0)  ff -> 00
+  0x0EBAD1 (va 0x080F02D1)  ff -> 00
+  0x0EBAD2 (va 0x080F02D2)  ff -> 1e
+  0x0EBAD3 (va 0x080F02D3)  ff -> 00
+  0x0EBAD4 (va 0x080F02D4)  ff -> 00
+  0x0EBAD5 (va 0x080F02D5)  ff -> fe
+  0x0EBAD7 (va 0x080F02D7)  ff -> 1f
+  0x0EBAD8 (va 0x080F02D8)  ff -> 00
+  0x0EBAD9 (va 0x080F02D9)  ff -> fe
+  0x0EBADB (va 0x080F02DB)  ff -> 1f
+  0x0EBADC (va 0x080F02DC)  ff -> 00
+  0x0EBADD (va 0x080F02DD)  ff -> fe
+  0x0EBADF (va 0x080F02DF)  ff -> 1f
+  0x0EBAE0 (va 0x080F02E0)  ff -> 00
+  0x0EBAE1 (va 0x080F02E1)  ff -> 00
+  0x0EBAE2 (va 0x080F02E2)  ff -> 00
+  0x0EBAE3 (va 0x080F02E3)  ff -> 1c
+  0x0EBAE4 (va 0x080F02E4)  ff -> 00
+  0x0EBAE5 (va 0x080F02E5)  ff -> 00
+  0x0EBAE6 (va 0x080F02E6)  ff -> 00
+  0x0EBAE7 (va 0x080F02E7)  ff -> 1c
+  0x0EBAE8 (va 0x080F02E8)  ff -> 00
+  0x0EBAE9 (va 0x080F02E9)  ff -> 00
+  0x0EBAEA (va 0x080F02EA)  ff -> 00
+  0x0EBAEB (va 0x080F02EB)  ff -> 1c
+  0x0EBAEC (va 0x080F02EC)  ff -> 00
+  0x0EBAED (va 0x080F02ED)  ff -> 00
+  0x0EBAEE (va 0x080F02EE)  ff -> 00
+  0x0EBAEF (va 0x080F02EF)  ff -> 1c
+  0x0EBAF0 (va 0x080F02F0)  ff -> 00
+  0x0EBAF1 (va 0x080F02F1)  ff -> 00
+  0x0EBAF2 (va 0x080F02F2)  ff -> 00
+  0x0EBAF3 (va 0x080F02F3)  ff -> 1c
+  0x0EBAF4 (va 0x080F02F4)  ff -> 00
+  0x0EBAF5 (va 0x080F02F5)  ff -> 00
+  0x0EBAF6 (va 0x080F02F6)  ff -> 00
+  0x0EBAF7 (va 0x080F02F7)  ff -> 1c
+  0x0EBAF8 (va 0x080F02F8)  ff -> 00
+  0x0EBAF9 (va 0x080F02F9)  ff -> 00
+  0x0EBAFA (va 0x080F02FA)  ff -> 00
+  0x0EBAFB (va 0x080F02FB)  ff -> 1c
+  0x0EBAFC (va 0x080F02FC)  ff -> 00
+  0x0EBAFD (va 0x080F02FD)  ff -> 00
+  0x0EBAFE (va 0x080F02FE)  ff -> 00
+  0x0EBAFF (va 0x080F02FF)  ff -> 1c
+  0x0EBB00 (va 0x080F0300)  ff -> 00
+  0x0EBB01 (va 0x080F0301)  ff -> 00
+  0x0EBB02 (va 0x080F0302)  ff -> 00
+  0x0EBB03 (va 0x080F0303)  ff -> 1c
+  0x0EBB04 (va 0x080F0304)  ff -> 00
+  0x0EBB05 (va 0x080F0305)  ff -> 00
+  0x0EBB06 (va 0x080F0306)  ff -> 00
+  0x0EBB07 (va 0x080F0307)  ff -> 1c
+  0x0EBB08 (va 0x080F0308)  ff -> 00
+  0x0EBB09 (va 0x080F0309)  ff -> 00
+  0x0EBB0A (va 0x080F030A)  ff -> 00
+  0x0EBB0B (va 0x080F030B)  ff -> 3c
+  0x0EBB0C (va 0x080F030C)  ff -> 00
+  0x0EBB0D (va 0x080F030D)  ff -> 00
+  0x0EBB0E (va 0x080F030E)  ff -> 00
+  0x0EBB0F (va 0x080F030F)  ff -> 3c
+  0x0EBB10 (va 0x080F0310)  ff -> 00
+  0x0EBB11 (va 0x080F0311)  ff -> 00
+  0x0EBB12 (va 0x080F0312)  ff -> 00
+  0x0EBB13 (va 0x080F0313)  ff -> 78
+  0x0EBB14 (va 0x080F0314)  ff -> 00
+  0x0EBB15 (va 0x080F0315)  ff -> 00
+  0x0EBB16 (va 0x080F0316)  ff -> 00
+  0x0EBB17 (va 0x080F0317)  ff -> 78
+  0x0EBB18 (va 0x080F0318)  ff -> 00
+  0x0EBB19 (va 0x080F0319)  ff -> 00
+  0x0EBB1A (va 0x080F031A)  ff -> 00
+  0x0EBB1B (va 0x080F031B)  ff -> 70
+  0x0EBB1C (va 0x080F031C)  ff -> 00
+  0x0EBB1D (va 0x080F031D)  ff -> 00
+  0x0EBB1E (va 0x080F031E)  ff -> 00
+  0x0EBB1F (va 0x080F031F)  ff -> 00
+  0x0EBB20 (va 0x080F0320)  ff -> 00
+  0x0EBB21 (va 0x080F0321)  ff -> 00
+  0x0EBB22 (va 0x080F0322)  ff -> 00
+  0x0EBB23 (va 0x080F0323)  ff -> 0e
+  0x0EBB24 (va 0x080F0324)  ff -> 00
+  0x0EBB25 (va 0x080F0325)  ff -> f8
+  0x0EBB26 (va 0x080F0326)  ff -> 07
+  0x0EBB27 (va 0x080F0327)  ff -> 0e
+  0x0EBB28 (va 0x080F0328)  ff -> 00
+  0x0EBB29 (va 0x080F0329)  ff -> fc
+  0x0EBB2B (va 0x080F032B)  ff -> 0e
+  0x0EBB2C (va 0x080F032C)  ff -> 00
+  0x0EBB2D (va 0x080F032D)  ff -> f8
+  0x0EBB2E (va 0x080F032E)  ff -> 7f
+  0x0EBB2F (va 0x080F032F)  ff -> 0e
+  0x0EBB30 (va 0x080F0330)  ff -> 00
+  0x0EBB31 (va 0x080F0331)  ff -> b8
+  0x0EBB32 (va 0x080F0332)  ff -> 7b
+  0x0EBB33 (va 0x080F0333)  ff -> 0e
+  0x0EBB34 (va 0x080F0334)  ff -> 00
+  0x0EBB35 (va 0x080F0335)  ff -> f8
+  0x0EBB36 (va 0x080F0336)  ff -> bb
+  0x0EBB37 (va 0x080F0337)  ff -> 7f
+  0x0EBB38 (va 0x080F0338)  ff -> 00
+  0x0EBB39 (va 0x080F0339)  ff -> f0
+  0x0EBB3A (va 0x080F033A)  ff -> bb
+  0x0EBB3B (va 0x080F033B)  ff -> 7f
+  0x0EBB3C (va 0x080F033C)  ff -> 00
+  0x0EBB3F (va 0x080F033F)  ff -> 7f
+  0x0EBB40 (va 0x080F0340)  ff -> 00
+  0x0EBB41 (va 0x080F0341)  ff -> fe
+  0x0EBB43 (va 0x080F0343)  ff -> 0e
+  0x0EBB44 (va 0x080F0344)  ff -> 00
+  0x0EBB45 (va 0x080F0345)  ff -> f0
+  0x0EBB46 (va 0x080F0346)  ff -> 1f
+  0x0EBB47 (va 0x080F0347)  ff -> 0e
+  0x0EBB48 (va 0x080F0348)  ff -> 00
+  0x0EBB49 (va 0x080F0349)  ff -> f8
+  0x0EBB4A (va 0x080F034A)  ff -> bf
+  0x0EBB4B (va 0x080F034B)  ff -> 0f
+  0x0EBB4C (va 0x080F034C)  ff -> 00
+  0x0EBB4D (va 0x080F034D)  ff -> be
+  0x0EBB4E (va 0x080F034E)  ff -> fb
+  0x0EBB4F (va 0x080F034F)  ff -> 1f
+  0x0EBB50 (va 0x080F0350)  ff -> 00
+  0x0EBB53 (va 0x080F0353)  ff -> 7f
+  0x0EBB54 (va 0x080F0354)  ff -> 00
+  0x0EBB55 (va 0x080F0355)  ff -> fe
+  0x0EBB57 (va 0x080F0357)  ff -> 7f
+  0x0EBB58 (va 0x080F0358)  ff -> 00
+  0x0EBB59 (va 0x080F0359)  ff -> b8
+  0x0EBB5A (va 0x080F035A)  ff -> f3
+  0x0EBB5B (va 0x080F035B)  ff -> 6e
+  0x0EBB5C (va 0x080F035C)  ff -> 00
+  0x0EBB5D (va 0x080F035D)  ff -> b8
+  0x0EBB5E (va 0x080F035E)  ff -> 73
+  0x0EBB5F (va 0x080F035F)  ff -> 0e
+  0x0EBB60 (va 0x080F0360)  ff -> 00
+  0x0EBB61 (va 0x080F0361)  ff -> f8
+  0x0EBB62 (va 0x080F0362)  ff -> 7f
+  0x0EBB63 (va 0x080F0363)  ff -> 0e
+  0x0EBB64 (va 0x080F0364)  ff -> 00
+  0x0EBB65 (va 0x080F0365)  ff -> f8
+  0x0EBB66 (va 0x080F0366)  ff -> 7f
+  0x0EBB67 (va 0x080F0367)  ff -> 0e
+  0x0EBB68 (va 0x080F0368)  ff -> 00
+  0x0EBB69 (va 0x080F0369)  ff -> b8
+  0x0EBB6A (va 0x080F036A)  ff -> 73
+  0x0EBB6B (va 0x080F036B)  ff -> 0e
+  0x0EBB6C (va 0x080F036C)  ff -> 00
+  0x0EBB6D (va 0x080F036D)  ff -> f8
+  0x0EBB6E (va 0x080F036E)  ff -> 7f
+  0x0EBB6F (va 0x080F036F)  ff -> 0e
+  0x0EBB70 (va 0x080F0370)  ff -> 00
+  0x0EBB71 (va 0x080F0371)  ff -> f8
+  0x0EBB72 (va 0x080F0372)  ff -> 7f
+  0x0EBB73 (va 0x080F0373)  ff -> 7e
+  0x0EBB74 (va 0x080F0374)  ff -> 00
+  0x0EBB75 (va 0x080F0375)  ff -> 3c
+  0x0EBB76 (va 0x080F0376)  ff -> 70
+  0x0EBB77 (va 0x080F0377)  ff -> 3c
+  0x0EBB78 (va 0x080F0378)  ff -> 00
+  0x0EBB79 (va 0x080F0379)  ff -> 18
+  0x0EBB7A (va 0x080F037A)  ff -> 30
+  0x0EBB7B (va 0x080F037B)  ff -> 10
+  0x0EBB7C (va 0x080F037C)  ff -> 00
+  0x0EBB7D (va 0x080F037D)  ff -> 00
+  0x0EBB7E (va 0x080F037E)  ff -> 00
+  0x0EBB7F (va 0x080F037F)  ff -> 00
+  0x0EBB80 (va 0x080F0380)  ff -> 00
+  0x0EBB81 (va 0x080F0381)  ff -> 00
+  0x0EBB82 (va 0x080F0382)  ff -> 00
+  0x0EBB83 (va 0x080F0383)  ff -> 07
+  0x0EBB84 (va 0x080F0384)  ff -> 00
+  0x0EBB85 (va 0x080F0385)  ff -> fe
+  0x0EBB86 (va 0x080F0386)  ff -> 87
+  0x0EBB87 (va 0x080F0387)  ff -> 07
+  0x0EBB88 (va 0x080F0388)  ff -> 00
+  0x0EBB89 (va 0x080F0389)  ff -> fe
+  0x0EBB8A (va 0x080F038A)  ff -> 0f
+  0x0EBB8B (va 0x080F038B)  ff -> 07
+  0x0EBB8C (va 0x080F038C)  ff -> 00
+  0x0EBB8D (va 0x080F038D)  ff -> 0e
+  0x0EBB8E (va 0x080F038E)  ff -> ef
+  0x0EBB8F (va 0x080F038F)  ff -> 0f
+  0x0EBB90 (va 0x080F0390)  ff -> 00
+  0x0EBB91 (va 0x080F0391)  ff -> 0e
+  0x0EBB92 (va 0x080F0392)  ff -> f7
+  0x0EBB93 (va 0x080F0393)  ff -> 0f
+  0x0EBB94 (va 0x080F0394)  ff -> 00
+  0x0EBB95 (va 0x080F0395)  ff -> 0e
+  0x0EBB96 (va 0x080F0396)  ff -> f7
+  0x0EBB97 (va 0x080F0397)  ff -> 1f
+  0x0EBB98 (va 0x080F0398)  ff -> 00
+  0x0EBB99 (va 0x080F0399)  ff -> 0e
+  0x0EBB9A (va 0x080F039A)  ff -> 07
+  0x0EBB9B (va 0x080F039B)  ff -> 1c
+  0x0EBB9C (va 0x080F039C)  ff -> 00
+  0x0EBB9D (va 0x080F039D)  ff -> fe
+  0x0EBB9E (va 0x080F039E)  ff -> 07
+  0x0EBB9F (va 0x080F039F)  ff -> 3c
+  0x0EBBA0 (va 0x080F03A0)  ff -> 00
+  0x0EBBA1 (va 0x080F03A1)  ff -> fe
+  0x0EBBA2 (va 0x080F03A2)  ff -> e7
+  0x0EBBA3 (va 0x080F03A3)  ff -> 7f
+  0x0EBBA4 (va 0x080F03A4)  ff -> 00
+  0x0EBBA5 (va 0x080F03A5)  ff -> 0e
+  0x0EBBA6 (va 0x080F03A6)  ff -> e7
+  0x0EBBA7 (va 0x080F03A7)  ff -> 3f
+  0x0EBBA8 (va 0x080F03A8)  ff -> 00
+  0x0EBBA9 (va 0x080F03A9)  ff -> 0e
+  0x0EBBAA (va 0x080F03AA)  ff -> 87
+  0x0EBBAB (va 0x080F03AB)  ff -> 07
+  0x0EBBAC (va 0x080F03AC)  ff -> 00
+  0x0EBBAD (va 0x080F03AD)  ff -> 0e
+  0x0EBBAE (va 0x080F03AE)  ff -> 87
+  0x0EBBAF (va 0x080F03AF)  ff -> 07
+  0x0EBBB0 (va 0x080F03B0)  ff -> 00
+  0x0EBBB1 (va 0x080F03B1)  ff -> fe
+  0x0EBBB3 (va 0x080F03B3)  ff -> 3f
+  0x0EBBB4 (va 0x080F03B4)  ff -> 00
+  0x0EBBB5 (va 0x080F03B5)  ff -> fe
+  0x0EBBB7 (va 0x080F03B7)  ff -> 3f
+  0x0EBBB8 (va 0x080F03B8)  ff -> 00
+  0x0EBBB9 (va 0x080F03B9)  ff -> 0e
+  0x0EBBBA (va 0x080F03BA)  ff -> 8f
+  0x0EBBBB (va 0x080F03BB)  ff -> 07
+  0x0EBBBC (va 0x080F03BC)  ff -> 00
+  0x0EBBBD (va 0x080F03BD)  ff -> 0e
+  0x0EBBBE (va 0x080F03BE)  ff -> 8e
+  0x0EBBBF (va 0x080F03BF)  ff -> 07
+  0x0EBBC0 (va 0x080F03C0)  ff -> 00
+  0x0EBBC1 (va 0x080F03C1)  ff -> 0e
+  0x0EBBC2 (va 0x080F03C2)  ff -> ee
+  0x0EBBC3 (va 0x080F03C3)  ff -> 07
+  0x0EBBC4 (va 0x080F03C4)  ff -> 00
+  0x0EBBC5 (va 0x080F03C5)  ff -> 0e
+  0x0EBBC6 (va 0x080F03C6)  ff -> fe
+  0x0EBBC7 (va 0x080F03C7)  ff -> 07
+  0x0EBBC8 (va 0x080F03C8)  ff -> 00
+  0x0EBBC9 (va 0x080F03C9)  ff -> 0e
+  0x0EBBCA (va 0x080F03CA)  ff -> fc
+  0x0EBBCB (va 0x080F03CB)  ff -> 07
+  0x0EBBCC (va 0x080F03CC)  ff -> 00
+  0x0EBBCD (va 0x080F03CD)  ff -> 0e
+  0x0EBBCE (va 0x080F03CE)  ff -> fc
+  0x0EBBCF (va 0x080F03CF)  ff -> 07
+  0x0EBBD0 (va 0x080F03D0)  ff -> 00
+  0x0EBBD1 (va 0x080F03D1)  ff -> 7e
+  0x0EBBD2 (va 0x080F03D2)  ff -> 78
+  0x0EBBD3 (va 0x080F03D3)  ff -> 07
+  0x0EBBD4 (va 0x080F03D4)  ff -> 00
+  0x0EBBD5 (va 0x080F03D5)  ff -> 3e
+  0x0EBBD6 (va 0x080F03D6)  ff -> 78
+  0x0EBBD7 (va 0x080F03D7)  ff -> 00
+  0x0EBBD8 (va 0x080F03D8)  ff -> 00
+  0x0EBBD9 (va 0x080F03D9)  ff -> 38
+  0x0EBBDA (va 0x080F03DA)  ff -> 30
+  0x0EBBDB (va 0x080F03DB)  ff -> 00
+  0x0EBBDC (va 0x080F03DC)  ff -> 00
+  0x0EBBDD (va 0x080F03DD)  ff -> 00
+  0x0EBBDE (va 0x080F03DE)  ff -> 00
+  0x0EBBDF (va 0x080F03DF)  ff -> 00
+  0x0EBC00 (va 0x080F0400)  ff -> e5
+  0x0EBC01 (va 0x080F0401)  ff -> af
+  0x0EBC02 (va 0x080F0402)  ff -> 86
+  0x0EBC03 (va 0x080F0403)  ff -> e9
+  0x0EBC04 (va 0x080F0404)  ff -> 92
+  0x0EBC05 (va 0x080F0405)  ff -> a5
+  0x0EBC06 (va 0x080F0406)  ff -> 00
+  0x0EBC07 (va 0x080F0407)  ff -> e5
+  0x0EBC08 (va 0x080F0408)  ff -> b9
+  0x0EBC09 (va 0x080F0409)  ff -> bf
+  0x0EBC0A (va 0x080F040A)  ff -> e6
+  0x0EBC0B (va 0x080F040B)  ff -> 92
+  0x0EBC0C (va 0x080F040C)  ff -> ad
+  0x0EBC0D (va 0x080F040D)  ff -> 00
+  0x0EBC0E (va 0x080F040E)  ff -> e5
+  0x0EBC0F (va 0x080F040F)  ff -> 85
+  0x0EBC10 (va 0x080F0410)  ff -> a8
+  0x0EBC11 (va 0x080F0411)  ff -> e9
+  0x0EBC12 (va 0x080F0412)  ff -> a2
+  0x0EBC13 (va 0x080F0413)  ff -> 91
+  0x0EBC14 (va 0x080F0414)  ff -> e9
+  0x0EBC15 (va 0x080F0415)  ff -> 81
+  0x0EBC16 (va 0x080F0416)  ff -> 93
+  0x0EBC17 (va 0x080F0417)  ff -> 00
+  0x0EBC18 (va 0x080F0418)  ff -> e5
+  0x0EBC19 (va 0x080F0419)  ff -> 85
+  0x0EBC1A (va 0x080F041A)  ff -> a8
+  0x0EBC1B (va 0x080F041B)  ff -> 49
+  0x0EBC1C (va 0x080F041C)  ff -> 44
+  0x0EBC1D (va 0x080F041D)  ff -> 00
+  0x0EBC1E (va 0x080F041E)  ff -> 4b
+  0x0EBC1F (va 0x080F041F)  ff -> 45
+  0x0EBC20 (va 0x080F0420)  ff -> 59
+  0x0EBC21 (va 0x080F0421)  ff -> 20
+  0x0EBC22 (va 0x080F0422)  ff -> 4f
+  0x0EBC23 (va 0x080F0423)  ff -> 4e
+  0x0EBC24 (va 0x080F0424)  ff -> 00
+  0x0EBC25 (va 0x080F0425)  ff -> 4b
+  0x0EBC26 (va 0x080F0426)  ff -> 45
+  0x0EBC27 (va 0x080F0427)  ff -> 59
+  0x0EBC28 (va 0x080F0428)  ff -> 20
+  0x0EBC29 (va 0x080F0429)  ff -> 4f
+  0x0EBC2A (va 0x080F042A)  ff -> 46
+  0x0EBC2B (va 0x080F042B)  ff -> 46
+  0x0EBC2C (va 0x080F042C)  ff -> 00
+  0x0EBD00 (va 0x080F0500)  ff -> 4b
+  0x0EBD01 (va 0x080F0501)  ff -> 45
+  0x0EBD02 (va 0x080F0502)  ff -> 59
+  0x0EBD03 (va 0x080F0503)  ff -> 00
+  0x0EBD04 (va 0x080F0504)  ff -> 00
+  0x0EBD05 (va 0x080F0505)  ff -> 00
+  0x0EBD06 (va 0x080F0506)  ff -> 00
+  0x0EBD07 (va 0x080F0507)  ff -> 00
+  0x0EBD08 (va 0x080F0508)  ff -> 42
+  0x0EBD09 (va 0x080F0509)  ff -> 43
+  0x0EBD0A (va 0x080F050A)  ff -> 41
+  0x0EBD0B (va 0x080F050B)  ff -> 53
+  0x0EBD0C (va 0x080F050C)  ff -> 54
+  0x0EBD0D (va 0x080F050D)  ff -> 00
+  0x0EBD0E (va 0x080F050E)  ff -> 00
+  0x0EBD0F (va 0x080F050F)  ff -> 00
+  0x0EBD10 (va 0x080F0510)  ff -> 42
+  0x0EBD11 (va 0x080F0511)  ff -> 52
+  0x0EBD12 (va 0x080F0512)  ff -> 4f
+  0x0EBD13 (va 0x080F0513)  ff -> 41
+  0x0EBD14 (va 0x080F0514)  ff -> 44
+  0x0EBD15 (va 0x080F0515)  ff -> 43
+  0x0EBD16 (va 0x080F0516)  ff -> 41
+  0x0EBD17 (va 0x080F0517)  ff -> 53
+  0x0EBD18 (va 0x080F0518)  ff -> 54
+  0x0EBD19 (va 0x080F0519)  ff -> 00
+  0x0EC000 (va 0x080F0800)  ff -> 70
+  0x0EC001 (va 0x080F0801)  ff -> b5
+  0x0EC002 (va 0x080F0802)  ff -> 37
+  0x0EC003 (va 0x080F0803)  ff -> f7
+  0x0EC004 (va 0x080F0804)  ff -> ed
+  0x0EC005 (va 0x080F0805)  ff -> fb
+  0x0EC006 (va 0x080F0806)  ff -> 06
+  0x0EC007 (va 0x080F0807)  ff -> 46
+  0x0EC008 (va 0x080F0808)  ff -> 82
+  0x0EC009 (va 0x080F0809)  ff -> b0
+  0x0EC00A (va 0x080F080A)  ff -> 68
+  0x0EC00B (va 0x080F080B)  ff -> 48
+  0x0EC00C (va 0x080F080C)  ff -> 00
+  0x0EC00D (va 0x080F080D)  ff -> 90
+  0x0EC00E (va 0x080F080E)  ff -> 68
+  0x0EC00F (va 0x080F080F)  ff -> 48
+  0x0EC010 (va 0x080F0810)  ff -> 01
+  0x0EC011 (va 0x080F0811)  ff -> 90
+  0x0EC012 (va 0x080F0812)  ff -> 28
+  0x0EC013 (va 0x080F0813)  ff -> 46
+  0x0EC014 (va 0x080F0814)  ff -> 01
+  0x0EC015 (va 0x080F0815)  ff -> 21
+  0x0EC016 (va 0x080F0816)  ff -> 67
+  0x0EC017 (va 0x080F0817)  ff -> 4a
+  0x0EC018 (va 0x080F0818)  ff -> 67
+  0x0EC019 (va 0x080F0819)  ff -> 4b
+  0x0EC01A (va 0x080F081A)  ff -> 15
+  0x0EC01B (va 0x080F081B)  ff -> f7
+  0x0EC01C (va 0x080F081C)  ff -> 01
+  0x0EC01D (va 0x080F081D)  ff -> fd
+  0x0EC01E (va 0x080F081E)  ff -> 02
+  0x0EC01F (va 0x080F081F)  ff -> b0
+  0x0EC020 (va 0x080F0820)  ff -> 04
+  0x0EC021 (va 0x080F0821)  ff -> 46
+  0x0EC022 (va 0x080F0822)  ff -> 27
+  0x0EC023 (va 0x080F0823)  ff -> 20
+  0x0EC024 (va 0x080F0824)  ff -> 27
+  0x0EC025 (va 0x080F0825)  ff -> 21
+  0x0EC026 (va 0x080F0826)  ff -> 27
+  0x0EC027 (va 0x080F0827)  ff -> 22
+  0x0EC028 (va 0x080F0828)  ff -> 37
+  0x0EC029 (va 0x080F0829)  ff -> f7
+  0x0EC02A (va 0x080F082A)  ff -> b2
+  0x0EC02B (va 0x080F082B)  ff -> fa
+  0x0EC02C (va 0x080F082C)  ff -> 01
+  0x0EC02D (va 0x080F082D)  ff -> 46
+  0x0EC02E (va 0x080F082E)  ff -> 00
+  0x0EC02F (va 0x080F082F)  ff -> 22
+  0x0EC030 (va 0x080F0830)  ff -> 20
+  0x0EC031 (va 0x080F0831)  ff -> 46
+  0x0EC032 (va 0x080F0832)  ff -> 40
+  0x0EC033 (va 0x080F0833)  ff -> f7
+  0x0EC034 (va 0x080F0834)  ff -> a3
+  0x0EC035 (va 0x080F0835)  ff -> fe
+  0x0EC037 (va 0x080F0837)  ff -> 21
+  0x0EC038 (va 0x080F0838)  ff -> 00
+  0x0EC039 (va 0x080F0839)  ff -> 22
+  0x0EC03A (va 0x080F083A)  ff -> 20
+  0x0EC03B (va 0x080F083B)  ff -> 46
+  0x0EC03C (va 0x080F083C)  ff -> 40
+  0x0EC03D (va 0x080F083D)  ff -> f7
+  0x0EC03E (va 0x080F083E)  ff -> aa
+  0x0EC03F (va 0x080F083F)  ff -> fe
+  0x0EC041 (va 0x080F0841)  ff -> 21
+  0x0EC042 (va 0x080F0842)  ff -> 04
+  0x0EC043 (va 0x080F0843)  ff -> 22
+  0x0EC044 (va 0x080F0844)  ff -> 20
+  0x0EC045 (va 0x080F0845)  ff -> 46
+  0x0EC046 (va 0x080F0846)  ff -> 40
+  0x0EC047 (va 0x080F0847)  ff -> f7
+  0x0EC048 (va 0x080F0848)  ff -> e9
+  0x0EC049 (va 0x080F0849)  ff -> fe
+  0x0EC04A (va 0x080F084A)  ff -> 37
+  0x0EC04B (va 0x080F084B)  ff -> f7
+  0x0EC04C (va 0x080F084C)  ff -> c9
+  0x0EC04D (va 0x080F084D)  ff -> fb
+  0x0EC04E (va 0x080F084E)  ff -> 01
+  0x0EC04F (va 0x080F084F)  ff -> 46
+  0x0EC050 (va 0x080F0850)  ff -> 04
+  0x0EC051 (va 0x080F0851)  ff -> 22
+  0x0EC052 (va 0x080F0852)  ff -> 20
+  0x0EC053 (va 0x080F0853)  ff -> 46
+  0x0EC054 (va 0x080F0854)  ff -> 40
+  0x0EC055 (va 0x080F0855)  ff -> f7
+  0x0EC056 (va 0x080F0856)  ff -> d6
+  0x0EC057 (va 0x080F0857)  ff -> fe
+  0x0EC058 (va 0x080F0858)  ff -> 02
+  0x0EC059 (va 0x080F0859)  ff -> 21
+  0x0EC05A (va 0x080F085A)  ff -> 04
+  0x0EC05B (va 0x080F085B)  ff -> 22
+  0x0EC05C (va 0x080F085C)  ff -> 20
+  0x0EC05D (va 0x080F085D)  ff -> 46
+  0x0EC05E (va 0x080F085E)  ff -> 40
+  0x0EC05F (va 0x080F085F)  ff -> f7
+  0x0EC060 (va 0x080F0860)  ff -> e7
+  0x0EC061 (va 0x080F0861)  ff -> fe
+  0x0EC062 (va 0x080F0862)  ff -> 04
+  0x0EC063 (va 0x080F0863)  ff -> 21
+  0x0EC064 (va 0x080F0864)  ff -> 04
+  0x0EC065 (va 0x080F0865)  ff -> 22
+  0x0EC066 (va 0x080F0866)  ff -> 20
+  0x0EC067 (va 0x080F0867)  ff -> 46
+  0x0EC068 (va 0x080F0868)  ff -> 40
+  0x0EC069 (va 0x080F0869)  ff -> f7
+  0x0EC06A (va 0x080F086A)  ff -> dd
+  0x0EC06B (va 0x080F086B)  ff -> fe
+  0x0EC06C (va 0x080F086C)  ff -> 00
+  0x0EC06D (va 0x080F086D)  ff -> 21
+  0x0EC06E (va 0x080F086E)  ff -> 00
+  0x0EC06F (va 0x080F086F)  ff -> 22
+  0x0EC070 (va 0x080F0870)  ff -> 20
+  0x0EC071 (va 0x080F0871)  ff -> 46
+  0x0EC072 (va 0x080F0872)  ff -> 40
+  0x0EC073 (va 0x080F0873)  ff -> f7
+  0x0EC074 (va 0x080F0874)  ff -> a0
+  0x0EC075 (va 0x080F0875)  ff -> fe
+  0x0EC076 (va 0x080F0876)  ff -> 02
+  0x0EC077 (va 0x080F0877)  ff -> 21
+  0x0EC078 (va 0x080F0878)  ff -> 00
+  0x0EC079 (va 0x080F0879)  ff -> 22
+  0x0EC07A (va 0x080F087A)  ff -> 20
+  0x0EC07B (va 0x080F087B)  ff -> 46
+  0x0EC07C (va 0x080F087C)  ff -> 40
+  0x0EC07D (va 0x080F087D)  ff -> f7
+  0x0EC07E (va 0x080F087E)  ff -> a0
+  0x0EC07F (va 0x080F087F)  ff -> fe
+  0x0EC080 (va 0x080F0880)  ff -> 00
+  0x0EC081 (va 0x080F0881)  ff -> 21
+  0x0EC082 (va 0x080F0882)  ff -> 04
+  0x0EC083 (va 0x080F0883)  ff -> 22
+  0x0EC084 (va 0x080F0884)  ff -> 20
+  0x0EC085 (va 0x080F0885)  ff -> 46
+  0x0EC086 (va 0x080F0886)  ff -> 40
+  0x0EC087 (va 0x080F0887)  ff -> f7
+  0x0EC088 (va 0x080F0888)  ff -> 96
+  0x0EC089 (va 0x080F0889)  ff -> fe
+  0x0EC08A (va 0x080F088A)  ff -> 02
+  0x0EC08B (va 0x080F088B)  ff -> 21
+  0x0EC08C (va 0x080F088C)  ff -> 04
+  0x0EC08D (va 0x080F088D)  ff -> 22
+  0x0EC08E (va 0x080F088E)  ff -> 20
+  0x0EC08F (va 0x080F088F)  ff -> 46
+  0x0EC090 (va 0x080F0890)  ff -> 40
+  0x0EC091 (va 0x080F0891)  ff -> f7
+  0x0EC092 (va 0x080F0892)  ff -> 96
+  0x0EC093 (va 0x080F0893)  ff -> fe
+  0x0EC094 (va 0x080F0894)  ff -> 37
+  0x0EC095 (va 0x080F0895)  ff -> f7
+  0x0EC096 (va 0x080F0896)  ff -> a4
+  0x0EC097 (va 0x080F0897)  ff -> fb
+  0x0EC098 (va 0x080F0898)  ff -> 01
+  0x0EC099 (va 0x080F0899)  ff -> 46
+  0x0EC09A (va 0x080F089A)  ff -> 04
+  0x0EC09B (va 0x080F089B)  ff -> 22
+  0x0EC09C (va 0x080F089C)  ff -> 20
+  0x0EC09D (va 0x080F089D)  ff -> 46
+  0x0EC09E (va 0x080F089E)  ff -> 40
+  0x0EC09F (va 0x080F089F)  ff -> f7
+  0x0EC0A0 (va 0x080F08A0)  ff -> 7e
+  0x0EC0A1 (va 0x080F08A1)  ff -> fe
+  0x0EC0A2 (va 0x080F08A2)  ff -> 6c
+  0x0EC0A3 (va 0x080F08A3)  ff -> 21
+  0x0EC0A4 (va 0x080F08A4)  ff -> 00
+  0x0EC0A5 (va 0x080F08A5)  ff -> 22
+  0x0EC0A6 (va 0x080F08A6)  ff -> 20
+  0x0EC0A7 (va 0x080F08A7)  ff -> 46
+  0x0EC0A8 (va 0x080F08A8)  ff -> 40
+  0x0EC0A9 (va 0x080F08A9)  ff -> f7
+  0x0EC0AA (va 0x080F08AA)  ff -> f5
+  0x0EC0AB (va 0x080F08AB)  ff -> fe
+  0x0EC0AC (va 0x080F08AC)  ff -> 37
+  0x0EC0AD (va 0x080F08AD)  ff -> f7
+  0x0EC0AE (va 0x080F08AE)  ff -> 98
+  0x0EC0AF (va 0x080F08AF)  ff -> fb
+  0x0EC0B0 (va 0x080F08B0)  ff -> 84
+  0x0EC0B1 (va 0x080F08B1)  ff -> b0
+  0x0EC0B2 (va 0x080F08B2)  ff -> 01
+  0x0EC0B3 (va 0x080F08B3)  ff -> 90
+  0x0EC0B4 (va 0x080F08B4)  ff -> 41
+  0x0EC0B5 (va 0x080F08B5)  ff -> 49
+  0x0EC0B6 (va 0x080F08B6)  ff -> 00
+  0x0EC0B7 (va 0x080F08B7)  ff -> 91
+  0x0EC0B8 (va 0x080F08B8)  ff -> 41
+  0x0EC0B9 (va 0x080F08B9)  ff -> 49
+  0x0EC0BA (va 0x080F08BA)  ff -> 02
+  0x0EC0BB (va 0x080F08BB)  ff -> 91
+  0x0EC0BC (va 0x080F08BC)  ff -> 09
+  0x0EC0BD (va 0x080F08BD)  ff -> 21
+  0x0EC0BE (va 0x080F08BE)  ff -> 00
+  0x0EC0BF (va 0x080F08BF)  ff -> 22
+  0x0EC0C0 (va 0x080F08C0)  ff -> 00
+  0x0EC0C1 (va 0x080F08C1)  ff -> 23
+  0x0EC0C2 (va 0x080F08C2)  ff -> 20
+  0x0EC0C3 (va 0x080F08C3)  ff -> 46
+  0x0EC0C4 (va 0x080F08C4)  ff -> 34
+  0x0EC0C5 (va 0x080F08C5)  ff -> f7
+  0x0EC0C6 (va 0x080F08C6)  ff -> 3b
+  0x0EC0C7 (va 0x080F08C7)  ff -> fe
+  0x0EC0C8 (va 0x080F08C8)  ff -> 04
+  0x0EC0C9 (va 0x080F08C9)  ff -> b0
+  0x0EC0CA (va 0x080F08CA)  ff -> 20
+  0x0EC0CB (va 0x080F08CB)  ff -> 46
+  0x0EC0CC (va 0x080F08CC)  ff -> 3d
+  0x0EC0CD (va 0x080F08CD)  ff -> 49
+  0x0EC0CE (va 0x080F08CE)  ff -> 00
+  0x0EC0CF (va 0x080F08CF)  ff -> 22
+  0x0EC0D0 (va 0x080F08D0)  ff -> 3d
+  0x0EC0D1 (va 0x080F08D1)  ff -> f7
+  0x0EC0D2 (va 0x080F08D2)  ff -> 53
+  0x0EC0D3 (va 0x080F08D3)  ff -> f8
+  0x0EC0D4 (va 0x080F08D4)  ff -> 3c
+  0x0EC0D5 (va 0x080F08D5)  ff -> 49
+  0x0EC0D6 (va 0x080F08D6)  ff -> 0c
+  0x0EC0D7 (va 0x080F08D7)  ff -> 60
+  0x0EC0D8 (va 0x080F08D8)  ff -> 82
+  0x0EC0D9 (va 0x080F08D9)  ff -> b0
+  0x0EC0DA (va 0x080F08DA)  ff -> 3c
+  0x0EC0DB (va 0x080F08DB)  ff -> 48
+  0x0EC0DC (va 0x080F08DC)  ff -> 00
+  0x0EC0DD (va 0x080F08DD)  ff -> 90
+  0x0EC0DE (va 0x080F08DE)  ff -> 3c
+  0x0EC0DF (va 0x080F08DF)  ff -> 48
+  0x0EC0E0 (va 0x080F08E0)  ff -> 01
+  0x0EC0E1 (va 0x080F08E1)  ff -> 90
+  0x0EC0E2 (va 0x080F08E2)  ff -> 28
+  0x0EC0E3 (va 0x080F08E3)  ff -> 46
+  0x0EC0E4 (va 0x080F08E4)  ff -> 01
+  0x0EC0E5 (va 0x080F08E5)  ff -> 21
+  0x0EC0E6 (va 0x080F08E6)  ff -> 3b
+  0x0EC0E7 (va 0x080F08E7)  ff -> 4a
+  0x0EC0E8 (va 0x080F08E8)  ff -> 3b
+  0x0EC0E9 (va 0x080F08E9)  ff -> 4b
+  0x0EC0EA (va 0x080F08EA)  ff -> 15
+  0x0EC0EB (va 0x080F08EB)  ff -> f7
+  0x0EC0EC (va 0x080F08EC)  ff -> 99
+  0x0EC0ED (va 0x080F08ED)  ff -> fc
+  0x0EC0EE (va 0x080F08EE)  ff -> 02
+  0x0EC0EF (va 0x080F08EF)  ff -> b0
+  0x0EC0F0 (va 0x080F08F0)  ff -> 04
+  0x0EC0F1 (va 0x080F08F1)  ff -> 46
+  0x0EC0F2 (va 0x080F08F2)  ff -> 27
+  0x0EC0F3 (va 0x080F08F3)  ff -> 20
+  0x0EC0F4 (va 0x080F08F4)  ff -> 27
+  0x0EC0F5 (va 0x080F08F5)  ff -> 21
+  0x0EC0F6 (va 0x080F08F6)  ff -> 27
+  0x0EC0F7 (va 0x080F08F7)  ff -> 22
+  0x0EC0F8 (va 0x080F08F8)  ff -> 37
+  0x0EC0F9 (va 0x080F08F9)  ff -> f7
+  0x0EC0FA (va 0x080F08FA)  ff -> 4a
+  0x0EC0FB (va 0x080F08FB)  ff -> fa
+  0x0EC0FC (va 0x080F08FC)  ff -> 01
+  0x0EC0FD (va 0x080F08FD)  ff -> 46
+  0x0EC0FE (va 0x080F08FE)  ff -> 00
+  0x0EC0FF (va 0x080F08FF)  ff -> 22
+  0x0EC100 (va 0x080F0900)  ff -> 20
+  0x0EC101 (va 0x080F0901)  ff -> 46
+  0x0EC102 (va 0x080F0902)  ff -> 40
+  0x0EC103 (va 0x080F0903)  ff -> f7
+  0x0EC104 (va 0x080F0904)  ff -> 3b
+  0x0EC105 (va 0x080F0905)  ff -> fe
+  0x0EC107 (va 0x080F0907)  ff -> 21
+  0x0EC108 (va 0x080F0908)  ff -> 00
+  0x0EC109 (va 0x080F0909)  ff -> 22
+  0x0EC10A (va 0x080F090A)  ff -> 20
+  0x0EC10B (va 0x080F090B)  ff -> 46
+  0x0EC10C (va 0x080F090C)  ff -> 40
+  0x0EC10D (va 0x080F090D)  ff -> f7
+  0x0EC10E (va 0x080F090E)  ff -> 42
+  0x0EC10F (va 0x080F090F)  ff -> fe
+  0x0EC111 (va 0x080F0911)  ff -> 21
+  0x0EC112 (va 0x080F0912)  ff -> 04
+  0x0EC113 (va 0x080F0913)  ff -> 22
+  0x0EC114 (va 0x080F0914)  ff -> 20
+  0x0EC115 (va 0x080F0915)  ff -> 46
+  0x0EC116 (va 0x080F0916)  ff -> 40
+  0x0EC117 (va 0x080F0917)  ff -> f7
+  0x0EC118 (va 0x080F0918)  ff -> 81
+  0x0EC119 (va 0x080F0919)  ff -> fe
+  0x0EC11A (va 0x080F091A)  ff -> 37
+  0x0EC11B (va 0x080F091B)  ff -> f7
+  0x0EC11C (va 0x080F091C)  ff -> 61
+  0x0EC11D (va 0x080F091D)  ff -> fb
+  0x0EC11E (va 0x080F091E)  ff -> 01
+  0x0EC11F (va 0x080F091F)  ff -> 46
+  0x0EC120 (va 0x080F0920)  ff -> 04
+  0x0EC121 (va 0x080F0921)  ff -> 22
+  0x0EC122 (va 0x080F0922)  ff -> 20
+  0x0EC123 (va 0x080F0923)  ff -> 46
+  0x0EC124 (va 0x080F0924)  ff -> 40
+  0x0EC125 (va 0x080F0925)  ff -> f7
+  0x0EC126 (va 0x080F0926)  ff -> 6e
+  0x0EC127 (va 0x080F0927)  ff -> fe
+  0x0EC128 (va 0x080F0928)  ff -> 02
+  0x0EC129 (va 0x080F0929)  ff -> 21
+  0x0EC12A (va 0x080F092A)  ff -> 04
+  0x0EC12B (va 0x080F092B)  ff -> 22
+  0x0EC12C (va 0x080F092C)  ff -> 20
+  0x0EC12D (va 0x080F092D)  ff -> 46
+  0x0EC12E (va 0x080F092E)  ff -> 40
+  0x0EC12F (va 0x080F092F)  ff -> f7
+  0x0EC130 (va 0x080F0930)  ff -> 7f
+  0x0EC131 (va 0x080F0931)  ff -> fe
+  0x0EC132 (va 0x080F0932)  ff -> 04
+  0x0EC133 (va 0x080F0933)  ff -> 21
+  0x0EC134 (va 0x080F0934)  ff -> 04
+  0x0EC135 (va 0x080F0935)  ff -> 22
+  0x0EC136 (va 0x080F0936)  ff -> 20
+  0x0EC137 (va 0x080F0937)  ff -> 46
+  0x0EC138 (va 0x080F0938)  ff -> 40
+  0x0EC139 (va 0x080F0939)  ff -> f7
+  0x0EC13A (va 0x080F093A)  ff -> 75
+  0x0EC13B (va 0x080F093B)  ff -> fe
+  0x0EC13C (va 0x080F093C)  ff -> 00
+  0x0EC13D (va 0x080F093D)  ff -> 21
+  0x0EC13E (va 0x080F093E)  ff -> 00
+  0x0EC13F (va 0x080F093F)  ff -> 22
+  0x0EC140 (va 0x080F0940)  ff -> 20
+  0x0EC141 (va 0x080F0941)  ff -> 46
+  0x0EC142 (va 0x080F0942)  ff -> 40
+  0x0EC143 (va 0x080F0943)  ff -> f7
+  0x0EC144 (va 0x080F0944)  ff -> 38
+  0x0EC145 (va 0x080F0945)  ff -> fe
+  0x0EC146 (va 0x080F0946)  ff -> 02
+  0x0EC147 (va 0x080F0947)  ff -> 21
+  0x0EC148 (va 0x080F0948)  ff -> 00
+  0x0EC149 (va 0x080F0949)  ff -> 22
+  0x0EC14A (va 0x080F094A)  ff -> 20
+  0x0EC14B (va 0x080F094B)  ff -> 46
+  0x0EC14C (va 0x080F094C)  ff -> 40
+  0x0EC14D (va 0x080F094D)  ff -> f7
+  0x0EC14E (va 0x080F094E)  ff -> 38
+  0x0EC14F (va 0x080F094F)  ff -> fe
+  0x0EC150 (va 0x080F0950)  ff -> 00
+  0x0EC151 (va 0x080F0951)  ff -> 21
+  0x0EC152 (va 0x080F0952)  ff -> 04
+  0x0EC153 (va 0x080F0953)  ff -> 22
+  0x0EC154 (va 0x080F0954)  ff -> 20
+  0x0EC155 (va 0x080F0955)  ff -> 46
+  0x0EC156 (va 0x080F0956)  ff -> 40
+  0x0EC157 (va 0x080F0957)  ff -> f7
+  0x0EC158 (va 0x080F0958)  ff -> 2e
+  0x0EC159 (va 0x080F0959)  ff -> fe
+  0x0EC15A (va 0x080F095A)  ff -> 02
+  0x0EC15B (va 0x080F095B)  ff -> 21
+  0x0EC15C (va 0x080F095C)  ff -> 04
+  0x0EC15D (va 0x080F095D)  ff -> 22
+  0x0EC15E (va 0x080F095E)  ff -> 20
+  0x0EC15F (va 0x080F095F)  ff -> 46
+  0x0EC160 (va 0x080F0960)  ff -> 40
+  0x0EC161 (va 0x080F0961)  ff -> f7
+  0x0EC162 (va 0x080F0962)  ff -> 2e
+  0x0EC163 (va 0x080F0963)  ff -> fe
+  0x0EC164 (va 0x080F0964)  ff -> 37
+  0x0EC165 (va 0x080F0965)  ff -> f7
+  0x0EC166 (va 0x080F0966)  ff -> 3c
+  0x0EC167 (va 0x080F0967)  ff -> fb
+  0x0EC168 (va 0x080F0968)  ff -> 01
+  0x0EC169 (va 0x080F0969)  ff -> 46
+  0x0EC16A (va 0x080F096A)  ff -> 04
+  0x0EC16B (va 0x080F096B)  ff -> 22
+  0x0EC16C (va 0x080F096C)  ff -> 20
+  0x0EC16D (va 0x080F096D)  ff -> 46
+  0x0EC16E (va 0x080F096E)  ff -> 40
+  0x0EC16F (va 0x080F096F)  ff -> f7
+  0x0EC170 (va 0x080F0970)  ff -> 16
+  0x0EC171 (va 0x080F0971)  ff -> fe
+  0x0EC172 (va 0x080F0972)  ff -> 6c
+  0x0EC173 (va 0x080F0973)  ff -> 21
+  0x0EC174 (va 0x080F0974)  ff -> 00
+  0x0EC175 (va 0x080F0975)  ff -> 22
+  0x0EC176 (va 0x080F0976)  ff -> 20
+  0x0EC177 (va 0x080F0977)  ff -> 46
+  0x0EC178 (va 0x080F0978)  ff -> 40
+  0x0EC179 (va 0x080F0979)  ff -> f7
+  0x0EC17A (va 0x080F097A)  ff -> 8d
+  0x0EC17B (va 0x080F097B)  ff -> fe
+  0x0EC17C (va 0x080F097C)  ff -> 37
+  0x0EC17D (va 0x080F097D)  ff -> f7
+  0x0EC17E (va 0x080F097E)  ff -> 30
+  0x0EC17F (va 0x080F097F)  ff -> fb
+  0x0EC180 (va 0x080F0980)  ff -> 84
+  0x0EC181 (va 0x080F0981)  ff -> b0
+  0x0EC182 (va 0x080F0982)  ff -> 01
+  0x0EC183 (va 0x080F0983)  ff -> 90
+  0x0EC184 (va 0x080F0984)  ff -> 15
+  0x0EC185 (va 0x080F0985)  ff -> 49
+  0x0EC186 (va 0x080F0986)  ff -> 00
+  0x0EC187 (va 0x080F0987)  ff -> 91
+  0x0EC188 (va 0x080F0988)  ff -> 15
+  0x0EC189 (va 0x080F0989)  ff -> 49
+  0x0EC18A (va 0x080F098A)  ff -> 02
+  0x0EC18B (va 0x080F098B)  ff -> 91
+  0x0EC18C (va 0x080F098C)  ff -> 09
+  0x0EC18D (va 0x080F098D)  ff -> 21
+  0x0EC18E (va 0x080F098E)  ff -> 00
+  0x0EC18F (va 0x080F098F)  ff -> 22
+  0x0EC190 (va 0x080F0990)  ff -> 00
+  0x0EC191 (va 0x080F0991)  ff -> 23
+  0x0EC192 (va 0x080F0992)  ff -> 20
+  0x0EC193 (va 0x080F0993)  ff -> 46
+  0x0EC194 (va 0x080F0994)  ff -> 34
+  0x0EC195 (va 0x080F0995)  ff -> f7
+  0x0EC196 (va 0x080F0996)  ff -> d3
+  0x0EC197 (va 0x080F0997)  ff -> fd
+  0x0EC198 (va 0x080F0998)  ff -> 04
+  0x0EC199 (va 0x080F0999)  ff -> b0
+  0x0EC19A (va 0x080F099A)  ff -> 20
+  0x0EC19B (va 0x080F099B)  ff -> 46
+  0x0EC19C (va 0x080F099C)  ff -> 11
+  0x0EC19D (va 0x080F099D)  ff -> 49
+  0x0EC19E (va 0x080F099E)  ff -> 00
+  0x0EC19F (va 0x080F099F)  ff -> 22
+  0x0EC1A0 (va 0x080F09A0)  ff -> 3c
+  0x0EC1A1 (va 0x080F09A1)  ff -> f7
+  0x0EC1A2 (va 0x080F09A2)  ff -> eb
+  0x0EC1A4 (va 0x080F09A4)  ff -> 10
+  0x0EC1A5 (va 0x080F09A5)  ff -> 49
+  0x0EC1A6 (va 0x080F09A6)  ff -> 0c
+  0x0EC1A7 (va 0x080F09A7)  ff -> 60
+  0x0EC1A8 (va 0x080F09A8)  ff -> 30
+  0x0EC1A9 (va 0x080F09A9)  ff -> 46
+  0x0EC1AA (va 0x080F09AA)  ff -> 70
+  0x0EC1AB (va 0x080F09AB)  ff -> bd
+  0x0EC1AC (va 0x080F09AC)  ff -> 80
+  0x0EC1AD (va 0x080F09AD)  ff -> 00
+  0x0EC1AE (va 0x080F09AE)  ff -> 00
+  0x0EC1AF (va 0x080F09AF)  ff -> 00
+  0x0EC1B0 (va 0x080F09B0)  ff -> 2c
+  0x0EC1B1 (va 0x080F09B1)  ff -> 00
+  0x0EC1B2 (va 0x080F09B2)  ff -> 00
+  0x0EC1B3 (va 0x080F09B3)  ff -> 00
+  0x0EC1B4 (va 0x080F09B4)  ff -> 28
+  0x0EC1B5 (va 0x080F09B5)  ff -> 00
+  0x0EC1B6 (va 0x080F09B6)  ff -> 00
+  0x0EC1B7 (va 0x080F09B7)  ff -> 00
+  0x0EC1B8 (va 0x080F09B8)  ff -> 20
+  0x0EC1B9 (va 0x080F09B9)  ff -> 01
+  0x0EC1BA (va 0x080F09BA)  ff -> 00
+  0x0EC1BB (va 0x080F09BB)  ff -> 00
+  0x0EC1BC (va 0x080F09BC)  ff -> 90
+  0x0EC1BD (va 0x080F09BD)  ff -> b0
+  0x0EC1BE (va 0x080F09BE)  ff -> 06
+  0x0EC1BF (va 0x080F09BF)  ff -> 08
+  0x0EC1C0 (va 0x080F09C0)  ff -> 20
+  0x0EC1C1 (va 0x080F09C1)  ff -> 7e
+  0x0EC1C2 (va 0x080F09C2)  ff -> 00
+  0x0EC1C3 (va 0x080F09C3)  ff -> 08
+  0x0EC1C4 (va 0x080F09C4)  ff -> 00
+  0x0EC1C5 (va 0x080F09C5)  ff -> 05
+  0x0EC1C6 (va 0x080F09C6)  ff -> 0f
+  0x0EC1C7 (va 0x080F09C7)  ff -> 08
+  0x0EC1C8 (va 0x080F09C8)  ff -> 84
+  0x0EC1C9 (va 0x080F09C9)  ff -> 10
+  0x0EC1CA (va 0x080F09CA)  ff -> 00
+  0x0EC1CB (va 0x080F09CB)  ff -> 20
+  0x0EC1CC (va 0x080F09CC)  ff -> 80
+  0x0EC1CD (va 0x080F09CD)  ff -> 00
+  0x0EC1CE (va 0x080F09CE)  ff -> 00
+  0x0EC1CF (va 0x080F09CF)  ff -> 00
+  0x0EC1D0 (va 0x080F09D0)  ff -> 2c
+  0x0EC1D1 (va 0x080F09D1)  ff -> 00
+  0x0EC1D2 (va 0x080F09D2)  ff -> 00
+  0x0EC1D3 (va 0x080F09D3)  ff -> 00
+  0x0EC1D4 (va 0x080F09D4)  ff -> b0
+  0x0EC1D5 (va 0x080F09D5)  ff -> 00
+  0x0EC1D6 (va 0x080F09D6)  ff -> 00
+  0x0EC1D7 (va 0x080F09D7)  ff -> 00
+  0x0EC1D8 (va 0x080F09D8)  ff -> 20
+  0x0EC1D9 (va 0x080F09D9)  ff -> 01
+  0x0EC1DA (va 0x080F09DA)  ff -> 00
+  0x0EC1DB (va 0x080F09DB)  ff -> 00
+  0x0EC1DC (va 0x080F09DC)  ff -> 90
+  0x0EC1DD (va 0x080F09DD)  ff -> b0
+  0x0EC1DE (va 0x080F09DE)  ff -> 06
+  0x0EC1DF (va 0x080F09DF)  ff -> 08
+  0x0EC1E0 (va 0x080F09E0)  ff -> 20
+  0x0EC1E1 (va 0x080F09E1)  ff -> 7e
+  0x0EC1E2 (va 0x080F09E2)  ff -> 00
+  0x0EC1E3 (va 0x080F09E3)  ff -> 08
+  0x0EC1E4 (va 0x080F09E4)  ff -> 10
+  0x0EC1E5 (va 0x080F09E5)  ff -> 05
+  0x0EC1E6 (va 0x080F09E6)  ff -> 0f
+  0x0EC1E7 (va 0x080F09E7)  ff -> 08
+  0x0EC1E8 (va 0x080F09E8)  ff -> 88
+  0x0EC1E9 (va 0x080F09E9)  ff -> 10
+  0x0EC1EA (va 0x080F09EA)  ff -> 00
+  0x0EC1EB (va 0x080F09EB)  ff -> 20
+  0x0EC800 (va 0x080F1000)  ff -> 70
+  0x0EC801 (va 0x080F1001)  ff -> b5
+  0x0EC802 (va 0x080F1002)  ff -> 08
+  0x0EC803 (va 0x080F1003)  ff -> 26
+  0x0EC804 (va 0x080F1004)  ff -> 14
+  0x0EC805 (va 0x080F1005)  ff -> 4c
+  0x0EC806 (va 0x080F1006)  ff -> 20
+  0x0EC807 (va 0x080F1007)  ff -> 68
+  0x0EC808 (va 0x080F1008)  ff -> 00
+  0x0EC809 (va 0x080F1009)  ff -> 28
+  0x0EC80A (va 0x080F100A)  ff -> 0f
+  0x0EC80B (va 0x080F100B)  ff -> d0
+  0x0EC80C (va 0x080F100C)  ff -> 01
+  0x0EC80D (va 0x080F100D)  ff -> 8d
+  0x0EC80E (va 0x080F100E)  ff -> 31
+  0x0EC80F (va 0x080F100F)  ff -> 40
+  0x0EC810 (va 0x080F1010)  ff -> 00
+  0x0EC811 (va 0x080F1011)  ff -> 29
+  0x0EC812 (va 0x080F1012)  ff -> 08
+  0x0EC813 (va 0x080F1013)  ff -> d0
+  0x0EC814 (va 0x080F1014)  ff -> 11
+  0x0EC815 (va 0x080F1015)  ff -> 4d
+  0x0EC816 (va 0x080F1016)  ff -> 2a
+  0x0EC817 (va 0x080F1017)  ff -> 78
+  0x0EC818 (va 0x080F1018)  ff -> 00
+  0x0EC819 (va 0x080F1019)  ff -> 2a
+  0x0EC81A (va 0x080F101A)  ff -> 07
+  0x0EC81B (va 0x080F101B)  ff -> d1
+  0x0EC81C (va 0x080F101C)  ff -> 01
+  0x0EC81D (va 0x080F101D)  ff -> 22
+  0x0EC81E (va 0x080F101E)  ff -> 2a
+  0x0EC81F (va 0x080F101F)  ff -> 70
+  0x0EC820 (va 0x080F1020)  ff -> fe
+  0x0EC821 (va 0x080F1021)  ff -> f7
+  0x0EC822 (va 0x080F1022)  ff -> ee
+  0x0EC824 (va 0x080F1024)  ff -> 02
+  0x0EC825 (va 0x080F1025)  ff -> e0
+  0x0EC826 (va 0x080F1026)  ff -> 0e
+  0x0EC827 (va 0x080F1027)  ff -> 4d
+  0x0EC828 (va 0x080F1028)  ff -> 00
+  0x0EC829 (va 0x080F1029)  ff -> 22
+  0x0EC82A (va 0x080F102A)  ff -> 2a
+  0x0EC82B (va 0x080F102B)  ff -> 70
+  0x0EC82C (va 0x080F102C)  ff -> 0d
+  0x0EC82D (va 0x080F102D)  ff -> 4c
+  0x0EC82E (va 0x080F102E)  ff -> 20
+  0x0EC82F (va 0x080F102F)  ff -> 68
+  0x0EC830 (va 0x080F1030)  ff -> 00
+  0x0EC831 (va 0x080F1031)  ff -> 28
+  0x0EC832 (va 0x080F1032)  ff -> 0f
+  0x0EC833 (va 0x080F1033)  ff -> d0
+  0x0EC834 (va 0x080F1034)  ff -> 01
+  0x0EC835 (va 0x080F1035)  ff -> 8d
+  0x0EC836 (va 0x080F1036)  ff -> 31
+  0x0EC837 (va 0x080F1037)  ff -> 40
+  0x0EC838 (va 0x080F1038)  ff -> 00
+  0x0EC839 (va 0x080F1039)  ff -> 29
+  0x0EC83A (va 0x080F103A)  ff -> 08
+  0x0EC83B (va 0x080F103B)  ff -> d0
+  0x0EC83C (va 0x080F103C)  ff -> 0a
+  0x0EC83D (va 0x080F103D)  ff -> 4d
+  0x0EC83E (va 0x080F103E)  ff -> 2a
+  0x0EC83F (va 0x080F103F)  ff -> 78
+  0x0EC840 (va 0x080F1040)  ff -> 00
+  0x0EC841 (va 0x080F1041)  ff -> 2a
+  0x0EC842 (va 0x080F1042)  ff -> 07
+  0x0EC843 (va 0x080F1043)  ff -> d1
+  0x0EC844 (va 0x080F1044)  ff -> 01
+  0x0EC845 (va 0x080F1045)  ff -> 22
+  0x0EC846 (va 0x080F1046)  ff -> 2a
+  0x0EC847 (va 0x080F1047)  ff -> 70
+  0x0EC848 (va 0x080F1048)  ff -> fe
+  0x0EC849 (va 0x080F1049)  ff -> f7
+  0x0EC84A (va 0x080F104A)  ff -> ea
+  0x0EC84C (va 0x080F104C)  ff -> 02
+  0x0EC84D (va 0x080F104D)  ff -> e0
+  0x0EC84E (va 0x080F104E)  ff -> 07
+  0x0EC84F (va 0x080F104F)  ff -> 4d
+  0x0EC850 (va 0x080F1050)  ff -> 00
+  0x0EC851 (va 0x080F1051)  ff -> 22
+  0x0EC852 (va 0x080F1052)  ff -> 2a
+  0x0EC853 (va 0x080F1053)  ff -> 70
+  0x0EC854 (va 0x080F1054)  ff -> 70
+  0x0EC855 (va 0x080F1055)  ff -> bd
+  0x0EC856 (va 0x080F1056)  ff -> 00
+  0x0EC857 (va 0x080F1057)  ff -> 00
+  0x0EC858 (va 0x080F1058)  ff -> 84
+  0x0EC859 (va 0x080F1059)  ff -> 10
+  0x0EC85A (va 0x080F105A)  ff -> 00
+  0x0EC85B (va 0x080F105B)  ff -> 20
+  0x0EC85C (va 0x080F105C)  ff -> 8c
+  0x0EC85D (va 0x080F105D)  ff -> 10
+  0x0EC85E (va 0x080F105E)  ff -> 00
+  0x0EC85F (va 0x080F105F)  ff -> 20
+  0x0EC860 (va 0x080F1060)  ff -> 8c
+  0x0EC861 (va 0x080F1061)  ff -> 10
+  0x0EC862 (va 0x080F1062)  ff -> 00
+  0x0EC863 (va 0x080F1063)  ff -> 20
+  0x0EC864 (va 0x080F1064)  ff -> 88
+  0x0EC865 (va 0x080F1065)  ff -> 10
+  0x0EC866 (va 0x080F1066)  ff -> 00
+  0x0EC867 (va 0x080F1067)  ff -> 20
+  0x0EC868 (va 0x080F1068)  ff -> 8d
+  0x0EC869 (va 0x080F1069)  ff -> 10
+  0x0EC86A (va 0x080F106A)  ff -> 00
+  0x0EC86B (va 0x080F106B)  ff -> 20
+  0x0EC86C (va 0x080F106C)  ff -> 8d
+  0x0EC86D (va 0x080F106D)  ff -> 10
+  0x0EC86E (va 0x080F106E)  ff -> 00
+  0x0EC86F (va 0x080F106F)  ff -> 20
+  0x0EC900 (va 0x080F1100)  ff -> 0f
+  0x0EC901 (va 0x080F1101)  ff -> b5
+  0x0EC903 (va 0x080F1103)  ff -> f7
+  0x0EC904 (va 0x080F1104)  ff -> 7d
+  0x0EC906 (va 0x080F1106)  ff -> 0f
+  0x0EC907 (va 0x080F1107)  ff -> bd
+  0x0EC908 (va 0x080F1108)  ff -> 2d
+  0x0EC909 (va 0x080F1109)  ff -> e9
+  0x0EC90A (va 0x080F110A)  ff -> fc
+  0x0EC90B (va 0x080F110B)  ff -> 41
+  0x0EC90C (va 0x080F110C)  ff -> 1e
+  0x0EC90D (va 0x080F110D)  ff -> f7
+  0x0EC90E (va 0x080F110E)  ff -> b6
+  0x0EC90F (va 0x080F110F)  ff -> be
+
+八、点击动作接线（v1.1）：页 1 入口跳板 + 轮询函数
+页 1 处理器 0x0800FE78（补丁后，入口已被改写）：
+  0800fe78  e1 f0 42 b9  b.w #0x80f1100
+  0800fe7c  37 48        ldr r0, [pc, #0xdc]
+  0800fe7e  01 78        ldrb r1, [r0]
+跳板 @0x080F1100：
+  080f1100  0f b5        push {r0, r1, r2, r3, lr}
+  080f1102  ff f7 7d ff  bl #0x80f1000
+  080f1106  0f bd        pop {r0, r1, r2, r3, pc}
+  080f1108  2d e9 fc 41  push.w {r2, r3, r4, r5, r6, r7, r8, lr}
+  080f110c  1e f7 b6 be  b.w #0x800fe7c
+轮询 @0x080F1000：
+  080f1000  70 b5        push {r4, r5, r6, lr}
+  080f1002  08 26        movs r6, #8
+  080f1004  14 4c        ldr r4, [pc, #0x50]
+  080f1006  20 68        ldr r0, [r4]
+  080f1008  00 28        cmp r0, #0
+  080f100a  0f d0        beq #0x80f102c
+  080f100c  01 8d        ldrh r1, [r0, #0x28]
+  080f100e  31 40        ands r1, r6
+  080f1010  00 29        cmp r1, #0
+  080f1012  08 d0        beq #0x80f1026
+  080f1014  11 4d        ldr r5, [pc, #0x44]
+  080f1016  2a 78        ldrb r2, [r5]
+  080f1018  00 2a        cmp r2, #0
+  080f101a  07 d1        bne #0x80f102c
+  080f101c  01 22        movs r2, #1
+  080f101e  2a 70        strb r2, [r5]
+  080f1020  fe f7 ee ff  bl #0x80f0000
+  080f1024  02 e0        b #0x80f102c
+  080f1026  0e 4d        ldr r5, [pc, #0x38]
+  080f1028  00 22        movs r2, #0
+  080f102a  2a 70        strb r2, [r5]
+  080f102c  0d 4c        ldr r4, [pc, #0x34]
+  080f102e  20 68        ldr r0, [r4]
+  080f1030  00 28        cmp r0, #0
+  080f1032  0f d0        beq #0x80f1054
+  080f1034  01 8d        ldrh r1, [r0, #0x28]
+  080f1036  31 40        ands r1, r6
+  080f1038  00 29        cmp r1, #0
+  080f103a  08 d0        beq #0x80f104e
+  080f103c  0a 4d        ldr r5, [pc, #0x28]
+  080f103e  2a 78        ldrb r2, [r5]
+  080f1040  00 2a        cmp r2, #0
+  080f1042  07 d1        bne #0x80f1054
+  080f1044  01 22        movs r2, #1
+  080f1046  2a 70        strb r2, [r5]
+  080f1048  fe f7 ea ff  bl #0x80f0020
+  080f104c  02 e0        b #0x80f1054
+  080f104e  07 4d        ldr r5, [pc, #0x1c]
+  080f1050  00 22        movs r2, #0
+  080f1052  2a 70        strb r2, [r5]
+  080f1054  70 bd        pop {r4, r5, r6, pc}
+  080f1056  00 00        movs r0, r0
+  080f1058  84 10        asrs r4, r0, #2
+  080f105a  00 20        movs r0, #0
+  080f105c  8c 10        asrs r4, r1, #2
+  080f105e  00 20        movs r0, #0
+磁贴句柄 RAM：KEY=0x20001084  BCAST=0x20001088  KEY_ON=0x20001080

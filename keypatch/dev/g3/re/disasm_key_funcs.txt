@@ -1,0 +1,1788 @@
+
+==================================================================
+### 0x004082e0
+// function: FUN_004082e0  entry=0x004082e0  size=2103  thunk=false
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+uint __fastcall FUN_004082e0(void *param_1)
+
+{
+  uint uVar1;
+  QArrayData *pQVar2;
+  char cVar3;
+  byte bVar4;
+  QArrayData QVar5;
+  int iVar6;
+  undefined4 uVar7;
+  uint uVar8;
+  DWORD DVar9;
+  void *extraout_ECX;
+  void *this;
+  void *this_00;
+  void *extraout_ECX_00;
+  void *extraout_ECX_01;
+  void *pvVar10;
+  void *extraout_ECX_02;
+  void *extraout_ECX_03;
+  int iVar11;
+  undefined4 *puVar12;
+  int local_80;
+  uint local_68;
+  QArrayData *local_64;
+  QArrayData *local_60;
+  uint local_5c;
+  uint local_58;
+  
+  if ((DAT_00459060 == '\0') && (iVar6 = __cxa_guard_acquire(&DAT_00459060), iVar6 != 0)) {
+    QFile::QFile((QFile *)&DAT_00459068);
+    __cxa_guard_release(&DAT_00459060);
+    FUN_004014c0((_onexit_t)&LAB_00408c10);
+  }
+  if ((DAT_00459050 == '\0') && (iVar6 = __cxa_guard_acquire(&DAT_00459050), iVar6 != 0)) {
+    DAT_00459058 = shared_null_exref;
+    __cxa_guard_release(&DAT_00459050);
+    FUN_004014c0((_onexit_t)&LAB_004070a0);
+  }
+  local_68 = 0;
+  switch(*(undefined4 *)((int)param_1 + 0xc4)) {
+  case 0:
+    FUN_00420940(param_1,0);
+    if (*(int *)((int)param_1 + 0x14) == 0) {
+      FUN_00420980(param_1,6);
+      return 0;
+    }
+    iVar6 = *(int *)((int)param_1 + 8);
+    iVar6 = QString::compare_helper
+                      (iVar6 + *(int *)(iVar6 + 0xc),*(undefined4 *)(iVar6 + 4),0,0xffffffff,1);
+    if (iVar6 == 0) {
+      FUN_00420980(param_1,7);
+      return 0;
+    }
+    goto LAB_004084bf;
+  case 1:
+    QFile::setFileName((QString *)((int)param_1 + 8));
+    uVar8 = QFile::open(1);
+    if ((char)uVar8 == '\0') {
+      FUN_00420980(param_1,0);
+      return uVar8 & 0xff;
+    }
+LAB_004084fc:
+    *(int *)((int)param_1 + 0xc4) = *(int *)((int)param_1 + 0xc4) + 1;
+    return uVar8;
+  case 2:
+    uVar7 = FUN_00407990((int *)&DAT_00459068,(QString *)&DAT_00459058,&local_68);
+    if ((*(char *)((int)param_1 + 0x9a) != '\0') &&
+       (((char)uVar7 == '\0' || (iVar6 = QString::indexOf((int)param_1 + 0xbc,0,1), iVar6 == -1))))
+    {
+      FUN_00420980(param_1,10);
+      goto LAB_004087a7;
+    }
+    iVar6 = QFile::size();
+    DAT_00434008 = iVar6 - local_68;
+    puVar12 = (undefined4 *)((int)param_1 + 0x1cU & 0xfffffffc);
+    DAT_0045905c = DAT_00434008 + 0x3ff >> 10;
+    *(undefined4 *)((int)param_1 + 0x18) = 0;
+    *(undefined4 *)((int)param_1 + 0x55) = 0;
+    uVar8 = (uint)((int)param_1 + 0x18 + (0x41 - (int)puVar12)) >> 2;
+    for (; uVar8 != 0; uVar8 = uVar8 - 1) {
+      *puVar12 = 0;
+      puVar12 = puVar12 + 1;
+    }
+    DVar9 = hid_write((void *)0x0,*(undefined4 **)((int)param_1 + 0x14),
+                      (void *)((int)param_1 + 0x18),0x41);
+    if (DVar9 == 0xffffffff) goto LAB_00408796;
+    DAT_00459080 = 0;
+LAB_004084bf:
+    *(int *)((int)param_1 + 0xc4) = *(int *)((int)param_1 + 0xc4) + 1;
+    break;
+  case 3:
+    DAT_00459080 = DAT_00459080 + 1;
+    if (9 < DAT_00459080) {
+      *(undefined4 *)((int)param_1 + 0xc4) = 4;
+      return 1;
+    }
+    break;
+  case 4:
+    FUN_00407610(0,(undefined1 *)0x0,0,(undefined2 *)((int)param_1 + 0x18));
+    DVar9 = hid_write(this,*(undefined4 **)((int)param_1 + 0x14),(undefined2 *)((int)param_1 + 0x18)
+                      ,0x41);
+    if (DVar9 != 0xffffffff) {
+      *(undefined1 *)((int)param_1 + 0xc0) = 0;
+      DAT_0045907c = 0;
+      *(int *)((int)param_1 + 0xc4) = *(int *)((int)param_1 + 0xc4) + 1;
+      return 1;
+    }
+    goto LAB_00408796;
+  case 5:
+    if (*(char *)((int)param_1 + 0xc0) != '\0') {
+      *(undefined4 *)((int)param_1 + 0xc4) = 6;
+    }
+    goto LAB_0040877e;
+  case 6:
+    FUN_00407610(2,(undefined1 *)0x0,0,(undefined2 *)((int)param_1 + 0x18));
+    DVar9 = hid_write(this_00,*(undefined4 **)((int)param_1 + 0x14),
+                      (undefined2 *)((int)param_1 + 0x18),0x41);
+    if (DVar9 != 0xffffffff) {
+      *(undefined1 *)((int)param_1 + 0xc1) = 0;
+      DAT_0045907c = 0;
+      *(int *)((int)param_1 + 0xc4) = *(int *)((int)param_1 + 0xc4) + 1;
+      return 1;
+    }
+    goto LAB_00408796;
+  case 7:
+    if (*(char *)((int)param_1 + 0xc1) != '\0') {
+      *(undefined4 *)((int)param_1 + 0xc4) = 8;
+      DAT_00459078 = 0;
+      DAT_00459070 = 0;
+      DAT_00459074 = 0;
+    }
+    goto LAB_0040877e;
+  case 8:
+    if (*(char *)((int)param_1 + 0x9a) == '\0') {
+      local_5c = CONCAT31(local_5c._1_3_,(char)DAT_00459078);
+    }
+    else {
+      local_5c = DAT_00459078 >> 0x18 | (DAT_00459078 & 0xff0000) >> 8 |
+                 (DAT_00459078 & 0xff00) << 8 | DAT_00459078 << 0x18;
+    }
+    local_64 = (QArrayData *)shared_null_exref;
+    QIODevice::read(0x40000459068);
+    pQVar2 = local_64;
+    local_64 = local_60;
+    local_60 = pQVar2;
+    if (*(int *)pQVar2 == 0) {
+LAB_00408a0b:
+      QArrayData::deallocate(pQVar2,1,4);
+    }
+    else if (*(int *)pQVar2 != -1) {
+      LOCK();
+      *(int *)pQVar2 = *(int *)pQVar2 + -1;
+      UNLOCK();
+      if (*(int *)pQVar2 == 0) goto LAB_00408a0b;
+    }
+    iVar6 = 0;
+    uVar8 = 0;
+    do {
+      if (DAT_00459070 < DAT_00434008) {
+        if ((1 < *(uint *)local_64) || (*(uint *)(local_64 + 0xc) != 0x10)) {
+          QByteArray::reallocData
+                    (*(uint *)(local_64 + 4) + 1,(uint)(int)(char)local_64[0xb] >> 0x1f);
+        }
+        if (iVar6 < (int)*(uint *)(local_64 + 4)) {
+          uVar8 = uVar8 + (byte)local_64[*(uint *)(local_64 + 0xc) + iVar6];
+        }
+        DAT_00459070 = DAT_00459070 + 1;
+      }
+      else {
+        uVar8 = uVar8 + 0xff;
+      }
+      iVar6 = iVar6 + 1;
+    } while (iVar6 != 0x400);
+    uVar1 = uVar8 >> 0x18 | (uVar8 & 0xff0000) >> 8 | (uVar8 & 0xff00) << 8;
+    if (*(char *)((int)param_1 + 0x9a) == '\0') {
+      local_5c._1_3_ = (undefined3)uVar1;
+      local_58._0_1_ = (undefined1)uVar8;
+      bVar4 = 4;
+      if (0xff < DAT_0045905c) {
+        bVar4 = (byte)(DAT_00459078 >> 4) & 0xf0 | 4;
+      }
+      FUN_00407610(bVar4,(undefined1 *)&local_5c,5,(undefined2 *)((int)param_1 + 0x18));
+      pvVar10 = extraout_ECX_00;
+    }
+    else {
+      local_58 = uVar1 | uVar8 << 0x18;
+      FUN_00407610(8,(undefined1 *)&local_5c,8,(undefined2 *)((int)param_1 + 0x18));
+      pvVar10 = extraout_ECX_03;
+    }
+    DVar9 = hid_write(pvVar10,*(undefined4 **)((int)param_1 + 0x14),(void *)((int)param_1 + 0x18),
+                      0x41);
+    local_80 = 0;
+    pvVar10 = extraout_ECX_01;
+    if (DVar9 != 0xffffffff) {
+      do {
+        iVar11 = 1;
+        iVar6 = local_80 + -1;
+        do {
+          if (DAT_00459074 < DAT_00434008) {
+            if ((*(uint *)local_64 < 2) && (*(uint *)(local_64 + 0xc) == 0x10)) {
+              if (iVar6 + iVar11 < (int)*(uint *)(local_64 + 4)) goto LAB_0040898e;
+LAB_004089b3:
+              QVar5 = (QArrayData)0x0;
+            }
+            else {
+              QByteArray::reallocData
+                        (*(uint *)(local_64 + 4) + 1,(uint)(int)(char)local_64[0xb] >> 0x1f);
+              pvVar10 = extraout_ECX_02;
+              if ((int)*(uint *)(local_64 + 4) <= iVar6 + iVar11) goto LAB_004089b3;
+LAB_0040898e:
+              QVar5 = local_64[*(uint *)(local_64 + 0xc) + iVar6 + iVar11];
+            }
+            *(QArrayData *)((int)param_1 + iVar11 + 0x18) = QVar5;
+          }
+          else {
+            *(undefined1 *)((int)param_1 + iVar11 + 0x18) = 0xff;
+          }
+          DAT_00459074 = DAT_00459074 + 1;
+          iVar11 = iVar11 + 1;
+        } while (iVar11 != 0x41);
+        DVar9 = hid_write(pvVar10,*(undefined4 **)((int)param_1 + 0x14),
+                          (void *)((int)param_1 + 0x18),0x41);
+        if (DVar9 == 0xffffffff) break;
+        local_80 = local_80 + 0x40;
+        pvVar10 = extraout_ECX;
+        if (local_80 == 0x400) {
+          DAT_00459078 = DAT_00459078 + 1;
+          DAT_0045907c = 0;
+          *(undefined1 *)((int)param_1 + 0xc2) = 0;
+          *(int *)((int)param_1 + 0xc4) = *(int *)((int)param_1 + 0xc4) + 1;
+          if (*(int *)local_64 != 0) {
+            if (*(int *)local_64 == -1) {
+              return 1;
+            }
+            LOCK();
+            *(int *)local_64 = *(int *)local_64 + -1;
+            UNLOCK();
+            if (*(int *)local_64 != 0) {
+              return 1;
+            }
+          }
+          QArrayData::deallocate(local_64,1,4);
+          return 1;
+        }
+      } while( true );
+    }
+    FUN_00420980(param_1,8);
+    if (*(int *)local_64 != 0) {
+      if (*(int *)local_64 == -1) goto LAB_004087a7;
+      LOCK();
+      *(int *)local_64 = *(int *)local_64 + -1;
+      UNLOCK();
+      if (*(int *)local_64 != 0) goto LAB_004087a7;
+    }
+    QArrayData::deallocate(local_64,1,4);
+    goto LAB_004087a7;
+  case 9:
+    bVar4 = *(byte *)((int)param_1 + 0xc2);
+    if (bVar4 != 0) {
+      FUN_00420940(param_1,(char)(int)ROUND(((float10)DAT_00459078 / (float10)DAT_0045905c) *
+                                            (float10)_DAT_004351c0));
+      uVar8 = (uint)bVar4;
+      if (DAT_00459078 < DAT_0045905c) {
+        *(int *)((int)param_1 + 0xc4) = *(int *)((int)param_1 + 0xc4) + -1;
+        return uVar8;
+      }
+      goto LAB_004084fc;
+    }
+LAB_0040877e:
+    DAT_0045907c = DAT_0045907c + 1;
+    if (5000 < DAT_0045907c) {
+LAB_00408796:
+      FUN_00420980(param_1,8);
+LAB_004087a7:
+      uVar8 = QIODevice::isOpen();
+      if ((char)uVar8 == '\0') {
+        return uVar8;
+      }
+      QFileDevice::close();
+      return 0;
+    }
+    break;
+  case 10:
+    cVar3 = QIODevice::isOpen();
+    if (cVar3 != '\0') {
+      QFileDevice::close();
+    }
+    *(undefined1 *)((int)param_1 + 0xc) = 0;
+    FUN_00420980(param_1,9);
+  }
+  return 1;
+}
+
+
+// ---- disassembly (max 150 insns) ----
+004082e0  PUSH EBP
+004082e1  MOV EBP,ESP
+004082e3  PUSH EDI
+004082e4  PUSH ESI
+004082e5  PUSH EBX
+004082e6  MOV EBX,ECX
+004082e8  SUB ESP,0x9c
+004082ee  MOVZX EAX,byte ptr [0x00459060]
+004082f5  TEST AL,AL
+004082f7  JNZ 0x0040830d
+004082f9  MOV dword ptr [ESP],0x459060
+00408300  CALL 0x00422428
+00408305  TEST EAX,EAX
+00408307  JNZ 0x00408418
+0040830d  MOVZX EAX,byte ptr [0x00459050]
+00408314  TEST AL,AL
+00408316  JZ 0x004083dd
+0040831c  CMP dword ptr [EBX + 0xc4],0xa
+00408323  MOV dword ptr [EBP + -0x64],0x0
+0040832a  JA 0x004083d0
+00408330  MOV EAX,dword ptr [EBX + 0xc4]
+00408336  JMP dword ptr [EAX*0x4 + 0x43518c]
+00408340  MOV EAX,dword ptr [EBP + -0x80]
+00408343  MOV dword ptr [ESP + 0x8],0x41
+0040834b  MOV dword ptr [ESP + 0x4],EAX
+0040834f  MOV EAX,dword ptr [EBX + 0x14]
+00408352  MOV dword ptr [ESP],EAX
+00408355  LEA EAX,[EBP + -0x60]
+00408358  MOV dword ptr [EBP + -0x78],EAX
+0040835b  CALL 0x0040a6d0
+00408360  CMP EAX,-0x1
+00408363  JZ 0x004089b7
+00408369  ADD dword ptr [EBP + -0x7c],0x40
+0040836d  MOV EAX,dword ptr [EBP + -0x7c]
+00408370  CMP EAX,0x400
+00408375  JNZ 0x00408920
+0040837b  MOV EAX,dword ptr [EBP + -0x60]
+0040837e  ADD dword ptr [0x00459078],0x1
+00408385  MOV dword ptr [0x0045907c],0x0
+0040838f  MOV byte ptr [EBX + 0xc2],0x0
+00408396  ADD dword ptr [EBX + 0xc4],0x1
+0040839d  MOV EDX,dword ptr [EAX]
+0040839f  TEST EDX,EDX
+004083a1  JZ 0x004083b1
+004083a3  CMP EDX,-0x1
+004083a6  JZ 0x004083d0
+004083a8  SUB.LOCK dword ptr [EAX],0x1
+004083ac  MOV EAX,dword ptr [EBP + -0x60]
+004083af  JNZ 0x004083d0
+004083b1  MOV dword ptr [ESP + 0x8],0x4
+004083b9  MOV dword ptr [ESP + 0x4],0x1
+004083c1  MOV dword ptr [ESP],EAX
+004083c4  CALL dword ptr [0x0045b694]
+004083ca  LEA ESI,[ESI]
+004083d0  MOV EAX,0x1
+004083d5  LEA ESP,[EBP + -0xc]
+004083d8  POP EBX
+004083d9  POP ESI
+004083da  POP EDI
+004083db  POP EBP
+004083dc  RET
+004083dd  MOV dword ptr [ESP],0x459050
+004083e4  CALL 0x00422428
+004083e9  TEST EAX,EAX
+004083eb  JZ 0x0040831c
+004083f1  MOV dword ptr [ESP],0x459050
+004083f8  MOV EAX,[0x0045b698]
+004083fd  MOV [0x00459058],EAX
+00408402  CALL 0x00422420
+00408407  MOV dword ptr [ESP],0x4070a0
+0040840e  CALL 0x004014c0
+00408413  JMP 0x0040831c
+00408418  MOV ECX,0x459068
+0040841d  CALL dword ptr [0x0045b78c]
+00408423  MOV dword ptr [ESP],0x459060
+0040842a  CALL 0x00422420
+0040842f  MOV dword ptr [ESP],0x408c10
+00408436  CALL 0x004014c0
+0040843b  JMP 0x0040830d
+00408440  MOV ECX,0x459068
+00408445  CALL dword ptr [0x0045b994]
+0040844b  TEST AL,AL
+0040844d  JNZ 0x00408ac3
+00408453  MOV byte ptr [EBX + 0xc],0x0
+00408457  MOV ECX,EBX
+00408459  MOV dword ptr [ESP],0x9
+00408460  CALL 0x00420980
+00408465  SUB ESP,0x4
+00408468  JMP 0x004083d0
+0040846d  MOV dword ptr [ESP],0x0
+00408474  MOV ECX,EBX
+00408476  CALL 0x00420940
+0040847b  MOV EAX,dword ptr [EBX + 0x14]
+0040847e  SUB ESP,0x4
+00408481  TEST EAX,EAX
+00408483  JZ 0x00408af0
+00408489  MOV EAX,dword ptr [EBX + 0x8]
+0040848c  MOV dword ptr [ESP + 0x10],0x1
+00408494  MOV dword ptr [ESP + 0xc],0xffffffff
+0040849c  MOV dword ptr [ESP + 0x8],0x0
+004084a4  MOV EDX,dword ptr [EAX + 0x4]
+004084a7  MOV dword ptr [ESP + 0x4],EDX
+004084ab  ADD EAX,dword ptr [EAX + 0xc]
+004084ae  MOV dword ptr [ESP],EAX
+004084b1  CALL dword ptr [0x0045b7ec]
+004084b7  TEST EAX,EAX
+004084b9  JZ 0x00408b08
+004084bf  ADD dword ptr [EBX + 0xc4],0x1
+004084c6  JMP 0x004083d0
+004084cb  LEA EAX,[EBX + 0x8]
+004084ce  MOV ECX,0x459068
+004084d3  MOV dword ptr [ESP],EAX
+004084d6  CALL dword ptr [0x0045b778]
+004084dc  MOV ECX,0x459068
+004084e1  SUB ESP,0x4
+004084e4  MOV dword ptr [ESP],0x1
+004084eb  CALL dword ptr [0x0045b77c]
+004084f1  SUB ESP,0x4
+004084f4  TEST AL,AL
+004084f6  JZ 0x00408ad3
+004084fc  ADD dword ptr [EBX + 0xc4],0x1
+00408503  JMP 0x004083d5
+00408508  LEA EAX,[EBP + -0x64]
+0040850b  MOV dword ptr [ESP + 0x4],0x459058
+00408513  MOV dword ptr [ESP + 0x8],EAX
+00408517  MOV dword ptr [ESP],0x459068
+0040851e  CALL 0x00407990
+00408523  CMP byte ptr [EBX + 0x9a],0x0
+0040852a  JZ 0x00408802
+00408530  TEST AL,AL
+00408532  JZ 0x00408564
+00408534  LEA EAX,[EBX + 0xbc]
+0040853a  MOV dword ptr [ESP + 0x8],0x1
+00408542  MOV ECX,0x459058
+00408547  MOV dword ptr [ESP + 0x4],0x0
+0040854f  MOV dword ptr [ESP],EAX
+00408552  CALL dword ptr [0x0045b970]
+00408558  SUB ESP,0xc
+0040855b  CMP EAX,-0x1
+0040855e  JNZ 0x00408802
+00408564  MOV dword ptr [ESP],0xa
+0040856b  MOV ECX,EBX
+0040856d  CALL 0x00420980
+00408572  SUB ESP,0x4
+00408575  JMP 0x004087a7
+0040857a  MOV EAX,[0x00459080]
+0040857f  ADD EAX,0x1
+00408582  MOV [0x00459080],EAX
+00408587  CMP EAX,0x9
+0040858a  JBE 0x004083d0
+
+==================================================================
+### 0x00407990
+// function: FUN_00407990  entry=0x00407990  size=1549  thunk=false
+
+undefined4 __cdecl FUN_00407990(int *param_1,QString *param_2,uint *param_3)
+
+{
+  code *pcVar1;
+  char cVar2;
+  int iVar3;
+  QArrayData QVar4;
+  int iVar5;
+  uint uVar6;
+  uint uVar7;
+  QArrayData *pQVar8;
+  undefined4 uVar9;
+  uint uVar10;
+  QArrayData *_Str;
+  bool bVar11;
+  longlong lVar12;
+  QByteArray *pQVar13;
+  QString *local_5c;
+  uint local_54;
+  int local_50;
+  QArrayData *local_44;
+  QArrayData *local_40;
+  QArrayData *local_3c;
+  QArrayData *local_38;
+  QCryptographicHash local_34 [4];
+  QArrayData *local_30;
+  QArrayData *local_2c;
+  code *local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  
+  pcVar1 = shared_null_exref;
+  local_24 = 0x996655aa;
+  local_20 = 0x33228877;
+  local_44 = (QArrayData *)shared_null_exref;
+  local_40 = (QArrayData *)shared_null_exref;
+  lVar12 = (**(code **)(*param_1 + 0x40))();
+  iVar5 = (int)((ulonglong)lVar12 >> 0x20);
+  uVar7 = (uint)lVar12;
+  if ((SBORROW4(0,iVar5) != SBORROW4(-iVar5,(uint)(9 < uVar7))) !=
+      (int)(-iVar5 - (uint)(9 < uVar7)) < 0) {
+    lVar12 = lVar12 + -10;
+    (**(code **)(*param_1 + 0x44))(lVar12);
+    QIODevice::read(CONCAT44(10,param_1));
+    local_40 = local_3c;
+    if (*(int *)pcVar1 == 0) {
+LAB_00407d74:
+      QArrayData::deallocate((QArrayData *)pcVar1,1,4);
+    }
+    else if (*(int *)pcVar1 != -1) {
+      LOCK();
+      *(int *)pcVar1 = *(int *)pcVar1 + -1;
+      UNLOCK();
+      if (*(int *)pcVar1 == 0) goto LAB_00407d74;
+    }
+    QVar4 = (QArrayData)0xaa;
+    iVar3 = 0;
+    while (QVar4 == local_3c[iVar3 + *(uint *)(local_3c + 0xc) + 2]) {
+      if (iVar3 + 1 == 8) {
+        if ((*(uint *)local_3c < 2) && (*(uint *)(local_3c + 0xc) == 0x10)) {
+          uVar6 = 0x10;
+        }
+        else {
+          QByteArray::reallocData
+                    (*(uint *)(local_3c + 4) + 1,(uint)(int)(char)local_3c[0xb] >> 0x1f);
+          uVar6 = *(uint *)(local_3c + 0xc);
+        }
+        QVar4 = local_3c[uVar6];
+        if ((*(uint *)local_3c < 2) && (*(uint *)(local_3c + 0xc) == 0x10)) {
+          uVar6 = 0x10;
+        }
+        else {
+          QByteArray::reallocData
+                    (*(uint *)(local_3c + 4) + 1,(uint)(int)(char)local_3c[0xb] >> 0x1f);
+          uVar6 = *(uint *)(local_3c + 0xc);
+        }
+        uVar6 = (uint)(ushort)(short)(char)QVar4 | (uint)(byte)local_3c[uVar6 + 1] << 8;
+        if (iVar5 < (int)(uint)(uVar7 < uVar6 + 0x1a)) {
+          (**(code **)(*param_1 + 0x44))(0,0);
+          goto LAB_00407d2f;
+        }
+        uVar10 = (uint)lVar12 - uVar6;
+        local_54 = uVar10 - 0x10;
+        local_50 = ((int)((ulonglong)lVar12 >> 0x20) - (uint)((uint)lVar12 < uVar6)) + -1 +
+                   (uint)(0xf < uVar10);
+        (**(code **)(*param_1 + 0x44))(local_54,local_50);
+        QIODevice::read(CONCAT44(0x10,param_1));
+        local_44 = local_38;
+        if (*(int *)pcVar1 == 0) {
+LAB_00407d95:
+          QArrayData::deallocate((QArrayData *)pcVar1,1,4);
+        }
+        else if (*(int *)pcVar1 != -1) {
+          LOCK();
+          *(int *)pcVar1 = *(int *)pcVar1 + -1;
+          UNLOCK();
+          if (*(int *)pcVar1 == 0) goto LAB_00407d95;
+        }
+        QCryptographicHash::QCryptographicHash(local_34,1);
+        (**(code **)(*param_1 + 0x44))(0,0);
+        if ((SBORROW4(0,local_50) != SBORROW4(-local_50,(uint)(local_54 != 0))) !=
+            (int)(-local_50 - (uint)(local_54 != 0)) < 0) goto LAB_00407bec;
+        goto LAB_00407c67;
+      }
+      QVar4 = *(QArrayData *)((int)&local_24 + iVar3 + 1);
+      iVar3 = iVar3 + 1;
+    }
+    (**(code **)(*param_1 + 0x44))(0,0);
+  }
+LAB_00407d2f:
+  uVar9 = 0;
+  uVar7 = *(uint *)local_40;
+  local_3c = local_40;
+  if (uVar7 == 0) goto LAB_00407cd9;
+LAB_00407d3a:
+  if (uVar7 == 0xffffffff) goto LAB_00407cf2;
+  LOCK();
+  *(uint *)local_40 = *(uint *)local_40 - 1;
+  UNLOCK();
+  local_3c = local_40;
+  if (*(uint *)local_40 == 0) goto LAB_00407cd9;
+  iVar5 = *(int *)local_44;
+  goto joined_r0x00407d4f;
+  while( true ) {
+    if (*(int *)local_28 != -1) {
+      LOCK();
+      *(int *)local_28 = *(int *)local_28 + -1;
+      UNLOCK();
+      if (*(int *)local_28 == 0) goto LAB_00407c40;
+    }
+    if ((SBORROW4(0,local_50) != SBORROW4(-local_50,(uint)(local_54 != 0))) ==
+        (int)(-local_50 - (uint)(local_54 != 0)) < 0) break;
+LAB_00407bec:
+    uVar10 = local_54;
+    if ((SBORROW4(0,local_50) != SBORROW4(-local_50,(uint)(0x2000 < local_54))) !=
+        (int)(-local_50 - (uint)(0x2000 < local_54)) < 0) {
+      uVar10 = 0x2000;
+    }
+    QIODevice::read(CONCAT44(uVar10,param_1));
+    uVar10 = *(uint *)(local_28 + 4);
+    bVar11 = local_54 < uVar10;
+    local_54 = local_54 - uVar10;
+    local_50 = (local_50 - ((int)uVar10 >> 0x1f)) - (uint)bVar11;
+    pQVar13 = (QByteArray *)&local_28;
+    QCryptographicHash::addData((QByteArray *)&local_28);
+    if (*(int *)local_28 == 0) {
+LAB_00407c40:
+      QArrayData::deallocate((QArrayData *)pQVar13,1,4);
+      if ((SBORROW4(0,local_50) != SBORROW4(-local_50,(uint)(local_54 != 0))) ==
+          (int)(-local_50 - (uint)(local_54 != 0)) < 0) break;
+      goto LAB_00407bec;
+    }
+  }
+LAB_00407c67:
+  QCryptographicHash::result();
+  pcVar1 = *(code **)(*param_1 + 0x44);
+  if ((*(size_t *)(local_38 + 4) == *(size_t *)(local_30 + 4)) &&
+     (iVar3 = memcmp(local_38 + *(int *)(local_38 + 0xc),local_30 + *(int *)(local_30 + 0xc),
+                     *(size_t *)(local_38 + 4)), iVar3 == 0)) {
+    pQVar8 = (QArrayData *)((iVar5 - (uint)(uVar7 < uVar6)) + -1 + (uint)(9 < uVar7 - uVar6));
+    (*pcVar1)((uVar7 - uVar6) - 10);
+    QIODevice::read(CONCAT44(uVar6,param_1));
+    cVar2 = QByteArray::isNull();
+    if (cVar2 == '\0') {
+      _Str = local_2c + *(int *)(local_2c + 0xc);
+      if ((_Str != (QArrayData *)0x0) && (iVar5 = *(int *)(local_2c + 4), iVar5 != 0)) {
+        iVar3 = 0;
+        QVar4 = *_Str;
+        while (QVar4 != (QArrayData)0x0) {
+          iVar3 = iVar3 + 1;
+          if (iVar5 == iVar3) {
+            if (iVar5 == -1) {
+              strlen((char *)_Str);
+            }
+            break;
+          }
+          QVar4 = _Str[iVar3];
+        }
+      }
+      QString::fromUtf8_helper((char *)&local_28,(int)_Str);
+    }
+    else {
+      local_28 = shared_null_exref;
+    }
+    local_5c = (QString *)&local_28;
+    QString::operator=(param_2,local_5c);
+    *param_3 = uVar6 + 0x1a;
+    (**(code **)(*param_1 + 0x44))(0,0);
+    if (*(int *)local_28 == 0) {
+LAB_00407fa0:
+      QArrayData::deallocate(pQVar8,2,4);
+    }
+    else if (*(int *)local_28 != -1) {
+      LOCK();
+      *(int *)local_28 = *(int *)local_28 + -1;
+      UNLOCK();
+      if (*(int *)local_28 == 0) goto LAB_00407fa0;
+    }
+    if (*(int *)local_2c == 0) {
+LAB_00407f80:
+      QArrayData::deallocate(local_2c,1,4);
+    }
+    else if (*(int *)local_2c != -1) {
+      LOCK();
+      *(int *)local_2c = *(int *)local_2c + -1;
+      UNLOCK();
+      if (*(int *)local_2c == 0) goto LAB_00407f80;
+    }
+    uVar9 = 1;
+  }
+  else {
+    (*pcVar1)(0,0);
+    uVar9 = 0;
+  }
+  if (*(int *)local_30 == 0) {
+LAB_00407e10:
+    QArrayData::deallocate(local_30,1,4);
+  }
+  else if (*(int *)local_30 != -1) {
+    LOCK();
+    *(int *)local_30 = *(int *)local_30 + -1;
+    UNLOCK();
+    if (*(int *)local_30 == 0) goto LAB_00407e10;
+  }
+  QCryptographicHash::~QCryptographicHash(local_34);
+  uVar7 = *(uint *)local_3c;
+  if (uVar7 != 0) goto LAB_00407d3a;
+LAB_00407cd9:
+  QArrayData::deallocate(local_3c,1,4);
+LAB_00407cf2:
+  iVar5 = *(int *)local_44;
+joined_r0x00407d4f:
+  if (iVar5 == 0) {
+LAB_00407d51:
+    QArrayData::deallocate(local_44,1,4);
+    return uVar9;
+  }
+  if (iVar5 != -1) {
+    LOCK();
+    *(int *)local_44 = *(int *)local_44 + -1;
+    UNLOCK();
+    if (*(int *)local_44 == 0) goto LAB_00407d51;
+  }
+  return uVar9;
+}
+
+
+// ---- disassembly (max 150 insns) ----
+00407990  PUSH EBP
+00407991  MOV EBP,ESP
+00407993  PUSH EDI
+00407994  PUSH ESI
+00407995  LEA ESI,[EBP + -0x3c]
+00407998  PUSH EBX
+00407999  SUB ESP,0x7c
+0040799c  MOV EAX,[0x0045b698]
+004079a1  MOV EBX,dword ptr [EBP + 0x8]
+004079a4  MOV dword ptr [EBP + -0x20],0x996655aa
+004079ab  MOV dword ptr [EBP + -0x1c],0x33228877
+004079b2  MOV dword ptr [EBP + -0x40],EAX
+004079b5  MOV ECX,EBX
+004079b7  MOV dword ptr [EBP + -0x3c],EAX
+004079ba  MOV EAX,dword ptr [EBX]
+004079bc  CALL dword ptr [EAX + 0x40]
+004079bf  MOV ESI,EAX
+004079c1  MOV dword ptr [EBP + -0x60],EAX
+004079c4  MOV EAX,0x9
+004079c9  CMP EAX,ESI
+004079cb  MOV EAX,0x0
+004079d0  MOV dword ptr [EBP + -0x5c],EDX
+004079d3  SBB EAX,EDX
+004079d5  JGE 0x00407d2f
+004079db  MOV EAX,dword ptr [EBP + -0x60]
+004079de  MOV EDX,dword ptr [EBP + -0x5c]
+004079e1  MOV ECX,EBX
+004079e3  ADD EAX,-0xa
+004079e6  MOV ESI,EAX
+004079e8  MOV dword ptr [EBP + -0x50],EAX
+004079eb  MOV EAX,dword ptr [EBX]
+004079ed  ADC EDX,-0x1
+004079f0  MOV dword ptr [ESP],ESI
+004079f3  LEA ESI,[EBP + -0x3c]
+004079f6  MOV dword ptr [EBP + -0x4c],EDX
+004079f9  MOV dword ptr [ESP + 0x4],EDX
+004079fd  CALL dword ptr [EAX + 0x44]
+00407a00  MOV EAX,[0x0045b870]
+00407a05  SUB ESP,0x8
+00407a08  LEA ECX,[EBP + -0x38]
+00407a0b  MOV dword ptr [ESP + 0x4],0xa
+00407a13  MOV dword ptr [ESP + 0x8],0x0
+00407a1b  MOV dword ptr [ESP],EBX
+00407a1e  MOV dword ptr [EBP + -0x54],EAX
+00407a21  CALL EAX
+00407a23  MOV EAX,dword ptr [EBP + -0x3c]
+00407a26  MOV EDX,dword ptr [EBP + -0x38]
+00407a29  SUB ESP,0xc
+00407a2c  MOV dword ptr [EBP + -0x3c],EDX
+00407a2f  MOV dword ptr [EBP + -0x38],EAX
+00407a32  MOV EDX,dword ptr [EAX]
+00407a34  TEST EDX,EDX
+00407a36  JZ 0x00407d74
+00407a3c  CMP EDX,-0x1
+00407a3f  JZ 0x00407a4b
+00407a41  SUB.LOCK dword ptr [EAX],0x1
+00407a45  JZ 0x00407d74
+00407a4b  MOV ESI,dword ptr [EBP + -0x3c]
+00407a4e  MOV EDX,0xffffffaa
+00407a53  XOR EAX,EAX
+00407a55  MOV ECX,dword ptr [ESI + 0xc]
+00407a58  ADD ECX,ESI
+00407a5a  JMP 0x00407a65
+00407a60  MOVZX EDX,byte ptr [EBP + EAX*0x1 + -0x20]
+00407a65  CMP DL,byte ptr [ECX + EAX*0x1 + 0x2]
+00407a69  JNZ 0x00407d13
+00407a6f  ADD EAX,0x1
+00407a72  CMP EAX,0x8
+00407a75  JNZ 0x00407a60
+00407a77  MOV EAX,dword ptr [ESI]
+00407a79  CMP EAX,0x1
+00407a7c  JBE 0x00407dd3
+00407a82  MOV EDX,dword ptr [EBP + -0x3c]
+00407a85  MOVSX EAX,byte ptr [EDX + 0xb]
+00407a89  LEA ESI,[EBP + -0x3c]
+00407a8c  MOV ECX,ESI
+00407a8e  SHR EAX,0x1f
+00407a91  MOV dword ptr [ESP + 0x4],EAX
+00407a95  MOV EAX,dword ptr [EDX + 0x4]
+00407a98  ADD EAX,0x1
+00407a9b  MOV dword ptr [ESP],EAX
+00407a9e  CALL dword ptr [0x0045b69c]
+00407aa4  MOV EAX,dword ptr [EBP + -0x3c]
+00407aa7  SUB ESP,0x8
+00407aaa  MOV ECX,dword ptr [EAX + 0xc]
+00407aad  MOVSX DI,byte ptr [EAX + ECX*0x1]
+00407ab2  MOV EDX,dword ptr [EAX]
+00407ab4  CMP EDX,0x1
+00407ab7  JBE 0x00407dc0
+00407abd  MOVSX EDX,byte ptr [EAX + 0xb]
+00407ac1  LEA ESI,[EBP + -0x3c]
+00407ac4  MOV ECX,ESI
+00407ac6  SHR EDX,0x1f
+00407ac9  MOV dword ptr [ESP + 0x4],EDX
+00407acd  MOV EAX,dword ptr [EAX + 0x4]
+00407ad0  ADD EAX,0x1
+00407ad3  MOV dword ptr [ESP],EAX
+00407ad6  CALL dword ptr [0x0045b69c]
+00407adc  MOV EDX,dword ptr [EBP + -0x3c]
+00407adf  SUB ESP,0x8
+00407ae2  MOV ECX,dword ptr [EDX + 0xc]
+00407ae5  MOVSX EDX,byte ptr [EDX + ECX*0x1 + 0x1]
+00407aea  MOV EAX,dword ptr [EBX]
+00407aec  SHL EDX,0x8
+00407aef  MOV EAX,dword ptr [EAX + 0x44]
+00407af2  OR EDI,EDX
+00407af4  MOVZX EDX,DI
+00407af7  LEA ECX,[EDX + 0x1a]
+00407afa  MOV EDI,ECX
+00407afc  MOV dword ptr [EBP + -0x6c],ECX
+00407aff  SAR EDI,0x1f
+00407b02  CMP dword ptr [EBP + -0x60],ECX
+00407b05  MOV ECX,dword ptr [EBP + -0x5c]
+00407b08  SBB ECX,EDI
+00407b0a  JL 0x00407df0
+00407b10  MOV ESI,dword ptr [EBP + -0x50]
+00407b13  MOV EDI,dword ptr [EBP + -0x4c]
+00407b16  XOR ECX,ECX
+00407b18  MOV dword ptr [EBP + -0x68],EDX
+00407b1b  MOV dword ptr [EBP + -0x64],ECX
+00407b1e  SUB ESI,EDX
+00407b20  SBB EDI,ECX
+00407b22  ADD ESI,-0x10
+00407b25  MOV ECX,EBX
+00407b27  ADC EDI,-0x1
+00407b2a  MOV dword ptr [EBP + -0x50],ESI
+00407b2d  MOV dword ptr [ESP],ESI
+00407b30  LEA ESI,[EBP + -0x3c]
+00407b33  MOV dword ptr [EBP + -0x4c],EDI
+00407b36  MOV dword ptr [ESP + 0x4],EDI
+00407b3a  CALL EAX
+00407b3c  SUB ESP,0x8
+00407b3f  LEA ECX,[EBP + -0x34]
+00407b42  MOV EAX,dword ptr [EBP + -0x54]
+00407b45  MOV dword ptr [ESP + 0x4],0x10
+00407b4d  MOV dword ptr [ESP + 0x8],0x0
+00407b55  MOV dword ptr [ESP],EBX
+00407b58  CALL EAX
+00407b5a  MOV EAX,dword ptr [EBP + -0x40]
+00407b5d  MOV EDX,dword ptr [EBP + -0x34]
+00407b60  SUB ESP,0xc
+00407b63  MOV dword ptr [EBP + -0x40],EDX
+00407b66  MOV dword ptr [EBP + -0x34],EAX
+00407b69  MOV EDX,dword ptr [EAX]
+00407b6b  TEST EDX,EDX
+00407b6d  JZ 0x00407d95
+00407b73  CMP EDX,-0x1
+00407b76  JZ 0x00407b82
+00407b78  SUB.LOCK dword ptr [EAX],0x1
+00407b7c  JZ 0x00407d95
+
+==================================================================
+### 0x00407610
+// function: FUN_00407610  entry=0x00407610  size=100  thunk=false
+
+void __cdecl FUN_00407610(undefined1 param_1,undefined1 *param_2,byte param_3,undefined2 *param_4)
+
+{
+  undefined1 *puVar1;
+  undefined1 uVar2;
+  byte bVar3;
+  byte *pbVar4;
+  undefined2 *puVar5;
+  uint uVar6;
+  
+  *param_4 = 0xaa00;
+  *(undefined1 *)(param_4 + 1) = 0x55;
+  *(undefined1 *)((int)param_4 + 3) = param_1;
+  if (param_3 != 0) {
+    puVar1 = param_2 + param_3;
+    puVar5 = param_4 + 2;
+    do {
+      uVar2 = *param_2;
+      param_2 = param_2 + 1;
+      *(undefined1 *)puVar5 = uVar2;
+      puVar5 = (undefined2 *)((int)puVar5 + 1);
+    } while (puVar1 != param_2);
+  }
+  pbVar4 = (byte *)((int)param_4 + 1);
+  uVar6 = 0;
+  do {
+    bVar3 = *pbVar4;
+    pbVar4 = pbVar4 + 1;
+    uVar6 = uVar6 + bVar3;
+  } while ((byte *)((int)param_4 + 0x3d) != pbVar4);
+  *(uint *)((int)param_4 + 0x3d) =
+       uVar6 >> 0x18 | (uVar6 & 0xff0000) >> 8 | (uVar6 & 0xff00) << 8 | uVar6 * 0x1000000;
+  return;
+}
+
+
+// ---- disassembly (max 150 insns) ----
+00407610  PUSH ESI
+00407611  MOV EAX,0xffffaa00
+00407616  PUSH EBX
+00407617  MOV ESI,dword ptr [ESP + 0x18]
+0040761b  MOV ECX,dword ptr [ESP + 0x14]
+0040761f  MOV word ptr [ESI],AX
+00407622  MOV byte ptr [ESI + 0x2],0x55
+00407626  MOV EAX,dword ptr [ESP + 0xc]
+0040762a  MOV byte ptr [ESI + 0x3],AL
+0040762d  TEST CL,CL
+0040762f  JZ 0x00407650
+00407631  MOV EAX,dword ptr [ESP + 0x10]
+00407635  MOVZX ECX,CL
+00407638  LEA EDX,[ESI + 0x4]
+0040763b  LEA EBX,[EAX + ECX*0x1]
+0040763e  NOP
+00407640  MOVZX ECX,byte ptr [EAX]
+00407643  ADD EAX,0x1
+00407646  ADD EDX,0x1
+00407649  MOV byte ptr [EDX + -0x1],CL
+0040764c  CMP EBX,EAX
+0040764e  JNZ 0x00407640
+00407650  LEA EAX,[ESI + 0x1]
+00407653  LEA EBX,[ESI + 0x3d]
+00407656  XOR EDX,EDX
+00407658  NOP
+00407659  LEA ESI,[ESI]
+00407660  MOVZX ECX,byte ptr [EAX]
+00407663  ADD EAX,0x1
+00407666  ADD EDX,ECX
+00407668  CMP EBX,EAX
+0040766a  JNZ 0x00407660
+0040766c  BSWAP EDX
+0040766e  MOV dword ptr [ESI + 0x3d],EDX
+00407671  POP EBX
+00407672  POP ESI
+00407673  RET
+
+==================================================================
+### 0x00408073
+// function: FUN_00408073  entry=0x00408073  size=580  thunk=false
+
+void __fastcall FUN_00408073(void *param_1)
+
+{
+  char *_Str;
+  undefined4 *puVar1;
+  int iVar2;
+  size_t sVar3;
+  undefined4 *puVar4;
+  QArrayData *in_stack_ffffffac;
+  uint uVar5;
+  uint uVar6;
+  QArrayData *local_20 [4];
+  
+  DAT_00459044 = 0;
+  if (*(int *)((int)param_1 + 0x14) != 0) {
+    puVar1 = hid_enumerate(0x483);
+    if (puVar1 != (undefined4 *)0x0) {
+      iVar2 = strcmp((char *)*puVar1,DAT_00459040);
+      puVar4 = puVar1;
+      do {
+        if (iVar2 == 0) {
+          hid_free_enumeration(puVar1);
+          DAT_00459049 = 1;
+          if (DAT_00459048 == '\0') {
+            FUN_004208f0(param_1,1);
+            FUN_00420980(param_1,4);
+            DAT_00459048 = DAT_00459049;
+            return;
+          }
+          DAT_00459049 = 1;
+          return;
+        }
+        puVar4 = (undefined4 *)puVar4[8];
+      } while (puVar4 != (undefined4 *)0x0);
+    }
+    hid_free_enumeration(puVar1);
+    hid_close(*(undefined4 **)((int)param_1 + 0x14));
+    local_20[0] = (QArrayData *)QString::fromAscii_helper("*",1);
+    FUN_004209c0(param_1,local_20);
+    if (*(int *)local_20[0] != 0) {
+      if (*(int *)local_20[0] == -1) goto LAB_00408293;
+      LOCK();
+      *(int *)local_20[0] = *(int *)local_20[0] + -1;
+      UNLOCK();
+      if (*(int *)local_20[0] != 0) goto LAB_00408293;
+    }
+    QArrayData::deallocate(local_20[0],2,4);
+LAB_00408293:
+    *(undefined1 *)((int)param_1 + 0x9a) = 0;
+    *(undefined4 *)((int)param_1 + 0x14) = 0;
+    return;
+  }
+  DAT_00459049 = '\0';
+  if (DAT_00459048 != '\0') {
+    FUN_004208f0(param_1,0);
+    FUN_00420980(param_1,5);
+    DAT_00459048 = DAT_00459049;
+  }
+  puVar1 = hid_enumerate(0x483);
+  if (puVar1 == (undefined4 *)0x0) goto LAB_00408200;
+  _Str = (char *)*puVar1;
+  sVar3 = strlen(_Str);
+  uVar5 = 0x40817a;
+  DAT_00459040 = operator_new__(sVar3 + 1);
+  strcpy(DAT_00459040,_Str);
+  puVar4 = hid_open_path();
+  *(undefined4 **)((int)param_1 + 0x14) = puVar4;
+  if (puVar4 == (undefined4 *)0x0) goto LAB_00408200;
+  local_20[0] = (QArrayData *)QString::fromAscii_helper("*",1);
+  uVar6 = 0x4081c4;
+  FUN_004209c0(param_1,local_20);
+  if (*(int *)local_20[0] == 0) {
+LAB_004081e0:
+    QArrayData::deallocate(in_stack_ffffffac,uVar5,uVar6);
+  }
+  else if (*(int *)local_20[0] != -1) {
+    LOCK();
+    *(int *)local_20[0] = *(int *)local_20[0] + -1;
+    UNLOCK();
+    if (*(int *)local_20[0] == 0) goto LAB_004081e0;
+  }
+  FUN_00407ff0((int)param_1);
+LAB_00408200:
+  hid_free_enumeration(puVar1);
+  return;
+}
+
+
+// ---- disassembly (max 150 insns) ----
+00408073  PUSH EBP
+00408074  MOV EBP,ESP
+00408076  PUSH EDI
+00408077  PUSH ESI
+00408078  PUSH EBX
+00408079  MOV EBX,ECX
+0040807b  SUB ESP,0x3c
+0040807e  MOV EAX,dword ptr [ECX + 0x14]
+00408081  MOV dword ptr [0x00459044],0x0
+0040808b  TEST EAX,EAX
+0040808d  JZ 0x00408130
+00408093  MOV dword ptr [ESP + 0x4],0x572b
+0040809b  MOV dword ptr [ESP],0x483
+004080a2  CALL 0x00409fe0
+004080a7  MOV ESI,EAX
+004080a9  TEST EAX,EAX
+004080ab  JZ 0x00408241
+004080b1  MOV EAX,[0x00459040]
+004080b6  MOV dword ptr [ESP + 0x4],EAX
+004080ba  MOV EAX,dword ptr [ESI]
+004080bc  MOV dword ptr [ESP],EAX
+004080bf  CALL 0x0042dfa8
+004080c4  MOV EDX,ESI
+004080c6  JMP 0x004080db
+004080d0  MOV EDX,dword ptr [EDX + 0x20]
+004080d3  TEST EDX,EDX
+004080d5  JZ 0x00408241
+004080db  TEST EAX,EAX
+004080dd  JNZ 0x004080d0
+004080df  MOV dword ptr [ESP],ESI
+004080e2  CALL 0x0040a290
+004080e7  CMP byte ptr [0x00459048],0x0
+004080ee  MOV byte ptr [0x00459049],0x1
+004080f5  JNZ 0x00408208
+004080fb  MOV dword ptr [ESP],0x1
+00408102  MOV ECX,EBX
+00408104  CALL 0x004208f0
+00408109  MOV ECX,EBX
+0040810b  SUB ESP,0x4
+0040810e  MOV dword ptr [ESP],0x4
+00408115  CALL 0x00420980
+0040811a  MOVZX EAX,byte ptr [0x00459049]
+00408121  SUB ESP,0x4
+00408124  MOV [0x00459048],AL
+00408129  JMP 0x00408208
+00408130  CMP byte ptr [0x00459048],0x0
+00408137  MOV byte ptr [0x00459049],0x0
+0040813e  JNZ 0x00408210
+00408144  MOV dword ptr [ESP + 0x4],0x572b
+0040814c  MOV dword ptr [ESP],0x483
+00408153  CALL 0x00409fe0
+00408158  MOV ESI,EAX
+0040815a  TEST EAX,EAX
+0040815c  JZ 0x00408200
+00408162  MOV EAX,dword ptr [EAX]
+00408164  MOV dword ptr [ESP],EAX
+00408167  MOV dword ptr [EBP + -0x2c],EAX
+0040816a  CALL 0x0042df90
+0040816f  ADD EAX,0x1
+00408172  MOV dword ptr [ESP],EAX
+00408175  CALL 0x00422450
+0040817a  MOV EDI,EAX
+0040817c  MOV [0x00459040],EAX
+00408181  MOV EAX,dword ptr [EBP + -0x2c]
+00408184  MOV dword ptr [ESP],EDI
+00408187  MOV dword ptr [ESP + 0x4],EAX
+0040818b  CALL 0x0042dfa0
+00408190  MOV dword ptr [ESP],EDI
+00408193  CALL 0x0040a2f0
+00408198  MOV dword ptr [EBX + 0x14],EAX
+0040819b  TEST EAX,EAX
+0040819d  JZ 0x00408200
+0040819f  LEA EDI,[EBP + -0x1c]
+004081a2  MOV dword ptr [ESP + 0x4],0x1
+004081aa  MOV dword ptr [ESP],0x435187
+004081b1  CALL dword ptr [0x0045b7f4]
+004081b7  MOV dword ptr [ESP],EDI
+004081ba  MOV ECX,EBX
+004081bc  MOV dword ptr [EBP + -0x1c],EAX
+004081bf  CALL 0x004209c0
+004081c4  MOV EAX,dword ptr [EBP + -0x1c]
+004081c7  SUB ESP,0x4
+004081ca  MOV EDX,dword ptr [EAX]
+004081cc  TEST EDX,EDX
+004081ce  JZ 0x004081e0
+004081d0  CMP EDX,-0x1
+004081d3  JZ 0x004081f9
+004081d5  SUB.LOCK dword ptr [EAX],0x1
+004081d9  MOV EAX,dword ptr [EBP + -0x1c]
+004081dc  JNZ 0x004081f9
+004081de  NOP
+004081e0  MOV dword ptr [ESP + 0x8],0x4
+004081e8  MOV dword ptr [ESP + 0x4],0x2
+004081f0  MOV dword ptr [ESP],EAX
+004081f3  CALL dword ptr [0x0045b694]
+004081f9  MOV ECX,EBX
+004081fb  CALL 0x00407ff0
+00408200  MOV dword ptr [ESP],ESI
+00408203  CALL 0x0040a290
+00408208  LEA ESP,[EBP + -0xc]
+0040820b  POP EBX
+0040820c  POP ESI
+0040820d  POP EDI
+0040820e  POP EBP
+0040820f  RET
+00408210  MOV dword ptr [ESP],0x0
+00408217  CALL 0x004208f0
+0040821c  MOV ECX,EBX
+0040821e  SUB ESP,0x4
+00408221  MOV dword ptr [ESP],0x5
+00408228  CALL 0x00420980
+0040822d  MOVZX EAX,byte ptr [0x00459049]
+00408234  SUB ESP,0x4
+00408237  MOV [0x00459048],AL
+0040823c  JMP 0x00408144
+00408241  MOV dword ptr [ESP],ESI
+00408244  LEA EDI,[EBP + -0x1c]
+00408247  CALL 0x0040a290
+0040824c  MOV EAX,dword ptr [EBX + 0x14]
+0040824f  MOV dword ptr [ESP],EAX
+00408252  CALL 0x0040abe0
+00408257  MOV dword ptr [ESP + 0x4],0x1
+0040825f  MOV dword ptr [ESP],0x435187
+00408266  CALL dword ptr [0x0045b7f4]
+0040826c  MOV dword ptr [ESP],EDI
+0040826f  MOV ECX,EBX
+00408271  MOV dword ptr [EBP + -0x1c],EAX
+00408274  CALL 0x004209c0
+00408279  MOV EAX,dword ptr [EBP + -0x1c]
+0040827c  SUB ESP,0x4
+0040827f  MOV EDX,dword ptr [EAX]
+00408281  TEST EDX,EDX
+00408283  JZ 0x004082b0
+00408285  CMP EDX,-0x1
+00408288  JZ 0x00408293
+0040828a  SUB.LOCK dword ptr [EAX],0x1
+0040828e  MOV EAX,dword ptr [EBP + -0x1c]
+00408291  JZ 0x004082b0
+00408293  MOV byte ptr [EBX + 0x9a],0x0
+0040829a  MOV dword ptr [EBX + 0x14],0x0
+004082a1  JMP 0x00408208
+004082b0  MOV dword ptr [ESP + 0x8],0x4
+004082b8  MOV dword ptr [ESP + 0x4],0x2
+004082c0  MOV dword ptr [ESP],EAX
+004082c3  CALL dword ptr [0x0045b694]
+004082c9  JMP 0x00408293
+
+==================================================================
+### 0x00407ff0
+// function: FUN_00407ff0  entry=0x00407ff0  size=101  thunk=false
+
+void __fastcall FUN_00407ff0(int param_1)
+
+{
+  undefined2 *puVar1;
+  void *this;
+  void *this_00;
+  
+  puVar1 = (undefined2 *)(param_1 + 0x18);
+  *(undefined1 *)(param_1 + 0x9a) = 0;
+  FUN_00407610(0xa0,(undefined1 *)0x0,0,puVar1);
+  hid_write(this,*(undefined4 **)(param_1 + 0x14),puVar1,0x41);
+  hid_write(this_00,*(undefined4 **)(param_1 + 0x14),puVar1,0x41);
+  return;
+}
+
+
+// ---- disassembly (max 150 insns) ----
+00407ff0  PUSH ESI
+00407ff1  LEA ESI,[ECX + 0x18]
+00407ff4  PUSH EBX
+00407ff5  MOV EBX,ECX
+00407ff7  SUB ESP,0x14
+00407ffa  MOV byte ptr [ECX + 0x9a],0x0
+00408001  MOV dword ptr [ESP + 0xc],ESI
+00408005  MOV dword ptr [ESP + 0x8],0x0
+0040800d  MOV dword ptr [ESP + 0x4],0x0
+00408015  MOV dword ptr [ESP],0xa0
+0040801c  CALL 0x00407610
+00408021  MOV EAX,dword ptr [EBX + 0x14]
+00408024  MOV dword ptr [ESP + 0x4],ESI
+00408028  MOV dword ptr [ESP + 0x8],0x41
+00408030  MOV dword ptr [ESP],EAX
+00408033  CALL 0x0040a6d0
+00408038  MOV EAX,dword ptr [EBX + 0x14]
+0040803b  MOV dword ptr [ESP + 0x4],ESI
+0040803f  MOV dword ptr [ESP + 0x8],0x41
+00408047  MOV dword ptr [ESP],EAX
+0040804a  CALL 0x0040a6d0
+0040804f  ADD ESP,0x14
+00408052  POP EBX
+00408053  POP ESI
+00408054  RET
+
+==================================================================
+### 0x00403040
+// function: FUN_00403040  entry=0x00403040  size=724  thunk=false
+
+void __thiscall FUN_00403040(void *this,undefined4 *param_1)
+
+{
+  int iVar1;
+  code *pcVar2;
+  QArrayData *in_stack_ffffffd0;
+  undefined4 local_2c;
+  QArrayData *local_28;
+  QArrayData *local_24;
+  QArrayData *local_20 [4];
+  
+  QFileInfo::QFileInfo((QFileInfo *)(local_20 + -4));
+  local_2c = (QArrayData *)*param_1;
+  if (1 < *(int *)local_2c + 1U) {
+    LOCK();
+    *(int *)local_2c = *(int *)local_2c + 1;
+    UNLOCK();
+  }
+  QFileInfo::QFileInfo((QFileInfo *)local_20,(QString *)&local_2c);
+  local_20[0] = in_stack_ffffffd0;
+  QFileInfo::~QFileInfo((QFileInfo *)local_20);
+  QFileInfo::fileName();
+  local_24 = *(QArrayData **)(*(int *)((int)this + 0x4c) + *(int *)((int)this + 0x8c) * 4);
+  if (1 < *(int *)local_24 + 1U) {
+    LOCK();
+    *(int *)local_24 = *(int *)local_24 + 1;
+    UNLOCK();
+  }
+  QString::fromUtf8_helper((char *)local_20,0x435138);
+  pcVar2 = append_exref;
+  QString::append((QString *)local_20);
+  if (*(int *)local_20[0] == 0) {
+LAB_00403213:
+    QArrayData::deallocate(local_20[0],2,4);
+    iVar1 = *(int *)local_24;
+  }
+  else {
+    if (*(int *)local_20[0] != -1) {
+      LOCK();
+      *(int *)local_20[0] = *(int *)local_20[0] + -1;
+      UNLOCK();
+      if (*(int *)local_20[0] == 0) goto LAB_00403213;
+    }
+    iVar1 = *(int *)local_24;
+  }
+  if (1 < iVar1 + 1U) {
+    LOCK();
+    *(int *)local_24 = *(int *)local_24 + 1;
+    UNLOCK();
+  }
+  local_20[0] = local_24;
+  (*pcVar2)(&local_28);
+  FUN_004028d0(this,'\0',(QString *)local_20);
+  if (*(int *)local_20[0] == 0) {
+LAB_004032c0:
+    QArrayData::deallocate(local_20[0],2,4);
+    iVar1 = *(int *)local_24;
+    if (iVar1 != 0) goto LAB_0040317e;
+LAB_004032e6:
+    QArrayData::deallocate(local_24,2,4);
+  }
+  else {
+    if (*(int *)local_20[0] != -1) {
+      LOCK();
+      *(int *)local_20[0] = *(int *)local_20[0] + -1;
+      UNLOCK();
+      if (*(int *)local_20[0] == 0) goto LAB_004032c0;
+    }
+    iVar1 = *(int *)local_24;
+    if (iVar1 == 0) goto LAB_004032e6;
+LAB_0040317e:
+    if (iVar1 != -1) {
+      LOCK();
+      *(int *)local_24 = *(int *)local_24 + -1;
+      UNLOCK();
+      if (*(int *)local_24 == 0) goto LAB_004032e6;
+    }
+  }
+  local_20[0] = (QArrayData *)*param_1;
+  if (1 < *(int *)local_20[0] + 1U) {
+    LOCK();
+    *(int *)local_20[0] = *(int *)local_20[0] + 1;
+    UNLOCK();
+  }
+  FUN_0041f480(this,(QFileInfo *)local_20);
+  if (*(int *)local_20[0] == 0) {
+LAB_004032a0:
+    QArrayData::deallocate(local_20[0],2,4);
+  }
+  else if (*(int *)local_20[0] != -1) {
+    LOCK();
+    *(int *)local_20[0] = *(int *)local_20[0] + -1;
+    UNLOCK();
+    if (*(int *)local_20[0] == 0) goto LAB_004032a0;
+  }
+  if (*(int *)local_28 == 0) {
+LAB_00403250:
+    QArrayData::deallocate(local_28,2,4);
+    iVar1 = *(int *)local_2c;
+  }
+  else {
+    if (*(int *)local_28 != -1) {
+      LOCK();
+      *(int *)local_28 = *(int *)local_28 + -1;
+      UNLOCK();
+      if (*(int *)local_28 == 0) goto LAB_00403250;
+    }
+    iVar1 = *(int *)local_2c;
+  }
+  if (iVar1 == 0) {
+LAB_00403276:
+    QArrayData::deallocate(local_2c,2,4);
+    QFileInfo::~QFileInfo((QFileInfo *)(local_20 + -4));
+    return;
+  }
+  if (iVar1 != -1) {
+    LOCK();
+    *(int *)local_2c = *(int *)local_2c + -1;
+    UNLOCK();
+    if (*(int *)local_2c == 0) goto LAB_00403276;
+  }
+  QFileInfo::~QFileInfo((QFileInfo *)(local_20 + -4));
+  return;
+}
+
+
+// ---- disassembly (max 150 insns) ----
+00403040  PUSH EBP
+00403041  MOV EBP,ESP
+00403043  PUSH EDI
+00403044  PUSH ESI
+00403045  MOV ESI,ECX
+00403047  LEA ECX,[EBP + -0x2c]
+0040304a  PUSH EBX
+0040304b  SUB ESP,0x4c
+0040304e  CALL dword ptr [0x0045b850]
+00403054  MOV EAX,dword ptr [EBP + 0x8]
+00403057  MOV EDX,dword ptr [EAX]
+00403059  MOV dword ptr [EBP + -0x28],EDX
+0040305c  MOV EAX,dword ptr [EDX]
+0040305e  ADD EAX,0x1
+00403061  CMP EAX,0x1
+00403064  JA 0x00403320
+0040306a  LEA EBX,[EBP + -0x1c]
+0040306d  LEA EAX,[EBP + -0x28]
+00403070  MOV EDI,dword ptr [0x0045b854]
+00403076  MOV dword ptr [ESP],EAX
+00403079  MOV ECX,EBX
+0040307b  CALL dword ptr [0x0045b848]
+00403081  MOV EAX,dword ptr [EBP + -0x2c]
+00403084  MOV EDX,dword ptr [EBP + -0x1c]
+00403087  SUB ESP,0x4
+0040308a  MOV ECX,EBX
+0040308c  MOV EDI,dword ptr [0x0045b854]
+00403092  MOV dword ptr [EBP + -0x1c],EAX
+00403095  MOV dword ptr [EBP + -0x2c],EDX
+00403098  CALL EDI
+0040309a  LEA EAX,[EBP + -0x2c]
+0040309d  LEA ECX,[EBP + -0x24]
+004030a0  MOV dword ptr [ESP],EAX
+004030a3  CALL dword ptr [0x0045b98c]
+004030a9  MOV EDX,dword ptr [ESI + 0x8c]
+004030af  MOV EAX,dword ptr [ESI + 0x4c]
+004030b2  SUB ESP,0x4
+004030b5  MOV EDX,dword ptr [EAX + EDX*0x4]
+004030b8  MOV dword ptr [EBP + -0x20],EDX
+004030bb  MOV EAX,dword ptr [EDX]
+004030bd  ADD EAX,0x1
+004030c0  CMP EAX,0x1
+004030c3  JA 0x00403310
+004030c9  MOV dword ptr [ESP + 0x8],0x1
+004030d1  MOV dword ptr [ESP + 0x4],0x435138
+004030d9  MOV dword ptr [ESP],EBX
+004030dc  CALL dword ptr [0x0045b7f0]
+004030e2  LEA EAX,[EBP + -0x20]
+004030e5  MOV dword ptr [ESP],EBX
+004030e8  MOV dword ptr [EBP + -0x40],EAX
+004030eb  MOV ECX,EAX
+004030ed  MOV EAX,[0x0045b7fc]
+004030f2  MOV dword ptr [EBP + -0x3c],EAX
+004030f5  CALL EAX
+004030f7  MOV EAX,dword ptr [EBP + -0x1c]
+004030fa  SUB ESP,0x4
+004030fd  MOV EDX,dword ptr [EAX]
+004030ff  TEST EDX,EDX
+00403101  JZ 0x00403213
+00403107  CMP EDX,-0x1
+0040310a  JZ 0x00403119
+0040310c  SUB.LOCK dword ptr [EAX],0x1
+00403110  MOV EAX,dword ptr [EBP + -0x1c]
+00403113  JZ 0x00403213
+00403119  MOV EDX,dword ptr [EBP + -0x20]
+0040311c  MOV dword ptr [EBP + -0x1c],EDX
+0040311f  MOV EAX,dword ptr [EDX]
+00403121  ADD EAX,0x1
+00403124  CMP EAX,0x1
+00403127  JA 0x00403240
+0040312d  LEA EAX,[EBP + -0x24]
+00403130  MOV ECX,EBX
+00403132  MOV dword ptr [ESP],EAX
+00403135  MOV EAX,dword ptr [EBP + -0x3c]
+00403138  CALL EAX
+0040313a  SUB ESP,0x4
+0040313d  MOV ECX,ESI
+0040313f  MOV dword ptr [ESP + 0x4],EBX
+00403143  MOV dword ptr [ESP],0x0
+0040314a  CALL 0x004028d0
+0040314f  MOV EAX,dword ptr [EBP + -0x1c]
+00403152  SUB ESP,0x8
+00403155  MOV EDX,dword ptr [EAX]
+00403157  TEST EDX,EDX
+00403159  JZ 0x004032c0
+0040315f  CMP EDX,-0x1
+00403162  JZ 0x00403171
+00403164  SUB.LOCK dword ptr [EAX],0x1
+00403168  MOV EAX,dword ptr [EBP + -0x1c]
+0040316b  JZ 0x004032c0
+00403171  MOV EAX,dword ptr [EBP + -0x20]
+00403174  MOV EDX,dword ptr [EAX]
+00403176  TEST EDX,EDX
+00403178  JZ 0x004032e6
+0040317e  CMP EDX,-0x1
+00403181  JZ 0x00403190
+00403183  SUB.LOCK dword ptr [EAX],0x1
+00403187  MOV EAX,dword ptr [EBP + -0x20]
+0040318a  JZ 0x004032e6
+00403190  MOV EAX,dword ptr [EBP + 0x8]
+00403193  MOV EDX,dword ptr [EAX]
+00403195  MOV dword ptr [EBP + -0x1c],EDX
+00403198  MOV EAX,dword ptr [EDX]
+0040319a  ADD EAX,0x1
+0040319d  CMP EAX,0x1
+004031a0  JA 0x00403304
+004031a6  MOV dword ptr [ESP],EBX
+004031a9  MOV ECX,ESI
+004031ab  CALL 0x0041f480
+004031b0  MOV EAX,dword ptr [EBP + -0x1c]
+004031b3  SUB ESP,0x4
+004031b6  MOV EDX,dword ptr [EAX]
+004031b8  TEST EDX,EDX
+004031ba  JZ 0x004032a0
+004031c0  CMP EDX,-0x1
+004031c3  JZ 0x004031d2
+004031c5  SUB.LOCK dword ptr [EAX],0x1
+004031c9  MOV EAX,dword ptr [EBP + -0x1c]
+004031cc  JZ 0x004032a0
+004031d2  MOV EAX,dword ptr [EBP + -0x24]
+004031d5  MOV EDX,dword ptr [EAX]
+004031d7  TEST EDX,EDX
+004031d9  JZ 0x00403250
+004031db  CMP EDX,-0x1
+004031de  JZ 0x004031e9
+004031e0  SUB.LOCK dword ptr [EAX],0x1
+004031e4  MOV EAX,dword ptr [EBP + -0x24]
+004031e7  JZ 0x00403250
+004031e9  MOV EAX,dword ptr [EBP + -0x28]
+004031ec  MOV EDX,dword ptr [EAX]
+004031ee  TEST EDX,EDX
+004031f0  JZ 0x00403276
+004031f6  CMP EDX,-0x1
+004031f9  JZ 0x00403204
+004031fb  SUB.LOCK dword ptr [EAX],0x1
+004031ff  MOV EAX,dword ptr [EBP + -0x28]
+00403202  JZ 0x00403276
+00403204  LEA ECX,[EBP + -0x2c]
+00403207  CALL EDI
+00403209  LEA ESP,[EBP + -0xc]
+0040320c  POP EBX
+0040320d  POP ESI
+0040320e  POP EDI
+0040320f  POP EBP
+00403210  RET 0x4
+00403213  MOV dword ptr [ESP],EAX
+00403216  MOV dword ptr [ESP + 0x8],0x4
+0040321e  MOV dword ptr [ESP + 0x4],0x2
+00403226  CALL dword ptr [0x0045b694]
+0040322c  MOV EDX,dword ptr [EBP + -0x20]
+
+==================================================================
+### 0x004028d0
+// function: FUN_004028d0  entry=0x004028d0  size=874  thunk=false
+
+void __thiscall FUN_004028d0(void *this,char param_1,QString *param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  undefined2 uVar4;
+  undefined2 uVar5;
+  QArrayData *local_2c;
+  QArrayData *local_28;
+  QArrayData *local_24;
+  QArrayData *local_20 [4];
+  
+  QTime::currentTime();
+  iVar1 = QTime::hour();
+  iVar2 = QTime::minute();
+  iVar3 = QTime::second();
+  local_28 = (QArrayData *)QString::fromAscii_helper("[%1:%2:%3] ",0xb);
+  uVar5 = 0x40;
+  QString::arg(&local_28,iVar1,iVar1 >> 0x1f,2,10,0x30);
+  uVar4 = 0x40;
+  QString::arg(&local_24,iVar2,iVar2 >> 0x1f,2,10,CONCAT22(uVar5,0x30));
+  QString::arg(local_20,iVar3,iVar3 >> 0x1f,2,10,CONCAT22(uVar4,0x30));
+  if (*(int *)local_20[0] == 0) {
+LAB_00402bb2:
+    QArrayData::deallocate(local_20[0],2,4);
+    iVar1 = *(int *)local_24;
+    if (iVar1 != 0) goto LAB_004029fa;
+LAB_00402bd8:
+    QArrayData::deallocate(local_24,2,4);
+    iVar1 = *(int *)local_28;
+    if (iVar1 == 0) goto LAB_00402bfe;
+LAB_00402a19:
+    if (iVar1 != -1) {
+      LOCK();
+      *(int *)local_28 = *(int *)local_28 + -1;
+      UNLOCK();
+      if (*(int *)local_28 == 0) goto LAB_00402bfe;
+    }
+    iVar1 = *(int *)local_2c;
+    if (param_1 != '\0') goto LAB_00402af0;
+LAB_00402a3d:
+    if (1 < iVar1 + 1U) {
+      LOCK();
+      *(int *)local_2c = *(int *)local_2c + 1;
+      UNLOCK();
+    }
+    local_24 = local_2c;
+    QString::append(param_2);
+    local_20[0] = (QArrayData *)QString::fromAscii_helper("black",5);
+    FUN_0041f3c0(this,local_20,&local_24);
+    iVar1 = *(int *)local_20[0];
+    if (iVar1 == 0) goto LAB_00402b43;
+LAB_00402a90:
+    if (iVar1 != -1) {
+      LOCK();
+      *(int *)local_20[0] = *(int *)local_20[0] + -1;
+      UNLOCK();
+      if (*(int *)local_20[0] == 0) goto LAB_00402b43;
+    }
+    iVar1 = *(int *)local_24;
+    if (iVar1 != 0) goto LAB_00402aaf;
+LAB_00402b69:
+    QArrayData::deallocate(local_24,2,4);
+    iVar1 = *(int *)local_2c;
+  }
+  else {
+    if (*(int *)local_20[0] != -1) {
+      LOCK();
+      *(int *)local_20[0] = *(int *)local_20[0] + -1;
+      UNLOCK();
+      if (*(int *)local_20[0] == 0) goto LAB_00402bb2;
+    }
+    iVar1 = *(int *)local_24;
+    if (iVar1 == 0) goto LAB_00402bd8;
+LAB_004029fa:
+    if (iVar1 != -1) {
+      LOCK();
+      *(int *)local_24 = *(int *)local_24 + -1;
+      UNLOCK();
+      if (*(int *)local_24 == 0) goto LAB_00402bd8;
+    }
+    iVar1 = *(int *)local_28;
+    if (iVar1 != 0) goto LAB_00402a19;
+LAB_00402bfe:
+    QArrayData::deallocate(local_28,2,4);
+    iVar1 = *(int *)local_2c;
+    if (param_1 == '\0') goto LAB_00402a3d;
+LAB_00402af0:
+    if (1 < iVar1 + 1U) {
+      LOCK();
+      *(int *)local_2c = *(int *)local_2c + 1;
+      UNLOCK();
+    }
+    local_24 = local_2c;
+    QString::append(param_2);
+    local_20[0] = (QArrayData *)QString::fromAscii_helper("red",3);
+    FUN_0041f3c0(this,local_20,&local_24);
+    iVar1 = *(int *)local_20[0];
+    if (iVar1 != 0) goto LAB_00402a90;
+LAB_00402b43:
+    QArrayData::deallocate(local_20[0],2,4);
+    iVar1 = *(int *)local_24;
+    if (iVar1 == 0) goto LAB_00402b69;
+LAB_00402aaf:
+    if (iVar1 != -1) {
+      LOCK();
+      *(int *)local_24 = *(int *)local_24 + -1;
+      UNLOCK();
+      if (*(int *)local_24 == 0) goto LAB_00402b69;
+    }
+    iVar1 = *(int *)local_2c;
+  }
+  if (iVar1 == 0) {
+LAB_00402b8f:
+    QArrayData::deallocate(local_2c,2,4);
+    return;
+  }
+  if (iVar1 != -1) {
+    LOCK();
+    *(int *)local_2c = *(int *)local_2c + -1;
+    UNLOCK();
+    if (*(int *)local_2c == 0) goto LAB_00402b8f;
+  }
+  return;
+}
+
+
+// ---- disassembly (max 150 insns) ----
+004028d0  PUSH EBP
+004028d1  MOV EBP,ESP
+004028d3  PUSH EDI
+004028d4  PUSH ESI
+004028d5  PUSH EBX
+004028d6  LEA EBX,[EBP + -0x20]
+004028d9  SUB ESP,0x6c
+004028dc  MOV EAX,dword ptr [EBP + 0x8]
+004028df  MOV dword ptr [EBP + -0x44],ECX
+004028e2  MOV dword ptr [EBP + -0x48],EAX
+004028e5  CALL dword ptr [0x0045b794]
+004028eb  LEA ECX,[EBP + -0x2c]
+004028ee  MOV dword ptr [EBP + -0x2c],EAX
+004028f1  CALL dword ptr [0x0045b958]
+004028f7  LEA ECX,[EBP + -0x2c]
+004028fa  MOV ESI,EAX
+004028fc  CALL dword ptr [0x0045b95c]
+00402902  LEA ECX,[EBP + -0x2c]
+00402905  MOV dword ptr [EBP + -0x3c],EAX
+00402908  CALL dword ptr [0x0045b960]
+0040290e  MOV EDI,dword ptr [0x0045b7f4]
+00402914  MOV dword ptr [ESP + 0x4],0xb
+0040291c  MOV dword ptr [EBP + -0x40],EAX
+0040291f  MOV dword ptr [EBP + -0x4c],EDI
+00402922  MOV dword ptr [ESP],0x4350f2
+00402929  CALL EDI
+0040292b  MOV dword ptr [ESP + 0x4],ESI
+0040292f  SAR ESI,0x1f
+00402932  MOV ECX,0x30
+00402937  MOV dword ptr [ESP + 0x8],ESI
+0040293b  LEA ESI,[EBP + -0x24]
+0040293e  MOV EDI,dword ptr [0x0045b96c]
+00402944  MOV word ptr [ESP + 0x14],CX
+00402949  MOV ECX,EBX
+0040294b  MOV dword ptr [EBP + -0x24],EAX
+0040294e  MOV dword ptr [ESP + 0x10],0xa
+00402956  MOV dword ptr [ESP + 0xc],0x2
+0040295e  MOV dword ptr [ESP],ESI
+00402961  CALL EDI
+00402963  MOV ECX,dword ptr [EBP + -0x3c]
+00402966  SUB ESP,0x18
+00402969  LEA ESI,[EBP + -0x1c]
+0040296c  MOV EDX,0x30
+00402971  MOV word ptr [ESP + 0x14],DX
+00402976  MOV dword ptr [ESP + 0x4],ECX
+0040297a  SAR ECX,0x1f
+0040297d  MOV dword ptr [ESP + 0x8],ECX
+00402981  MOV ECX,ESI
+00402983  MOV dword ptr [ESP + 0x10],0xa
+0040298b  MOV dword ptr [ESP + 0xc],0x2
+00402993  MOV dword ptr [ESP],EBX
+00402996  CALL EDI
+00402998  SUB ESP,0x18
+0040299b  MOV EAX,0x30
+004029a0  LEA ECX,[EBP + -0x28]
+004029a3  MOV word ptr [ESP + 0x14],AX
+004029a8  MOV EAX,dword ptr [EBP + -0x40]
+004029ab  MOV dword ptr [ESP + 0x10],0xa
+004029b3  MOV dword ptr [ESP + 0x4],EAX
+004029b7  SAR EAX,0x1f
+004029ba  MOV dword ptr [ESP + 0xc],0x2
+004029c2  MOV dword ptr [ESP + 0x8],EAX
+004029c6  MOV dword ptr [ESP],ESI
+004029c9  CALL EDI
+004029cb  MOV EAX,dword ptr [EBP + -0x1c]
+004029ce  SUB ESP,0x18
+004029d1  MOV EDX,dword ptr [EAX]
+004029d3  TEST EDX,EDX
+004029d5  JZ 0x00402bb2
+004029db  CMP EDX,-0x1
+004029de  JZ 0x004029ed
+004029e0  SUB.LOCK dword ptr [EAX],0x1
+004029e4  MOV EAX,dword ptr [EBP + -0x1c]
+004029e7  JZ 0x00402bb2
+004029ed  MOV EAX,dword ptr [EBP + -0x20]
+004029f0  MOV EDX,dword ptr [EAX]
+004029f2  TEST EDX,EDX
+004029f4  JZ 0x00402bd8
+004029fa  CMP EDX,-0x1
+004029fd  JZ 0x00402a0c
+004029ff  SUB.LOCK dword ptr [EAX],0x1
+00402a03  MOV EAX,dword ptr [EBP + -0x20]
+00402a06  JZ 0x00402bd8
+00402a0c  MOV EAX,dword ptr [EBP + -0x24]
+00402a0f  MOV EDX,dword ptr [EAX]
+00402a11  TEST EDX,EDX
+00402a13  JZ 0x00402bfe
+00402a19  CMP EDX,-0x1
+00402a1c  JZ 0x00402a2b
+00402a1e  SUB.LOCK dword ptr [EAX],0x1
+00402a22  MOV EAX,dword ptr [EBP + -0x24]
+00402a25  JZ 0x00402bfe
+00402a2b  MOV EAX,dword ptr [EBP + -0x28]
+00402a2e  CMP byte ptr [EBP + -0x48],0x0
+00402a32  MOV dword ptr [EBP + -0x20],EAX
+00402a35  MOV EDX,dword ptr [EAX]
+00402a37  JNZ 0x00402af0
+00402a3d  ADD EDX,0x1
+00402a40  CMP EDX,0x1
+00402a43  JA 0x00402c30
+00402a49  MOV EAX,dword ptr [EBP + 0xc]
+00402a4c  MOV ECX,EBX
+00402a4e  MOV dword ptr [ESP],EAX
+00402a51  CALL dword ptr [0x0045b7fc]
+00402a57  SUB ESP,0x4
+00402a5a  MOV EAX,dword ptr [EBP + -0x4c]
+00402a5d  MOV dword ptr [ESP + 0x4],0x5
+00402a65  MOV dword ptr [ESP],0x435102
+00402a6c  CALL EAX
+00402a6e  MOV dword ptr [ESP + 0x4],EBX
+00402a72  MOV ECX,dword ptr [EBP + -0x44]
+00402a75  MOV dword ptr [ESP],ESI
+00402a78  MOV dword ptr [EBP + -0x1c],EAX
+00402a7b  CALL 0x0041f3c0
+00402a80  MOV EAX,dword ptr [EBP + -0x1c]
+00402a83  SUB ESP,0x8
+00402a86  MOV EDX,dword ptr [EAX]
+00402a88  TEST EDX,EDX
+00402a8a  JZ 0x00402b43
+00402a90  CMP EDX,-0x1
+00402a93  JZ 0x00402aa2
+00402a95  SUB.LOCK dword ptr [EAX],0x1
+00402a99  MOV EAX,dword ptr [EBP + -0x1c]
+00402a9c  JZ 0x00402b43
+00402aa2  MOV EAX,dword ptr [EBP + -0x20]
+00402aa5  MOV EDX,dword ptr [EAX]
+00402aa7  TEST EDX,EDX
+00402aa9  JZ 0x00402b69
+00402aaf  CMP EDX,-0x1
+00402ab2  JZ 0x00402ac1
+00402ab4  SUB.LOCK dword ptr [EAX],0x1
+00402ab8  MOV EAX,dword ptr [EBP + -0x20]
+00402abb  JZ 0x00402b69
+00402ac1  MOV EAX,dword ptr [EBP + -0x28]
+00402ac4  MOV EDX,dword ptr [EAX]
+00402ac6  TEST EDX,EDX
+00402ac8  JZ 0x00402b8f
+00402ace  CMP EDX,-0x1
+00402ad1  JZ 0x00402ae0
+00402ad3  SUB.LOCK dword ptr [EAX],0x1
+00402ad7  MOV EAX,dword ptr [EBP + -0x28]
+00402ada  JZ 0x00402b8f
+00402ae0  LEA ESP,[EBP + -0xc]
+00402ae3  POP EBX
+00402ae4  POP ESI
+00402ae5  POP EDI
+00402ae6  POP EBP
+00402ae7  RET 0x8
+00402af0  ADD EDX,0x1
+00402af3  CMP EDX,0x1

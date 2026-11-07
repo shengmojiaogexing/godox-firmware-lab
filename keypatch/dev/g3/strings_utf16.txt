@@ -1,0 +1,567 @@
+000336b0 004350b0 .rdata	qrc:/main.qml
+000337d4 004351d4 .rdata	REV_
+000337e6 004351e6 .rdata	BTHENUM
+000337f6 004351f6 .rdata	BTHLEDEVICE
+0003380e 0043520e .rdata	PNP0C50
+0003381e 0043521e .rdata	PNP0C51
+00033830 00435230 .rdata	%.*ls: (0x%08X) %.*ls
+0003385c 0043525c .rdata	Zero buffer/length
+00033884 00435284 .rdata	Get Input/Feature Report DeviceIoControl
+000338d8 004352d8 .rdata	Get Input/Feature Report GetOverLappedResult
+0003393a 0043533a .rdata	hid.dll
+0003394a 0043534a .rdata	cfgmgr32.dll
+00033b14 00435514 .rdata	resolve DLL functions
+00033b40 00435540 .rdata	Failed to get size of HID device interface list
+00033ba0 004355a0 .rdata	Failed to allocate memory for HID device interface list
+00033c10 00435610 .rdata	Failed to get HID device interface list
+00033c60 00435660 .rdata	No HID devices found in the system.
+00033ca8 004356a8 .rdata	No HID devices with requested VID/PID found in the system.
+00033d20 00435720 .rdata	Path conversion failure
+00033d50 00435750 .rdata	open_device
+00033d68 00435768 .rdata	set input buffers
+00033d8c 0043578c .rdata	get preparsed data
+00033db2 004357b2 .rdata	HidP_GetCaps
+00033dcc 004357cc .rdata	hid_device allocation error
+00033e04 00435804 .rdata	Device with requested VID/PID/(SerialNumber) not found
+00033e72 00435872 .rdata	WriteFile
+00033e88 00435888 .rdata	hid_write/WaitForSingleObject
+00033ec4 004358c4 .rdata	hid_write/GetOverlappedResult
+00033f00 00435900 .rdata	ReadFile
+00033f14 00435914 .rdata	hid_read_timeout/GetOverlappedResult
+00033f60 00435960 .rdata	HidD_SetFeature
+00033f80 00435980 .rdata	NULL device info
+00033fa4 004359a4 .rdata	HidD_GetIndexedString
+00033fd0 004359d0 .rdata	Invalid Container ID
+00033ffc 004359fc .rdata	Failed to get device interface property InstanceId
+00034064 00435a64 .rdata	Failed to locate device node
+000340a0 00435aa0 .rdata	Failed to read ContainerId property from device node
+0003410a 00435b0a .rdata	Success
+00034124 00435b24 .rdata	HidD_GetPreparsedData
+00035560 00436f60 .rdata	QtQuick
+00035588 00436f88 .rdata	QtQuick.Controls
+000355c8 00436fc8 .rdata	TreeViewModel
+00035600 00437000 .rdata	QtGraphicalEffects
+00035640 00437040 .rdata	ApplicationWindow
+00035680 00437080 .rdata	popupWindow
+000356b0 004370b0 .rdata	width
+000356d8 004370d8 .rdata	height
+00035700 00437100 .rdata	visible
+00035728 00437128 .rdata	flags
+00035750 00437150 .rdata	expression for flags
+00035798 00437198 .rdata	modality
+000357c8 004371c8 .rdata	expression for modality
+00035810 00437210 .rdata	color
+00035838 00437238 .rdata	expression for color
+00035880 00437280 .rdata	progressValue
+000358b8 004372b8 .rdata	control
+000358e0 004372e0 .rdata	value
+00035908 00437308 .rdata	Rectangle
+00035938 00437338 .rdata	expression for width
+00035980 00437380 .rdata	expression for height
+000359c8 004373c8 .rdata	white
+000359f0 004373f0 .rdata	border
+00035a18 00437418 .rdata	gray
+00035a40 00437440 .rdata	radius
+00035a68 00437468 .rdata	ProgressBar
+00035a98 00437498 .rdata	from
+00035ae0 004374e0 .rdata	anchors
+00035b08 00437508 .rdata	left
+00035b30 00437530 .rdata	expression for left
+00035b70 00437570 .rdata	leftMargin
+00035ba0 004375a0 .rdata	right
+00035bc8 004375c8 .rdata	expression for right
+00035c10 00437610 .rdata	rightMargin
+00035c40 00437640 .rdata	verticalCenter
+00035c78 00437678 .rdata	expression for verticalCenter
+00035cd0 004376d0 .rdata	implicitWidth
+00035d08 00437708 .rdata	expression for implicitWidth
+00035d60 00437760 .rdata	implicitHeight
+00035d98 00437798 .rdata	expression for implicitHeight
+00035df0 004377f0 .rdata	#000000
+00035e18 00437818 .rdata	background
+00035e48 00437848 .rdata	_rect
+00035e70 00437870 .rdata	horizontalCenter
+00035eb0 004378b0 .rdata	expression for horizontalCenter
+00035f08 00437908 .rdata	layer
+00035f30 00437930 .rdata	enabled
+00035f58 00437958 .rdata	OpacityMask
+00035f88 00437988 .rdata	expression for radius
+00035fd0 004379d0 .rdata	maskSource
+00036000 00437a00 .rdata	effect
+00036028 00437a28 .rdata	_childRect
+00036058 00437a58 .rdata	contentItem
+00036088 00437a88 .rdata	Text
+000360d0 00437ad0 .rdata	centerIn
+00036100 00437b00 .rdata	expression for centerIn
+00036148 00437b48 .rdata	text
+00036170 00437b70 .rdata	expression for text
+000361b0 00437bb0 .rdata	font
+000361d8 00437bd8 .rdata	pixelSize
+00036228 00437c28 .rdata	FramelessWindowHint
+00036268 00437c68 .rdata	ApplicationModal
+000362a8 00437ca8 .rdata	rgba
+000362d0 00437cd0 .rdata	parent
+000362f8 00437cf8 .rdata	visualPosition
+000393a0 0043ada0 .rdata	QtQuick
+000393c8 0043adc8 .rdata	QtQuick.Controls
+00039408 0043ae08 .rdata	TreeViewModel
+00039440 0043ae40 .rdata	ApplicationWindow
+00039480 0043ae80 .rdata	root
+000394a8 0043aea8 .rdata	modality
+000394d8 0043aed8 .rdata	expression for modality
+00039520 0043af20 .rdata	width
+00039548 0043af48 .rdata	height
+00039570 0043af70 .rdata	minimumWidth
+000395a8 0043afa8 .rdata	minimumHeight
+000395e0 0043afe0 .rdata	visible
+00039608 0043b008 .rdata	title
+00039658 0043b058 .rdata	detailMsgUrl
+00039690 0043b090 .rdata	selectFileNumber
+000396d0 0043b0d0 .rdata	searchInputText
+00039708 0043b108 .rdata	gidTextInputSearch
+00039748 0043b148 .rdata	text
+00039770 0043b170 .rdata	treeViewExpandAll
+000397b0 0043b1b0 .rdata	Rectangle
+000397e0 0043b1e0 .rdata	gidBackGroundRec
+00039820 0043b220 .rdata	anchors
+00039848 0043b248 .rdata	fill
+00039870 0043b270 .rdata	expression for fill
+000398b0 0043b2b0 .rdata	color
+000398d8 0043b2d8 .rdata	expression for color
+00039920 0043b320 .rdata	Text
+00039988 0043b388 .rdata	gidTextCurSelectDevice
+000399d0 0043b3d0 .rdata	font
+000399f8 0043b3f8 .rdata	pixelSize
+00039a70 0043b470 .rdata	gidRowSearch
+00039aa8 0043b4a8 .rdata	expression for y
+00039ae8 0043b4e8 .rdata	spacing
+00039b10 0043b510 .rdata	gidTextSearch
+00039b68 0043b568 .rdata	horizontalAlignment
+00039ba8 0043b5a8 .rdata	expression for horizontalAlignment
+00039c08 0043b608 .rdata	verticalAlignment
+00039c48 0043b648 .rdata	expression for verticalAlignment
+00039ca8 0043b6a8 .rdata	verticalCenter
+00039ce0 0043b6e0 .rdata	expression for verticalCenter
+00039d38 0043b738 .rdata	border
+00039d60 0043b760 .rdata	grey
+00039d88 0043b788 .rdata	TextInput
+00039db8 0043b7b8 .rdata	margins
+00039de0 0043b7e0 .rdata	clip
+00039e08 0043b808 .rdata	selectByMouse
+00039e40 0043b840 .rdata	onEditingFinished
+00039e80 0043b880 .rdata	expression for onEditingFinished
+00039ee0 0043b8e0 .rdata	onAccepted
+00039f10 0043b910 .rdata	expression for onAccepted
+00039f60 0043b960 .rdata	Image
+00039f88 0043b988 .rdata	buttonImage
+00039fb8 0043b9b8 .rdata	source
+00039fe0 0043b9e0 .rdata	qrc:/img/img_search.png
+0003a028 0043ba28 .rdata	MouseArea
+0003a058 0043ba58 .rdata	mouseArea
+0003a088 0043ba88 .rdata	hoverEnabled
+0003a0c0 0043bac0 .rdata	onClicked
+0003a0f0 0043baf0 .rdata	expression for onClicked
+0003a140 0043bb40 .rdata	onReleased
+0003a170 0043bb70 .rdata	expression for onReleased
+0003a1c0 0043bbc0 .rdata	onPressed
+0003a1f0 0043bbf0 .rdata	expression for onPressed
+0003a240 0043bc40 .rdata	onHoveredChanged
+0003a280 0043bc80 .rdata	expression for onHoveredChanged
+0003a2d8 0043bcd8 .rdata	gidRecTreeList
+0003a330 0043bd30 .rdata	expression for top
+0003a370 0043bd70 .rdata	topMargin
+0003a3a0 0043bda0 .rdata	bottom
+0003a3c8 0043bdc8 .rdata	expression for bottom
+0003a410 0043be10 .rdata	bottomMargin
+0003a448 0043be48 .rdata	expression for width
+0003a490 0043be90 .rdata	white
+0003a4b8 0043beb8 .rdata	TreeView
+0003a4e8 0043bee8 .rdata	gidTreeView
+0003a518 0043bf18 .rdata	model
+0003a540 0043bf40 .rdata	expression for model
+0003a588 0043bf88 .rdata	alternatingRowColors
+0003a5d0 0043bfd0 .rdata	backgroundVisible
+0003a610 0043c010 .rdata	headerVisible
+0003a648 0043c048 .rdata	verticalScrollBarPolicy
+0003a690 0043c090 .rdata	expression for verticalScrollBarPolicy
+0003a6f8 0043c0f8 .rdata	horizontalScrollBarPolicy
+0003a748 0043c148 .rdata	expression for horizontalScrollBarPolicy
+0003a7b8 0043c1b8 .rdata	TableViewColumn
+0003a7f0 0043c1f0 .rdata	Name
+0003a818 0043c218 .rdata	role
+0003a840 0043c240 .rdata	name
+0003a868 0043c268 .rdata	onCurrentIndexChanged
+0003a8b0 0043c2b0 .rdata	expression for onCurrentIndexChanged
+0003a918 0043c318 .rdata	onDoubleClicked
+0003a950 0043c350 .rdata	expression for onDoubleClicked
+0003a9a8 0043c3a8 .rdata	gidRecDetailMsg
+0003a9e0 0043c3e0 .rdata	right
+0003aa08 0043c408 .rdata	expression for right
+0003aa50 0043c450 .rdata	rightMargin
+0003aa80 0043c480 .rdata	ScrollView
+0003aab0 0043c4b0 .rdata	ScrollBar
+0003aae0 0043c4e0 .rdata	vertical
+0003ab10 0043c510 .rdata	policy
+0003ab38 0043c538 .rdata	expression for policy
+0003ab80 0043c580 .rdata	Column
+0003aba8 0043c5a8 .rdata	enabled
+0003abd0 0043c5d0 .rdata	gidTextMsg_Description
+0003ac40 0043c640 .rdata	family
+0003ac68 0043c668 .rdata	Microsoft Yahei
+0003aca0 0043c6a0 .rdata	gidTextMsg_DescriptionChild
+0003acf6 0043c6f6 .rdata	V1.2.6
+0003ad0e 0043c70e .rdata	2024/10/23
+0003ad40 0043c740 .rdata	wrapMode
+0003ad70 0043c770 .rdata	expression for wrapMode
+0003adb8 0043c7b8 .rdata	gidTextMsg_Remark
+0003ae20 0043c820 .rdata	gidTextMsg_RemarkChild
+0003ae68 0043c868 .rdata	X3N 
+0003aea8 0043c8a8 .rdata	gidTextMsg_upeateContent
+0003af20 0043c920 .rdata	gidTextMsg_upeateContentchild
+0003afe0 0043c9e0 .rdata	Button
+0003b008 0043ca08 .rdata	gidBtnDetailChangeList
+0003b078 0043ca78 .rdata	horizontalCenter
+0003b0b8 0043cab8 .rdata	expression for horizontalCenter
+0003b110 0043cb10 .rdata	gidBtnOpenFireware
+0003b170 0043cb70 .rdata	gidBtnCancel
+0003b1c8 0043cbc8 .rdata	Connections
+0003b1f8 0043cbf8 .rdata	target
+0003b220 0043cc20 .rdata	expression for target
+0003b268 0043cc68 .rdata	onSigSetCurSelectDevice
+0003b2d0 0043ccd0 .rdata	onSigSetDetailMsg
+0003b310 0043cd10 .rdata	description
+0003b340 0043cd40 .rdata	descChild
+0003b370 0043cd70 .rdata	updateContent
+0003b3a8 0043cda8 .rdata	updateContentChild
+0003b3e8 0043cde8 .rdata	Remark
+0003b410 0043ce10 .rdata	RemarkChild
+0003b440 0043ce40 .rdata	msgUrl
+0003b468 0043ce68 .rdata	onSigNetFileDialogLanguageChange
+0003b4c8 0043cec8 .rdata	OpenStr
+0003b4f0 0043cef0 .rdata	CancelStr
+0003b520 0043cf20 .rdata	SelectedFirmwareStr
+0003b560 0043cf60 .rdata	FirmwareDescStr
+0003b598 0043cf98 .rdata	UpdatesStr
+0003b5c8 0043cfc8 .rdata	RemarkStr
+0003b5f8 0043cff8 .rdata	SearchStr
+0003b628 0043d028 .rdata	UpdateDetails
+0003b660 0043d060 .rdata	onSigNetFileDialogWindowsTitle
+0003b6b8 0043d0b8 .rdata	doOneTimeSearch
+0003b730 0043d130 .rdata	ApplicationModal
+0003b770 0043d170 .rdata	myModel
+0003b798 0043d198 .rdata	rowCount
+0003b7c8 0043d1c8 .rdata	index
+0003b7f0 0043d1f0 .rdata	expand
+0003b818 0043d218 .rdata	backend
+0003b840 0043d240 .rdata	qml_SearchButtonClicked
+0003b888 0043d288 .rdata	rgba
+0003b8b0 0043d2b0 .rdata	parent
+0003b8d8 0043d2d8 .rdata	AlignHCenter
+0003b910 0043d310 .rdata	AlignVCenter
+0003b948 0043d348 .rdata	focus
+0003b970 0043d370 .rdata	qrc:/img/img_search_down.png
+0003b9c8 0043d3c8 .rdata	containsMouse
+0003ba00 0043d400 .rdata	qrc:/img/img_search_over.png
+0003ba58 0043d458 .rdata	AlwaysOn
+0003ba88 0043d488 .rdata	currentIndex
+0003bac0 0043d4c0 .rdata	data
+0003bae8 0043d4e8 .rdata	NAME
+0003bb10 0043d510 .rdata	STATE
+0003bb38 0043d538 .rdata	Number
+0003bb60 0043d560 .rdata	qml_TreeViewSelectDevice
+0003bbb0 0043d5b0 .rdata	isExpanded
+0003bbe0 0043d5e0 .rdata	collapse
+0003bc10 0043d610 .rdata	WordWrap
+0003bc40 0043d640 .rdata	openUrlExternally
+0003bc80 0043d680 .rdata	openProgress
+0003bcb8 0043d6b8 .rdata	qml_OpenNetFile
+0003bcf0 0043d6f0 .rdata	close
+0003bfac 0043d9ac .rdata	IPIP
+00041550 00442f50 .rdata	QtQuick
+00041578 00442f78 .rdata	QtQuick.Window
+000415b0 00442fb0 .rdata	QtQuick.Dialogs
+000415e8 00442fe8 .rdata	QtQuick.Controls
+00041628 00443028 .rdata	Qt.labs.platform
+00041668 00443068 .rdata	ApplicationWindow
+000416a8 004430a8 .rdata	rootWindow
+000416d8 004430d8 .rdata	width
+00041700 00443100 .rdata	height
+00041728 00443128 .rdata	maximumWidth
+00041760 00443160 .rdata	maximumHeight
+00041798 00443198 .rdata	minimumWidth
+000417d0 004431d0 .rdata	minimumHeight
+00041808 00443208 .rdata	visible
+00041830 00443230 .rdata	title
+00041858 00443258 .rdata	Godox
+00041888 00443288 .rdata	logoPath
+000418b8 004432b8 .rdata	usbIconOn
+000418e8 004432e8 .rdata	usbIconOff
+00041918 00443318 .rdata	help_website
+00041950 00443350 .rdata	www.godox.com
+00041988 00443388 .rdata	isdownJsonFile
+000419c0 004433c0 .rdata	delay
+000419e8 004433e8 .rdata	func
+00041a30 00443430 .rdata	notifyStartUpdate
+00041a90 00443490 .rdata	Event
+00041ab8 004434b8 .rdata	Component
+00041ae8 004434e8 .rdata	onCompleted
+00041b18 00443518 .rdata	expression for onCompleted
+00041b68 00443568 .rdata	onClosing
+00041b98 00443598 .rdata	expression for onClosing
+00041be8 004435e8 .rdata	Rectangle
+00041c18 00443618 .rdata	anchors
+00041c40 00443640 .rdata	fill
+00041c68 00443668 .rdata	expression for fill
+00041ca8 004436a8 .rdata	color
+00041cd0 004436d0 .rdata	expression for color
+00041d18 00443718 .rdata	rec_logo
+00041d48 00443748 .rdata	expression for height
+00041d90 00443790 .rdata	transparent
+00041de0 004437e0 .rdata	expression for top
+00041e20 00443820 .rdata	left
+00041e48 00443848 .rdata	expression for left
+00041e88 00443888 .rdata	Image
+00041eb0 004438b0 .rdata	img_logo
+00041ee0 004438e0 .rdata	margins
+00041f08 00443908 .rdata	source
+00041f30 00443930 .rdata	expression for source
+00041f78 00443978 .rdata	rec_Ctrl
+00041fa8 004439a8 .rdata	right
+00041fd0 004439d0 .rdata	expression for right
+00042018 00443a18 .rdata	Item
+00042040 00443a40 .rdata	item_top
+00042070 00443a70 .rdata	topMargin
+000420c0 00443ac0 .rdata	spacing
+000420e8 00443ae8 .rdata	img_ConnectStatus
+00042128 00443b28 .rdata	Button
+00042150 00443b50 .rdata	bt_netFile
+00042180 00443b80 .rdata	text
+000421d0 00443bd0 .rdata	font
+000421f8 00443bf8 .rdata	pixelSize
+00042228 00443c28 .rdata	family
+00042250 00443c50 .rdata	Arial
+00042278 00443c78 .rdata	Text
+000422a0 00443ca0 .rdata	expression for text
+000422e0 00443ce0 .rdata	expression for font
+00042320 00443d20 .rdata	black
+00042348 00443d48 .rdata	horizontalAlignment
+00042388 00443d88 .rdata	expression for horizontalAlignment
+000423e8 00443de8 .rdata	verticalAlignment
+00042428 00443e28 .rdata	expression for verticalAlignment
+00042488 00443e88 .rdata	elide
+000424b0 00443eb0 .rdata	expression for elide
+000424f8 00443ef8 .rdata	contentItem
+00042528 00443f28 .rdata	onClicked
+00042558 00443f58 .rdata	expression for onClicked
+000425a8 00443fa8 .rdata	bt_OpenFile
+00042600 00444000 .rdata	bt_Update
+00042650 00444050 .rdata	item_TextOut
+00042688 00444088 .rdata	bottom
+000426b0 004440b0 .rdata	expression for bottom
+000426f8 004440f8 .rdata	bottomMargin
+00042730 00444130 .rdata	white
+00042758 00444158 .rdata	border
+00042780 00444180 .rdata	grey
+000427a8 004441a8 .rdata	ScrollView
+000427d8 004441d8 .rdata	scrollView
+00042808 00444208 .rdata	clip
+00042830 00444230 .rdata	ScrollBar
+00042860 00444260 .rdata	vertical
+00042890 00444290 .rdata	wheelEnabled
+000428c8 004442c8 .rdata	policy
+000428f0 004442f0 .rdata	expression for policy
+00042938 00444338 .rdata	TextArea
+00042968 00444368 .rdata	outputTextArea
+000429a0 004443a0 .rdata	expression for width
+000429e8 004443e8 .rdata	padding
+00042a10 00444410 .rdata	textFormat
+00042a40 00444440 .rdata	expression for textFormat
+00042a90 00444490 .rdata	pointSize
+00042ac0 004444c0 .rdata	blue
+00042ae8 004444e8 .rdata	mouseSelectionMode
+00042b28 00444528 .rdata	expression for mouseSelectionMode
+00042b88 00444588 .rdata	readOnly
+00042bb8 004445b8 .rdata	wrapMode
+00042be8 004445e8 .rdata	expression for wrapMode
+00042c30 00444630 .rdata	selectByMouse
+00042c68 00444668 .rdata	item_Prog
+00042c98 00444698 .rdata	ProgressBar
+00042cc8 004446c8 .rdata	update_Prog
+00042cf8 004446f8 .rdata	value
+00042d20 00444720 .rdata	implicitWidth
+00042d58 00444758 .rdata	expression for implicitWidth
+00042db0 004447b0 .rdata	implicitHeight
+00042de8 004447e8 .rdata	expression for implicitHeight
+00042e40 00444840 .rdata	radius
+00042e68 00444868 .rdata	background
+00042e98 00444898 .rdata	green
+00042ec0 004448c0 .rdata	item_bottom
+00042ef0 004448f0 .rdata	ComboBox
+00042f20 00444920 .rdata	comb_Language
+00042f58 00444958 .rdata	currentIndex
+00042f90 00444990 .rdata	ListModel
+00042fc0 004449c0 .rdata	diskModel
+00042ff0 004449f0 .rdata	model
+00043018 00444a18 .rdata	onCurrentIndexChanged
+00043060 00444a60 .rdata	expression for onCurrentIndexChanged
+000430c8 00444ac8 .rdata	ItemDelegate
+00043100 00444b00 .rdata	highlighted
+00043130 00444b30 .rdata	expression for highlighted
+00043180 00444b80 .rdata	delegate
+000431b0 00444bb0 .rdata	Canvas
+000431d8 00444bd8 .rdata	canvas
+00043220 00444c20 .rdata	expression for x
+00043280 00444c80 .rdata	expression for y
+000432c0 00444cc0 .rdata	contextType
+00043310 00444d10 .rdata	Connections
+00043340 00444d40 .rdata	target
+00043368 00444d68 .rdata	expression for target
+000433b0 00444db0 .rdata	onPressedChanged
+000433f0 00444df0 .rdata	onPaint
+00043418 00444e18 .rdata	expression for onPaint
+00043460 00444e60 .rdata	indicator
+00043490 00444e90 .rdata	bt_help
+000434d8 00444ed8 .rdata	bt_exit
+00043520 00444f20 .rdata	FileDialog
+00043550 00444f50 .rdata	fileDialog
+00043580 00444f80 .rdata	file
+000435a8 00444fa8 .rdata	expression for file
+000435e8 00444fe8 .rdata	nameFilters
+00043618 00445018 .rdata	expression for nameFilters
+00043668 00445068 .rdata	onAccepted
+00043698 00445098 .rdata	expression for onAccepted
+000436e8 004450e8 .rdata	Qml_DeviceSelect
+00043728 00445128 .rdata	netFileDialog
+00043760 00445160 .rdata	openProgress
+00043798 00445198 .rdata	Qml_DownLoadProgress
+000437e0 004451e0 .rdata	gidDownloadProgress
+00043820 00445220 .rdata	onSigOutputMsg
+00043858 00445258 .rdata	Clolr
+00043880 00445280 .rdata	outputMsg
+000438b0 004452b0 .rdata	onSigUsbConnectStatus
+000438f8 004452f8 .rdata	Status
+00043920 00445320 .rdata	onSigProgressValue
+00043960 00445360 .rdata	onSiglangageChange
+000439a0 004453a0 .rdata	strTitle
+000439d0 004453d0 .rdata	strOpenfile
+00043a00 00445400 .rdata	strUpdate
+00043a30 00445430 .rdata	strHelp
+00043a58 00445458 .rdata	strExit
+00043a80 00445480 .rdata	strNetFile
+00043ab0 004454b0 .rdata	onSigInitLangageComboBox
+00043b00 00445500 .rdata	list
+00043b48 00445548 .rdata	currentSelect
+00043b80 00445580 .rdata	onSigSetHelpBtnMeg
+00043bc0 004455c0 .rdata	website
+00043be8 004455e8 .rdata	onSigProgressCtrl
+00043c28 00445628 .rdata	percent
+00043c50 00445650 .rdata	isClose
+00043c98 00445698 .rdata	createQmlObject
+00043cd0 004456d0 .rdata	import QtQuick 2.15; Timer { interval: 
+00043d38 00445738 .rdata	; repeat: false; running: true }
+00043d98 00445798 .rdata	dynamicTimer
+00043dd0 004457d0 .rdata	triggered
+00043e00 00445800 .rdata	connect
+00043e28 00445828 .rdata	backend
+00043e50 00445850 .rdata	windowsClose
+00043e88 00445888 .rdata	close
+00043eb0 004458b0 .rdata	accepted
+00043f00 00445900 .rdata	append
+00043f28 00445928 .rdata	<span style='color: red; font-family: Arial; font-size: 18px;'>
+00043fc0 004459c0 .rdata	</span>
+00043fe8 004459e8 .rdata	<span style='color: black; font-family: Arial; font-size: 18px;'>
+00044088 00445a88 .rdata	position
+000440b8 00445ab8 .rdata	size
+000440e0 00445ae0 .rdata	lineCount
+00044110 00445b10 .rdata	fromUiEevent
+00044148 00445b48 .rdata	file:///
+00044178 00445b78 .rdata	appdir
+000441c0 00445bc0 .rdata	Config/logo.png
+000441f8 00445bf8 .rdata	Config/ON.png
+00044230 00445c30 .rdata	Config/OFF.png
+00044268 00445c68 .rdata	rgba
+00044290 00445c90 .rdata	parent
+000442b8 00445cb8 .rdata	qml_LoadJsonFile
+000442f8 00445cf8 .rdata	jsonFileIsExists
+00044338 00445d38 .rdata	searchInputText
+00044370 00445d70 .rdata	qmlGetDeviceID
+000443c8 00445dc8 .rdata	doOneTimeSearch
+00044400 00445e00 .rdata	AlignHCenter
+00044438 00445e38 .rdata	AlignVCenter
+00044470 00445e70 .rdata	ElideRight
+000444a0 00445ea0 .rdata	open
+000444c8 00445ec8 .rdata	AlwaysOn
+000444f8 00445ef8 .rdata	RichText
+00044528 00445f28 .rdata	TextEdit
+00044558 00445f58 .rdata	SelectCharacters
+00044598 00445f98 .rdata	WrapAnywhere
+000445d0 00445fd0 .rdata	visualPosition
+00044608 00446008 .rdata	qml_LangageSelectChange
+00044650 00446050 .rdata	highlightedIndex
+00044690 00446090 .rdata	index
+000446b8 004460b8 .rdata	modelData
+000446e8 004460e8 .rdata	rightPadding
+00044720 00446120 .rdata	topPadding
+00044750 00446150 .rdata	availableHeight
+00044788 00446188 .rdata	context
+000447b0 004461b0 .rdata	reset
+000447d8 004461d8 .rdata	moveTo
+00044800 00446200 .rdata	lineTo
+00044828 00446228 .rdata	closePath
+00044858 00446258 .rdata	fillStyle
+00044888 00446288 .rdata	pressed
+000448b0 004462b0 .rdata	#505050
+000448d8 004462d8 .rdata	#000000
+00044900 00446300 .rdata	requestPaint
+00044938 00446338 .rdata	openUrlExternally
+00044978 00446378 .rdata	https://
+000449a8 004463a8 .rdata	quit
+000449d0 004463d0 .rdata	StandardPaths
+00044a08 00446408 .rdata	standardLocations
+00044a48 00446448 .rdata	DesktopLocation
+00044a80 00446480 .rdata	Firmware Files (*.bin)
+00044ac8 004464c8 .rdata	openFirwareFile
+00044b00 00446500 .rdata	progressValue
+00044b38 00446538 .rdata	clear
+00044d9c 0044679c .rdata	7 8 
+00044eec 004468ec .rdata	? ? 
+00045074 00446a74 .rdata	E0E0
+0004508c 00446a8c .rdata	X0X0#
+0004515c 00446b5c .rdata	E0G@
+000451cc 00446bcc .rdata	N@N@#
+000452b4 00446cb4 .rdata	N@PP
+000453c4 00446dc4 .rdata	X0Z@
+0004541c 00446e1c .rdata	d@d@
+00045564 00446f64 .rdata	d@fP
+000455a4 00446fa4 .rdata	jPjP#
+000456cc 004470cc .rdata	n`n`
+000457e4 004471e4 .rdata	n`pp
+00047d50 00449750 .rdata	/Qml_DeviceSelect.qml
+00047d90 00449790 .rdata	/main.qml
+00047dd0 004497d0 .rdata	/Qml_DownLoadProgress.qml
+00047f05 00449905 .rdata	<Qml_DownLoadProgress.qml
+00047f3b 0044993b .rdata	7img
+00047f47 00449947 .rdata	|Qml_DeviceSelect.qml
+00047f75 00449975 .rdata	\main.qml
+00047f8b 0044998b .rdata	Gimg_search_down.png
+00047fb9 004499b9 .rdata	img_search_over.png
+00047fe3 004499e3 .rdata	Gimg_search.png
+0004ca38 0044e438 .rdata	(null)
+0004cefc 0044e8fc .rdata	msvcrt.dll
+0005b2ba 004610ba .rsrc	IDI_ICON1
+0009d346 004a3146 .rsrc	VS_VERSION_INFO
+0009d3a2 004a31a2 .rsrc	StringFileInfo
+0009d3c6 004a31c6 .rsrc	040904b0
+0009d3de 004a31de .rsrc	CompanyName
+0009d402 004a3202 .rsrc	FileDescription
+0009d42e 004a322e .rsrc	FileVersion
+0009d448 004a3248 .rsrc	0.0.0.0
+0009d45e 004a325e .rsrc	LegalCopyright
+0009d486 004a3286 .rsrc	OriginalFilename
+0009d4a8 004a32a8 .rsrc	Godox V2.0.exe
+0009d4ce 004a32ce .rsrc	ProductName
+0009d4e8 004a32e8 .rsrc	Godox V2.0
+0009d506 004a3306 .rsrc	ProductVersion
+0009d524 004a3324 .rsrc	0.0.0.0
+0009d53a 004a333a .rsrc	VarFileInfo
+0009d55a 004a335a .rsrc	Translation

@@ -1,0 +1,8 @@
+// 0x080274b0 FUN_080274b0 size=22
+
+int FUN_080274b0(int *param_1)
+
+{
+  return ((param_1[3] - param_1[1]) + 1) * ((param_1[2] - *param_1) + 1);
+}
+

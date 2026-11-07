@@ -1,0 +1,87 @@
+﻿==============================================================================
+range 0x080047d0 .. 0x08004860  
+==============================================================================
+080047d0: ff21       movs r1, #0xff              
+080047d2: f531       adds r1, #0xf5              
+080047d4: 8842       cmp r0, r1                  
+080047d6: 01d2       bhs #0x80047dc              
+080047d8: 401f       subs r0, r0, #5             
+080047da: f7e7       b #0x80047cc                
+080047dc: 7d21       movs r1, #0x7d              
+080047de: c900       lsls r1, r1, #3             
+080047e0: 8842       cmp r0, r1                  
+080047e2: 01d2       bhs #0x80047e8              
+080047e4: 0a38       subs r0, #0xa               
+080047e6: f1e7       b #0x80047cc                
+080047e8: 0a49       ldr r1, [pc, #0x28]            ; lit@08004814 = 0x00000bb8 (small)
+080047ea: 8842       cmp r0, r1                  
+080047ec: 01d2       bhs #0x80047f2              
+080047ee: 3238       subs r0, #0x32              
+080047f0: ece7       b #0x80047cc                
+080047f2: 6438       subs r0, #0x64              
+080047f4: eae7       b #0x80047cc                
+080047f6: 0a28       cmp r0, #0xa                
+080047f8: e1d9       bls #0x80047be              
+080047fa: 401e       subs r0, r0, #1             
+080047fc: e6e7       b #0x80047cc                
+080047fe: 0000       movs r0, r0                 
+08004800: 5001       lsls r0, r2, #5             
+08004802: 0020       movs r0, #0                 
+08004804: d001       lsls r0, r2, #7             
+08004806: 0020       movs r0, #0                 
+08004808: 1804       lsls r0, r3, #0x10          
+0800480a: 0020       movs r0, #0                 
+0800480c: 14e3       b #0x8004e38                
+0800480e: 0008       lsrs r0, r0, #0x20          
+08004810: fb01       lsls r3, r7, #7             
+08004812: 0020       movs r0, #0                 
+08004814: b80b       lsrs r0, r7, #0xe           
+08004816: 0000       movs r0, r0                 
+08004818: 10b5       push {r4, lr}                  <FUNC_08004818>
+0800481a: 0d49       ldr r1, [pc, #0x34]            ; lit@08004850 = 0x20000180 (ram)
+0800481c: 0868       ldr r0, [r1]                
+0800481e: 0028       cmp r0, #0                  
+08004820: 11d0       beq #0x8004846              
+08004822: 401e       subs r0, r0, #1             
+08004824: 0860       str r0, [r1]                
+08004826: 0ed1       bne #0x8004846              
+08004828: 0a4c       ldr r4, [pc, #0x28]            ; lit@08004854 = 0x20000197 (ram)
+0800482a: 0120       movs r0, #1                 
+0800482c: 0a49       ldr r1, [pc, #0x28]            ; lit@08004858 = 0x200001a0 (ram)
+0800482e: 2070       strb r0, [r4]               
+08004830: 0978       ldrb r1, [r1]               
+08004832: 0907       lsls r1, r1, #0x1c          
+08004834: 090f       lsrs r1, r1, #0x1c          
+08004836: 0a29       cmp r1, #0xa                
+08004838: 06d0       beq #0x8004848              
+0800483a: 0849       ldr r1, [pc, #0x20]            ; lit@0800485c = 0x2000016b (ram)
+0800483c: 0870       strb r0, [r1]               
+0800483e: 01f053f9   bl #0x8005ae8               
+08004842: 0020       movs r0, #0                 
+08004844: 2070       strb r0, [r4]               
+08004846: 10bd       pop {r4, pc}                
+08004848: 07f084fe   bl #0x800c554               
+0800484c: f9e7       b #0x8004842                
+0800484e: 0000       movs r0, r0                 
+08004850: 8001       lsls r0, r0, #6             
+08004852: 0020       movs r0, #0                 
+08004854: 9701       lsls r7, r2, #6             
+08004856: 0020       movs r0, #0                 
+08004858: a001       lsls r0, r4, #6             
+0800485a: 0020       movs r0, #0                 
+0800485c: 6b01       lsls r3, r5, #5             
+0800485e: 0020       movs r0, #0                 
+python.exe : Traceback (most recent call last):
+At line:1 char:160
++ ... NG='utf-8'; & D:\神牛\AD200pro-RE\python\python.exe D:\神牛\keypatch\dev\ ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "D:\神牛\keypatch\dev\ad200_ui\store\dump_funcs.py", line 120, in <module>
+    sys.exit(main(sys.argv))
+             ^^^^^^^^^^^^^^
+  File "D:\神牛\keypatch\dev\ad200_ui\store\dump_funcs.py", line 109, in main
+    addr = int(a, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '0x080047d0:0x08004860'

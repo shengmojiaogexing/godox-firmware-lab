@@ -1,0 +1,25 @@
+﻿==============================================================================
+range 0x0800b9ac .. 0x0800b9e4  rf_set_power_level
+==============================================================================
+0800b9ac: 0c4a       ldr r2, [pc, #0x30]            ; lit@0800b9e0 = 0x0000c368 (small)   <rf_set_power_level>
+0800b9ae: 10b5       push {r4, lr}               
+0800b9b0: 411c       adds r1, r0, #1             
+0800b9b2: 1046       mov r0, r2                  
+0800b9b4: f7f79cfb   bl #0x80030f0               
+0800b9b8: 0446       mov r4, r0                  
+0800b9ba: 010a       lsrs r1, r0, #8             
+0800b9bc: 0420       movs r0, #4                 
+0800b9be: 01f070f8   bl #0x800caa2               
+0800b9c2: e1b2       uxtb r1, r4                 
+0800b9c4: 0520       movs r0, #5                 
+0800b9c6: 01f06cf8   bl #0x800caa2               
+0800b9ca: 1420       movs r0, #0x14              
+0800b9cc: 00f02cff   bl #0x800c828               
+0800b9d0: 3320       movs r0, #0x33              
+0800b9d2: 01f0c7f8   bl #0x800cb64               
+0800b9d6: 7d20       movs r0, #0x7d              
+0800b9d8: c000       lsls r0, r0, #3             
+0800b9da: 00f025ff   bl #0x800c828               
+0800b9de: 10bd       pop {r4, pc}                
+0800b9e0: 68c3       stm r3!, {r3, r5, r6}       
+0800b9e2: 0000       movs r0, r0                 

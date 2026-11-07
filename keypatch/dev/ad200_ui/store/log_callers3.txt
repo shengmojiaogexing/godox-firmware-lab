@@ -1,0 +1,15 @@
+﻿扫描 BL 指向: 0x08009b38, 0x0800b7f4, 0x0800b810, 0x0800c740
+
+== 0x08009b38 ui_factory_reset_task  callers=1 ==
+   0800ce9a  in main @0800cdb0
+
+== 0x0800b7f4 flash_erase_params  callers=1 ==
+   08009b3a  in ui_factory_reset_task @08009b38
+
+== 0x0800b810 rf_flush_tx  callers=3 ==
+   080045be  in flash_charge_state_machine @080045ac
+   08008516  in flash_trigger_state_machine @08008504
+   080089cc  in ui_key_scan_task @08008818
+
+== 0x0800c740 flash_params_default  callers=1 ==
+   08009b50  in ui_factory_reset_task @08009b38

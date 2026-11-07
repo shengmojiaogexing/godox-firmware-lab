@@ -1,0 +1,9798 @@
+[
+ {
+  "addr": "0x080030C0",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080030C2",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08003548"
+  ]
+ },
+ {
+  "addr": "0x080030C8",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080030D4",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080030D8",
+  "insns": 7,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080030E6",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080030EC",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080030F0",
+  "insns": 22,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800311C",
+  "insns": 19,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08003144",
+  "insns": 18,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003168",
+  "insns": 63,
+  "periph": [],
+  "callees": [
+   "0x08003444",
+   "0x08003464"
+  ]
+ },
+ {
+  "addr": "0x080031E8",
+  "insns": 34,
+  "periph": [],
+  "callees": [
+   "0x080034A4"
+  ]
+ },
+ {
+  "addr": "0x0800322E",
+  "insns": 63,
+  "periph": [],
+  "callees": [
+   "0x0800348A"
+  ]
+ },
+ {
+  "addr": "0x080032B0",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080032BC",
+  "insns": 7,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080032CC",
+  "insns": 101,
+  "periph": [],
+  "callees": [
+   "0x080034A4"
+  ]
+ },
+ {
+  "addr": "0x0800339C",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x080034A4"
+  ]
+ },
+ {
+  "addr": "0x080033B8",
+  "insns": 19,
+  "periph": [],
+  "callees": [
+   "0x08003144"
+  ]
+ },
+ {
+  "addr": "0x080033DE",
+  "insns": 9,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080033F4",
+  "insns": 19,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800341C",
+  "insns": 20,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003444",
+  "insns": 16,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003464",
+  "insns": 19,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800348A",
+  "insns": 13,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080034A4",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x08003444",
+   "0x0800C8C4"
+  ]
+ },
+ {
+  "addr": "0x080034C8",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x08003144"
+  ]
+ },
+ {
+  "addr": "0x080034EC",
+  "insns": 43,
+  "periph": [],
+  "callees": [
+   "0x08003444",
+   "0x0800348A"
+  ]
+ },
+ {
+  "addr": "0x08003548",
+  "insns": 9,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800355A",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x080030C8"
+  ]
+ },
+ {
+  "addr": "0x08003562",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800356C",
+  "insns": 30,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080035A8",
+  "insns": 153,
+  "periph": [],
+  "callees": [
+   "0x08006BA4",
+   "0x08006C44",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x080036E0",
+  "insns": 18,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08003704",
+  "insns": 21,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08003732",
+  "insns": 53,
+  "periph": [],
+  "callees": [
+   "0x080069A4"
+  ]
+ },
+ {
+  "addr": "0x0800379E",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x080069A8"
+  ]
+ },
+ {
+  "addr": "0x080037B8",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x080069A6"
+  ]
+ },
+ {
+  "addr": "0x080037C2",
+  "insns": 29,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080037FC",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08003828",
+  "insns": 30,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08003864",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08003872",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x0800387A",
+  "insns": 24,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080038AC",
+  "insns": 10,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080038C0",
+  "insns": 32,
+  "periph": [],
+  "callees": [
+   "0x08003C30"
+  ]
+ },
+ {
+  "addr": "0x08003900",
+  "insns": 90,
+  "periph": [],
+  "callees": [
+   "0x0800339C",
+   "0x0800741C"
+  ]
+ },
+ {
+  "addr": "0x080039B8",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800341C"
+  ]
+ },
+ {
+  "addr": "0x080039C4",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080033F4"
+  ]
+ },
+ {
+  "addr": "0x080039D4",
+  "insns": 55,
+  "periph": [],
+  "callees": [
+   "0x0800341C"
+  ]
+ },
+ {
+  "addr": "0x08003A44",
+  "insns": 65,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003AC8",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080035A8"
+  ]
+ },
+ {
+  "addr": "0x08003AD4",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08003ADA",
+  "insns": 35,
+  "periph": [],
+  "callees": [
+   "0x0800339C"
+  ]
+ },
+ {
+  "addr": "0x08003B22",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x080033F4"
+  ]
+ },
+ {
+  "addr": "0x08003B2E",
+  "insns": 29,
+  "periph": [],
+  "callees": [
+   "0x0800341C"
+  ]
+ },
+ {
+  "addr": "0x08003B6A",
+  "insns": 32,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003BAC",
+  "insns": 65,
+  "periph": [
+   "GPIOC.MODER/r",
+   "GPIOC.MODER/w"
+  ],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08003C30",
+  "insns": 16,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003C50",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08006770"
+  ]
+ },
+ {
+  "addr": "0x08003C66",
+  "insns": 68,
+  "periph": [],
+  "callees": [
+   "0x080067C0",
+   "0x0800AF88"
+  ]
+ },
+ {
+  "addr": "0x08003CF2",
+  "insns": 28,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003D2C",
+  "insns": 74,
+  "periph": [],
+  "callees": [
+   "0x08006730"
+  ]
+ },
+ {
+  "addr": "0x08003DC0",
+  "insns": 53,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003E2C",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08003E56",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08003E66",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08003E78",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08003E88",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08003EA0",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003EA6",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003EB4",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08003ED8",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08003EE8",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08003EF8",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003EFE",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08003F0C",
+  "insns": 22,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003F3E",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003F4A",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003F56",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003F62",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003F6E",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003F7A",
+  "insns": 24,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003FB0",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003FBC",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003FC8",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08003FD4",
+  "insns": 19,
+  "periph": [],
+  "callees": [
+   "0x08004F30",
+   "0x08005058"
+  ]
+ },
+ {
+  "addr": "0x08003FFE",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800400A",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x080044D4",
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004028",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004034",
+  "insns": 26,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004070",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800407C",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080040A2",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080044D4",
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080040B6",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080040C2",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080040CE",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080040DA",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080040F4",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004100",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800523C"
+  ]
+ },
+ {
+  "addr": "0x08004110",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004126",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004132",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800413E",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800414A",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004156",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080044D4"
+  ]
+ },
+ {
+  "addr": "0x0800415C",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800416C",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004178",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004184",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004190",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800419C",
+  "insns": 39,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08004F30",
+   "0x08005090"
+  ]
+ },
+ {
+  "addr": "0x080041F4",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004200",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800420C",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004224",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004230",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x0800423E",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08004244",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08004252",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x0800425C",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800426A",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004276",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004282",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800428E",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800429A",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080044D4",
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080042AC",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080042B8",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x08004F30",
+   "0x08005274"
+  ]
+ },
+ {
+  "addr": "0x080042DC",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080042E8",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080044D4",
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x080042FC",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004308",
+  "insns": 136,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x0800441C",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004428",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x0800443C",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004448",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08004450",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004464",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004F30"
+  ]
+ },
+ {
+  "addr": "0x08004470",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004484",
+  "insns": 40,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080044D4",
+  "insns": 36,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800451C",
+  "insns": 38,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004568",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800741C"
+  ]
+ },
+ {
+  "addr": "0x08004572",
+  "insns": 56,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080045E4",
+  "insns": 69,
+  "periph": [],
+  "callees": [
+   "0x08003C30"
+  ]
+ },
+ {
+  "addr": "0x08004670",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800467C",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800468A",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004690",
+  "insns": 128,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004790",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08006E2C"
+  ]
+ },
+ {
+  "addr": "0x08004796",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080047A0",
+  "insns": 15,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080047BE",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x080047C8",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080047CC",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800741C"
+  ]
+ },
+ {
+  "addr": "0x080047DA",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x0800741C"
+  ]
+ },
+ {
+  "addr": "0x080047EC",
+  "insns": 22,
+  "periph": [],
+  "callees": [
+   "0x08008A5C"
+  ]
+ },
+ {
+  "addr": "0x0800481A",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08004880",
+   "0x08008A5C"
+  ]
+ },
+ {
+  "addr": "0x08004836",
+  "insns": 26,
+  "periph": [],
+  "callees": [
+   "0x08004880",
+   "0x08009BF8"
+  ]
+ },
+ {
+  "addr": "0x0800486E",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x080064E8"
+  ]
+ },
+ {
+  "addr": "0x08004872",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004880",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080038AC",
+   "0x0800B578",
+   "0x0800B7F0"
+  ]
+ },
+ {
+  "addr": "0x08004894",
+  "insns": 264,
+  "periph": [],
+  "callees": [
+   "0x0800B758"
+  ]
+ },
+ {
+  "addr": "0x08004AA8",
+  "insns": 24,
+  "periph": [],
+  "callees": [
+   "0x08006014",
+   "0x0800C6F4"
+  ]
+ },
+ {
+  "addr": "0x08004ADA",
+  "insns": 10,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004AF0",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08008C78"
+  ]
+ },
+ {
+  "addr": "0x08004AF6",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800CA38",
+   "0x0800CCBC"
+  ]
+ },
+ {
+  "addr": "0x08004B04",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x0800CAE8"
+  ]
+ },
+ {
+  "addr": "0x08004B08",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CCA6"
+  ]
+ },
+ {
+  "addr": "0x08004B0E",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CCA6"
+  ]
+ },
+ {
+  "addr": "0x08004B16",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x08004B32",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8",
+   "0x0800CD32",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x08004B50",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x0800AB7C",
+   "0x0800B758"
+  ]
+ },
+ {
+  "addr": "0x08004B74",
+  "insns": 76,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004C0C",
+  "insns": 34,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004C50",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08005008"
+  ]
+ },
+ {
+  "addr": "0x08004C5C",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08005058"
+  ]
+ },
+ {
+  "addr": "0x08004C6C",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08004E1C"
+  ]
+ },
+ {
+  "addr": "0x08004C88",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08004E1C"
+  ]
+ },
+ {
+  "addr": "0x08004C92",
+  "insns": 30,
+  "periph": [],
+  "callees": [
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x08004CD4",
+  "insns": 33,
+  "periph": [],
+  "callees": [
+   "0x08005090"
+  ]
+ },
+ {
+  "addr": "0x08004D18",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080050C8"
+  ]
+ },
+ {
+  "addr": "0x08004D28",
+  "insns": 38,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004D74",
+  "insns": 37,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004DC0",
+  "insns": 45,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004E1C",
+  "insns": 24,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004E4C",
+  "insns": 38,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004E98",
+  "insns": 38,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004EE4",
+  "insns": 38,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004F30",
+  "insns": 50,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004F94",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x080052AC",
+   "0x0800531C"
+  ]
+ },
+ {
+  "addr": "0x08004FB6",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x080052E4"
+  ]
+ },
+ {
+  "addr": "0x08004FC0",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08004FC4",
+  "insns": 33,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005008",
+  "insns": 39,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005058",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005090",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080050C8",
+  "insns": 43,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005120",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005158",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005190",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080051C8",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005200",
+  "insns": 29,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800523C",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005274",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080052AC",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080052E4",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800531C",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005354",
+  "insns": 51,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080053BC",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x08005200"
+  ]
+ },
+ {
+  "addr": "0x080053DC",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080053E4",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080051C8"
+  ]
+ },
+ {
+  "addr": "0x080053F0",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08004C6C"
+  ]
+ },
+ {
+  "addr": "0x080053F8",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005400",
+  "insns": 18,
+  "periph": [],
+  "callees": [
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x08005424",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x08005430",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004E4C"
+  ]
+ },
+ {
+  "addr": "0x0800543C",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004E4C"
+  ]
+ },
+ {
+  "addr": "0x08005448",
+  "insns": 13,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005464",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080058D0"
+  ]
+ },
+ {
+  "addr": "0x08005474",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x08004DC0"
+  ]
+ },
+ {
+  "addr": "0x08005490",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08005190"
+  ]
+ },
+ {
+  "addr": "0x08005498",
+  "insns": 19,
+  "periph": [],
+  "callees": [
+   "0x08004DC0"
+  ]
+ },
+ {
+  "addr": "0x080054C0",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08004DC0"
+  ]
+ },
+ {
+  "addr": "0x080054CE",
+  "insns": 10,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080054E4",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x0800557C",
+   "0x080058D0"
+  ]
+ },
+ {
+  "addr": "0x080054FC",
+  "insns": 22,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x0800596C"
+  ]
+ },
+ {
+  "addr": "0x0800552C",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08005536",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x08005546",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x08005552",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x0800555E",
+  "insns": 14,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800557C",
+  "insns": 34,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x080055C0",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800C8F2"
+  ]
+ },
+ {
+  "addr": "0x080055C6",
+  "insns": 24,
+  "periph": [],
+  "callees": [
+   "0x08004D74"
+  ]
+ },
+ {
+  "addr": "0x080055FE",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005606",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800560E",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005614",
+  "insns": 37,
+  "periph": [],
+  "callees": [
+   "0x08004D28",
+   "0x08004D74"
+  ]
+ },
+ {
+  "addr": "0x08005666",
+  "insns": 27,
+  "periph": [],
+  "callees": [
+   "0x08004D28"
+  ]
+ },
+ {
+  "addr": "0x080056A6",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080056AC",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080056B0",
+  "insns": 16,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080056D0",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x080057E4"
+  ]
+ },
+ {
+  "addr": "0x080056D8",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080056E4"
+  ]
+ },
+ {
+  "addr": "0x080056E0",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080056E4",
+  "insns": 18,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08005708",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08005712",
+  "insns": 44,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08004E4C",
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x08005772",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x0800577C",
+  "insns": 23,
+  "periph": [],
+  "callees": [
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x080057AE",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08004E4C"
+  ]
+ },
+ {
+  "addr": "0x080057CC",
+  "insns": 11,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080057E4",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08005806",
+  "insns": 27,
+  "periph": [],
+  "callees": [
+   "0x08004D74",
+   "0x0800C8F2"
+  ]
+ },
+ {
+  "addr": "0x08005844",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800584C",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005854",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800585A",
+  "insns": 39,
+  "periph": [],
+  "callees": [
+   "0x08004D28",
+   "0x08004D74"
+  ]
+ },
+ {
+  "addr": "0x080058B2",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080058B6",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080058BA",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080058BE",
+  "insns": 9,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080058D0",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08005158"
+  ]
+ },
+ {
+  "addr": "0x080058DC",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080058E0",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08005190"
+  ]
+ },
+ {
+  "addr": "0x080058E8",
+  "insns": 58,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08004D74"
+  ]
+ },
+ {
+  "addr": "0x0800596C",
+  "insns": 25,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x080059A6",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x08004E98"
+  ]
+ },
+ {
+  "addr": "0x080059CC",
+  "insns": 32,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x08005A18",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08005354"
+  ]
+ },
+ {
+  "addr": "0x08005A20",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005A24",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08005A32",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005A38",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08005A42",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08005A52",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08005A64",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005A6A",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005A78",
+  "insns": 29,
+  "periph": [
+   "EXTI.PR/r"
+  ],
+  "callees": [
+   "0x08006014",
+   "0x0800B7F0"
+  ]
+ },
+ {
+  "addr": "0x08005AB4",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08006014",
+   "0x0800B7F0"
+  ]
+ },
+ {
+  "addr": "0x08005AD0",
+  "insns": 22,
+  "periph": [],
+  "callees": [
+   "0x080072AC"
+  ]
+ },
+ {
+  "addr": "0x08005B00",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x080072AC"
+  ]
+ },
+ {
+  "addr": "0x08005B0C",
+  "insns": 14,
+  "periph": [
+   "EXTI.PR/r"
+  ],
+  "callees": [
+   "0x0800AA74"
+  ]
+ },
+ {
+  "addr": "0x08005B28",
+  "insns": 11,
+  "periph": [
+   "EXTI.PR/r"
+  ],
+  "callees": [
+   "0x080072AC",
+   "0x0800CA68"
+  ]
+ },
+ {
+  "addr": "0x08005B42",
+  "insns": 24,
+  "periph": [],
+  "callees": [
+   "0x08006014",
+   "0x0800741C",
+   "0x0800B7F0"
+  ]
+ },
+ {
+  "addr": "0x08005B78",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x080072AC"
+  ]
+ },
+ {
+  "addr": "0x08005B9C",
+  "insns": 22,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005BC8",
+  "insns": 59,
+  "periph": [],
+  "callees": [
+   "0x08003C30"
+  ]
+ },
+ {
+  "addr": "0x08005C40",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005C44",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08006770"
+  ]
+ },
+ {
+  "addr": "0x08005C58",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800AF88"
+  ]
+ },
+ {
+  "addr": "0x08005C64",
+  "insns": 32,
+  "periph": [],
+  "callees": [
+   "0x080067C0"
+  ]
+ },
+ {
+  "addr": "0x08005CA6",
+  "insns": 18,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005CCC",
+  "insns": 50,
+  "periph": [],
+  "callees": [
+   "0x08006730"
+  ]
+ },
+ {
+  "addr": "0x08005D30",
+  "insns": 37,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005D7C",
+  "insns": 13,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005D96",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08005DB4",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08005DC4",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08005DD4",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005DDA",
+  "insns": 16,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005DFC",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08007154",
+   "0x08007284"
+  ]
+ },
+ {
+  "addr": "0x08005E14",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005E24",
+  "insns": 18,
+  "periph": [
+   "FLASH_IF.CR/r",
+   "FLASH_IF.CR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08005E48",
+  "insns": 18,
+  "periph": [
+   "FLASH_IF.AR/w",
+   "FLASH_IF.CR/r",
+   "FLASH_IF.CR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08005E6C",
+  "insns": 16,
+  "periph": [
+   "FLASH_IF.ACR/w",
+   "FLASH_IF.CR/r",
+   "FLASH_IF.CR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08005E8C",
+  "insns": 18,
+  "periph": [
+   "FLASH_IF.ACR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08005EB0",
+  "insns": 6,
+  "periph": [
+   "FLASH_IF.ACR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08005EBC",
+  "insns": 28,
+  "periph": [
+   "FLASH_IF.SR/r",
+   "FLASH_IF.SR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08005EF4",
+  "insns": 29,
+  "periph": [],
+  "callees": [
+   "0x080071F4",
+   "0x08007208",
+   "0x08007284"
+  ]
+ },
+ {
+  "addr": "0x08005F34",
+  "insns": 31,
+  "periph": [
+   "FLASH_IF.SR/r",
+   "FLASH_IF.SR/w"
+  ],
+  "callees": [
+   "0x08005EBC",
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08005F76",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005F84",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08005FA4",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08005FBC",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08005FCE",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08005FD4",
+  "insns": 30,
+  "periph": [],
+  "callees": [
+   "0x080072AC"
+  ]
+ },
+ {
+  "addr": "0x08006014",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x08005F84"
+  ]
+ },
+ {
+  "addr": "0x08006026",
+  "insns": 36,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08006070",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08006078",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800607E",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x08009CB4"
+  ]
+ },
+ {
+  "addr": "0x0800609C",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08005A24"
+  ]
+ },
+ {
+  "addr": "0x080060B4",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080091C4"
+  ]
+ },
+ {
+  "addr": "0x080060C2",
+  "insns": 35,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800610C",
+  "insns": 104,
+  "periph": [],
+  "callees": [
+   "0x0800311C",
+   "0x08003168",
+   "0x080032CC",
+   "0x0800339C",
+   "0x080033B8"
+  ]
+ },
+ {
+  "addr": "0x080061EA",
+  "insns": 53,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x0800341C",
+   "0x080045E4"
+  ]
+ },
+ {
+  "addr": "0x0800625A",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x080045E4"
+  ]
+ },
+ {
+  "addr": "0x08006274",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x0800339C"
+  ]
+ },
+ {
+  "addr": "0x08006282",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080032BC",
+   "0x0800339C"
+  ]
+ },
+ {
+  "addr": "0x08006294",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800341C"
+  ]
+ },
+ {
+  "addr": "0x0800629C",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x080045E4"
+  ]
+ },
+ {
+  "addr": "0x080062B4",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x080062C4",
+  "insns": 26,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x080045E4"
+  ]
+ },
+ {
+  "addr": "0x080062FC",
+  "insns": 15,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800631C",
+  "insns": 41,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08006370",
+  "insns": 47,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x080063D0",
+  "insns": 44,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800642C",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x08004568",
+   "0x0800610C",
+   "0x08006370",
+   "0x0800C444"
+  ]
+ },
+ {
+  "addr": "0x08006450",
+  "insns": 54,
+  "periph": [],
+  "callees": [
+   "0x08003C30",
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x080064C6",
+  "insns": 16,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080064E8",
+  "insns": 57,
+  "periph": [],
+  "callees": [
+   "0x0800AB7C"
+  ]
+ },
+ {
+  "addr": "0x0800655C",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08006574",
+  "insns": 7,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08006584",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x0800659C",
+  "insns": 7,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080065AC",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x080065C2",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080065CC",
+  "insns": 25,
+  "periph": [],
+  "callees": [
+   "0x08009E30",
+   "0x0800B3C0"
+  ]
+ },
+ {
+  "addr": "0x08006600",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08005C44",
+   "0x0800A4E8"
+  ]
+ },
+ {
+  "addr": "0x08006614",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08003C50",
+   "0x0800A6E0"
+  ]
+ },
+ {
+  "addr": "0x08006628",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08009060"
+  ]
+ },
+ {
+  "addr": "0x0800662E",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800663C",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x080086E0"
+  ]
+ },
+ {
+  "addr": "0x0800665A",
+  "insns": 49,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x080066C0",
+  "insns": 25,
+  "periph": [],
+  "callees": [
+   "0x08009EE0",
+   "0x0800B448"
+  ]
+ },
+ {
+  "addr": "0x080066F4",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08005CCC",
+   "0x0800A570",
+   "0x0800A768"
+  ]
+ },
+ {
+  "addr": "0x08006712",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08003D2C"
+  ]
+ },
+ {
+  "addr": "0x0800671C",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080090E8"
+  ]
+ },
+ {
+  "addr": "0x08006722",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08006730",
+  "insns": 32,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08006770",
+  "insns": 40,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080067C0",
+  "insns": 22,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080067EC",
+  "insns": 70,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08006878",
+  "insns": 149,
+  "periph": [
+   "ADC.+0x308/r",
+   "ADC.+0x308/w"
+  ],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x080069A4",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080069A6",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080069A8",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080069AC",
+  "insns": 17,
+  "periph": [
+   "ADC.+0x300/w"
+  ],
+  "callees": [
+   "0x08006B20"
+  ]
+ },
+ {
+  "addr": "0x080069CE",
+  "insns": 166,
+  "periph": [
+   "ADC.+0x30C/r",
+   "ADC.+0x30C/w",
+   "ADC.+0x314/r",
+   "ADC.+0x314/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08006B20",
+  "insns": 62,
+  "periph": [
+   "RCC.APB2ENR/r",
+   "RCC.APB2ENR/w"
+  ],
+  "callees": [
+   "0x08005C40",
+   "0x080070B0",
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08006BA4",
+  "insns": 77,
+  "periph": [
+   "DMA1.CH1_CCR/r",
+   "DMA1.CH1_CPAR/r"
+  ],
+  "callees": [
+   "0x08003828",
+   "0x08007104",
+   "0x08205C36"
+  ]
+ },
+ {
+  "addr": "0x08006C44",
+  "insns": 38,
+  "periph": [],
+  "callees": [
+   "0x080036E0",
+   "0x080037C2",
+   "0x08006DDE"
+  ]
+ },
+ {
+  "addr": "0x08006C94",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x080037C2"
+  ]
+ },
+ {
+  "addr": "0x08006CB4",
+  "insns": 28,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08006CEC",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08006D18"
+  ]
+ },
+ {
+  "addr": "0x08006D06",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08006D18",
+  "insns": 31,
+  "periph": [
+   "RCC.APB1ENR/r",
+   "RCC.APB1ENR/w",
+   "RCC.APB1RSTR/w"
+  ],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08006D58",
+  "insns": 14,
+  "periph": [
+   "RCC.CR/r",
+   "RCC.CR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08006D74",
+  "insns": 42,
+  "periph": [
+   "RCC.+0x5/r",
+   "RCC.+0x5/w",
+   "RCC.CFGR/w",
+   "RCC.CR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08006DC8",
+  "insns": 11,
+  "periph": [
+   "ADC.+0x300/r",
+   "ADC.+0x300/w",
+   "RCC.CFGR/w",
+   "RCC.CR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08006DDE",
+  "insns": 8,
+  "periph": [
+   "RCC.CR/r",
+   "RCC.CR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08006DEE",
+  "insns": 29,
+  "periph": [
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08006E2C",
+  "insns": 322,
+  "periph": [
+   "DMA1.IFCR/w",
+   "DMA1.ISR/r",
+   "DMA1.ISR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x080070B0",
+  "insns": 41,
+  "periph": [
+   "DMA1.CH1_CCR/r",
+   "DMA1.CH1_CMAR/r",
+   "DMA1.CH1_CNDTR/r",
+   "DMA1.CH1_CPAR/r",
+   "DMA1.CH1_None/r",
+   "DMA1.CH2_ISR/r",
+   "DMA1.CH3_ISR/w",
+   "DMA1.IFCR/r",
+   "DMA1.ISR/r",
+   "DMA1.ISR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007104",
+  "insns": 39,
+  "periph": [
+   "DMA1.ISR/r",
+   "DMA1.ISR/w"
+  ],
+  "callees": [
+   "0x080047A0"
+  ]
+ },
+ {
+  "addr": "0x08007154",
+  "insns": 26,
+  "periph": [],
+  "callees": [
+   "0x08005E24",
+   "0x08005F34"
+  ]
+ },
+ {
+  "addr": "0x0800718C",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08005F34"
+  ]
+ },
+ {
+  "addr": "0x08007192",
+  "insns": 14,
+  "periph": [
+   "DMA1.ISR/w",
+   "FLASH_IF.CR/r",
+   "FLASH_IF.CR/w"
+  ],
+  "callees": [
+   "0x08005E48"
+  ]
+ },
+ {
+  "addr": "0x080071B0",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08005F34"
+  ]
+ },
+ {
+  "addr": "0x080071B6",
+  "insns": 30,
+  "periph": [
+   "DMA1.ISR/w",
+   "FLASH_IF.CR/r",
+   "FLASH_IF.CR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x080071F4",
+  "insns": 10,
+  "periph": [
+   "FLASH_IF.CR/r",
+   "FLASH_IF.CR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007208",
+  "insns": 34,
+  "periph": [],
+  "callees": [
+   "0x08003144",
+   "0x08005E6C",
+   "0x08005F34"
+  ]
+ },
+ {
+  "addr": "0x08007250",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08005F34"
+  ]
+ },
+ {
+  "addr": "0x08007256",
+  "insns": 22,
+  "periph": [
+   "FLASH_IF.CR/r",
+   "FLASH_IF.CR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007284",
+  "insns": 18,
+  "periph": [
+   "FLASH_IF.CR/r",
+   "FLASH_IF.KEYR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x080072A8",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080072AC",
+  "insns": 7,
+  "periph": [
+   "EXTI.PR/r",
+   "EXTI.PR/w"
+  ],
+  "callees": [
+   "0x080072A8"
+  ]
+ },
+ {
+  "addr": "0x080072BA",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080072C4",
+  "insns": 172,
+  "periph": [
+   "DMA1.CH1_CCR/r",
+   "DMA1.CH1_CCR/w",
+   "DMA1.CH2_IFCR/r",
+   "DMA1.CH2_IFCR/w",
+   "EXTI.EMR/r",
+   "EXTI.EMR/w",
+   "EXTI.FTSR/r",
+   "EXTI.FTSR/w",
+   "EXTI.IMR/r",
+   "EXTI.IMR/w",
+   "EXTI.RTSR/r",
+   "EXTI.RTSR/w",
+   "EXTI.SWIER/r",
+   "FLASH_IF.ACR/r",
+   "FLASH_IF.ACR/w",
+   "FLASH_IF.KEYR/r",
+   "FLASH_IF.KEYR/w",
+   "FLASH_IF.OPTKEYR/r",
+   "FLASH_IF.OPTKEYR/w",
+   "FLASH_IF.SR/r",
+   "FLASH_IF.SR/w",
+   "RCC.APB2ENR/r",
+   "RCC.APB2ENR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800741C",
+  "insns": 5,
+  "periph": [
+   "EXTI.SWIER/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007426",
+  "insns": 7,
+  "periph": [
+   "EXTI.+0x18/w",
+   "EXTI.+0x28/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007434",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08007440",
+  "insns": 24,
+  "periph": [
+   "EXTI.+0x11/r",
+   "EXTI.IMR/r",
+   "EXTI.SWIER/w"
+  ],
+  "callees": [
+   "0x080074EC"
+  ]
+ },
+ {
+  "addr": "0x08007470",
+  "insns": 28,
+  "periph": [
+   "EXTI.+0x11/w",
+   "EXTI.EMR/r",
+   "EXTI.FTSR/r",
+   "EXTI.IMR/r",
+   "EXTI.IMR/w",
+   "EXTI.RTSR/r",
+   "EXTI.SWIER/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080074AA",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080074B6",
+  "insns": 26,
+  "periph": [
+   "EXTI.+0x11/w",
+   "EXTI.FTSR/r",
+   "EXTI.IMR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x080074EC",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080074F0",
+  "insns": 40,
+  "periph": [
+   "EXTI.+0x11/w",
+   "EXTI.IMR/r",
+   "EXTI.IMR/w",
+   "EXTI.SWIER/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007544",
+  "insns": 20,
+  "periph": [
+   "EXTI.+0x11/w",
+   "EXTI.FTSR/r",
+   "EXTI.IMR/r",
+   "EXTI.SWIER/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x0800756C",
+  "insns": 38,
+  "periph": [
+   "EXTI.+0x11/w",
+   "EXTI.IMR/r",
+   "EXTI.SWIER/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080075BC",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080075CC",
+  "insns": 8,
+  "periph": [
+   "FLASH_IF.ACR/r",
+   "FLASH_IF.ACR/w"
+  ],
+  "callees": [
+   "0x080075EC"
+  ]
+ },
+ {
+  "addr": "0x080075DC",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x08007610"
+  ]
+ },
+ {
+  "addr": "0x080075E0",
+  "insns": 5,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080075EC",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x080078EC"
+  ]
+ },
+ {
+  "addr": "0x080075FA",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x08008164"
+  ]
+ },
+ {
+  "addr": "0x080075FE",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007670"
+  ]
+ },
+ {
+  "addr": "0x08007608",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08007610",
+  "insns": 21,
+  "periph": [
+   "RCC.APB2ENR/r",
+   "RCC.APB2ENR/w"
+  ],
+  "callees": [
+   "0x08007670"
+  ]
+ },
+ {
+  "addr": "0x0800763E",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08007648",
+  "insns": 10,
+  "periph": [
+   "NVIC.+0x80/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800765C",
+  "insns": 10,
+  "periph": [
+   "NVIC.+0x0/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007670",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800A2C8"
+  ]
+ },
+ {
+  "addr": "0x08007674",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08007678",
+  "insns": 27,
+  "periph": [
+   "PWR.CR/r",
+   "PWR.CR/w",
+   "RCC.APB1ENR/r",
+   "RCC.APB1ENR/w",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080076AE",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080076B6",
+  "insns": 30,
+  "periph": [
+   "EXTI.EMR/r",
+   "PWR.CR/r",
+   "RCC.BDCR/r",
+   "RCC.BDCR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080076F4",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080076FC",
+  "insns": 77,
+  "periph": [
+   "EXTI.+0x18/r",
+   "EXTI.EMR/r",
+   "EXTI.FTSR/r",
+   "EXTI.IMR/r",
+   "EXTI.PR/r",
+   "EXTI.RTSR/r",
+   "EXTI.SWIER/r",
+   "RCC.APB1ENR/r",
+   "RCC.APB1ENR/w",
+   "RCC.BDCR/r",
+   "RCC.BDCR/w",
+   "RCC.CFGR3/r",
+   "RCC.CFGR3/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007798",
+  "insns": 50,
+  "periph": [
+   "FLASH_IF.ACR/r",
+   "FLASH_IF.ACR/w",
+   "RCC.CFGR/r",
+   "RCC.CFGR/w",
+   "RCC.CIR/r",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080077FC",
+  "insns": 30,
+  "periph": [
+   "RCC.CFGR/r",
+   "RCC.CR/r",
+   "RCC.CR2/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x0800783C",
+  "insns": 11,
+  "periph": [
+   "RCC.CFGR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007854",
+  "insns": 11,
+  "periph": [
+   "RCC.CFGR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x0800786C",
+  "insns": 49,
+  "periph": [
+   "FLASH_IF.ACR/r",
+   "FLASH_IF.ACR/w",
+   "RCC.APB2RSTR/r",
+   "RCC.CFGR/r",
+   "RCC.CFGR/w",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x080075EC",
+   "0x080078F8"
+  ]
+ },
+ {
+  "addr": "0x080078D2",
+  "insns": 12,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080078EC",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080078F8",
+  "insns": 45,
+  "periph": [
+   "RCC.CFGR/r",
+   "RCC.CFGR2/r",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08007954",
+  "insns": 22,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08007980",
+  "insns": 41,
+  "periph": [
+   "RCC.CFGR/r",
+   "RCC.CR/r",
+   "RCC.CR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080079D2",
+  "insns": 18,
+  "periph": [
+   "RCC.CFGR/r",
+   "RCC.CR/r",
+   "RCC.CR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x080079F8",
+  "insns": 8,
+  "periph": [
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007A0A",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007A12",
+  "insns": 31,
+  "periph": [
+   "RCC.APB2RSTR/r",
+   "RCC.CFGR/r",
+   "RCC.CR/r",
+   "RCC.CR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007A52",
+  "insns": 10,
+  "periph": [
+   "RCC.APB2RSTR/r",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007A68",
+  "insns": 18,
+  "periph": [
+   "RCC.APB1RSTR/r",
+   "RCC.CR/r",
+   "RCC.CR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007A8E",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007A96",
+  "insns": 17,
+  "periph": [
+   "RCC.APB1ENR/r",
+   "RCC.CR/r",
+   "RCC.CSR/r",
+   "RCC.CSR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007ABA",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007AC2",
+  "insns": 13,
+  "periph": [
+   "RCC.CSR/r",
+   "RCC.CSR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007ADE",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007AE6",
+  "insns": 34,
+  "periph": [
+   "PWR.CR/r",
+   "PWR.CR/w",
+   "RCC.APB1ENR/r",
+   "RCC.APB1ENR/w",
+   "RCC.CR/r",
+   "RCC.CSR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007B2C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007B34",
+  "insns": 30,
+  "periph": [
+   "PWR.CR/r",
+   "RCC.BDCR/r",
+   "RCC.BDCR/w",
+   "RCC.CIR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007B72",
+  "insns": 7,
+  "periph": [
+   "RCC.BDCR/r",
+   "RCC.BDCR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007B82",
+  "insns": 10,
+  "periph": [
+   "RCC.BDCR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007B98",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007BA0",
+  "insns": 32,
+  "periph": [
+   "RCC.AHBENR/r",
+   "RCC.APB1ENR/r",
+   "RCC.APB1ENR/w",
+   "RCC.BDCR/r",
+   "RCC.CR/r",
+   "RCC.CR2/r",
+   "RCC.CR2/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007BE2",
+  "insns": 62,
+  "periph": [
+   "RCC.APB2ENR/r",
+   "RCC.BDCR/r",
+   "RCC.CFGR/r",
+   "RCC.CR/r",
+   "RCC.CR2/r",
+   "RCC.CR2/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007C66",
+  "insns": 21,
+  "periph": [
+   "RCC.BDCR/r",
+   "RCC.CR2/r",
+   "RCC.CR2/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007C94",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007C9C",
+  "insns": 27,
+  "periph": [
+   "RCC.CFGR/r",
+   "RCC.CR/r",
+   "RCC.CR/w",
+   "RCC.CR2/r",
+   "RCC.CSR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007CD6",
+  "insns": 31,
+  "periph": [
+   "RCC.AHBRSTR/r",
+   "RCC.CFGR/r",
+   "RCC.CFGR/w",
+   "RCC.CFGR2/r",
+   "RCC.CFGR2/w",
+   "RCC.CFGR3/r",
+   "RCC.CR/r",
+   "RCC.CR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007D1A",
+  "insns": 8,
+  "periph": [
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007D2C",
+  "insns": 21,
+  "periph": [
+   "RCC.CR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007D58",
+  "insns": 23,
+  "periph": [
+   "RCC.+0x1D/w",
+   "RCC.APB1ENR/w",
+   "RCC.CR/r",
+   "RCC.CSR/w"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007D86",
+  "insns": 21,
+  "periph": [
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007DB4",
+  "insns": 60,
+  "periph": [
+   "EXTI.+0x24/w",
+   "EXTI.IMR/r",
+   "EXTI.IMR/w",
+   "EXTI.RTSR/r",
+   "EXTI.RTSR/w",
+   "RCC.+0x1D/w",
+   "RCC.AHBENR/w",
+   "RCC.APB1ENR/w",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08007E30",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08007E34",
+  "insns": 11,
+  "periph": [
+   "EXTI.FTSR/r",
+   "EXTI.IMR/r",
+   "EXTI.RTSR/r"
+  ],
+  "callees": [
+   "0x08007E30"
+  ]
+ },
+ {
+  "addr": "0x08007E4A",
+  "insns": 16,
+  "periph": [
+   "EXTI.FTSR/r",
+   "EXTI.FTSR/w",
+   "EXTI.PR/w",
+   "RCC.+0x1D/w",
+   "RCC.CR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007E70",
+  "insns": 13,
+  "periph": [
+   "RCC.+0x1D/r",
+   "RCC.APB1ENR/w"
+  ],
+  "callees": [
+   "0x08007F38"
+  ]
+ },
+ {
+  "addr": "0x08007E8A",
+  "insns": 10,
+  "periph": [
+   "EXTI.+0x24/w",
+   "RCC.+0x1D/w",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x0800ACBE"
+  ]
+ },
+ {
+  "addr": "0x08007EA0",
+  "insns": 54,
+  "periph": [
+   "EXTI.+0x24/w",
+   "EXTI.+0x40/r",
+   "EXTI.+0x40/w",
+   "EXTI.FTSR/r",
+   "EXTI.FTSR/w",
+   "EXTI.RTSR/r",
+   "EXTI.RTSR/w",
+   "EXTI.SWIER/r",
+   "EXTI.SWIER/w",
+   "RCC.+0x1D/w",
+   "RCC.AHBENR/r",
+   "RCC.APB1RSTR/r",
+   "RCC.APB2ENR/r",
+   "RCC.APB2RSTR/r",
+   "RCC.CFGR/r",
+   "RCC.CIR/r",
+   "RCC.CR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08007F10",
+  "insns": 18,
+  "periph": [
+   "EXTI.IMR/r",
+   "RCC.BDCR/r",
+   "RCC.BDCR/w"
+  ],
+  "callees": [
+   "0x08007648"
+  ]
+ },
+ {
+  "addr": "0x08007F38",
+  "insns": 15,
+  "periph": [
+   "RCC.BDCR/r",
+   "RCC.BDCR/w",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08007670"
+  ]
+ },
+ {
+  "addr": "0x08007F56",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800765C"
+  ]
+ },
+ {
+  "addr": "0x08007F68",
+  "insns": 14,
+  "periph": [
+   "RCC.+0x1D/w",
+   "RCC.APB1ENR/r",
+   "RCC.APB1ENR/w"
+  ],
+  "callees": [
+   "0x0800AC98"
+  ]
+ },
+ {
+  "addr": "0x08007F84",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800AC98"
+  ]
+ },
+ {
+  "addr": "0x08007F8A",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x0800ACA8"
+  ]
+ },
+ {
+  "addr": "0x08007FB4",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800ACA8"
+  ]
+ },
+ {
+  "addr": "0x08007FBC",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800ACA8"
+  ]
+ },
+ {
+  "addr": "0x08007FC6",
+  "insns": 12,
+  "periph": [
+   "RCC.CR/r",
+   "RTC.WPR/w"
+  ],
+  "callees": [
+   "0x0800ACBE"
+  ]
+ },
+ {
+  "addr": "0x08007FE0",
+  "insns": 37,
+  "periph": [
+   "RCC.+0x1D/w",
+   "RCC.APB1ENR/w",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08008114"
+  ]
+ },
+ {
+  "addr": "0x08008030",
+  "insns": 19,
+  "periph": [
+   "RCC.+0x1D/w",
+   "RCC.APB1ENR/w",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x0800AC98"
+  ]
+ },
+ {
+  "addr": "0x08008056",
+  "insns": 8,
+  "periph": [
+   "RCC.+0x3/w",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x0800ACA8"
+  ]
+ },
+ {
+  "addr": "0x08008068",
+  "insns": 3,
+  "periph": [
+   "RCC.+0x1/r"
+  ],
+  "callees": [
+   "0x0800ACA8"
+  ]
+ },
+ {
+  "addr": "0x08008070",
+  "insns": 4,
+  "periph": [
+   "RCC.+0x2/r"
+  ],
+  "callees": [
+   "0x0800ACA8"
+  ]
+ },
+ {
+  "addr": "0x0800807A",
+  "insns": 74,
+  "periph": [
+   "DMA1.CH2_None/r",
+   "RCC.+0x1/r",
+   "RCC.+0x1D/w",
+   "RCC.+0x2/r",
+   "RCC.+0x3/r",
+   "RCC.+0x3/w",
+   "RCC.APB1ENR/w",
+   "RCC.APB1RSTR/r",
+   "RCC.APB2RSTR/r",
+   "RCC.CR/r",
+   "RTC.CR/r",
+   "RTC.CR/w",
+   "RTC.WPR/w"
+  ],
+  "callees": [
+   "0x08008114",
+   "0x0800ACBE"
+  ]
+ },
+ {
+  "addr": "0x08008114",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x08008130",
+  "insns": 11,
+  "periph": [
+   "RCC.CR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08008148",
+  "insns": 12,
+  "periph": [
+   "SYSTICK.CTRL/r",
+   "SYSTICK.CTRL/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08008160",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08008164",
+  "insns": 12,
+  "periph": [
+   "SYSTICK.LOAD/w"
+  ],
+  "callees": [
+   "0x0800A2C8"
+  ]
+ },
+ {
+  "addr": "0x0800817C",
+  "insns": 10,
+  "periph": [
+   "SYSTICK.CTRL/w",
+   "SYSTICK.VAL/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08008194",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08008160"
+  ]
+ },
+ {
+  "addr": "0x08008198",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800819C",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800819E",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080081A0",
+  "insns": 36,
+  "periph": [
+   "SYS.+0x4/r",
+   "SYS.+0x4/w",
+   "SYS.+0x8/r",
+   "SYS.+0x8/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x080081E8",
+  "insns": 15,
+  "periph": [
+   "RCC.+0x19/r",
+   "RCC.APB2ENR/w"
+  ],
+  "callees": [
+   "0x0800821C"
+  ]
+ },
+ {
+  "addr": "0x08008206",
+  "insns": 5,
+  "periph": [
+   "RCC.+0x19/w",
+   "SYS.+0x0/r"
+  ],
+  "callees": [
+   "0x0800BABC"
+  ]
+ },
+ {
+  "addr": "0x08008212",
+  "insns": 4,
+  "periph": [
+   "RCC.+0x19/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800821C",
+  "insns": 72,
+  "periph": [
+   "RCC.APB1ENR/r",
+   "RCC.APB1ENR/w",
+   "RCC.APB2ENR/r",
+   "RCC.APB2ENR/w"
+  ],
+  "callees": [
+   "0x0800765C",
+   "0x08007670"
+  ]
+ },
+ {
+  "addr": "0x080082B4",
+  "insns": 12,
+  "periph": [
+   "RCC.CR/r",
+   "RCC.CR/w",
+   "TIM14.DIER/r",
+   "TIM14.DIER/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x080082CC",
+  "insns": 22,
+  "periph": [
+   "RCC.BDCR/r",
+   "RCC.CR/r",
+   "RCC.CR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x080082F8",
+  "insns": 80,
+  "periph": [
+   "RCC.+0x19/w",
+   "RCC.APB2ENR/r",
+   "RCC.APB2ENR/w",
+   "RCC.CIR/r",
+   "RCC.CIR/w",
+   "SYS.+0x0/r"
+  ],
+  "callees": [
+   "0x0800BB5E",
+   "0x0800BD7C"
+  ]
+ },
+ {
+  "addr": "0x0800839C",
+  "insns": 7,
+  "periph": [
+   "SYS.+0x0/r"
+  ],
+  "callees": [
+   "0x0800BD9E"
+  ]
+ },
+ {
+  "addr": "0x080083AC",
+  "insns": 11,
+  "periph": [
+   "RCC.+0x19/w",
+   "RCC.APB2ENR/w",
+   "SYS.+0x0/r"
+  ],
+  "callees": [
+   "0x0800BB74",
+   "0x0800BD7C"
+  ]
+ },
+ {
+  "addr": "0x080083C6",
+  "insns": 15,
+  "periph": [
+   "SYS.+0x0/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x080083E6",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080083E8",
+  "insns": 23,
+  "periph": [
+   "RCC.APB1RSTR/r",
+   "RCC.APB1RSTR/w",
+   "RCC.APB2ENR/r",
+   "RCC.APB2RSTR/r",
+   "RCC.CR/r",
+   "SYS.+0x0/r",
+   "SYSTICK.VAL/w"
+  ],
+  "callees": [
+   "0x080083E6"
+  ]
+ },
+ {
+  "addr": "0x08008416",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08008580"
+  ]
+ },
+ {
+  "addr": "0x0800841C",
+  "insns": 24,
+  "periph": [
+   "RCC.APB1RSTR/r",
+   "RCC.APB1RSTR/w",
+   "RCC.APB2ENR/r",
+   "RCC.APB2RSTR/r",
+   "SYS.+0x0/r",
+   "SYSTICK.VAL/w"
+  ],
+  "callees": [
+   "0x080083E6",
+   "0x08008688"
+  ]
+ },
+ {
+  "addr": "0x08008450",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08008580"
+  ]
+ },
+ {
+  "addr": "0x08008456",
+  "insns": 23,
+  "periph": [
+   "RCC.APB1ENR/r",
+   "RCC.APB1RSTR/r",
+   "RCC.APB1RSTR/w",
+   "RCC.APB2RSTR/r",
+   "SYS.+0x0/r",
+   "SYSTICK.VAL/w"
+  ],
+  "callees": [
+   "0x080083E6",
+   "0x08008688"
+  ]
+ },
+ {
+  "addr": "0x08008488",
+  "insns": 26,
+  "periph": [
+   "RCC.APB1ENR/r",
+   "RCC.APB1RSTR/r",
+   "RCC.APB1RSTR/w",
+   "RCC.APB2RSTR/r",
+   "SYS.+0x0/r",
+   "SYSTICK.VAL/w"
+  ],
+  "callees": [
+   "0x080083E6",
+   "0x08008580",
+   "0x08008688"
+  ]
+ },
+ {
+  "addr": "0x080084C2",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08008580",
+   "0x08008688"
+  ]
+ },
+ {
+  "addr": "0x080084CE",
+  "insns": 28,
+  "periph": [
+   "RCC.APB1RSTR/r",
+   "RCC.APB1RSTR/w",
+   "RCC.APB2RSTR/r",
+   "SYS.+0x0/r",
+   "SYSTICK.VAL/w"
+  ],
+  "callees": [
+   "0x0800819C",
+   "0x080086DC"
+  ]
+ },
+ {
+  "addr": "0x0800850A",
+  "insns": 14,
+  "periph": [
+   "RCC.APB1RSTR/r",
+   "RCC.APB1RSTR/w",
+   "RCC.APB2RSTR/r",
+   "SYS.+0x0/r"
+  ],
+  "callees": [
+   "0x080086DE"
+  ]
+ },
+ {
+  "addr": "0x08008528",
+  "insns": 14,
+  "periph": [
+   "RCC.APB1RSTR/r",
+   "RCC.APB1RSTR/w",
+   "RCC.APB2RSTR/r",
+   "SYS.+0x0/r"
+  ],
+  "callees": [
+   "0x0800819E"
+  ]
+ },
+ {
+  "addr": "0x08008546",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800854C",
+  "insns": 20,
+  "periph": [
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08008574",
+  "insns": 5,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08008580",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08008582",
+  "insns": 41,
+  "periph": [
+   "RCC.APB1RSTR/r",
+   "RCC.APB2ENR/r",
+   "RCC.APB2ENR/w",
+   "SYS.+0x0/r"
+  ],
+  "callees": [
+   "0x0800BB84",
+   "0x0800BC0C"
+  ]
+ },
+ {
+  "addr": "0x080085D6",
+  "insns": 59,
+  "periph": [
+   "RCC.APB1ENR/r",
+   "RCC.APB1ENR/w",
+   "RCC.APB1RSTR/r",
+   "RCC.APB2ENR/r",
+   "RCC.APB2ENR/w",
+   "SYS.+0x0/r"
+  ],
+  "callees": [
+   "0x0800BC8C",
+   "0x0800BD10"
+  ]
+ },
+ {
+  "addr": "0x08008652",
+  "insns": 15,
+  "periph": [
+   "RCC.+0x19/r",
+   "RCC.APB2ENR/w"
+  ],
+  "callees": [
+   "0x08008686"
+  ]
+ },
+ {
+  "addr": "0x08008670",
+  "insns": 9,
+  "periph": [
+   "RCC.+0x19/w",
+   "SYS.+0x0/r"
+  ],
+  "callees": [
+   "0x0800BABC"
+  ]
+ },
+ {
+  "addr": "0x08008686",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08008688",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800868C",
+  "insns": 39,
+  "periph": [
+   "RCC.CR/r",
+   "SYS.+0x0/r",
+   "TIM17.CR1/r",
+   "TIM17.CR1/w",
+   "TIM3.BDTR/r",
+   "TIM3.BDTR/w"
+  ],
+  "callees": [
+   "0x0800BB48"
+  ]
+ },
+ {
+  "addr": "0x080086DC",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080086DE",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080086E0",
+  "insns": 42,
+  "periph": [
+   "RCC.CFGR/r",
+   "RCC.CFGR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x08008734",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08008738",
+  "insns": 230,
+  "periph": [
+   "RCC.+0x5/r",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x080072AC"
+  ]
+ },
+ {
+  "addr": "0x08008904",
+  "insns": 33,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08008948",
+  "insns": 18,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800896C",
+  "insns": 48,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08008948"
+  ]
+ },
+ {
+  "addr": "0x080089CE",
+  "insns": 45,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08008A2C",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08008A3A",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08008A52",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08008A5C",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080038AC"
+  ]
+ },
+ {
+  "addr": "0x08008A68",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x0800B7F0"
+  ]
+ },
+ {
+  "addr": "0x08008A6C",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x0800B578"
+  ]
+ },
+ {
+  "addr": "0x08008A70",
+  "insns": 44,
+  "periph": [],
+  "callees": [
+   "0x0800B758"
+  ]
+ },
+ {
+  "addr": "0x08008ACA",
+  "insns": 214,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08008C78",
+  "insns": 66,
+  "periph": [
+   "GPIOB.BRR/w",
+   "GPIOB.MODER/r",
+   "GPIOB.MODER/w",
+   "GPIOB.PUPDR/r",
+   "GPIOB.PUPDR/w",
+   "GPIOC.MODER/r",
+   "GPIOC.MODER/w"
+  ],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08008D00",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800B790"
+  ]
+ },
+ {
+  "addr": "0x08008D08",
+  "insns": 35,
+  "periph": [
+   "GPIOB.BRR/w"
+  ],
+  "callees": [
+   "0x080072C4",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08008D56",
+  "insns": 47,
+  "periph": [
+   "GPIOB.BRR/w"
+  ],
+  "callees": [
+   "0x080072C4",
+   "0x0800741C",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08008DC2",
+  "insns": 43,
+  "periph": [
+   "GPIOB.BRR/w"
+  ],
+  "callees": [
+   "0x080072C4",
+   "0x0800741C",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08008E24",
+  "insns": 72,
+  "periph": [],
+  "callees": [
+   "0x080038AC",
+   "0x080072C4",
+   "0x0800741C"
+  ]
+ },
+ {
+  "addr": "0x08008EC6",
+  "insns": 35,
+  "periph": [],
+  "callees": [
+   "0x0800451C",
+   "0x0800B578",
+   "0x0800B7F0"
+  ]
+ },
+ {
+  "addr": "0x08008F12",
+  "insns": 19,
+  "periph": [],
+  "callees": [
+   "0x0800C878"
+  ]
+ },
+ {
+  "addr": "0x08008F3A",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080067EC",
+   "0x08009198"
+  ]
+ },
+ {
+  "addr": "0x08008F4E",
+  "insns": 36,
+  "periph": [],
+  "callees": [
+   "0x0800A91C"
+  ]
+ },
+ {
+  "addr": "0x08008F98",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800983C"
+  ]
+ },
+ {
+  "addr": "0x08008F9E",
+  "insns": 26,
+  "periph": [],
+  "callees": [
+   "0x08004484",
+   "0x08004B74",
+   "0x0800B6A0",
+   "0x0800C068"
+  ]
+ },
+ {
+  "addr": "0x08008FDA",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x0800B758",
+   "0x0800B880"
+  ]
+ },
+ {
+  "addr": "0x08008FF0",
+  "insns": 35,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009038",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009046",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x080074F0"
+  ]
+ },
+ {
+  "addr": "0x08009060",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x08006770",
+   "0x0800AF88"
+  ]
+ },
+ {
+  "addr": "0x08009080",
+  "insns": 50,
+  "periph": [],
+  "callees": [
+   "0x080067C0"
+  ]
+ },
+ {
+  "addr": "0x080090E8",
+  "insns": 87,
+  "periph": [],
+  "callees": [
+   "0x08006730"
+  ]
+ },
+ {
+  "addr": "0x08009198",
+  "insns": 22,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080091C4",
+  "insns": 21,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x080091EE",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080091F4",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x080066C0",
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009202",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009212",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009224",
+  "insns": 25,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800A8D0",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009260",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x08008A2C",
+   "0x0800A904",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009290",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08008738",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x080092AE",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x080092BA",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080092C0",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x080092CA",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x080092DA",
+  "insns": 25,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009310",
+  "insns": 25,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x080069AC"
+  ]
+ },
+ {
+  "addr": "0x08009344",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x08006878"
+  ]
+ },
+ {
+  "addr": "0x08009360",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x08006878"
+  ]
+ },
+ {
+  "addr": "0x08009374",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x08006878"
+  ]
+ },
+ {
+  "addr": "0x08009388",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x08006878"
+  ]
+ },
+ {
+  "addr": "0x0800939C",
+  "insns": 5,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080093A8",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x08006CEC"
+  ]
+ },
+ {
+  "addr": "0x080093BC",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x08006CB4"
+  ]
+ },
+ {
+  "addr": "0x080093D4",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x08006CB4"
+  ]
+ },
+ {
+  "addr": "0x080093E6",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080093F4",
+  "insns": 13,
+  "periph": [
+   "RCC.AHBENR/r",
+   "RCC.AHBENR/w"
+  ],
+  "callees": [
+   "0x08007670"
+  ]
+ },
+ {
+  "addr": "0x0800940E",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800765C"
+  ]
+ },
+ {
+  "addr": "0x0800941C",
+  "insns": 49,
+  "periph": [
+   "RCC.AHBENR/r",
+   "RCC.AHBENR/w"
+  ],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009480",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800948A",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009496",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x080094A2",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x080072C4",
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x080094D0",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x080094DE",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x080094EE",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08009504",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08009514",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08009528",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08009536",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08009544",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08009556",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08009568",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x08009576",
+  "insns": 38,
+  "periph": [],
+  "callees": [
+   "0x0800765C",
+   "0x08007670"
+  ]
+ },
+ {
+  "addr": "0x080095CC",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x08007440"
+  ]
+ },
+ {
+  "addr": "0x080095E8",
+  "insns": 7,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080095F8",
+  "insns": 31,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x08007E70",
+   "0x08008030"
+  ]
+ },
+ {
+  "addr": "0x0800963C",
+  "insns": 27,
+  "periph": [
+   "RTC.+0x15/w",
+   "RTC.+0x16/w",
+   "RTC.+0x17/w",
+   "RTC.WUTR/w"
+  ],
+  "callees": [
+   "0x08005C40",
+   "0x08007D58",
+   "0x08007F68"
+  ]
+ },
+ {
+  "addr": "0x0800967C",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x080081E8"
+  ]
+ },
+ {
+  "addr": "0x080096A8",
+  "insns": 42,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x080081A0",
+   "0x080081E8",
+   "0x080082F8"
+  ]
+ },
+ {
+  "addr": "0x08009708",
+  "insns": 42,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x080081A0",
+   "0x080081E8",
+   "0x080082F8"
+  ]
+ },
+ {
+  "addr": "0x08009768",
+  "insns": 52,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x080081A0",
+   "0x080081E8",
+   "0x080082F8",
+   "0x0800854C",
+   "0x08008582",
+   "0x08008652"
+  ]
+ },
+ {
+  "addr": "0x080097E4",
+  "insns": 9,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080097F8",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800B55C"
+  ]
+ },
+ {
+  "addr": "0x080097FC",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08004690"
+  ]
+ },
+ {
+  "addr": "0x0800980E",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08005DFC",
+   "0x0800B588",
+   "0x0800C92C"
+  ]
+ },
+ {
+  "addr": "0x0800982E",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800983C",
+  "insns": 94,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080098F8",
+  "insns": 87,
+  "periph": [],
+  "callees": [
+   "0x0800311C",
+   "0x08006D58",
+   "0x08006D74",
+   "0x08006DC8"
+  ]
+ },
+ {
+  "addr": "0x080099B0",
+  "insns": 23,
+  "periph": [],
+  "callees": [
+   "0x080099EC",
+   "0x08009AD0",
+   "0x08009B7C"
+  ]
+ },
+ {
+  "addr": "0x080099E2",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x080099EC",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009A0A",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009A22",
+  "insns": 30,
+  "periph": [],
+  "callees": [
+   "0x0800741C",
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009A62",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009A6E",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009A7A",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009A92",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009AA6",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009AC0",
+  "insns": 7,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009AD0",
+  "insns": 64,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009B50",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009B5C",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009B7C",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009B96",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009BAE",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009BBA",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009BCC",
+  "insns": 21,
+  "periph": [],
+  "callees": [
+   "0x08009E04"
+  ]
+ },
+ {
+  "addr": "0x08009BF8",
+  "insns": 94,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009CB4",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009CCA",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x0800B5EC"
+  ]
+ },
+ {
+  "addr": "0x08009CCE",
+  "insns": 9,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009CE2",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009CF2",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009D02",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009D08",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08008738"
+  ]
+ },
+ {
+  "addr": "0x08009D10",
+  "insns": 11,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009D28",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009D3E",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009D44",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009D54",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x08009D5E",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009D64",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009D6A",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08008738"
+  ]
+ },
+ {
+  "addr": "0x08009D72",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009D84",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08009DA4",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x080081E8"
+  ]
+ },
+ {
+  "addr": "0x08009DB8",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x080082F8"
+  ]
+ },
+ {
+  "addr": "0x08009DCE",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x080081A0"
+  ]
+ },
+ {
+  "addr": "0x08009DE2",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x080082B4"
+  ]
+ },
+ {
+  "addr": "0x08009E04",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080082CC"
+  ]
+ },
+ {
+  "addr": "0x08009E14",
+  "insns": 14,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009E30",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08006770"
+  ]
+ },
+ {
+  "addr": "0x08009E44",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800AF88"
+  ]
+ },
+ {
+  "addr": "0x08009E50",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x08009E6A",
+  "insns": 36,
+  "periph": [],
+  "callees": [
+   "0x080067C0"
+  ]
+ },
+ {
+  "addr": "0x08009EB4",
+  "insns": 21,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x08009EE0",
+  "insns": 110,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08006730"
+  ]
+ },
+ {
+  "addr": "0x08009FC0",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08009E14"
+  ]
+ },
+ {
+  "addr": "0x08009FD8",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x08009FF8",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A008",
+  "insns": 19,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A030",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A034",
+  "insns": 41,
+  "periph": [],
+  "callees": [
+   "0x0800339C",
+   "0x080033F4"
+  ]
+ },
+ {
+  "addr": "0x0800A088",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08005B9C"
+  ]
+ },
+ {
+  "addr": "0x0800A0A0",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080033F4"
+  ]
+ },
+ {
+  "addr": "0x0800A0B2",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08008948"
+  ]
+ },
+ {
+  "addr": "0x0800A0C2",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080033F4"
+  ]
+ },
+ {
+  "addr": "0x0800A0D2",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x080033F4"
+  ]
+ },
+ {
+  "addr": "0x0800A0F2",
+  "insns": 36,
+  "periph": [],
+  "callees": [
+   "0x084FB314"
+  ]
+ },
+ {
+  "addr": "0x0800A140",
+  "insns": 35,
+  "periph": [],
+  "callees": [
+   "0x0800339C"
+  ]
+ },
+ {
+  "addr": "0x0800A186",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x080033F4"
+  ]
+ },
+ {
+  "addr": "0x0800A1B2",
+  "insns": 22,
+  "periph": [],
+  "callees": [
+   "0x080033F4"
+  ]
+ },
+ {
+  "addr": "0x0800A1E2",
+  "insns": 35,
+  "periph": [],
+  "callees": [
+   "0x084FB404"
+  ]
+ },
+ {
+  "addr": "0x0800A230",
+  "insns": 25,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800A034",
+   "0x0800A140"
+  ]
+ },
+ {
+  "addr": "0x0800A266",
+  "insns": 23,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A296",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A2A4",
+  "insns": 17,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A2C8",
+  "insns": 33,
+  "periph": [
+   "SCB.SHPR2/r",
+   "SCB.SHPR2/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A30C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08004670"
+  ]
+ },
+ {
+  "addr": "0x0800A312",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A31A",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A32C",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08004670"
+  ]
+ },
+ {
+  "addr": "0x0800A33E",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A346",
+  "insns": 7,
+  "periph": [
+   "NVIC.+0x300/r"
+  ],
+  "callees": [
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A356",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08004670"
+  ]
+ },
+ {
+  "addr": "0x0800A368",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A370",
+  "insns": 16,
+  "periph": [
+   "NVIC.+0x300/r"
+  ],
+  "callees": [
+   "0x08004670",
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A394",
+  "insns": 22,
+  "periph": [
+   "NVIC.+0x300/r"
+  ],
+  "callees": [
+   "0x08004670",
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A3C8",
+  "insns": 17,
+  "periph": [
+   "NVIC.+0x300/r"
+  ],
+  "callees": [
+   "0x08004670",
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A3EE",
+  "insns": 20,
+  "periph": [
+   "NVIC.+0x300/r"
+  ],
+  "callees": [
+   "0x08004670",
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A41C",
+  "insns": 23,
+  "periph": [
+   "NVIC.+0x300/r"
+  ],
+  "callees": [
+   "0x08004670",
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A452",
+  "insns": 21,
+  "periph": [
+   "NVIC.+0x300/r"
+  ],
+  "callees": [
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800A480",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A492",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A4A0",
+  "insns": 25,
+  "periph": [
+   "GPIOB.BRR/w",
+   "GPIOB.BSRR/w"
+  ],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A4D4",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A4E8",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08006770"
+  ]
+ },
+ {
+  "addr": "0x0800A4FC",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800AF88"
+  ]
+ },
+ {
+  "addr": "0x0800A508",
+  "insns": 50,
+  "periph": [],
+  "callees": [
+   "0x080067C0"
+  ]
+ },
+ {
+  "addr": "0x0800A570",
+  "insns": 50,
+  "periph": [],
+  "callees": [
+   "0x08006730"
+  ]
+ },
+ {
+  "addr": "0x0800A5D4",
+  "insns": 37,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A620",
+  "insns": 15,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A63E",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A65C",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A666",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800A66C",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A676",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800A682",
+  "insns": 16,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A6A4",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A6B0",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A6B8",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A6C2",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A6CC",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A6D8",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A6E0",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08006770"
+  ]
+ },
+ {
+  "addr": "0x0800A6F4",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800AF88"
+  ]
+ },
+ {
+  "addr": "0x0800A700",
+  "insns": 50,
+  "periph": [],
+  "callees": [
+   "0x080067C0"
+  ]
+ },
+ {
+  "addr": "0x0800A768",
+  "insns": 50,
+  "periph": [],
+  "callees": [
+   "0x08006730"
+  ]
+ },
+ {
+  "addr": "0x0800A7CC",
+  "insns": 37,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A818",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A81E",
+  "insns": 22,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A84C",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A856",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800A866",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800A878",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800A87E",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A888",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800A88E",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800A89C",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A8A2",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A8B6",
+  "insns": 12,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A8D0",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x0800854C"
+  ]
+ },
+ {
+  "addr": "0x0800A8EA",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08005C40",
+   "0x0800868C"
+  ]
+ },
+ {
+  "addr": "0x0800A8FA",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A904",
+  "insns": 10,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A918",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A91C",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x0800A934"
+  ]
+ },
+ {
+  "addr": "0x0800A928",
+  "insns": 5,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A934",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A93A",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800A94C",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A956",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A964",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A970",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A97A",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A984",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A98E",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A998",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A9A4",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A9B0",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800A9BC",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x0800741C",
+   "0x08007426",
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800A9DE",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x0800C230"
+  ]
+ },
+ {
+  "addr": "0x0800A9E2",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800B9C0",
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800AA0A",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080074F0"
+  ]
+ },
+ {
+  "addr": "0x0800AA12",
+  "insns": 29,
+  "periph": [],
+  "callees": [
+   "0x0800741C",
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800AA54",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x0800C204"
+  ]
+ },
+ {
+  "addr": "0x0800AA74",
+  "insns": 27,
+  "periph": [],
+  "callees": [
+   "0x0800C6F4",
+   "0x0800CC98"
+  ]
+ },
+ {
+  "addr": "0x0800AAAC",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800AAB2",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08006584",
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800AAC4",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800AAFC",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x0800C6F4"
+  ]
+ },
+ {
+  "addr": "0x0800AB14",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800AB1A",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800AB22",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08009BCC"
+  ]
+ },
+ {
+  "addr": "0x0800AB2E",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800B344",
+   "0x0800B7F0"
+  ]
+ },
+ {
+  "addr": "0x0800AB40",
+  "insns": 26,
+  "periph": [],
+  "callees": [
+   "0x0800AFC4",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800AB7C",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080065AC"
+  ]
+ },
+ {
+  "addr": "0x0800AB8C",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800AB92",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800AB9E",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800A6A4",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800ABA8",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800B718"
+  ]
+ },
+ {
+  "addr": "0x0800ABB2",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800ABB8",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800A6B8",
+   "0x0800CAB8",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800ABCE",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08006584",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800ABD8",
+  "insns": 5,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800ABE4",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800ABF2",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x0800741C",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800AC0A",
+  "insns": 18,
+  "periph": [],
+  "callees": [
+   "0x0800741C",
+   "0x0800BDC4",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800AC36",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x0800B718",
+   "0x0800CAB8"
+  ]
+ },
+ {
+  "addr": "0x0800AC46",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800AC4C",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800AC52",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800AC58",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800AA54"
+  ]
+ },
+ {
+  "addr": "0x0800AC64",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x0800741C",
+   "0x080074F0"
+  ]
+ },
+ {
+  "addr": "0x0800AC78",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x0800AB7C"
+  ]
+ },
+ {
+  "addr": "0x0800AC98",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800ACA8",
+  "insns": 11,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800ACBE",
+  "insns": 27,
+  "periph": [],
+  "callees": [
+   "0x08007434"
+  ]
+ },
+ {
+  "addr": "0x0800ACF8",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007E34"
+  ]
+ },
+ {
+  "addr": "0x0800AD04",
+  "insns": 5,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800AD10",
+  "insns": 12,
+  "periph": [
+   "RCC.CSR/r"
+  ],
+  "callees": [
+   "0x08005EB0"
+  ]
+ },
+ {
+  "addr": "0x0800AD28",
+  "insns": 12,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800AD44",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x08005E8C"
+  ]
+ },
+ {
+  "addr": "0x0800AD64",
+  "insns": 227,
+  "periph": [],
+  "callees": [
+   "0x08004B74",
+   "0x08005DFC",
+   "0x0800CE6C"
+  ]
+ },
+ {
+  "addr": "0x0800AF32",
+  "insns": 40,
+  "periph": [],
+  "callees": [
+   "0x0800B588"
+  ]
+ },
+ {
+  "addr": "0x0800AF88",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x0800AFAA",
+  "insns": 12,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800AFC4",
+  "insns": 35,
+  "periph": [],
+  "callees": [
+   "0x0800C8F2"
+  ]
+ },
+ {
+  "addr": "0x0800B012",
+  "insns": 21,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B03C",
+  "insns": 19,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B062",
+  "insns": 46,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B0BE",
+  "insns": 29,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B0F8",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800B0FC",
+  "insns": 9,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B110",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800B114",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08009FC0"
+  ]
+ },
+ {
+  "addr": "0x0800B126",
+  "insns": 15,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B146",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x0800A620"
+  ]
+ },
+ {
+  "addr": "0x0800B16A",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08005D7C"
+  ]
+ },
+ {
+  "addr": "0x0800B176",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800B188",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800655C"
+  ]
+ },
+ {
+  "addr": "0x0800B192",
+  "insns": 5,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B19E",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x0800B4F8"
+  ]
+ },
+ {
+  "addr": "0x0800B1B2",
+  "insns": 32,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B1F4",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x0800A818"
+  ]
+ },
+ {
+  "addr": "0x0800B208",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B210",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08003E2C"
+  ]
+ },
+ {
+  "addr": "0x0800B21C",
+  "insns": 10,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B232",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08003EB4"
+  ]
+ },
+ {
+  "addr": "0x0800B23E",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B246",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B24A",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B24E",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x0800C6F4"
+  ]
+ },
+ {
+  "addr": "0x0800B266",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B26C",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B270",
+  "insns": 9,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B282",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B28E",
+  "insns": 11,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B2A4",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B2A8",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x0800311C"
+  ]
+ },
+ {
+  "addr": "0x0800B2BE",
+  "insns": 12,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B2D6",
+  "insns": 23,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B304",
+  "insns": 32,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B344",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B34A",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800B362",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800B372",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080074F0"
+  ]
+ },
+ {
+  "addr": "0x0800B378",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B386",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B394",
+  "insns": 21,
+  "periph": [],
+  "callees": [
+   "0x0800AB7C"
+  ]
+ },
+ {
+  "addr": "0x0800B3C0",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08006770"
+  ]
+ },
+ {
+  "addr": "0x0800B3D4",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800AF88"
+  ]
+ },
+ {
+  "addr": "0x0800B3E0",
+  "insns": 50,
+  "periph": [],
+  "callees": [
+   "0x080067C0"
+  ]
+ },
+ {
+  "addr": "0x0800B448",
+  "insns": 50,
+  "periph": [],
+  "callees": [
+   "0x08006730"
+  ]
+ },
+ {
+  "addr": "0x0800B4AC",
+  "insns": 37,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B4F8",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B4FE",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800B522",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800B53C",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800B548",
+  "insns": 9,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B55C",
+  "insns": 14,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B578",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B584",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B588",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x08004690",
+   "0x08005EF4"
+  ]
+ },
+ {
+  "addr": "0x0800B5B2",
+  "insns": 5,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B5C0",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x0800A30C"
+  ]
+ },
+ {
+  "addr": "0x0800B5E2",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B5EC",
+  "insns": 23,
+  "periph": [],
+  "callees": [
+   "0x08009D84"
+  ]
+ },
+ {
+  "addr": "0x0800B61C",
+  "insns": 29,
+  "periph": [],
+  "callees": [
+   "0x08009BCC",
+   "0x08009D28"
+  ]
+ },
+ {
+  "addr": "0x0800B658",
+  "insns": 34,
+  "periph": [],
+  "callees": [
+   "0x08009BCC"
+  ]
+ },
+ {
+  "addr": "0x0800B6A0",
+  "insns": 60,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B718",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800B724",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800B730",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8",
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800B742",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800B758",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x0800B762",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8",
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800B77A",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800B788",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B790",
+  "insns": 16,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B7B0",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x0800D0E4"
+  ]
+ },
+ {
+  "addr": "0x0800B7D0",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800D108"
+  ]
+ },
+ {
+  "addr": "0x0800B7DC",
+  "insns": 9,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B7F0",
+  "insns": 14,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B80C",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800B814"
+  ]
+ },
+ {
+  "addr": "0x0800B810",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B814",
+  "insns": 46,
+  "periph": [],
+  "callees": [
+   "0x0800A934"
+  ]
+ },
+ {
+  "addr": "0x0800B874",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B880",
+  "insns": 50,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B8E4",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080075BC"
+  ]
+ },
+ {
+  "addr": "0x0800B8E8",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x08008194"
+  ]
+ },
+ {
+  "addr": "0x0800B8EC",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B8F0",
+  "insns": 47,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08007670",
+   "0x08007678",
+   "0x08007798",
+   "0x080078EC",
+   "0x08007980",
+   "0x08008148",
+   "0x08008164"
+  ]
+ },
+ {
+  "addr": "0x0800B95C",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B964",
+  "insns": 42,
+  "periph": [
+   "RCC.CFGR/r",
+   "RCC.CFGR/w",
+   "RCC.CFGR2/r",
+   "RCC.CFGR2/w",
+   "RCC.CFGR3/r",
+   "RCC.CFGR3/w",
+   "RCC.CIR/w",
+   "RCC.CR/r",
+   "RCC.CR/w",
+   "RCC.CR2/r",
+   "RCC.CR2/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800B9C0",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800B9CC",
+  "insns": 18,
+  "periph": [],
+  "callees": [
+   "0x08003AC8",
+   "0x08007426",
+   "0x08008A2C",
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800B9F8",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08004AF0",
+   "0x0800ABE4",
+   "0x0800C080",
+   "0x0800D088"
+  ]
+ },
+ {
+  "addr": "0x0800BA16",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080082B4"
+  ]
+ },
+ {
+  "addr": "0x0800BA1C",
+  "insns": 19,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BA44",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800C1E8"
+  ]
+ },
+ {
+  "addr": "0x0800BA48",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08004AA8",
+   "0x080099B0"
+  ]
+ },
+ {
+  "addr": "0x0800BA64",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080083E8"
+  ]
+ },
+ {
+  "addr": "0x0800BA6A",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BA7C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080083E8"
+  ]
+ },
+ {
+  "addr": "0x0800BA82",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BA8C",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x0800B61C"
+  ]
+ },
+ {
+  "addr": "0x0800BAA0",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x080083E8"
+  ]
+ },
+ {
+  "addr": "0x0800BAAA",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BABC",
+  "insns": 70,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BB48",
+  "insns": 11,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BB5E",
+  "insns": 11,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BB74",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BB84",
+  "insns": 68,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BC0C",
+  "insns": 64,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BC8C",
+  "insns": 66,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BD10",
+  "insns": 54,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BD7C",
+  "insns": 17,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BD9E",
+  "insns": 19,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800BDC4",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08004C0C"
+  ]
+ },
+ {
+  "addr": "0x0800BDD8",
+  "insns": 33,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BE2A",
+  "insns": 39,
+  "periph": [],
+  "callees": [
+   "0x08004C0C",
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BE84",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BEA4",
+  "insns": 23,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BEDC",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x080030F0"
+  ]
+ },
+ {
+  "addr": "0x0800BEE8",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BEF2",
+  "insns": 46,
+  "periph": [],
+  "callees": [
+   "0x080030F0",
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BF5C",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BF70",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BF7A",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BF84",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BFA4",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BFB2",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BFC0",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800BFCE",
+  "insns": 21,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800C000",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800C00A",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800C01A",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800C024",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08004EE4",
+   "0x0800C82C"
+  ]
+ },
+ {
+  "addr": "0x0800C046",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08004EE4"
+  ]
+ },
+ {
+  "addr": "0x0800C050",
+  "insns": 11,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C068",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08006014"
+  ]
+ },
+ {
+  "addr": "0x0800C074",
+  "insns": 5,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C080",
+  "insns": 24,
+  "periph": [],
+  "callees": [
+   "0x080072C4",
+   "0x0800741C",
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800C0B4",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x0800741C",
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800C0C8",
+  "insns": 24,
+  "periph": [],
+  "callees": [
+   "0x080035A8",
+   "0x0800741C",
+   "0x08007426",
+   "0x0800BDC4",
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800C102",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800A034"
+  ]
+ },
+ {
+  "addr": "0x0800C10A",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800C110",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080074F0"
+  ]
+ },
+ {
+  "addr": "0x0800C116",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x0800BDC4"
+  ]
+ },
+ {
+  "addr": "0x0800C124",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800BDC4"
+  ]
+ },
+ {
+  "addr": "0x0800C12C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800A140"
+  ]
+ },
+ {
+  "addr": "0x0800C134",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800C13A",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080074F0",
+   "0x0800BDC4"
+  ]
+ },
+ {
+  "addr": "0x0800C14E",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800BDC4"
+  ]
+ },
+ {
+  "addr": "0x0800C156",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800C162",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800BDC4"
+  ]
+ },
+ {
+  "addr": "0x0800C16A",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800C176",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080074F0"
+  ]
+ },
+ {
+  "addr": "0x0800C17C",
+  "insns": 13,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800C19A",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA98"
+  ]
+ },
+ {
+  "addr": "0x0800C1AA",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x080074F0"
+  ]
+ },
+ {
+  "addr": "0x0800C1B0",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x080074F0"
+  ]
+ },
+ {
+  "addr": "0x0800C1C2",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x0800741C"
+  ]
+ },
+ {
+  "addr": "0x0800C1E8",
+  "insns": 14,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C204",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800A6CC",
+   "0x0800CD24"
+  ]
+ },
+ {
+  "addr": "0x0800C210",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800C216",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8"
+  ]
+ },
+ {
+  "addr": "0x0800C21E",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x0800A6A4",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800C230",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800D088"
+  ]
+ },
+ {
+  "addr": "0x0800C24A",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x080047CC",
+   "0x080074F0",
+   "0x0800CA38",
+   "0x0800D0C4"
+  ]
+ },
+ {
+  "addr": "0x0800C268",
+  "insns": 24,
+  "periph": [],
+  "callees": [
+   "0x0800741C",
+   "0x0800D0C4"
+  ]
+ },
+ {
+  "addr": "0x0800C29C",
+  "insns": 13,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C2B8",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x08004C0C"
+  ]
+ },
+ {
+  "addr": "0x0800C2D8",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08005A18",
+   "0x08005BC8"
+  ]
+ },
+ {
+  "addr": "0x0800C2EA",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x08004C50",
+   "0x080058E0",
+   "0x080059CC"
+  ]
+ },
+ {
+  "addr": "0x0800C310",
+  "insns": 19,
+  "periph": [],
+  "callees": [
+   "0x08003F0C"
+  ]
+ },
+ {
+  "addr": "0x0800C338",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08005474"
+  ]
+ },
+ {
+  "addr": "0x0800C33E",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x08004D18",
+   "0x080053E4"
+  ]
+ },
+ {
+  "addr": "0x0800C358",
+  "insns": 18,
+  "periph": [],
+  "callees": [
+   "0x08005464",
+   "0x080054E4"
+  ]
+ },
+ {
+  "addr": "0x0800C380",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08004F94",
+   "0x080056D0"
+  ]
+ },
+ {
+  "addr": "0x0800C38C",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x08004FC4"
+  ]
+ },
+ {
+  "addr": "0x0800C398",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08004C5C"
+  ]
+ },
+ {
+  "addr": "0x0800C3A0",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x08005120"
+  ]
+ },
+ {
+  "addr": "0x0800C3BE",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08005190"
+  ]
+ },
+ {
+  "addr": "0x0800C3CE",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x08004CD4"
+  ]
+ },
+ {
+  "addr": "0x0800C3D4",
+  "insns": 53,
+  "periph": [
+   "TIM1.CR1/r",
+   "TIM1.CR1/w"
+  ],
+  "callees": [
+   "0x080053BC",
+   "0x08005400"
+  ]
+ },
+ {
+  "addr": "0x0800C444",
+  "insns": 43,
+  "periph": [],
+  "callees": [
+   "0x0800741C"
+  ]
+ },
+ {
+  "addr": "0x0800C49C",
+  "insns": 16,
+  "periph": [],
+  "callees": [
+   "0x08009060"
+  ]
+ },
+ {
+  "addr": "0x0800C4BC",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08005C44",
+   "0x0800A4E8"
+  ]
+ },
+ {
+  "addr": "0x0800C4D0",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x0800A6E0"
+  ]
+ },
+ {
+  "addr": "0x0800C4E8",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800C506",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C50C",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x080066C0"
+  ]
+ },
+ {
+  "addr": "0x0800C510",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800C51A",
+  "insns": 19,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800C54C",
+  "insns": 19,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800A8D0",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800C578",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x0800663C",
+   "0x08006BA4",
+   "0x08006C44",
+   "0x0800A904",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800C5A4",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x08008A2C"
+  ]
+ },
+ {
+  "addr": "0x0800C5BC",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800C5C8",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x0800C49C"
+  ]
+ },
+ {
+  "addr": "0x0800C5DE",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800C5E8",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C5EE",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800C5F8",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800C60A",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800C616",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08008738"
+  ]
+ },
+ {
+  "addr": "0x0800C61E",
+  "insns": 42,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C674",
+  "insns": 19,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800B5EC"
+  ]
+ },
+ {
+  "addr": "0x0800C69C",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C6A2",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800C6AC",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800C6B4",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800C6BE",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800C6C4",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C6CA",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x08008738"
+  ]
+ },
+ {
+  "addr": "0x0800C6D4",
+  "insns": 15,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C6F4",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08005F84"
+  ]
+ },
+ {
+  "addr": "0x0800C700",
+  "insns": 36,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C74A",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800C758",
+  "insns": 28,
+  "periph": [],
+  "callees": [
+   "0x0800C4E8",
+   "0x0800C674"
+  ]
+ },
+ {
+  "addr": "0x0800C794",
+  "insns": 30,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C7D4",
+  "insns": 29,
+  "periph": [],
+  "callees": [
+   "0x08006584",
+   "0x0800CAB8",
+   "0x0800CD32",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800C81A",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C82C",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08004670"
+  ]
+ },
+ {
+  "addr": "0x0800C838",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800C844",
+  "insns": 12,
+  "periph": [],
+  "callees": [
+   "0x0800A480"
+  ]
+ },
+ {
+  "addr": "0x0800C85E",
+  "insns": 12,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C878",
+  "insns": 38,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C8C4",
+  "insns": 23,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C8F2",
+  "insns": 14,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C90E",
+  "insns": 7,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C91C",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C92C",
+  "insns": 20,
+  "periph": [
+   "TIM1.CR1/r",
+   "TIM1.CR1/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800C954",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C964",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C96C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C974",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C97C",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C98C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C994",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C99C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9A4",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9AC",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9B4",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9BC",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9C4",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9CC",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9D4",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9DC",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9E4",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9EC",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9F4",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800C9FC",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800CA04",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800CA0C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800CA14",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800CA1C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800CA24",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800CA2C",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x080047BE"
+  ]
+ },
+ {
+  "addr": "0x0800CA34",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CA38",
+  "insns": 24,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CA68",
+  "insns": 24,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CA98",
+  "insns": 15,
+  "periph": [],
+  "callees": [
+   "0x0800CA38"
+  ]
+ },
+ {
+  "addr": "0x0800CAB8",
+  "insns": 24,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CAE8",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CB18",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CB20",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CB28",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CB30",
+  "insns": 27,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CB78",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CB80",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CB88",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CB90",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CB98",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBA0",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBA8",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBB0",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBB8",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBC0",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBC8",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBD0",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBD8",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBE0",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBE8",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBF0",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CBF8",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CC00",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CC08",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CC10",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CC18",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CC20",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CC28",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800CD32"
+  ]
+ },
+ {
+  "addr": "0x0800CC30",
+  "insns": 25,
+  "periph": [],
+  "callees": [
+   "0x0800CD32",
+   "0x0800CE0C"
+  ]
+ },
+ {
+  "addr": "0x0800CC72",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800CC78",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8"
+  ]
+ },
+ {
+  "addr": "0x0800CC82",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800CC88",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800CAB8"
+  ]
+ },
+ {
+  "addr": "0x0800CC8E",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CC94",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CC98",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800CDC8"
+  ]
+ },
+ {
+  "addr": "0x0800CCA2",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CCA6",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x0800CDC8"
+  ]
+ },
+ {
+  "addr": "0x0800CCB2",
+  "insns": 4,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CCBC",
+  "insns": 8,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CAB8"
+  ]
+ },
+ {
+  "addr": "0x0800CCCE",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CAB8"
+  ]
+ },
+ {
+  "addr": "0x0800CCDE",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x0800CAB8"
+  ]
+ },
+ {
+  "addr": "0x0800CCEE",
+  "insns": 23,
+  "periph": [
+   "GPIOB.IDR/r"
+  ],
+  "callees": [
+   "0x08007426",
+   "0x0800CDF4"
+  ]
+ },
+ {
+  "addr": "0x0800CD24",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x0800CE0C"
+  ]
+ },
+ {
+  "addr": "0x0800CD32",
+  "insns": 6,
+  "periph": [],
+  "callees": [
+   "0x0800CE0C"
+  ]
+ },
+ {
+  "addr": "0x0800CD40",
+  "insns": 9,
+  "periph": [
+   "GPIOB.BSRR/w"
+  ],
+  "callees": [
+   "0x0800B874"
+  ]
+ },
+ {
+  "addr": "0x0800CD52",
+  "insns": 11,
+  "periph": [
+   "GPIOB.BRR/w",
+   "GPIOB.IDR/r"
+  ],
+  "callees": [
+   "0x0800B874"
+  ]
+ },
+ {
+  "addr": "0x0800CD6A",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CD7C",
+  "insns": 20,
+  "periph": [
+   "GPIOB.BRR/w",
+   "GPIOB.BSRR/w"
+  ],
+  "callees": [
+   "0x0800B874"
+  ]
+ },
+ {
+  "addr": "0x0800CDA4",
+  "insns": 2,
+  "periph": [
+   "GPIOB.BSRR/w"
+  ],
+  "callees": [
+   "0x0800B874"
+  ]
+ },
+ {
+  "addr": "0x0800CDAA",
+  "insns": 14,
+  "periph": [
+   "GPIOB.BRR/w",
+   "GPIOB.IDR/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CDC8",
+  "insns": 11,
+  "periph": [],
+  "callees": [
+   "0x0800CD40",
+   "0x0800CD7C",
+   "0x0800CE38"
+  ]
+ },
+ {
+  "addr": "0x0800CDE2",
+  "insns": 7,
+  "periph": [],
+  "callees": [
+   "0x0800CE58"
+  ]
+ },
+ {
+  "addr": "0x0800CDF4",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x0800CD7C",
+   "0x0800CE38",
+   "0x0800CE58"
+  ]
+ },
+ {
+  "addr": "0x0800CE0C",
+  "insns": 18,
+  "periph": [],
+  "callees": [
+   "0x0800CD7C",
+   "0x0800CE38",
+   "0x0800CE58"
+  ]
+ },
+ {
+  "addr": "0x0800CE38",
+  "insns": 15,
+  "periph": [
+   "GPIOB.IDR/r"
+  ],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800CE58",
+  "insns": 9,
+  "periph": [],
+  "callees": [
+   "0x08007426"
+  ]
+ },
+ {
+  "addr": "0x0800CE6C",
+  "insns": 132,
+  "periph": [
+   "GPIOB.+0x1/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800CF74",
+  "insns": 37,
+  "periph": [
+   "GPIOB.MODER/r",
+   "RCC.APB1ENR/r",
+   "RCC.APB1ENR/w",
+   "SYSCFG.CFGR1/r",
+   "SYSCFG.CFGR1/w"
+  ],
+  "callees": [
+   "0x080075CC",
+   "0x08009310",
+   "0x080093A8",
+   "0x080093F4",
+   "0x0800941C",
+   "0x080095CC",
+   "0x080095F8",
+   "0x0800967C",
+   "0x080096A8",
+   "0x08009708",
+   "0x08009768",
+   "0x0800B8F0"
+  ]
+ },
+ {
+  "addr": "0x0800CFD6",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x08007F10"
+  ]
+ },
+ {
+  "addr": "0x0800CFDE",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x080074F0",
+   "0x08007544",
+   "0x0800AD10"
+  ]
+ },
+ {
+  "addr": "0x0800CFEE",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x0800AD44"
+  ]
+ },
+ {
+  "addr": "0x0800CFF2",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800A934"
+  ]
+ },
+ {
+  "addr": "0x0800CFF8",
+  "insns": 1,
+  "periph": [],
+  "callees": [
+   "0x0800ABE4"
+  ]
+ },
+ {
+  "addr": "0x0800CFFC",
+  "insns": 11,
+  "periph": [
+   "RCC.CSR/r",
+   "RCC.CSR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800D014",
+  "insns": 22,
+  "periph": [],
+  "callees": [
+   "0x080035A8",
+   "0x080038C0",
+   "0x08003BAC",
+   "0x080047CC",
+   "0x0800642C",
+   "0x080065CC",
+   "0x080074F0",
+   "0x0800896C",
+   "0x08008D00",
+   "0x080097F8",
+   "0x080098F8",
+   "0x0800A230",
+   "0x0800B394",
+   "0x0800B7B0",
+   "0x0800B80C",
+   "0x0800C7D4",
+   "0x0800D098"
+  ]
+ },
+ {
+  "addr": "0x0800D062",
+  "insns": 18,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800D088",
+  "insns": 5,
+  "periph": [],
+  "callees": [
+   "0x0800B5C0",
+   "0x0800C954",
+   "0x0800D134"
+  ]
+ },
+ {
+  "addr": "0x0800D098",
+  "insns": 20,
+  "periph": [],
+  "callees": [
+   "0x0800C2B8",
+   "0x0800C82C"
+  ]
+ },
+ {
+  "addr": "0x0800D0C4",
+  "insns": 4,
+  "periph": [],
+  "callees": [
+   "0x0800C2B8",
+   "0x0800C82C"
+  ]
+ },
+ {
+  "addr": "0x0800D0CE",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800C82C"
+  ]
+ },
+ {
+  "addr": "0x0800D0D4",
+  "insns": 2,
+  "periph": [],
+  "callees": [
+   "0x0800C82C"
+  ]
+ },
+ {
+  "addr": "0x0800D0DA",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0800C82C"
+  ]
+ },
+ {
+  "addr": "0x0800D0E4",
+  "insns": 17,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x0800D108",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x080072C4"
+  ]
+ },
+ {
+  "addr": "0x0800D11C",
+  "insns": 11,
+  "periph": [
+   "EXTI.IMR/r",
+   "EXTI.IMR/w"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800D134",
+  "insns": 14,
+  "periph": [],
+  "callees": [
+   "0x08007426",
+   "0x08009038"
+  ]
+ },
+ {
+  "addr": "0x0800D154",
+  "insns": 1168,
+  "periph": [
+   "GPIOB.+0x1/r",
+   "GPIOB.+0x2/r",
+   "GPIOB.MODER/r",
+   "RCC.+0x1/r",
+   "RCC.+0x2/r",
+   "RCC.CR/r"
+  ],
+  "callees": [
+   "0x08009038"
+  ]
+ },
+ {
+  "addr": "0x0800DA78",
+  "insns": 25,
+  "periph": [
+   "GPIOB.+0x1D/r"
+  ],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DAAC",
+  "insns": 25,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DADE",
+  "insns": 15,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DB00",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DB0E",
+  "insns": 15,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DB32",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DB44",
+  "insns": 316,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DDE2",
+  "insns": 124,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DEE0",
+  "insns": 30,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DF20",
+  "insns": 12,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DF38",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800DF48",
+  "insns": 119,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E050",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E05A",
+  "insns": 11,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E072",
+  "insns": 49,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E0E0",
+  "insns": 7,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E0F0",
+  "insns": 192,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E29A",
+  "insns": 13,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E2B6",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E2BC",
+  "insns": 97,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E38E",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E39E",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E3A2",
+  "insns": 133,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E4B4",
+  "insns": 349,
+  "periph": [],
+  "callees": [
+   "0x08011F1E"
+  ]
+ },
+ {
+  "addr": "0x0800E78E",
+  "insns": 27,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E7C4",
+  "insns": 29,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E800",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E804",
+  "insns": 6,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E812",
+  "insns": 162,
+  "periph": [],
+  "callees": [
+   "0x0801216E"
+  ]
+ },
+ {
+  "addr": "0x0800E964",
+  "insns": 19,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E98C",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E990",
+  "insns": 3,
+  "periph": [],
+  "callees": [
+   "0x0810E7B4"
+  ]
+ },
+ {
+  "addr": "0x0800E99A",
+  "insns": 10,
+  "periph": [],
+  "callees": [
+   "0x0810E7B4"
+  ]
+ },
+ {
+  "addr": "0x0800E9B2",
+  "insns": 8,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800E9C4",
+  "insns": 32,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EA10",
+  "insns": 22,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EA3E",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EA42",
+  "insns": 10,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EA58",
+  "insns": 3,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EA5E",
+  "insns": 18,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EA88",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EA8E",
+  "insns": 31,
+  "periph": [],
+  "callees": [
+   "0x0810E8CA"
+  ]
+ },
+ {
+  "addr": "0x0800EAD8",
+  "insns": 14,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EAF4",
+  "insns": 2,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EAFA",
+  "insns": 1,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EAFC",
+  "insns": 142,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800EC56",
+  "insns": 28,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800ECA6",
+  "insns": 18,
+  "periph": [],
+  "callees": []
+ },
+ {
+  "addr": "0x0800ECE4",
+  "insns": 850,
+  "periph": [],
+  "callees": [
+   "0x07A1E930",
+   "0x07A2E934"
+  ]
+ }
+]

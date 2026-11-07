@@ -1,0 +1,45 @@
+﻿==============================================================================
+devices\ad100pro\firmware\AD100pro_V1.2.bin 50248 bytes
+  RAW app image (legacy path): no container magic -> G3 flashes whole file
+  container parse at 0x407990 returns 0; at 0x408523 the legacy branch (byte[+0x9a]==0) ignores that failure
+  blocks: 50 (1 KiB each)
+  first block sum: 0x00012c30  payload 0000012c30
+  last  block sum: 0x0003c012  payload 310003c012
+  whole-image values sent to the device:
+    cmd 0x00 payload: none (frame 00aa5500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ff)
+    cmd 0x02 payload: none (frame 00aa550200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000101)
+    size/CRC/version/signature fields: NONE
+  in-place patch of 6 bytes at 0x100 (length unchanged):
+    blocks whose transmitted sum changes: [0]
+    -> G3 recomputes these sums from the patched file before sending,
+       so the device-side per-block check cannot be the rejection source.
+==============================================================================
+devices\ad200pro\firmware\AD200pro_V1.60.bin 46380 bytes
+  RAW app image (legacy path): no container magic -> G3 flashes whole file
+  container parse at 0x407990 returns 0; at 0x408523 the legacy branch (byte[+0x9a]==0) ignores that failure
+  blocks: 46 (1 KiB each)
+  first block sum: 0x00012bb5  payload 0000012bb5
+  last  block sum: 0x0002dbfe  payload 2d0002dbfe
+  whole-image values sent to the device:
+    cmd 0x00 payload: none (frame 00aa5500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ff)
+    cmd 0x02 payload: none (frame 00aa550200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000101)
+    size/CRC/version/signature fields: NONE
+  in-place patch of 6 bytes at 0x100 (length unchanged):
+    blocks whose transmitted sum changes: [0]
+    -> G3 recomputes these sums from the patched file before sending,
+       so the device-side per-block check cannot be the rejection source.
+==============================================================================
+devices\x3c\firmware\X3_C_v1.38_app.bin 1021468 bytes
+  RAW app image (legacy path): no container magic -> G3 flashes whole file
+  container parse at 0x407990 returns 0; at 0x408523 the legacy branch (byte[+0x9a]==0) ignores that failure
+  blocks: 998 (1 KiB each)
+  first block sum: 0x0001137b  payload 000001137b
+  last  block sum: 0x0002236f  payload e50002236f
+  whole-image values sent to the device:
+    cmd 0x00 payload: none (frame 00aa5500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ff)
+    cmd 0x02 payload: none (frame 00aa550200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000101)
+    size/CRC/version/signature fields: NONE
+  in-place patch of 6 bytes at 0x100 (length unchanged):
+    blocks whose transmitted sum changes: [0]
+    -> G3 recomputes these sums from the patched file before sending,
+       so the device-side per-block check cannot be the rejection source.

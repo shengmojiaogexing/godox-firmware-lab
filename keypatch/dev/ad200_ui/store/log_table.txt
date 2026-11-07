@@ -1,0 +1,5 @@
+﻿0x0800e314 clamp table 16B: 01 02 03 96 02 01 63 01 01 01 07 06 05 04 04 03
+  bytes as list: [1, 2, 3, 150, 2, 1, 99, 1, 1, 1]
+settings7 max byte (index7) = 1
+next table 0x0800e324: 03 02 02 02 02 02 02 0e 0e 0c 0a 08 06 05 04 04
+literal 0x0800e314 at ['0x800480c', '0x800876c', '0x800ae2c']

@@ -1,0 +1,12 @@
+addr,name,reason
+0x080020c0,thunk_FUN_08007700,thunk
+0x08002114,FUN_08002114,"incomplete: Low-level Error: Bad instruction count exceeded:
+    ...
+    No pcode could be generated at address: r0x08001f90"
+0x08002138,FUN_08002138,"incomplete: Low-level Error: Bad instruction count exceeded:
+    ...
+    No pcode could be generated at address: r0x08001f90"
+0x08005258,FUN_08005258,"incomplete: Low-level Error: Bad instruction count exceeded:
+    ...
+    No pcode could be generated at address: r0x0800533c"
+0x08007092,thunk_FUN_0800709a,thunk

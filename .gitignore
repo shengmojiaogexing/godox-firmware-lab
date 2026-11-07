@@ -1,0 +1,75 @@
+# ============================================================
+# 神牛固件研究工坊 (.gitignore)
+# 原则：不发布厂商固件/升级工具等受版权保护的内容，不发布本机运行时与生成物。
+# ============================================================
+
+# ---------- 固件二进制（版权归权利人，禁止再分发）----------
+*.bin
+*.hex
+*.s19
+*.elf
+*.map
+
+# ---------- 本机私有密钥 / 本地配置 ----------
+keypatch/KEY.txt
+*.key
+.env
+.env.*
+
+# ---------- 生成物 / 构建产物 ----------
+keypatch/out/
+keypatch/build/
+studio/builds/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+**/lcd_out/
+**/emu/logs/
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# ---------- 日志 ----------
+*.log
+
+# ---------- 便携运行时 / 第三方大件（本机已下载，不入库）----------
+tools/python/
+tools/jdk/
+tools/dl/
+tools/ghidra*/
+tools/*.zip
+devices/x3c/py/
+devices/ad200pro/python/
+**/site-packages/
+**/Lib/
+*.pyd
+*.dll
+*.exe
+*.msi
+*.pkl
+*.7z
+*.rar
+
+# ---------- 厂商文档 / 官方升级包 / 本地 vendor 缓存 ----------
+*.pdf
+*.zip
+vendor/
+
+# ---------- 独立仓库与副本（各自有 GitHub 仓库，本项目不重复收录）----------
+Godox-S3-Trigger/
+Godox-S3-Trigger-main/
+
+# ---------- 编辑器 / 系统 ----------
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- Agent 工作区内部文件（仅本机）----------
+AGENTS.md
+PLAN_REPO.md
+scripts/*.local.ps1
