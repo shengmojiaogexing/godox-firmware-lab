@@ -105,7 +105,7 @@ DEVICE = {
     "name": "Godox X3 Pro (X3 Pro trigger, C)",
     "image": "devices/x3pro/firmware/X3pro_C_v1.22_app.bin",
     "kind": "trigger",                       # trigger=引闪器 / flash=闪光灯
-    "model": "X3 Pro",
+    "model": "X3 Pro-C",
     "firmware_version": "V1.22",
     "base": 0x08020000,
     "sha256": "2e2b8a3b5ff70e62c4acddc406b055ea2625e4833a213e81863f96c0da5a911b",

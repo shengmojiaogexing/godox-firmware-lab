@@ -289,7 +289,39 @@ async function main() {
     };
   })()`);
   check('结果卡片包含文件名/描述', /keyD798|\.bin|固件/i.test(resultInfo.text), (resultInfo.text || '').slice(0, 200));
-  check('结果卡片包含 sha256', /[0-9a-f]{64}/i.test(resultInfo.text), '');
+
+  // 固件卡片默认缩略，sha256 等详情在展开后显示
+  const zipBig = await evalJs(`(() => {
+    const a = document.querySelector('.btn-zip-big');
+    if (!a) return null;
+    const r = a.getBoundingClientRect();
+    return { h: Math.round(r.height), fs: getComputedStyle(a).fontSize };
+  })()`);
+  check('「下载全部 ZIP」按钮已放大', !!zipBig && zipBig.h >= 56, zipBig ? `${zipBig.h}px / ${zipBig.fs}` : '未找到');
+
+  const cardCollapsed = await evalJs(`(() => {
+    const c = document.querySelector('.file-card');
+    if (!c) return null;
+    const body = c.querySelector('.file-body');
+    return { open: c.classList.contains('is-open'), bodyHidden: body ? getComputedStyle(body).display === 'none' : null };
+  })()`);
+  check('固件卡片默认缩略', !!cardCollapsed && cardCollapsed.open === false && cardCollapsed.bodyHidden === true);
+
+  await evalJs(`(() => {
+    const head = document.querySelector('.file-card .file-card-head');
+    if (head) head.click();
+    return true;
+  })()`);
+  await sleep(400);
+
+  const expandedText = await evalJs(`(() => {
+    const c = document.querySelector('.file-card');
+    if (!c) return '';
+    const body = c.querySelector('.file-body');
+    return (body && getComputedStyle(body).display !== 'none') ? body.innerText : '';
+  })()`);
+  check('展开后显示完整信息', /补丁点|离线验证/.test(expandedText), (expandedText || '').slice(0, 160));
+  check('结果卡片包含 sha256', /[0-9a-f]{64}/i.test(expandedText), '');
   const hasDownload = resultInfo.links.flat().some((h) => h && (h.includes('/api/builds/') || h.endsWith('.bin') || h.endsWith('.zip')));
   check('结果包含下载链接', hasDownload || /下载/.test(resultInfo.text));
 

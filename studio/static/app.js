@@ -294,6 +294,7 @@
       if (box) {
         box.addEventListener('change', function () {
           setDeviceSelected(id, box.checked);
+          if (box.checked) pulseCard(card);
         });
       }
       var up = card.querySelector('.device-upload');
@@ -461,10 +462,60 @@
     colorKeyState(kind);
   }
 
+  /* ---------------------------------------------------- 动效辅助 */
+  var _reduceMotion = function () {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+
+  /* 勾选设备：卡片弹一下 + 绿色对勾入场 */
+  function pulseCard(card) {
+    if (!card || _reduceMotion()) return;
+    card.classList.remove('just-picked');
+    /* 强制回流，保证连续勾选也能重播 */
+    void card.offsetWidth;
+    card.classList.add('just-picked');
+    setTimeout(function () { card.classList.remove('just-picked'); }, 560);
+  }
+
+  /* 密钥字符逐位跳动（每次输入让最新一位"落定"） */
+  var _keyPulseTimer = null;
+  function pulseKeyField() {
+    if (!els.keyField || _reduceMotion()) return;
+    els.keyField.classList.remove('key-typing');
+    /* 强制回流，保证连续输入也能重播动画 */
+    void els.keyField.offsetWidth;
+    els.keyField.classList.add('key-typing');
+    /* 清掉上一次的定时器，避免它把这次刚加上的类名移除 */
+    if (_keyPulseTimer) clearTimeout(_keyPulseTimer);
+    _keyPulseTimer = setTimeout(function () {
+      if (els.keyField) els.keyField.classList.remove('key-typing');
+      _keyPulseTimer = null;
+    }, 420);
+  }
+
+  /* 数字翻滚：SYNC1 / SYNC0 变化时滚一下 */
+  var _rollTimers = new WeakMap();
+  function rollNumber(el, value) {
+    if (!el) return;
+    var next = (value === null || value === undefined || value === '') ? '—' : String(value);
+    if (el.textContent === next) return;
+    el.textContent = next;
+    if (_reduceMotion()) return;
+    el.classList.remove('num-roll');
+    void el.offsetWidth;
+    el.classList.add('num-roll');
+    var old = _rollTimers.get(el);
+    if (old) clearTimeout(old);
+    _rollTimers.set(el, setTimeout(function () {
+      el.classList.remove('num-roll');
+      _rollTimers.delete(el);
+    }, 420));
+  }
+
   function setKeyStats(hex, decimal, sync1, sync0) {
-    if (els.statSync1) els.statSync1.textContent = sync1 || '—';
-    if (els.statSync0) els.statSync0.textContent = sync0 || '—';
-    if (els.statDecimal) els.statDecimal.textContent = (decimal === null || decimal === undefined) ? '—' : String(decimal);
+    rollNumber(els.statSync1, sync1);
+    rollNumber(els.statSync0, sync0);
+    rollNumber(els.statDecimal, (decimal === null || decimal === undefined) ? null : decimal);
     if (els.sumKey) els.sumKey.textContent = hex || '—';
   }
 
@@ -502,6 +553,7 @@
     var text = normalizeKeyText(els.keyInput.value);
     if (els.keyInput.value !== text) els.keyInput.value = text;
     state.key.text = text;
+    pulseKeyField();
     showSuggest('');
     if (!text) { clearKey(); setKeyStatus(null, '输入 4 位十六进制密钥（0-9、A-F）'); return; }
     if (text.length < 4) {
@@ -606,14 +658,14 @@
 
   function openDeriveModal() {
     openModal(
-      '<div class="modal-head"><h3>口令派生密钥</h3><p>同一口令总是派生出同一把密钥，方便在多台设备上复现。</p></div>' +
+      '<div class="modal-head"><h3>用密码生成密钥</h3><p>同一句话每次都会生成同一把密钥，换台电脑也能复现出来。</p></div>' +
       '<div class="modal-body">' +
-        '<label class="modal-label" for="derive-input">口令 / 短语</label>' +
+        '<label class="modal-label" for="derive-input">一句话密码</label>' +
         '<input class="modal-input" id="derive-input" type="text" placeholder="例如：我的引闪器 2026" autocomplete="off">' +
         '<p class="modal-error hidden" id="derive-error"></p>' +
       '</div>' +
       '<div class="modal-actions"><button type="button" class="btn btn-ghost" data-close-modal>取消</button>' +
-        '<button type="button" class="btn btn-primary" id="derive-submit">派生密钥</button></div>'
+        '<button type="button" class="btn btn-primary" id="derive-submit">生成密钥</button></div>'
     );
     var root = els.modalRoot;
     root.querySelector('[data-close-modal]').addEventListener('click', closeModal);
@@ -622,7 +674,7 @@
     var submit = root.querySelector('#derive-submit');
     function run() {
       var pass = (input.value || '').trim();
-      if (!pass) { errorEl.textContent = '口令不能为空'; errorEl.classList.remove('hidden'); return; }
+      if (!pass) { errorEl.textContent = '请先输入一句话密码'; errorEl.classList.remove('hidden'); return; }
       submit.disabled = true;
       apiPost('/api/key/derive', { passphrase: pass }).then(function (data) {
         closeModal();
@@ -633,10 +685,10 @@
         state.key.sync1 = data.key.sync1;
         state.key.sync0 = data.key.sync0;
         setKeyStats(data.key.hex, data.key.decimal, data.key.sync1, data.key.sync0);
-        setKeyStatus('ok', '由口令派生 · ' + data.key.hex, 'is-valid');
+        setKeyStatus('ok', '由密码生成 · ' + data.key.hex, 'is-valid');
         updateSelectionUI();
       }).catch(function (err) {
-        errorEl.textContent = err.message || '派生失败';
+        errorEl.textContent = err.message || '生成失败';
         errorEl.classList.remove('hidden');
       }).then(function () { submit.disabled = false; });
     }
@@ -898,6 +950,50 @@
       '</section>';
   }
 
+  /* 教程步骤依次点亮：逐个加 is-in，形成「小动画」 */
+  function playUsageAnimation() {
+    var list = document.querySelector('.usage-steps');
+    if (!list) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      list.classList.remove('is-animating');
+      Array.prototype.forEach.call(list.children, function (li) { li.classList.add('is-in'); });
+      return;
+    }
+    var items = Array.prototype.slice.call(list.children);
+    /* 先挂上动画态（此时才隐藏），再逐个点亮；即使中途出错也保证最终可见 */
+    list.classList.add('is-animating');
+    items.forEach(function (li) { li.classList.remove('is-in'); });
+    items.forEach(function (li, i) {
+      setTimeout(function () { li.classList.add('is-in'); }, 140 + i * 190);
+    });
+    /* 保险：无论如何，动画结束后全部可见并解除隐藏态 */
+    setTimeout(function () {
+      items.forEach(function (li) { li.classList.add('is-in'); });
+      list.classList.remove('is-animating');
+    }, 140 + items.length * 190 + 600);
+  }
+
+  /* 生成成功的一次性庆祝动画（缩放对勾 + 光环） */
+  function playSuccessBurst() {
+    var host = els.panelResult;
+    if (!host) return;
+    var old = host.querySelector('.success-burst');
+    if (old) old.parentNode.removeChild(old);
+    var el = document.createElement('div');
+    el.className = 'success-burst';
+    el.setAttribute('aria-hidden', 'true');
+    el.innerHTML =
+      '<span class="success-ring"></span>' +
+      '<span class="success-check">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" ' +
+        'stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.6 4.6L19 7.4"/></svg>' +
+      '</span>';
+    host.appendChild(el);
+    setTimeout(function () {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }, 1600);
+  }
+
   function renderBuild(build) {
     if (!els.panelResult) return;
     els.panelResult.classList.remove('hidden');
@@ -912,7 +1008,7 @@
     }
     if (els.resultActions) {
       els.resultActions.innerHTML = build.zip
-        ? '<a class="btn btn-primary btn-sm" href="' + esc(build.zip) + '" download>' +
+        ? '<a class="btn btn-primary btn-zip-big" href="' + esc(build.zip) + '" download>' +
           svg(ICON.zip) + '<span>下载全部 ZIP</span></a>'
         : '';
     }
@@ -925,16 +1021,23 @@
         : '';
       return '' +
         '<div class="file-card" data-testid="result-file" data-device-id="' + esc(f.device) + '">' +
-          '<div class="file-card-head">' +
+          '<div class="file-card-head" role="button" tabindex="0" aria-expanded="false" ' +
+            'title="点击展开完整信息">' +
             '<div class="file-name-wrap">' +
               '<div class="file-kind">' + esc(f.name || f.device) + '</div>' +
               '<div class="file-name mono">' + esc(f.filename) + '</div>' +
+            '</div>' +
+            '<div class="file-head-meta">' +
+              '<span class="file-size mono">' + esc(fmtSize(f.size)) + '</span>' +
+              badge +
+              '<span class="file-toggle-hint" aria-hidden="true">展开</span>' +
             '</div>' +
             '<div class="file-actions">' +
               '<a class="btn btn-soft btn-sm" data-testid="download-link" href="' + esc(f.download || '#') + '"' +
                 ' download title="下载固件">' + svg(ICON.download) + '<span>下载固件</span></a>' +
             '</div>' +
           '</div>' +
+          '<div class="file-body">' +
           '<div class="file-meta">' +
             '<span class="file-meta-item">大小 <b class="mono">' + esc(fmtSize(f.size)) + '</b></span>' +
             '<span class="file-meta-item">补丁点 <b class="mono">' + esc(f.patch_count || 0) + '</b></span>' +
@@ -962,6 +1065,7 @@
                   encodeURIComponent(n) + '" download>' + esc(n) + '</a>';
               }).join(' ') + '</span></div>'
             : '') +
+          '</div>' +
         '</div>';
     }).join('');
 
@@ -981,6 +1085,24 @@
         copyText(btn.getAttribute('data-copy') || '', btn);
       });
     });
+    /* 固件卡片缩略：点标题行展开/收起完整信息（下载按钮不触发） */
+    Array.prototype.forEach.call(els.resultRoot.querySelectorAll('.file-card'), function (card) {
+      var head = card.querySelector('.file-card-head');
+      if (!head) return;
+      function toggle() {
+        var open = card.classList.toggle('is-open');
+        head.setAttribute('aria-expanded', open ? 'true' : 'false');
+        var hint = head.querySelector('.file-toggle-hint');
+        if (hint) hint.textContent = open ? '收起' : '展开';
+      }
+      head.addEventListener('click', function (ev) {
+        if (ev.target.closest && ev.target.closest('a[href]')) return;
+        toggle();
+      });
+      head.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); }
+      });
+    });
     // 演示模式下拦截下载
     if (state.mock) {
       Array.prototype.forEach.call(els.resultRoot.querySelectorAll('a[download]'), function (a) {
@@ -991,6 +1113,8 @@
       });
     }
     updateFlow();
+    playSuccessBurst();
+    playUsageAnimation();
     els.panelResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 

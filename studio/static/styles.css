@@ -1063,13 +1063,18 @@ body::before {
   align-items: start;
 }
 .key-console-main { min-width: 0; }
-.key-console-actions { display: flex; flex-direction: column; gap: 9px; }
+.key-console-actions { display: flex; flex-direction: column; gap: 12px; }
 .key-console-actions .btn {
   width: 100%;
-  height: 37px;
-  padding: 0 10px;
-  font-size: 12.5px;
+  height: 58px;
+  padding: 0 18px;
+  font-size: 16px;
+  font-weight: 650;
+  gap: 10px;
+  border-radius: 12px;
+  justify-content: center;
 }
+.key-console-actions .btn svg { width: 21px; height: 21px; }
 .key-status {
   display: flex;
   align-items: flex-start;
@@ -2440,6 +2445,22 @@ details.detail[open] > summary svg { transform: rotate(180deg); }
 
 .history-drawer[open] > summary { border-bottom: 1px solid var(--line); }
 
+/* 「下载全部 ZIP」：整页最主要的目标，做得醒目 */
+.btn.btn-zip-big {
+  min-height: 64px;
+  padding: 0 30px;
+  font-size: 17px;
+  font-weight: 700;
+  gap: 12px;
+  border-radius: 14px;
+  letter-spacing: 0.01em;
+}
+.btn.btn-zip-big svg { width: 24px; height: 24px; }
+
+@media (max-width: 720px) {
+  .btn.btn-zip-big { width: 100%; justify-content: center; }
+}
+
 .history-drawer > #panel-history {
   border: 0;
   border-radius: 0;
@@ -2454,6 +2475,318 @@ details.detail[open] > summary svg { transform: rotate(180deg); }
 }
 
 
+/* ============================================================
+   教程小动画：步骤依次点亮 + 生成成功庆祝
+   ============================================================ */
+/* 默认可见：只有 JS 显式播放动画时才从下方淡入（见 .usage-steps.is-animating） */
+.usage-steps.is-animating li {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.usage-steps li.is-in {
+  animation: usage-in 0.46s cubic-bezier(0.22, 0.68, 0.3, 1) both;
+}
+
+@keyframes usage-in {
+  0%   { opacity: 0; transform: translateY(10px); }
+  60%  { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+
+/* 序号依次点亮（画一圈光） */
+.usage-steps li.is-in .usage-no {
+  animation: usage-no-pop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.4) both;
+}
+
+@keyframes usage-no-pop {
+  0%   { transform: scale(0.55); box-shadow: 0 0 0 0 rgba(255, 182, 74, 0.55); }
+  55%  { transform: scale(1.14); box-shadow: 0 0 0 7px rgba(255, 182, 74, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 182, 74, 0); }
+}
+
+/* 步骤之间连一条逐渐生长的虚线 */
+.usage-steps li.is-in b {
+  animation: usage-title-in 0.42s ease both;
+}
+
+@keyframes usage-title-in {
+  from { color: var(--ink-3); }
+  to   { color: var(--ink); }
+}
+
+/* ---------- 生成成功：对勾 + 光环 ---------- */
+.success-burst {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  animation: burst-fade 1.6s ease forwards;
+}
+
+@keyframes burst-fade {
+  0%   { opacity: 0; }
+  12%  { opacity: 1; }
+  72%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.success-check {
+  position: relative;
+  z-index: 2;
+  width: 118px;
+  height: 118px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #2a1c05;
+  background: linear-gradient(180deg, #ffc46a 0%, #ffab33 100%);
+  box-shadow: 0 26px 60px -22px rgba(255, 160, 43, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  animation: check-pop 0.72s cubic-bezier(0.18, 1.1, 0.32, 1.12) both;
+}
+
+.success-check svg {
+  width: 58px;
+  height: 58px;
+  overflow: visible;
+}
+
+/* 描边动画必须作用在 path 上（svg 本身不绘制线条） */
+.success-check svg path {
+  stroke: #2a1c05;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: check-draw 0.46s 0.3s ease-out forwards;
+}
+
+@keyframes check-pop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  62%  { transform: scale(1.07); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes check-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.success-ring {
+  position: absolute;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 182, 74, 0.65);
+  animation: ring-spread 1s 0.14s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes ring-spread {
+  0%   { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(2.35); opacity: 0; }
+}
+
+/* ============================================================
+   固件卡片：默认缩略成一行，点击展开完整信息
+   ============================================================ */
+.file-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.file-card .file-card-head {
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+  padding: 15px 16px 15px 19px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: var(--r);
+  transition: background 0.18s ease;
+}
+
+.file-card .file-card-head:hover { background: rgba(255, 255, 255, 0.026); }
+
+.file-card .file-card-head:focus-visible {
+  outline: 2px solid rgba(255, 182, 74, 0.55);
+  outline-offset: -2px;
+}
+
+/* 摘要行右侧：大小 + 验证结果 + 展开提示 */
+.file-head-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.file-size { color: var(--ink-2); font-size: 12px; }
+
+.file-toggle-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  color: var(--ink-3);
+  font-size: 11.5px;
+  white-space: nowrap;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.file-toggle-hint::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+  transition: transform 0.22s ease;
+}
+
+.file-card.is-open .file-toggle-hint::after {
+  transform: rotate(-135deg) translateY(-1px);
+}
+
+.file-card .file-card-head:hover .file-toggle-hint {
+  color: var(--ink-2);
+  border-color: var(--line-3);
+}
+
+/* 卡片主体：默认收起 */
+.file-card .file-body {
+  display: none;
+  padding: 0 16px 16px 19px;
+  border-top: 1px solid var(--line);
+  margin-top: 0;
+  animation: file-body-in 0.24s ease both;
+}
+
+.file-card.is-open .file-body { display: block; }
+
+@keyframes file-body-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* 收起态下卡片更紧凑，左侧强调线随之变短 */
+.file-card::before { top: 13px; bottom: 13px; }
+.file-card.is-open::before { top: 15px; bottom: 15px; }
+
+.file-card .file-name-wrap { flex: 1 1 auto; min-width: 0; }
+
+@media (max-width: 720px) {
+  .file-card .file-card-head { flex-wrap: wrap; gap: 10px; }
+  .file-head-meta { order: 3; width: 100%; }
+}
+
+/* ============================================================
+   第 1 步「选择设备」与第 2 步「自定义密钥」的动效
+   ============================================================ */
+
+/* ---------- 勾选设备：卡片弹一下 + 对勾放大入场 ---------- */
+.device-card.just-picked {
+  animation: card-pick 0.52s cubic-bezier(0.22, 0.9, 0.32, 1.1) both;
+}
+
+@keyframes card-pick {
+  0%   { transform: scale(1); }
+  32%  { transform: scale(1.022); }
+  62%  { transform: scale(0.997); }
+  100% { transform: scale(1); }
+}
+
+/* 选中时左侧高亮条滑入 */
+.device-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(255, 196, 106, 0.9), rgba(255, 160, 43, 0.55));
+  opacity: 0;
+  transform: scaleY(0.3);
+  transform-origin: center;
+  transition: opacity 0.24s ease, transform 0.28s cubic-bezier(0.2, 0.8, 0.3, 1.1);
+  pointer-events: none;
+}
+
+.device-card.is-selected::after {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* 对勾打勾时的回弹 */
+.device-check input:checked + .check {
+  animation: check-bounce 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.5) both;
+}
+
+@keyframes check-bounce {
+  0%   { transform: scale(0.72); }
+  55%  { transform: scale(1.16); }
+  100% { transform: scale(1); }
+}
+
+.device-check input:checked + .check svg {
+  animation: check-draw-in 0.34s 0.05s ease-out both;
+}
+
+@keyframes check-draw-in {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* 未选中 → 选中时，卡片底色短暂泛光 */
+.device-card.is-selected {
+  transition: border-color 0.24s ease, background 0.24s ease, box-shadow 0.32s ease;
+}
+
+/* ---------- 密钥输入：输入框光晕脉冲 ---------- */
+.key-field.key-typing {
+  animation: key-glow 0.42s ease-out both;
+}
+
+@keyframes key-glow {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 182, 74, 0); }
+  35%  { box-shadow: 0 0 0 3px rgba(255, 182, 74, 0.22); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 182, 74, 0); }
+}
+
+/* 密钥字符落定时轻微上浮 */
+.key-field.key-typing .key-input {
+  animation: key-char 0.3s cubic-bezier(0.2, 0.8, 0.3, 1.1) both;
+}
+
+@keyframes key-char {
+  0%   { transform: translateY(2px) scale(0.985); }
+  60%  { transform: translateY(-1px) scale(1.006); }
+  100% { transform: none; }
+}
+
+/* ---------- SYNC1 / SYNC0 / 十进制：数值翻滚 ---------- */
+.key-stat b.num-roll {
+  display: inline-block;
+  animation: num-roll 0.4s cubic-bezier(0.2, 0.8, 0.3, 1.05) both;
+}
+
+@keyframes num-roll {
+  0%   { opacity: 0; transform: translateY(9px) rotateX(-38deg); filter: blur(0.6px); }
+  60%  { opacity: 1; transform: translateY(-2px) rotateX(4deg); filter: blur(0); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* 密钥合法时统计条整体亮一下 */
+.key-stats.has-key {
+  transition: border-color 0.3s ease, box-shadow 0.4s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -2461,4 +2794,10 @@ details.detail[open] > summary svg { transform: rotate(180deg); }
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+  /* 关闭动效时，教程步骤必须直接可见（避免停在 opacity:0） */
+  .usage-steps li {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .success-burst { display: none !important; }
 }
