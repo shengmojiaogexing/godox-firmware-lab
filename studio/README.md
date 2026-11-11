@@ -47,6 +47,38 @@ tools\python\python.exe studio\server.py --port 18780 --open
 
 ## 部署到服务器
 
+### 已上线实例
+
+对外地址：**<http://zero-ai.cloud/godox/>**（或 <http://156.238.228.39/godox/>）
+
+| 项 | 值 |
+|---|---|
+| 主机 | `156.238.228.39:24877`（Ubuntu 22.04） |
+| 代码目录 | `/opt/godox-lab`（`keypatch/`、`studio/`、`devices/*/firmware/`） |
+| Python | venv：`/opt/godox-lab/venv`（capstone / unicorn / pillow） |
+| 服务 | `systemd` 单元 `godox-studio`，监听 `127.0.0.1:18780` |
+| 生成物 | `/var/lib/godox-studio/builds`（`www-data` 可写） |
+| 日志 | `/var/log/godox-studio.log` |
+| 反代 | nginx，`/godox/` → `127.0.0.1:18780/`，配置片段 `/etc/nginx/snippets/godox-studio.conf` |
+
+> ⚠️ **该实例为公开访问**（按需求未加认证），且服务器上已放置原厂固件，
+> 任何人打开网址都能生成固件。若不希望长期公开，请加 Basic Auth 或 IP 白名单，
+> 或执行 `systemctl stop godox-studio` 下线。
+
+常用运维命令：
+
+```bash
+systemctl status godox-studio        # 状态
+systemctl restart godox-studio       # 改代码后重启
+tail -f /var/log/godox-studio.log    # 日志
+nginx -t && systemctl reload nginx    # 改反代后校验并重载
+```
+
+更新代码后需重启服务（模块有缓存），并确认 `keypatch/dev/` 已上传——
+x3c 等设备依赖其中的 `x3c_ui/ui_patch.py`，缺失会导致「UI 补丁模块未加载」。
+
+### 自行部署到别处
+
 默认只监听 `127.0.0.1`。需要在局域网 / 内网提供访问时，建议用反向代理（Nginx / Caddy）转发到 `http://127.0.0.1:18780/`，并至少做到：
 
 1. 启用 HTTPS 与访问控制（Basic Auth、SSO 或 IP 白名单）；
