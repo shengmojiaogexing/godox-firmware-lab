@@ -1,0 +1,35 @@
+
+== Godox X3 Pro (X3 Pro trigger, C) (x3pro)
+   原厂固件 : devices\x3pro\firmware\X3pro_C_v1.22_app.bin  (1941020 字节, sha256 2e2b8a3b5ff70e62…)
+   私有密钥 : 0xD798  ->  SYNC1=0xD7 SYNC0=0x98
+   补丁点   :
+  [1] off+0x0EDC4  0x0802EDC4  10 b5 ff f7            -> 91 f1 29 b9             4 字节帧发送入口 -> inj_tx4（密钥模式 KEY+ID99 双发）
+  [2] off+0x0EE2C  0x0802EE2C  10 b5 ff f7            -> 91 f1 07 b9             2 字节帧发送入口 -> inj_tx2（密钥模式 KEY+ID99 双发）
+  [3] off+0x0F046  0x0802F046  4c f2 68 34 13 44 b4 fb f3 f4 -> 90 f1 db bf 00 bf 00 bf 00 bf  同步字函数 10 B 改写：ID=99 -> SYNC=KEY，其余原厂 50024/(ID+1)
+  [4] off+0x1A0000  0x081C0000  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff -> 63 28 03 d1 4d f2 98 74 6f f6 22 b8 4c f2 68 34 13 44 b4 fb f3 f4 6f f6 1b b8 10 b5 41 f2 68 73 c2 f2 00 03 5b 78 63 2b 06 d1 00 f0 2f f8 00 f0 36 f8 00 f0 23 f8 10 bd 00 f0 3a f8 10 bd 10 b5 41 f2 68 73 c2 f2 00 03 5b 78 63 2b 06 d1 00 f0 34 f8 00 f0 3b f8 00 f0 11 f8 10 bd 00 f0 3f f8 10 bd 10 b5 82 b0 04 46 23 0a 69 46 0b 70 4c 70 02 22 44 20 6e f6 52 fb 02 b0 10 bd 4d f2 98 70 ff f7 ef bf 40 f2 f4 10 ff f7 eb bf 10 b5 6e f6 e9 fd 4d f2 98 70 ff f7 e4 ff 6e f6 96 be 10 b5 6e f6 e0 fd 40 f2 f4 10 ff f7 db ff 6e f6 8d be 10 b5 6e f6 d7 fd 6e f6 88 be 10 b5 6e f6 d2 fd 4d f2 98 70 ff f7 cd ff 6e f6 b3 be 10 b5 6e f6 c9 fd 40 f2 f4 10 ff f7 c4 ff 6e f6 aa be 10 b5 6e f6 c0 fd 6e f6 a5 be  注入区（双发/同步字辅助 + 蹦床，232 字节，原厂 0xFF）
+   输出     : C:\Users\22435\AppData\Local\Temp\x3pro_indep\X3pro_C_v1.22_app_keyD798.bin  (1941020 字节, sha256 023ec3fefd2bd3a0…)
+   [PASS] 固件长度 1941020 字节（应为 1941020，原位补丁+注入）
+   [PASS] 注入区 0x081C0000 起 232 字节（双发包装 + 同步字分流，共 232/1024 字节）
+   [PASS] 注入区剩余 792 字节保持擦除态 0xFF（不越界改写）
+   [PASS] 入口 0x0802EDC4 = 91 f1 29 b9（4 字节帧发送入口 -> inj_tx4（密钥模式 KEY+ID99 双发））
+   [PASS] 入口 0x0802EE2C = 91 f1 07 b9（2 字节帧发送入口 -> inj_tx2（密钥模式 KEY+ID99 双发））
+   [PASS] 入口 0x0802F046 = 90 f1 db bf 00 bf 00 bf 00 bf（同步字函数 10 B 改写：ID=99 -> SYNC=KEY，其余原厂 50024/(ID+1)）
+   [PASS] 与原厂差异 240 字节（应为 240，全部落在补丁点/注入区；前 12 个 ['0x0EDC4', '0x0EDC5', '0x0EDC6', '0x0EDC7', '0x0EE2C', '0x0EE2D', '0x0EE2E', '0x0EE2F', '0x0F046', '0x0F047', '0x0F048', '0x0F049']）
+   [PASS] Unicorn 2.1.4 调用级测试：桩替换 write_reg(0x0802E71C)/strobe(0x0802E88C)/delay(0x0802B5DC)/radio_wake(0x0802EC64)
+   [PASS] 密钥 KEY=0xD798（SYNC1=0xD7 SYNC0=0x98）；密钥模式第二帧同步字 = floor(50024/100) = 0x01F4
+   [PASS] set_sync(补丁版 ID=0 , 原厂模式): SYNC=0xC368（期望 0xC368），SCAL/SIDLE=['0x33', '0x36'] | SYNC4=0xC3 -> SYNC5=0x68 -> strobe(0x33) -> strobe(0x36)
+   [PASS] set_sync(补丁版 ID=1 , 原厂模式): SYNC=0x61B4（期望 0x61B4），SCAL/SIDLE=['0x33', '0x36'] | SYNC4=0x61 -> SYNC5=0xB4 -> strobe(0x33) -> strobe(0x36)
+   [PASS] set_sync(补丁版 ID=37, 原厂模式): SYNC=0x0524（期望 0x0524），SCAL/SIDLE=['0x33', '0x36'] | SYNC4=0x05 -> SYNC5=0x24 -> strobe(0x33) -> strobe(0x36)
+   [PASS] set_sync(补丁版 ID=99, 密钥模式): SYNC=0xD798（期望 0xD798），SCAL/SIDLE=['0x33', '0x36'] | SYNC4=0xD7 -> SYNC5=0x98 -> strobe(0x33) -> strobe(0x36)
+   [PASS] set_sync(原厂(自证) ID=0 , 原厂模式): SYNC=0xC368（期望 0xC368），SCAL/SIDLE=['0x33', '0x36'] | SYNC4=0xC3 -> SYNC5=0x68 -> strobe(0x33) -> strobe(0x36)
+   [PASS] set_sync(原厂(自证) ID=1 , 原厂模式): SYNC=0x61B4（期望 0x61B4），SCAL/SIDLE=['0x33', '0x36'] | SYNC4=0x61 -> SYNC5=0xB4 -> strobe(0x33) -> strobe(0x36)
+   [PASS] set_sync(原厂(自证) ID=37, 原厂模式): SYNC=0x0524（期望 0x0524），SCAL/SIDLE=['0x33', '0x36'] | SYNC4=0x05 -> SYNC5=0x24 -> strobe(0x33) -> strobe(0x36)
+   [PASS] set_sync(原厂(自证) ID=99, 原厂模式): SYNC=0x01F4（期望 0x01F4），SCAL/SIDLE=['0x33', '0x36'] | SYNC4=0x01 -> SYNC5=0xF4 -> strobe(0x33) -> strobe(0x36)
+   [PASS] TX4(4B帧) ID=99 补丁版(密钥模式)：SYNC=0xD798 -> FIFO(4) -> SYNC=0x01F4 -> FIFO(4) -> SYNC=0xD798 | SYNC=0xD798 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0x01F4 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xD798
+   [PASS] TX2(2B短命令) ID=99 补丁版(密钥模式)：SYNC=0xD798 -> FIFO(2) -> SYNC=0x01F4 -> FIFO(2) -> SYNC=0xD798 | SYNC=0xD798 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0x01F4 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xD798
+   [PASS] TX4(4B帧) ID=5  补丁版(普通模式)：单发 FIFO(4) | FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36)
+   [PASS] TX2(2B短命令) ID=5  补丁版(普通模式)：单发 FIFO(2) | FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36)
+   [PASS] TX4(4B帧) ID=0  补丁版(普通模式)：单发 FIFO(4) | FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36)
+   [PASS] TX2(2B短命令) ID=0  补丁版(普通模式)：单发 FIFO(2) | FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36)
+   [PASS] TX4(4B帧) ID=99 原厂(自证)：单发 FIFO(4)（原厂行为）
+   [PASS] TX2(2B短命令) ID=99 原厂(自证)：单发 FIFO(2)（原厂行为）

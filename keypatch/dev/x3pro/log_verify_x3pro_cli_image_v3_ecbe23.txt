@@ -1,0 +1,138 @@
+X3 Pro v3「长按开关」私有密钥补丁 —— 独立验证
+原厂 : D:\神牛\devices/x3pro/firmware/X3pro_C_v1.22_app.bin
+成品 : C:\Users\22435\AppData\Local\Temp\x3pro_indep2\X3pro_C_v1.22_app_keyD798.bin
+密钥 : 0xD798   KEY_ON=1 时 KEY 帧 + floor(50024/(当前ID+1)) 帧双发
+
+## 1. 输入镜像 / 哈希
+  [PASS] 原厂镜像大小 1941020 B  | 实际 1941020
+  [PASS] 原厂镜像 sha256  | 2e2b8a3b5ff70e62c4acddc406b055ea2625e4833a213e81863f96c0da5a911b
+  [PASS] 成品镜像大小不变（原位补丁）  | 成品 1941020 B
+  [PASS] 成品 sha256 与 task-4 一致（v3）  | ecbe23e12890b22988ac608539c8e76eb3ac3456843c385f5e34cdef5359c39d
+  [PASS] --image 与 keypatch/out 成品逐字节一致  | 外部镜像对比
+
+## 2. 镜像基址判定（0x08020000）
+  [PASS] 向量表 [0] 初值 SP=0x20270000 落在 SRAM 区  | vec[0]=0x20270000
+  [PASS] 向量表 [1] Reset 向量为 Thumb 地址 0x08031345
+  [PASS] Reset 地址 - 基址 == 0x11344  | 实际 0x11344
+  [PASS] offset 0x11344 处是 Reset_Handler（首条 ldr.w sp,[pc,#..]）  | ldr.w sp, [pc, #0x34]
+  [PASS] Reset_Handler 载入的初值 SP 与向量表 [0] 一致  | 字面量@0x0803137C = 0x20270000
+  [PASS] 系统初始化把 SCB->VTOR 写成 0x08020000（应用向量表基址铁证）  | SCB 字面量@0x08030BFC；基址字面量@0x08030C04；str [SCB,#8]（VTOR）= 基址：是
+  [PASS] Reset_Handler 的 .data 源地址落在镜像内: ['0x081B05FC']
+  [PASS] 向量表 [7] 指向默认 handler 0x08031394 且为 b .  | b #0x8031394
+  [PASS] 所有非零向量表项（[0] 为 SP）均为 Thumb 奇数地址且落在镜像内  | 异常项 []
+  [PASS] 镜像 4 字节对齐字面量中 0x08020000 恰出现 1 次（VTOR 用）  | 位置 ['0x08030C04']
+
+## 3. 同步字函数 0x0802F040（边界 / 公式 / 序列）
+  [PASS] 函数头 = movs r2,#1; mov r3,r0; push {r4,lr}  | movs r2, #1 / mov r3, r0 / push {r4, lr}
+  [PASS] 0x0802F046 处原厂 10 字节 = movw r4,#0xC368; add r3,r2; udiv r4,r4,r3  | 原厂原字节 4c f2 68 34 13 44 b4 fb f3 f4
+  [PASS] 10 字节反汇编 = movw/add/udiv（常量 0xC368，r2=1 -> r3=ID+1）  | movw r4, #0xc368 / add r3, r2 / udiv r4, r4, r3
+  [PASS] 函数以 b.w delay_us 尾调用结束（0x0802F096）  | b.w #0x802b5dc
+  [PASS] 最后指令止于 0x0802F09A（长 0x5A），2B NOP 对齐后下一函数 0x0802F09C 以 push 开头  | push {r4, lr}
+  [PASS] 写 reg4(0x0802F05E)/reg5(0x0802F06E) + delay20/SCAL33/1ms/SIDLE36/700us 序列  | 0x0802F058:movs r0, #4 ; 0x0802F05E:bl #0x802e71c ; 0x0802F068:movs r0, #5 ; 0x0802F06E:bl #0x802e71c ; 0x0802F072:movs r0, #0x14 ; 0x0802F078:movs r0, #0x33 ; 0x0802F07E:mov.w r0, #0x3e8 ; 0x0802F086:movs r0, #0x36 ; 0x0802F08C:mov.w r0, #0x2bc
+
+## 4. 按键扫描入口 0x08027E44 / PA6 链路 / KEY_ON RAM
+  [PASS] 原厂 0x08027E44 4 字节 = push.w {r3..r11,lr}（2d e9 f8 4f）  | 实际 2d e9 f8 4f
+  [PASS] 成品 0x08027E44 = B.W -> inj_btn(0x081C0070)  | 字节 98 f1 14 b9
+  [PASS] 恢复点 0x08027E48 = 原 push.w 之后的原函数体起点（原厂字节 ldr r2,[pc,#..]）  | ldr r2, [pc, #0x254]
+  [PASS] 按键扫描入口静态调用点恰 1 处：main 0x0802B282 bl 0x08027E44  | 实际 [('0x802b282', 'bl')]
+  [PASS] main 主循环 0x0802B282 调用按键扫描（bl 目标 = 0x08027E44）  | bl #0x8027e44
+  [PASS] 原厂按键扫描读 PA6：movs r1,#0x40 + 字面量 GPIOA 0x42020000
+  [PASS] PA6 保持分支：lsls r3,r4,#0x1f; bmi.w 0x080282D6（r4 bit0=PA6）  | lsls r3, r4, #0x1f / bmi.w #0x80282d6
+  [PASS] PA6 保持块：计数器 0x20000F92 递增后 cmp #0x21，超阈值落入动作块 0x08028310  | adds/uxtb/cmp/bls 链
+  [PASS] KEY_ON/计数/latch 三地址在原厂全镜像无字面量引用（静态空白区）  | 0x20001096:[]; 0x20001098:[]; 0x2000109A:[]
+  [PASS] KEY_ON..latch 落在 .bss（0x20000440..0x2001AF38）内且三字节连续  | KEY_ON=0x20001096 +2 count +4 latch
+
+## 5. 全镜像写 CC2500 reg4/reg5 的唯一性
+  [PASS] write_reg 调用点 80 个，r0 常量回溯 79 个（1 个字节写 thunk 另行核对）  | 无法回溯 []
+  [PASS] 写 reg4/reg5 的调用点恰 4 处（初始化表 2 + 同步字函数 2）  | 实际 ['0x0802E950', '0x0802E962', '0x0802F05E', '0x0802F06E']
+  [PASS] 原厂无 burst 写 reg0x44  | 0x44 调用点 []
+  [PASS] 字节写 thunk 0x0802ECB4 的调用点也不写 reg4/5（r0=[0x18,6]）  | ['0x0802543C:r0=24', '0x08025450:r0=6']
+  [PASS] 初始化表 reg4 <- 0xC3、reg5 <- 0x68  | reg4=0xC3 reg5=0x68
+  [PASS] 成品新增唯一 write_reg 调用点 = 注入区 set_sync（reg=0x44 burst）  | 新增 ['0x081C00F2']
+
+## 6. 发送入口 0x0802EDC4 / 0x0802EE2C
+  [PASS] TX4 入口 = push {r4,lr}; bl radio_wake(0x0802EC64)  | push {r4, lr} / bl #0x802ec64
+  [PASS] TX2 入口 = push {r4,lr}; bl radio_wake
+  [PASS] TX4 函数体：FIFO(0x7F,4B) -> STX(0x35) -> 600us -> SFTX(0x3B) -> SIDLE(0x36)  | 0x0802EDE0=movs r2,#4 ; 0x0802EDE6=bl write_reg ; 0x0802EE1E=pop
+  [PASS] TX2 函数体：40us -> FIFO(0x7F,2B) -> STX -> 500us -> SFTX -> SIDLE  | 0x0802EE48=movs r0,#0x28 ; 0x0802EE54=bl write_reg ; 0x0802EE8C=pop
+  [PASS] TX4 静态引用：16 BL + 2 B.W 尾跳（总 18）
+  [PASS] TX2 静态引用：9 BL + 1 B.W 尾跳（总 10）
+  [PASS] TX4/TX2 入口覆盖后残留 2 字节 = 原 bl 后半（死字节，未改写）
+
+## 7. 成品差异范围（6 补丁点 + 注入区）
+  [PASS] 注入区实际代码长度 356 字节（0x164，原厂全 0xFF）  | 预留窗口 0x800
+  [PASS] 原厂注入窗口 0x081C0000..0x081C0800 全 0xFF
+  [PASS] 成品注入窗口剩余 1692 字节保持 0xFF
+  [PASS] 与原厂差异字节数 = 369（预期 369）  | 差异区间 ['0x07E44..0x07E47', '0x0830A..0x0830A', '0x0EDC4..0x0EDC7', '0x0EE2C..0x0EE2F', '0x0F046..0x0F04F', '0x1A0000..0x1A00FD', '0x1A00FF..0x1A0117', '0x1A0119..0x1A0125', '0x1A0127..0x1A0128', '0x1A012A..0x1A0133', '0x1A0135..0x1A0136', '0x1A0138..0x1A0145', '0x1A0147..0x1A0148', '0x1A014A..0x1A0153', '0x1A0155..0x1A0156', '0x1A0158..0x1A0163']
+  [PASS] 0x0802EDC4 原厂字节 = 10 b5 ff f7  | 实际 10 b5 ff f7
+  [PASS] 0x0802EE2C 原厂字节 = 10 b5 ff f7  | 实际 10 b5 ff f7
+  [PASS] 0x0802F046 原厂字节 = 4c f2 68 34 13 44 b4 fb f3 f4  | 实际 4c f2 68 34 13 44 b4 fb f3 f4
+  [PASS] 0x08027E44 原厂字节 = 2d e9 f8 4f  | 实际 2d e9 f8 4f
+  [PASS] 0x0802830A 原厂字节 = 21 2b  | 实际 21 2b
+  [PASS] 0x0802830A 只改 1 个字节（21 -> ff；任务书按 2 字节指令描述）  | 成品 ff 2b
+  [PASS] 差异仅落在 6 个补丁点与注入区代码内（无其它字节变化）
+
+## 8. 注入区反汇编核对（包装 / 蹦床顺序 / 栈 / KEY_ON / PA6 mask）
+  [PASS] 注入区线性反汇编覆盖 356 字节（118 条指令，无空洞）
+  [PASS] 注入区 109 个关键指令锚点（含 6 个包装/蹦床入口与分支目标）逐条一致
+  [PASS] KEY=0xD798：movw r4 1 次 + movw r0 3 次  | r4=1 r0=3
+  [PASS] 第二帧同步字动态计算：注入区无固定 0x01F4，set_ord 用 0xC368/(ID+1) 的 udiv  | 0x1F4 固定常量出现 0 次
+  [PASS] KEY_ON 地址 0x20001096 由 movw/movt 4 次访问；计数 0x1098 2 次、latch 0x109A 3 次  | 1096=4 1098=2 109a=3
+  [PASS] PA6 读取参数：GPIOA 0x42020000 + mask 0x40（movw r0,#0/movt r0,#0x4202/movs r1,#0x40）
+  [PASS] 长按阈值 34（cmp #0x22）与翻转指令（ldrb/movs 1/eors/strb）齐备
+  [PASS] 注入区无关中断指令（cpsid/cpsie，属残余风险记录）
+  [PASS] 静态栈配对：8 个 push {r4,lr} / 6 个 pop {r4,pc}（每个函数路径平衡）  | push=8 pop=6
+  [PASS] 蹦床顺序：push -> bl 0x0802EC64(唤醒) -> 写同步字/恢复 -> b.w 原函数体  | 0x081C011C:OK; 0x081C012E:OK; 0x081C013C:OK; 0x081C014E:OK; 0x081C015C:OK
+  [PASS] inj_btn 恢复原厂 push.w（10 寄存器）-> b.w 0x08027E48 执行原厂扫描体
+  [PASS] TX 包装恢复 KEY：两个包装代码路径均 bl set_key（0x081C00FA）
+  [PASS] TX 普通模式也先写原厂同步字再单发（beq -> bl tramp*_ord）
+
+## 9. 原厂 PA6 长按关机的禁用（0x0802830A）
+  [PASS] 0x0802830A 原厂 = cmp r3,#0x21，成品 = cmp r3,#0xFF  | 原厂 21 2b -> 成品 ff 2b
+  [PASS] r3 在比较前已 uxtb（0..255），cmp #0xFF 后 bls 恒成立 -> 动作块被跳过  | uxtb=True bls->0x08027FEE=True
+  [PASS] 动作块 0x08028310 在原厂无任何分支目标（唯一入口是 0x0802830A 的 fall-through）  | 发现 []
+  [PASS] 关机调用路径 0x0802852A 唯一分支来源 = 0x0802832A（动作块内部）  | 实际 [('0x802832a', 'beq.w')]
+  [PASS] 代码中 cmp r3,#0x21 出现在 0x0802830A（PA6 长按关机闸门）与 0x080284F2（另一状态分支）  | 2 字节对齐共 4 处，含 0x0802830A / 0x080284F2
+  [PASS] 第二处 0x080284F2 未打补丁，但其动作块不直接调用关机 0x0802B7D0（仅置状态/标志）  | 0x080284FA 起 0x12 字节内无关机调用
+
+## 10. 空闲闪存 / 引用扫描
+  [PASS] 原厂 0x081B0A30..0x081F4000 全 0xFF（275920 字节）
+  [PASS] 原厂无字面量引用 0x081C0000..0x081C0800  | 发现 []
+  [PASS] 原厂无分支目标落入 0x081C0000..0x081C0800  | 发现 []
+  [PASS] 成品注入区外部分支入口恰为 4 个补丁点（无其它跳入）  | 实际 [('0x8027e44', 'b.w', '0x81c0070'), ('0x802edc4', 'b.w', '0x81c0028'), ('0x802ee2c', 'b.w', '0x81c004c'), ('0x802f046', 'b.w', '0x81c0000')]
+  [PASS] 成品无字面量引用注入窗口  | 发现 []
+
+## 11. Unicorn：KEY_ON 开关语义 / 双发 / 原厂自证
+  [PASS] 原厂镜像自证：set_sync(ID)=floor(50024/(ID+1))，reg4/reg5 单写 + 时序/栈不变  | ID=0 =0xC368; ID=1 =0x61B4; ID=2 =0x4122; ID=37=0x0524; ID=50=0x03D4; ID=73=0x02A4; ID=98=0x01F9; ID=99=0x01F4
+  [PASS] 补丁版 set_sync KEY_ON=0：ID -> 原厂公式  | ID=0 =0xC368; ID=1 =0x61B4; ID=2 =0x4122; ID=37=0x0524; ID=50=0x03D4; ID=73=0x02A4; ID=98=0x01F9; ID=99=0x01F4
+  [PASS] 补丁版 set_sync KEY_ON=1：所有 ID -> KEY(0xD798)  | ID=0 =0xD798; ID=1 =0xD798; ID=2 =0xD798; ID=37=0xD798; ID=50=0xD798; ID=73=0xD798; ID=98=0xD798; ID=99=0xD798
+  [PASS] 原厂镜像自证 TX4：wake + 单发（无 SYNC 写入）  | wake FIFO(4) strobe(0x35) delay(600) strobe(0x3B) strobe(0x36)
+  [PASS] 原厂镜像自证 TX2：wake + 单发（无 SYNC 写入）  | wake delay(40) FIFO(2) strobe(0x35) delay(500) strobe(0x3B) strobe(0x36)
+  [PASS] 补丁版 KEY_ON=0：TX 单发且首帧前写原厂同步字（随当前 ID 动态）  | ID=0  sync=0xC368 OK; ID=1  sync=0x61B4 OK; ID=37 sync=0x0524 OK; ID=99 sync=0x01F4 OK
+  [PASS] 补丁版 KEY_ON=1：SYNC=KEY -> 发 -> SYNC=floor(50024/(ID+1)) -> 发 -> SYNC=KEY  | ID=0  第二帧=0xC368 OK; ID=1  第二帧=0x61B4 OK; ID=37 第二帧=0x0524 OK; ID=99 第二帧=0x01F4 OK
+  [PASS] 第二帧同步字确实随 ID 变化（ID=0 -> 0xC368，ID=37 -> 0x0524，非固定 0x01F4）
+  [PASS] 双发两帧的同步字写入均发生在 bl 0x0802EC64 唤醒之后（新旧设计关键点）  | 前两事件 [('wake',), ('sync', 55192)] / 第二帧 [('wake',), ('sync', 50024)]
+  [PASS] 2B 短命令每帧发射次数：原厂 1 / KEY_ON=0 1 / KEY_ON=1 2（双发仅密钥模式）
+
+## 12. Unicorn：按键长按注入逻辑（到 0x08027E48 即停）
+  [PASS] 按键注入 5 用例：松开复位 / 第1次 / 第34次翻转 / 第35次不翻转 / 再按一次关  | 松开复位 -> (0, 0, 0); 第 1 次按下 -> (0, 1, 0); 第 34 次按下翻转 -> (1, 34, 1); 第 35 次（latch 已置，不翻转） -> (1, 34, 1); 再按住 34 次关闭 -> (0, 34, 1)
+  [PASS] 注入逻辑读取 PA6：gpio_read(0x42020000, 0x40)（返回 0=按下）  | gpio_read(0x42020000,0x40)->0
+  [PASS] 34 次连续扫描（按住 PA6）在第 34 次翻转 KEY_ON=1，第 35..40 次保持不变  | 翻转于第 34 次，最终 key_on=1 cnt=34
+  [PASS] 松开一次（计数/latch 复位）后再按 34 次：KEY_ON 翻回 0（密钥模式可关闭）  | 松开后 count=34 latch=1，再按翻转于第 34 次
+
+## 汇总
+  1. 输入镜像 / 哈希                                   PASS  5 /  5
+  2. 镜像基址判定（0x08020000）                          PASS 10 / 10
+  3. 同步字函数 0x0802F040（边界 / 公式 / 序列）              PASS  6 /  6
+  4. 按键扫描入口 0x08027E44 / PA6 链路 / KEY_ON RAM     PASS 10 / 10
+  5. 全镜像写 CC2500 reg4/reg5 的唯一性                  PASS  6 /  6
+  6. 发送入口 0x0802EDC4 / 0x0802EE2C                PASS  7 /  7
+  7. 成品差异范围（6 补丁点 + 注入区）                         PASS 11 / 11
+  8. 注入区反汇编核对（包装 / 蹦床顺序 / 栈 / KEY_ON / PA6 mask） PASS 13 / 13
+  9. 原厂 PA6 长按关机的禁用（0x0802830A）                  PASS  6 /  6
+  10. 空闲闪存 / 引用扫描                                PASS  5 /  5
+  11. Unicorn：KEY_ON 开关语义 / 双发 / 原厂自证            PASS 10 / 10
+  12. Unicorn：按键长按注入逻辑（到 0x08027E48 即停）          PASS  4 /  4
+
+总计: PASS=93  FAIL=0
+结论: PASS —— 全部独立检查通过

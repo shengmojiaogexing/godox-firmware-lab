@@ -1,0 +1,121 @@
+V1C_V2.0.bin 补丁点 Unicorn 调用级独立验证（audit_unicorn.py）
+固件 : D:\神牛\devices\v1c\firmware\V1C_V2.0.bin
+Python: 3.11.9
+Unicorn: 2.1.4
+镜像 : 88032 字节 sha256=4435dda84903cb97cfaf34f7eeb15ecb6168771d60b57da1c346e6a9ca36edfb
+harness: 执行 0x080121BC|1；r0=ID；桩替换 WriteReg(0x080156CE)/strobe(0x08015790)/delay(0x08015440)；__aeabi_uidiv(0x080030F0) 保留真实代码
+
+==============================================================================
+1. 原厂镜像自证（同一 harness 必须还原原厂行为 + SCAL/1ms）
+==============================================================================
+[PASS] ID=0  原厂: sync=0xC368 (50024//1) | WriteReg(4,0xC3) -> WriteReg(5,0x68) -> delay(20) -> strobe(0x33) -> delay(1000)
+[PASS] ID=0 原厂 sync = 0xC368 = 50024（不是 KEY；说明 ID=0->KEY 是补丁才有的行为）
+[PASS] ID=1  原厂: sync=0x61B4 (50024//2) | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20) -> strobe(0x33) -> delay(1000)
+[PASS] ID=5  原厂: sync=0x2091 (50024//6) | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20) -> strobe(0x33) -> delay(1000)
+[PASS] ID=37 原厂: sync=0x0524 (50024//38) | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20) -> strobe(0x33) -> delay(1000)
+[PASS] ID=99 原厂: sync=0x01F4 (50024//100) | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20) -> strobe(0x33) -> delay(1000)
+
+==============================================================================
+2. 补丁镜像：ID==0 -> KEY；ID=1/5/37/99 -> 50024//(ID+1)（无 SCAL/1ms）
+==============================================================================
+
+==============================================================================
+KEY = 0xD798（手工构造 56 字节补丁）
+==============================================================================
+[PASS] 补丁后镜像长度 88032 字节不变
+[PASS] 0x080121BC..0x080121F3 补丁区与 build_patch_blob() 完全一致
+[PASS] 与原厂差异 48 字节，全部落在 0x0F1BC..0x0F1F3（区外 0 处）
+[PASS] 差异字节数 = 48（48B 代码 + KEY 字面量改变；50024 与原厂同值）
+[PASS] ID=0  密钥模式（ID==0 -> KEY）: sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98) -> delay(20)
+[PASS] ID=0  补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=0 补丁 sync=0xD798 == KEY，且 != 原厂值 0xC368
+[PASS] ID=1  原厂公式: sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20)
+[PASS] ID=1  补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=1  补丁 sync=0x61B4 != KEY 0xD798（普通模式未误入密钥分支）
+[PASS] ID=5  原厂公式: sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20)
+[PASS] ID=5  补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=5  补丁 sync=0x2091 != KEY 0xD798（普通模式未误入密钥分支）
+[PASS] ID=37 原厂公式: sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20)
+[PASS] ID=37 补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=37 补丁 sync=0x0524 != KEY 0xD798（普通模式未误入密钥分支）
+[PASS] ID=99 原厂公式: sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20)
+[PASS] ID=99 补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=99 补丁 sync=0x01F4 != KEY 0xD798（普通模式未误入密钥分支）
+[PASS] ID=0 在两个 KEY 下同步字分别为 0xD798 / 0xA5C3（KEY 字面量生效）
+
+==============================================================================
+KEY = 0xA5C3（手工构造 56 字节补丁）
+==============================================================================
+[PASS] 补丁后镜像长度 88032 字节不变
+[PASS] 0x080121BC..0x080121F3 补丁区与 build_patch_blob() 完全一致
+[PASS] 与原厂差异 48 字节，全部落在 0x0F1BC..0x0F1F3（区外 0 处）
+[PASS] 差异字节数 = 48（48B 代码 + KEY 字面量改变；50024 与原厂同值）
+[PASS] ID=0  密钥模式（ID==0 -> KEY）: sync=0xA5C3 -> SYNC1=0xA5 SYNC0=0xC3 | WriteReg(4,0xA5) -> WriteReg(5,0xC3) -> delay(20)
+[PASS] ID=0  补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=0 补丁 sync=0xA5C3 == KEY，且 != 原厂值 0xC368
+[PASS] ID=1  原厂公式: sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20)
+[PASS] ID=1  补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=1  补丁 sync=0x61B4 != KEY 0xA5C3（普通模式未误入密钥分支）
+[PASS] ID=5  原厂公式: sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20)
+[PASS] ID=5  补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=5  补丁 sync=0x2091 != KEY 0xA5C3（普通模式未误入密钥分支）
+[PASS] ID=37 原厂公式: sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20)
+[PASS] ID=37 补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=37 补丁 sync=0x0524 != KEY 0xA5C3（普通模式未误入密钥分支）
+[PASS] ID=99 原厂公式: sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20)
+[PASS] ID=99 补丁序列恰 3 次辅助调用（WriteReg x2 + delay(20)），无 SCAL(0x33)、无 delay(1000)
+[PASS] ID=99 补丁 sync=0x01F4 != KEY 0xA5C3（普通模式未误入密钥分支）
+[PASS] ID=0 在两个 KEY 下同步字分别为 0xA5C3 / 0xD798（KEY 字面量生效）
+[PASS] KEY=0xD798 对照：ID=5 原厂=0x2091 补丁=0x2091（一致）；ID=0 补丁=0xD798（KEY）
+[PASS] KEY=0xA5C3 对照：ID=5 原厂=0x2091 补丁=0x2091（一致）；ID=0 补丁=0xA5C3（KEY）
+
+==============================================================================
+3. 与 keypatch/devices/v1c.py 现行实现的只读对照（若存在）
+==============================================================================
+模块 : D:\神牛\keypatch\devices\v1c.py
+sha256: 917809d69cfae374a4dc40e3d92a03e2b616efbcefedc1227cde3ca80329093b
+[PASS] 模块 BASE = 0x08003000（本审计 0x08003000）
+[PASS] 模块函数区间 0x080121BC..0x080121F4（本审计 0x080121BC..0x080121F4）
+[PASS] 模块 ORIG_FUNC 与原厂 56 字节一致（apply 前逐字节校验）
+[PASS] 模块辅助函数地址 uidiv/WriteReg/strobe/delay = 0x080030F0/0x080156CE/0x08015790/0x08015440
+
+---- 模块实现 KEY=0xD798 ----
+[PASS] 模块输出：函数体 56 B、镜像 88032 B（长度不变）
+[PASS] 模块字面量：KEY@+0x30 = 0xD798，50024@+0x34 = 50024（原厂同址）
+[PASS] 模块补丁区与 build_sync_function() 一致；与原厂差异 46 字节全在区内
+[PASS] 模块实现：代码+对齐填充结束于 0x080121EC（KEY 字面量在 +0x30，不重叠）
+[PASS] 模块 BL 目标 = ['0x080030F0', '0x080156CE', '0x080156CE', '0x08015440']（uidiv/WriteReg x2/delay）
+[PASS] 模块 KEY=0xD798 ID=0 : sync=0xD798 | WriteReg(4,0xD7) -> WriteReg(5,0x98) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+[PASS] 模块 KEY=0xD798 ID=1 : sync=0x61B4 | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+[PASS] 模块 KEY=0xD798 ID=5 : sync=0x2091 | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+[PASS] 模块 KEY=0xD798 ID=37: sync=0x0524 | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+[PASS] 模块 KEY=0xD798 ID=99: sync=0x01F4 | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+
+---- 模块实现 KEY=0xA5C3 ----
+[PASS] 模块输出：函数体 56 B、镜像 88032 B（长度不变）
+[PASS] 模块字面量：KEY@+0x30 = 0xA5C3，50024@+0x34 = 50024（原厂同址）
+[PASS] 模块补丁区与 build_sync_function() 一致；与原厂差异 46 字节全在区内
+[PASS] 模块实现：代码+对齐填充结束于 0x080121EC（KEY 字面量在 +0x30，不重叠）
+[PASS] 模块 BL 目标 = ['0x080030F0', '0x080156CE', '0x080156CE', '0x08015440']（uidiv/WriteReg x2/delay）
+[PASS] 模块 KEY=0xA5C3 ID=0 : sync=0xA5C3 | WriteReg(4,0xA5) -> WriteReg(5,0xC3) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+[PASS] 模块 KEY=0xA5C3 ID=1 : sync=0x61B4 | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+[PASS] 模块 KEY=0xA5C3 ID=5 : sync=0x2091 | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+[PASS] 模块 KEY=0xA5C3 ID=37: sync=0x0524 | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+[PASS] 模块 KEY=0xA5C3 ID=99: sync=0x01F4 | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20)
+[PASS] 模块实现与本审计独立构造在该用例行为一致（仅布局可不同）
+
+==============================================================================
+汇总
+==============================================================================
+检查项: 82   PASS: 82   FAIL: 0
+
+结论: PASS（Unicorn 调用级验证全部通过）

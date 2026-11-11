@@ -45,6 +45,10 @@ def verify(patched: bytes, key: int) -> list[tuple[bool, str]]:
 - 补丁点、推导过程、验证证据写到 `keypatch/dev/<id>/NOTES.md`。
 - 完成的成品 bin 统一由 `keypatch.py patch / patch-all` 输出到 `keypatch/out/`；
   加 `--container` 会额外生成 `*_container.bin`（G3 V2.0 容器备用件）。
+- **原厂文件本身就是 G3 V2.0 容器的设备**（如 X2T-C）请在 `DEVICE` 里声明
+  `"container_builtin": True`：`apply()` 负责拆容器、改 payload、重算 MD5 并封回，
+  CLI/studio 会自动跳过额外的容器打包（避免二次套壳），`list_devices()` 里
+  `features.container` 也会置为 `False`。
 
 ---
 
@@ -54,7 +58,7 @@ def verify(patched: bytes, key: int) -> list[tuple[bool, str]]:
 
 ### `DEVICE_IDS`
 
-已注册设备 id 的列表（顺序即展示顺序）：`["ad100", "ad200", "x3c"]`。
+已注册设备 id 的列表（顺序即展示顺序）：`["ad100", "ad200", "x3c", "x3pros", "x3s", "v1c", ...]`。
 新增设备时追加 id 并在 `keypatch/devices/` 下新建同名模块。
 
 ### `get(device_id) -> module | None`
@@ -111,7 +115,7 @@ def verify(patched: bytes, key: int) -> list[tuple[bool, str]]:
 - 加载失败的设备**不会**出现在返回值里，错误可通过 `list_load_errors() -> list[dict]` 读取：
 
 ```python
-[{"id": "v1c", "stage": "import", "error": "ModuleNotFoundError: No module named 'devices.v1c'"}]
+[{"id": "v862c", "stage": "import", "error": "ModuleNotFoundError: No module named 'devices.v862c'"}]
 ```
 
 stdio 示例：

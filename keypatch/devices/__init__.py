@@ -25,7 +25,7 @@ import importlib
 import os
 
 # 已注册的设备 id（顺序 = CLI / studio 里的展示顺序；保持与旧版一致）。
-DEVICE_IDS = ["ad100", "ad200", "x3c"]
+DEVICE_IDS = ["ad100", "ad200", "x3c", "x3pro", "x3pros", "x3s", "v1c", "v1s", "v860iiic", "v860iiis", "ad300", "x2tc", "x2ts"]
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 KEYPATCH_DIR = os.path.dirname(_HERE)          # <repo>/keypatch
@@ -195,9 +195,12 @@ def list_devices() -> list[dict]:
                 # 现在就能生成补丁：模块在 + 固件在 + sha256 对得上（未声明 sha256 时只要求存在）
                 "available": bool(present and matches is not False),
                 "firmware": firmware,
+                # 原厂文件本身即 G3 V2.0 容器（如 X2T-C）：apply() 已就地重算 MD5 封好，
+                # CLI/studio 不应再套一层容器。
+                "container_builtin": bool(info.get("container_builtin")),
                 "features": {
                     "verify": callable(getattr(mod, "verify", None)),
-                    "container": True,                        # keypatch/container.py 对所有设备可用
+                    "container": (not bool(info.get("container_builtin"))),
                 },
             }
         except Exception as exc:  # noqa: BLE001

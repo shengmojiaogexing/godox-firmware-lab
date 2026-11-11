@@ -44,27 +44,42 @@ def lead_cross_check(device_id: str, patched: bytes, key: int) -> list[tuple[boo
       * ad100 v4：读 RAM 0x20000486（C.Fn 预留槽），flag=1 -> KEY，flag=0 -> 原厂公式；
       * ad200 v2：灯 ID=0 -> KEY，ID>=1 -> 原厂公式；
       * x3c v2/v3：双发语义，由 devices/x3c.py 的 verify 覆盖，这里跳过。
+  * x3pros：ID=99 双发语义，由 devices/x3pros.py 的 verify 覆盖，这里跳过。
     """
     sys.path.insert(0, os.path.join(HERE, "dev", "lead"))
     try:
         from call_harness import DEVICES, run
     except Exception as e:  # noqa: BLE001
         return [(False, "Lead harness 不可用: %s" % e)]
-    if device_id not in DEVICES or device_id == "x3c":
-        # X3-C 的 v2 是双发语义，由 devices/x3c.py 的 verify 覆盖；这里跳过
+    if device_id not in DEVICES or device_id in ("x3c", "x3pros"):
+        # X3-C / X3 Pro S 的密钥模式是双发语义，由设备模块 verify 覆盖；这里跳过
         return [(True, "（%s 的 Lead 交叉验证由设备模块 verify 覆盖）" % device_id)]
 
     out: list[tuple[bool, str]] = []
+    # 灯的「密钥开关」语义：设备模块可用 KEY_FLAG_ADDR 声明自己的开关字节；
+    # 未声明时按 v2 语义（ID==0 -> KEY）验证。
     flag_addrs = {"ad100": 0x20000486, "ad200": 0x2000041F}
+    try:
+        flag_addr = getattr(devs.load(device_id), "KEY_FLAG_ADDR", None)
+    except Exception:  # noqa: BLE001
+        flag_addr = None
+    if isinstance(flag_addr, int) and 0x20000000 <= flag_addr < 0x20010000:
+        flag_addrs[device_id] = flag_addr
+        try:
+            on_value = int(getattr(devs.load(device_id), "KEY_FLAG_ON_VALUE", 1))
+        except Exception:  # noqa: BLE001
+            on_value = 1
+    else:
+        on_value = 1
     if device_id in flag_addrs:
         flag_addr = flag_addrs[device_id]
-        # flag=1 时任意 ID 都应写 KEY
+        # flag=ON_VALUE 时任意 ID 都应写 KEY
         res = run(device_id, patched, ids=(0, 1, 37, 99), key=key,
-                  pre_ram={flag_addr: b"\x01"})
+                  pre_ram={flag_addr: bytes([on_value & 0xFF])})
         for ident, r in res.items():
             got = r[0] if isinstance(r[0], int) else -1
-            out.append((got == key, "flag=1: ID=%-2d sync=0x%04X 期望 0x%04X"
-                        % (ident, got, key)))
+            out.append((got == key, "flag=0x%02X(ON): ID=%-2d sync=0x%04X 期望 0x%04X"
+                        % (on_value, ident, got, key)))
         # flag=0 时回到原厂公式（含 ID=0 -> 50024）
         res = run(device_id, patched, ids=(0, 1, 37, 99), key=key,
                   pre_ram={flag_addr: b"\x00"})

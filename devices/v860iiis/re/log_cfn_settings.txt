@@ -1,0 +1,220 @@
+﻿
+== 1. 固件身份 ==
+PASS  镜像长度（实际=0x135C4 期望=0x135C4）
+PASS  镜像末端 = base + size（实际=0x80165C4 期望=0x80165C4）
+PASS  sha256（实际='bdc8f3547808d121f15a6c58b9363c5792c957c2dce2a16b203276ab078d0b20' 期望='bdc8f3547808d121f15a6c58b9363c5792c957c2dce2a16b203276ab078d0b20'）
+PASS  向量[0] 初值 SP（实际=0x20001548 期望=0x20001548）
+PASS  向量[1] Reset（Thumb 位已清）（实际=0x80030D4 期望=0x80030D4）
+
+== 2. settings 基址 / 12 项布局 / item6=ID / item8=LIGHT / 最大值表 ==
+PASS  settings 基址 0x20001058 的 u32 字面量数量（实际=0x1E 期望=0x1E）
+PASS  settings 字面量池位置集合与预期一致（实际={134288640, 134278276, 134252684, 134281228, 134277908, 134242080, 134246048, 134235940, 134240420, 134281896, 134236972, 134232624, 134289840, 134299696, 134250808, 134240704, 134280768, 134249288, 134233548, 134237516, 134241872, 134250196, 134298836, 134241624, 134269144, 134293848, 134271324, 134277860, 134279524, 134231676} 期望={134288640, 134240704, 134280768, 134278276, 134249288, 134252684, 134281228, 134233548, 134237516, 134241872, 134277908, 134250196, 134298836, 134241624, 134269144, 134293848, 134271324, 134242080, 134246048, 134235940, 134240420, 134277860, 134279524, 134281896, 134236972, 134232624, 134289840, 134299696, 134250808, 134231676}）
+PASS  LDR 引用 settings 字面量池的指令数（实际=0x2A 期望=0x2A）
+PASS  item6(ID) 地址 = settings+6（实际=0x2000105E 期望=0x2000105E）
+PASS  item8(LIGHT) 地址 = settings+8（实际=0x20001060 期望=0x20001060）
+PASS  递减 handler: ldr r0,[pc,#0x330] -> settings（实际='cc 48' 期望='cc 48'）
+PASS  递减 handler settings 字面量池 = 0x20001058（实际=0x20001058 期望=0x20001058）
+PASS  递减 handler: ldr r2,[pc,#0x324] -> &item_idx（实际='c9 4a' 期望='c9 4a'）
+PASS  递减 handler 项索引指针 = 0x200004D6（实际=0x200004D6 期望=0x200004D6）
+PASS  递增 handler: ldr r0,[pc,#0x36c] -> settings（实际='db 48' 期望='db 48'）
+PASS  递增 handler settings 字面量池 = 0x20001058（实际=0x20001058 期望=0x20001058）
+PASS  递增 handler: ldr r1,[pc,#0x360] -> &item_idx（实际='d8 49' 期望='d8 49'）
+PASS  递增 handler 项索引指针 = 0x200004D6（实际=0x200004D6 期望=0x200004D6）
+PASS  最大值/回绕表 0x08016102 的 12 字节（实际='01 01 01 01 01 1f 63 01 02 06 01 01' 期望='01 01 01 01 01 1f 63 01 02 06 01 01'）
+PASS  最大值表字面量池位置（实际={134279520, 134241636, 134269156} 期望={134279520, 134241636, 134269156}）
+PASS  3 个 LDR 引用最大值表的指令（实际=[134240874, 134268294, 134279302] 期望=[134240874, 134268294, 134279302]）
+PASS  CFN_MAX 解码（实际=(1, 1, 1, 1, 1, 31, 99, 1, 2, 6, 1, 1) 期望=(1, 1, 1, 1, 1, 31, 99, 1, 2, 6, 1, 1)）
+PASS  clamp 循环 cmp r0,#0xC（12 项）（实际='0c 28' 期望='0c 28'）
+
+== 3. 同步字函数 0x080115B8（56B）与调用点 ==
+PASS  同步字函数入口 12 字节（实际='0c 4a 10 b5 41 1c 10 46 f1 f7 96 fd' 期望='0c 4a 10 b5 41 1c 10 46 f1 f7 96 fd'）
+PASS  同步字函数长度（到下一函数 0x080115F0）（实际=0x38 期望=0x38）
+PASS  字面量 50024 @0x080115EC（实际=0xC368 期望=0xC368）
+PASS  函数尾 bl delay + pop {r4,pc} + 50024 字面量（实际='57 f8 10 bd 68 c3' 期望='57 f8 10 bd 68 c3'）
+PASS  全镜像 BL 到同步字函数的 5 个调用点（实际=(134240888, 134241846, 134268354, 134271162, 134271206) 期望=(134240888, 134241846, 134268354, 134271162, 134271206)）
+PASS  调用点 0x08005A78 前一指令为 ldrb r0,[settings,#6]（settings[6]）
+PASS  调用点 0x08005E36 前一指令为 ldrb r0,[settings,#6]（settings[6]）
+PASS  调用点 0x0800C5C2 前一指令为 ldrb r0,[settings,#6]（settings[6]）
+PASS  调用点 0x0800D0BA 前一指令为 ldrb r0,[settings,#6]（settings[6]）
+PASS  调用点 0x0800D0E6 前一指令为 ldrb r0,[settings,#6]（settings[6]）
+
+== 4. C.Fn 递减/递增 handler 与 gate 角色 ==
+PASS  递减 handler 0x080059E4 入口 push {r3-r7,lr}（实际='f8 b5' 期望='f8 b5'）
+PASS  递增 handler 0x0800C528 入口 push {r3-r7,lr}（实际='f8 b5' 期望='f8 b5'）
+PASS  递减 handler 由键事件分发 0x080058E4 调用
+PASS  递增 handler 由键事件分发 0x080058E4 调用
+PASS  递减 gate: cmp r1,#6; bne skip; ldrb r0,[r0,#6]（实际='06 29 02 d1 80 79' 期望='06 29 02 d1 80 79'）
+PASS  递增 gate: cmp r1,#6; bne skip; ldrb r0,[r0,#6]（实际='06 29 f5 d1 80 79 04 f0' 期望='06 29 f5 d1 80 79 04 f0'）
+PASS  递减 gate 前 cmp #6 在 0x08005A72（实际='06 29' 期望='06 29'）
+PASS  递减 gate 后 ldrb + bl sync（实际='80 79 0b f0 9e fd' 期望='80 79 0b f0 9e fd'）
+PASS  递增 gate 后 ldrb + bl sync（实际='80 79 04 f0 f9 ff' 期望='80 79 04 f0 f9 ff'）
+PASS  递减：值路径 cmp r1,#9; beq LCD 专用（实际='09 29 15 d0' 期望='09 29 15 d0'）
+PASS  递减：回绕路径 cmp r1,#9; beq LCD 专用（实际='09 29 09 d0' 期望='09 29 09 d0'）
+PASS  递增：回绕路径 cmp r2,#9; beq LCD 专用（实际='09 2a 09 d0' 期望='09 2a 09 d0'）
+PASS  递增：正常路径 cmp r2,#9; beq LCD 专用（实际='09 2a 06 d0' 期望='09 2a 06 d0'）
+PASS  递减 item9 分支调用 0x080128F0
+PASS  递增 item9 分支调用 0x080128F0
+PASS  递减 gate 前 ldrb r1,[r2]（r2=&item_idx）（实际='11 78' 期望='11 78'）
+PASS  递增 gate 前 ldrb r1,[r1]（r1=&item_idx）（实际='09 78' 期望='09 78'）
+PASS  递减：索引 0 -> 9（实际='09 20 10 70' 期望='09 20 10 70'）
+PASS  递增：索引 +1 后 cmp #9 / 越界写 0（实际='09 2a 04 d9 0c 70' 期望='09 2a 04 d9 0c 70'）
+PASS  递增：索引 >9 -> 0（实际='0c 70' 期望='0c 70'）
+PASS  settings 侧 12 项（上限表/clamp/持久化均 12+）（实际=0xC 期望=0xC）
+INFO  菜单可编辑索引范围 0..9（10 行）；item10/11 无菜单改值路径，但仍在 settings/记录中（LIGHT=8、ID=6 均在可达范围）
+
+== 5. 补丁方案字节 / 差异范围 / 代码洞 ==
+PASS  方案(a) 与原厂差异恰为 2 处 NOP 共 4 字节（实际=[10868, 10869, 38334, 38335] 期望=[10868, 10869, 38334, 38335]）
+PASS  方案(a) 递减 gate 改为 00 bf（实际='00 bf' 期望='00 bf'）
+PASS  方案(a) 递增 gate 改为 00 bf（实际='00 bf' 期望='00 bf'）
+PASS  方案(a) 固件长度不变（实际=0x135C4 期望=0x135C4）
+PASS  方案(b) 递减 gate 的 BL 编码（实际='10 f0 22 fc' 期望='10 f0 22 fc'）
+PASS  方案(b) 递增 gate 的 BL 编码（实际='09 f0 7d fe' 期望='09 f0 7d fe'）
+PASS  方案(b) hook 16 字节（实际='1f b5 80 79 fb f7 7b f9 1f bc 01 bc 06 30 00 47' 期望='1f b5 80 79 fb f7 7b f9 1f bc 01 bc 06 30 00 47'）
+PASS  方案(b) 差异只落在 2 处 gate(4B×2) + hook 区(16B)（实际=[] 期望=[]）
+PASS  方案(b) 实际差异 23 字节（BL 编码与部分原字节重合）
+PASS  hook 反汇编指令序列（实际=['push', 'ldrb', 'bl', 'pop', 'pop', 'adds', 'bx'] 期望=['push', 'ldrb', 'bl', 'pop', 'pop', 'adds', 'bx']）
+PASS  hook 内 BL 目标 = 同步字函数（实际=0x80115B8 期望=0x80115B8）
+PASS  备选洞 0x080162BA 起 16B 全 0x00（实际=00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 期望=00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00）
+PASS  备选洞：无 BL/分支目标指入（实际=[] 期望=[]）
+PASS  备选洞：代码区无 LDR 字面量指向（实际=[] 期望=[]）
+PASS  备选洞：无 u32 绝对地址（含 Thumb 变体）指向（实际=[] 期望=[]）
+INFO  备选洞 0x080162B9..0x08016328 为数据段尾部 0x00 padding（112B）；线性反汇编命中的 LDR 池共 1 处（0x080161EE/0x0801624C/0x0801624E），源地址本身位于数据区（>0x08016000），属数据误码，不能据此证明死区；正式补丁采用方案 (a)，不需要代码洞。
+
+== 6. settings[8]=LIGHT 原厂读者（造型灯任务）/ 写者 / 屏蔽点 ==
+PASS  造型灯任务 0x08003950 入口 push {r3-r7,lr}（实际='f8 b5' 期望='f8 b5'）
+PASS  造型灯任务使用 GPIO 基址 0x48001000（LIGHT 同 V1C）（实际=0x48001000 期望=0x48001000）
+PASS  主循环调用造型灯任务（0x08013DB2）（实际='ef f7 cd fd' 期望='ef f7 cd fd'）
+PASS  LIGHT 读者 1 原字节 00 7a（实际='00 7a' 期望='00 7a'）
+PASS  LIGHT 读者 2 原字节 01 7a（实际='01 7a' 期望='01 7a'）
+PASS  读者 1 后 cmp r0,#1（LIGHT=OFF 分支）（实际='01 28' 期望='01 28'）
+PASS  读者 2 后 cmp r1,#2（LIGHT=ON 分支）（实际='02 29' 期望='02 29'）
+PASS  读者 1 屏蔽为 movs r0,#0（实际='00 20' 期望='00 20'）
+PASS  读者 2 屏蔽为 movs r1,#0（实际='00 21' 期望='00 21'）
+PASS  RF 设置复位写 settings[8] 处 NOP 保护（实际='00 bf' 期望='00 bf'）
+PASS  settings[8] 全部静态读者（造型灯 x2 / 菜单显示 x2 / save builder）（实际=[134232406, 134232446, 134236810, 134236826, 134240278] 期望=[134232406, 134232446, 134236810, 134236826, 134240278]）
+PASS  settings[8] 全部静态写者（出厂默认 / RF 复位 / flash 记录加载）（实际=[134241968, 134271138, 134298696] 期望=[134241968, 134271138, 134298696]）
+PASS  settings 动态索引访问点（两个改值 handler + clamp）（实际=[('R', 134240834), ('R', 134268296), ('R', 134279308), ('W', 134240842), ('W', 134268302), ('W', 134268314), ('W', 134279316)] 期望=[('R', 134240834), ('R', 134268296), ('R', 134279308), ('W', 134240842), ('W', 134268302), ('W', 134268314), ('W', 134279316)]）
+PASS  出厂默认函数中 r1=0（随后写 settings[8]=0）（实际='00 21' 期望='00 21'）
+PASS  出厂默认写 settings[8] 原字节（实际='01 72' 期望='01 72'）
+PASS  RF 复位写 settings[8] 原字节 26 72（实际='26 72' 期望='26 72'）
+PASS  clamp: 读 settings[i]/max[i] 并比较（实际='15 5c 1f 5c bd 42 00 d9' 期望='15 5c 1f 5c bd 42 00 d9'）
+PASS  LIGHT max=2 == 密钥模式值（clamp 不会清除）（实际=2 期望=2）
+
+== 7. 持久化：save / flash / load 是否覆盖 settings[8] ==
+PASS  save builder 0x080056D8 入口（实际='10 b5 5d 49' 期望='10 b5 5d 49'）
+PASS  save builder 内 settings 字面量（实际=0x20001058 期望=0x20001058）
+PASS  save builder 读 settings[8]（ldrb r4,[r2,#8]）（实际='14 7a' 期望='14 7a'）
+PASS  save builder 把 s6..s9 组写入 record+0x34（实际='44 63' 期望='44 63'）
+PASS  settings[8] 在 record 内偏移 = 0x36（实际=0x36 期望=0x36）
+PASS  record 长度 72 字节（0x08012F68 循环 0x12 words）（实际=0x48 期望=0x48）
+PASS  0x08012F68 比对/提交 0x12 words（实际='12 29' 期望='12 29'）
+PASS  save task 读 0x20000518 待保存标志（实际='0f 48 01 78' 期望='0f 48 01 78'）
+PASS  save builder 目标缓冲 = 0x20000FD4（实际=0x20000FD4 期望=0x20000FD4）
+PASS  save task 调 save builder（实际='f7 f7 78 fe' 期望='f7 f7 78 fe'）
+PASS  save builder 两个调用点（实际=[134273508, 134286746] 期望=[134273508, 134286746]）
+PASS  flash 写函数 0x08010D94 入口（实际='70 b5' 期望='70 b5'）
+PASS  flash 槽基址 0x0801F000（实际=0x801F000 期望=0x801F000）
+PASS  槽大小 0x64（muls r4,r0）（实际='64 20' 期望='64 20'）
+PASS  flash 写函数调 0x080093A0 编程（实际='f8 f7 f0 fa' 期望='f8 f7 f0 fa'）
+PASS  flash 写函数调用点（save 任务 / load 任务）（实际=[134273542, 134279442] 期望=[134273542, 134279442]）
+PASS  load task 0x0800EEB0 入口（实际='f8 b5' 期望='f8 b5'）
+PASS  load task 槽数 0x14（20）（实际='14 20' 期望='14 20'）
+PASS  load task 槽大小 0x64（实际='64 21' 期望='64 21'）
+PASS  load task 槽基址 0x0801F000（实际=0x801F000 期望=0x801F000）
+PASS  load task 校验记录头 0x5C（实际='5c 28' 期望='5c 28'）
+PASS  load task 调 0x08013B08 展开 settings（实际='04 f0 0c fe' 期望='04 f0 0c fe'）
+PASS  load task 无效记录调 0x08005E54 出厂默认（实际='f6 f7 91 ff' 期望='f6 f7 91 ff'）
+PASS  展开函数 0x08013B08 取记录/工作缓冲（实际='5d 48 5c 49' 期望='5d 48 5c 49'）
+PASS  展开函数 settings 字面量（实际=0x20001058 期望=0x20001058）
+PASS  展开函数读 record+0x34（s6..s9 组）（实际='4b 6b' 期望='4b 6b'）
+PASS  展开函数写 settings[8]（ldrb r3,[r0,#2]; strb r3,[r2,#8]）（实际='13 72' 期望='13 72'）
+INFO  结论：settings[8] 随 72B 记录写入 flash 槽（record+0x36），上电由 load task 恢复；出厂默认/恢复出厂写 0（=普通模式），属于预期语义。
+
+== 8. 自动保存倒计时（只影响何时落盘，不影响 settings[8] 内容） ==
+PASS  0x080109C8: 0x20000516 = 0xC8（实际='01 49 c8 20 08 80 70 47' 期望='01 49 c8 20 08 80 70 47'）
+PASS  0x080109A4: 递减 0x20000516（实际='06 48 01 88 00 29 07 d0' 期望='06 48 01 88 00 29 07 d0'）
+PASS  归零时写 0x20000518 = 1（实际='03 49 01 20 08 70' 期望='03 49 01 20 08 70'）
+PASS  倒计时重置点（两个 C.Fn handler 入口 + RF handler + 另一路径）（实际=[134240758, 134268218, 134270758, 134286860] 期望=[134240758, 134268218, 134270758, 134286860]）
+
+== 9. Unicorn handler 级实测（原厂 vs 方案(a) NOP vs 方案(b) BL-hook） ==
+INFO  Unicorn 现场：ROM=0x08000000+0x20000, RAM=0x20000000+0x4000, SP=0x20001480, 哨兵=0x20001300, 指令上限=2000
+PASS  dec item=0  正常 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[0]=0
+PASS  dec item=0  回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[0]=1
+PASS  dec item=1  正常 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[1]=0
+PASS  dec item=1  回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[1]=1
+PASS  dec item=2  正常 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[2]=0
+PASS  dec item=2  回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[2]=1
+PASS  dec item=3  正常 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[3]=0
+PASS  dec item=3  回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[3]=1
+PASS  dec item=4  正常 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[4]=0
+PASS  dec item=4  回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[4]=1
+PASS  dec item=5  正常 v=31：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[5]=30
+PASS  dec item=5  回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[5]=31
+PASS  dec item=6  正常 v=50：原厂 sync=1 / NOP sync=1 / hook sync=1，改值后 settings[6]=49
+PASS  dec item=6  回绕 v=0 ：原厂 sync=1 / NOP sync=1 / hook sync=1，改值后 settings[6]=99
+PASS  dec item=7  正常 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[7]=0
+PASS  dec item=7  回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[7]=1
+PASS  dec item=8  正常 v=2 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[8]=1
+PASS  dec item=8  回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[8]=2
+PASS  dec item=9  正常 v=6 ：原厂 sync=0 / NOP sync=0 / hook sync=0，改值后 settings[9]=5（item9 走 0x080128F0 且不 sync）
+PASS  dec item=9  回绕 v=0 ：原厂 sync=0 / NOP sync=0 / hook sync=0，改值后 settings[9]=0（item9 走 0x080128F0 且不 sync）
+PASS  dec item=10 正常 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[10]=0
+PASS  dec item=10 回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[10]=1
+PASS  dec item=11 正常 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[11]=0
+PASS  dec item=11 回绕 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[11]=1
+PASS  inc item=0  正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[0]=1
+PASS  inc item=0  回绕 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[0]=0
+PASS  inc item=1  正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[1]=1
+PASS  inc item=1  回绕 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[1]=0
+PASS  inc item=2  正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[2]=1
+PASS  inc item=2  回绕 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[2]=0
+PASS  inc item=3  正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[3]=1
+PASS  inc item=3  回绕 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[3]=0
+PASS  inc item=4  正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[4]=1
+PASS  inc item=4  回绕 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[4]=0
+PASS  inc item=5  正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[5]=1
+PASS  inc item=5  回绕 v=31：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[5]=0
+PASS  inc item=6  正常 v=0 ：原厂 sync=1 / NOP sync=1 / hook sync=1，改值后 settings[6]=1
+PASS  inc item=6  回绕 v=99：原厂 sync=1 / NOP sync=1 / hook sync=1，改值后 settings[6]=0
+PASS  inc item=7  正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[7]=1
+PASS  inc item=7  回绕 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[7]=0
+PASS  inc item=8  正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[8]=1
+PASS  inc item=8  回绕 v=2 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[8]=0
+PASS  inc item=9  正常 v=0 ：原厂 sync=0 / NOP sync=0 / hook sync=0，改值后 settings[9]=1（item9 走 0x080128F0 且不 sync）
+PASS  inc item=9  回绕 v=6 ：原厂 sync=0 / NOP sync=0 / hook sync=0，改值后 settings[9]=6（item9 走 0x080128F0 且不 sync）
+PASS  inc item=10 正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[10]=1
+PASS  inc item=10 回绕 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[10]=0
+PASS  inc item=11 正常 v=0 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[11]=1
+PASS  inc item=11 回绕 v=1 ：原厂 sync=0 / NOP sync=1 / hook sync=1，改值后 settings[11]=0
+PASS  dec 光标移动 item=0 ：新索引=9，原厂 sync=0 / NOP sync=0 / hook sync=0
+PASS  dec 光标移动 item=1 ：新索引=0，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  dec 光标移动 item=2 ：新索引=1，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  dec 光标移动 item=3 ：新索引=2，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  dec 光标移动 item=4 ：新索引=3，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  dec 光标移动 item=5 ：新索引=4，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  dec 光标移动 item=6 ：新索引=5，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  dec 光标移动 item=7 ：新索引=6，原厂 sync=1 / NOP sync=1 / hook sync=1
+PASS  dec 光标移动 item=8 ：新索引=7，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  dec 光标移动 item=9 ：新索引=8，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  inc 光标移动 item=0 ：新索引=1，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  inc 光标移动 item=1 ：新索引=2，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  inc 光标移动 item=2 ：新索引=3，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  inc 光标移动 item=3 ：新索引=4，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  inc 光标移动 item=4 ：新索引=5，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  inc 光标移动 item=5 ：新索引=6，原厂 sync=1 / NOP sync=1 / hook sync=1
+PASS  inc 光标移动 item=6 ：新索引=7，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  inc 光标移动 item=7 ：新索引=8，原厂 sync=0 / NOP sync=1 / hook sync=1
+PASS  inc 光标移动 item=8 ：新索引=9，原厂 sync=0 / NOP sync=0 / hook sync=0
+PASS  inc 光标移动 item=9 ：新索引=0，原厂 sync=0 / NOP sync=0 / hook sync=0
+PASS  dec [orig] 忙标志提前返回：0 次 sync、settings 不变、栈/寄存器恢复
+PASS  dec [nop] 忙标志提前返回：0 次 sync、settings 不变、栈/寄存器恢复
+PASS  dec [hook] 忙标志提前返回：0 次 sync、settings 不变、栈/寄存器恢复
+PASS  inc [orig] 忙标志提前返回：0 次 sync、settings 不变、栈/寄存器恢复
+PASS  inc [nop] 忙标志提前返回：0 次 sync、settings 不变、栈/寄存器恢复
+PASS  inc [hook] 忙标志提前返回：0 次 sync、settings 不变、栈/寄存器恢复
+PASS  方案(b) BL-hook 与方案(a) NOP 在全部 item/取值上行为等价
+INFO  对照 Lead 模块 keypatch/devices/v860iiis.py：9/9 个关键地址出现（0x080115B8, 0x20001058, 0x20001060, 0x08016102, 0x08005A74, 0x0800C5BE, 0x08003956, 0x0800397E, 0x0800D0A2）
+
+==============================================================================
+总结：PASS 193 / FAIL 0
+全部断言 PASS（退出码 0）

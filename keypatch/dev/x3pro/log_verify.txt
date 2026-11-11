@@ -1,0 +1,54 @@
+
+== Godox X3 Pro (X3 Pro trigger, C) (x3pro)
+   原厂固件 : devices\x3pro\firmware\X3pro_C_v1.22_app.bin  (1941020 字节, sha256 2e2b8a3b5ff70e62…)
+   私有密钥 : 0xD798  ->  SYNC1=0xD7 SYNC0=0x98
+   补丁点   :
+  [1] off+0x0EDC4  0x0802EDC4  10 b5 ff f7            -> 91 f1 30 b9             4 字节帧发送入口 -> inj_tx4（KEY_ON 时 KEY+当前ID 双发）
+  [2] off+0x0EE2C  0x0802EE2C  10 b5 ff f7            -> 91 f1 0e b9             2 字节帧发送入口 -> inj_tx2（KEY_ON 时 KEY+当前ID 双发）
+  [3] off+0x0F046  0x0802F046  4c f2 68 34 13 44 b4 fb f3 f4 -> 90 f1 db bf 00 bf 00 bf 00 bf  同步字函数 10 B 改写：KEY_ON -> SYNC=KEY，否则原厂 50024/(ID+1)
+  [4] off+0x07E44  0x08027E44  2d e9 f8 4f            -> 98 f1 14 b9             按键扫描入口 -> inj_btn（长按 PA6 ≈1.5s 翻转 KEY_ON）
+  [5] off+0x0830A  0x0802830A  21 2b                  -> ff 2b                   禁用原厂 PA6 长按动作 A（0x0802830A，cmp #0x21 -> #0xFF）
+  [6] off+0x084F2  0x080284F2  21 2b                  -> ff 2b                   禁用原厂 PA6 长按动作 B（0x080284F2，状态机另一分支，cmp #0x21 -> #0xFF）
+  [7] off+0x1A0000  0x081C0000  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff -> 41 f2 96 03 c2 f2 00 03 1b 78 00 2b 03 d0 4d f2 98 74 6f f6 1d b8 01 22 03 46 4c f2 68 34 13 44 b4 fb f3 f4 6f f6 14 b8 10 b5 41 f2 96 03 c2 f2 00 03 1b 78 00 2b 06 d0 00 f0 70 f8 00 f0 77 f8 00 f0 5b f8 10 bd 00 f0 72 f8 10 bd 10 b5 41 f2 96 03 c2 f2 00 03 1b 78 00 2b 06 d0 00 f0 6e f8 00 f0 75 f8 00 f0 49 f8 10 bd 00 f0 70 f8 10 bd 10 b5 40 f2 00 00 c4 f2 02 20 40 21 72 f6 ec fc 00 28 1f d1 41 f2 9a 01 c2 f2 00 01 0a 78 00 2a 23 d1 41 f2 98 02 c2 f2 00 02 13 88 5b 1c 13 80 22 2b 1a d1 41 f2 96 03 c2 f2 00 03 18 78 01 22 50 40 18 70 41 f2 9a 01 c2 f2 00 01 01 20 08 70 00 f0 0b b8 41 f2 98 01 c2 f2 00 01 00 22 0a 80 41 f2 9a 01 c2 f2 00 01 0a 70 00 f0 3f f8 10 bd 10 b5 82 b0 04 46 23 0a 69 46 0b 70 4c 70 02 22 44 20 6e f6 13 fb 02 b0 10 bd 4d f2 98 70 ff f7 ef bf 41 f2 68 73 c2 f2 00 03 58 78 40 1c 4c f2 68 31 b1 fb f0 f4 20 46 ff f7 e2 bf 10 b5 6e f6 a1 fd 4d f2 98 70 ff f7 db ff 6e f6 4e be 10 b5 6e f6 98 fd ff f7 e5 ff 6e f6 47 be 10 b5 6e f6 91 fd 4d f2 98 70 ff f7 cb ff 6e f6 72 be 10 b5 6e f6 88 fd ff f7 d5 ff 6e f6 6b be 2d e9 f8 4f 67 f6 72 be  注入区（长按/双发/同步字辅助 + 蹦床，356 字节，原厂 0xFF）
+   输出     : C:\Users\22435\AppData\Local\Temp\x3pro_indep3\X3pro_C_v1.22_app_keyD798.bin  (1941020 字节, sha256 11f58c71e83192fd…)
+   [PASS] 固件长度 1941020 字节（应为 1941020，原位补丁+注入）
+   [PASS] 注入区 0x081C0000 起 356 字节（长按开关 + 双发包装 + 同步字分流，共 356/2048 字节）
+   [PASS] 注入区剩余 1692 字节保持擦除态 0xFF（不越界改写）
+   [PASS] 补丁点 0x0802EDC4 = 91 f1 30 b9（4 字节帧发送入口 -> inj_tx4（KEY_ON 时 KEY+当前ID 双发））
+   [PASS] 补丁点 0x0802EE2C = 91 f1 0e b9（2 字节帧发送入口 -> inj_tx2（KEY_ON 时 KEY+当前ID 双发））
+   [PASS] 补丁点 0x0802F046 = 90 f1 db bf 00 bf 00 bf 00 bf（同步字函数 10 B 改写：KEY_ON -> SYNC=KEY，否则原厂 50024/(ID+1)）
+   [PASS] 补丁点 0x08027E44 = 98 f1 14 b9（按键扫描入口 -> inj_btn（长按 PA6 ≈1.5s 翻转 KEY_ON））
+   [PASS] 补丁点 0x0802830A = ff 2b（禁用原厂 PA6 长按动作 A（0x0802830A，cmp #0x21 -> #0xFF））
+   [PASS] 补丁点 0x080284F2 = ff 2b（禁用原厂 PA6 长按动作 B（0x080284F2，状态机另一分支，cmp #0x21 -> #0xFF））
+   [PASS] 与原厂差异 370 字节（应为 370，全部落在补丁点/注入区；前 12 个 ['0x07E44', '0x07E45', '0x07E46', '0x07E47', '0x0830A', '0x084F2', '0x0EDC4', '0x0EDC5', '0x0EDC6', '0x0EDC7', '0x0EE2C', '0x0EE2D']）
+   [PASS] Unicorn 2.1.4 调用级测试：桩替换 write_reg(0x0802E71C)/strobe(0x0802E88C)/delay(0x0802B5DC)/radio_wake(0x0802EC64)/gpio(0x08032A58,0x08032A64)
+   [PASS] 密钥 KEY=0xD798（SYNC1=0xD7 SYNC0=0x98）；KEY_ON 位于 RAM 0x20001096（长按 PA6 ≈1.5s 切换，RAM 版）
+   [PASS] set_sync(补丁版 ID=0 , 密钥模式): SYNC=0xD798（期望 0xD798），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(补丁版 ID=1 , 密钥模式): SYNC=0xD798（期望 0xD798），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(补丁版 ID=37, 密钥模式): SYNC=0xD798（期望 0xD798），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(补丁版 ID=99, 密钥模式): SYNC=0xD798（期望 0xD798），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(补丁版 ID=0 , 原厂模式): SYNC=0xC368（期望 0xC368），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(补丁版 ID=1 , 原厂模式): SYNC=0x61B4（期望 0x61B4），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(补丁版 ID=37, 原厂模式): SYNC=0x0524（期望 0x0524），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(补丁版 ID=99, 原厂模式): SYNC=0x01F4（期望 0x01F4），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(原厂(自证) ID=0 , 原厂模式): SYNC=0xC368（期望 0xC368），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(原厂(自证) ID=1 , 原厂模式): SYNC=0x61B4（期望 0x61B4），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(原厂(自证) ID=37, 原厂模式): SYNC=0x0524（期望 0x0524），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] set_sync(原厂(自证) ID=99, 原厂模式): SYNC=0x01F4（期望 0x01F4），SCAL/SIDLE=['0x33', '0x36']
+   [PASS] TX4 ID=99 补丁版(密钥模式)：SYNC=0xD798 -> 发 -> SYNC=0x01F4 -> 发 -> SYNC=0xD798 | SYNC=0xD798 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0x01F4 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xD798
+   [PASS] TX2 ID=99 补丁版(密钥模式)：SYNC=0xD798 -> 发 -> SYNC=0x01F4 -> 发 -> SYNC=0xD798 | SYNC=0xD798 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0x01F4 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xD798
+   [PASS] TX4 ID=5  补丁版(密钥模式)：SYNC=0xD798 -> 发 -> SYNC=0x2091 -> 发 -> SYNC=0xD798 | SYNC=0xD798 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0x2091 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xD798
+   [PASS] TX2 ID=5  补丁版(密钥模式)：SYNC=0xD798 -> 发 -> SYNC=0x2091 -> 发 -> SYNC=0xD798 | SYNC=0xD798 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0x2091 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xD798
+   [PASS] TX4 ID=0  补丁版(密钥模式)：SYNC=0xD798 -> 发 -> SYNC=0xC368 -> 发 -> SYNC=0xD798 | SYNC=0xD798 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xC368 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xD798
+   [PASS] TX2 ID=0  补丁版(密钥模式)：SYNC=0xD798 -> 发 -> SYNC=0xC368 -> 发 -> SYNC=0xD798 | SYNC=0xD798 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xC368 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36) -> SYNC=0xD798
+   [PASS] TX4 ID=5  补丁版(普通模式)：SYNC=0x2091 -> 单发 | SYNC=0x2091 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36)
+   [PASS] TX2 ID=5  补丁版(普通模式)：SYNC=0x2091 -> 单发 | SYNC=0x2091 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36)
+   [PASS] TX4 ID=0  补丁版(普通模式)：SYNC=0xC368 -> 单发 | SYNC=0xC368 -> FIFO(4) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36)
+   [PASS] TX2 ID=0  补丁版(普通模式)：SYNC=0xC368 -> 单发 | SYNC=0xC368 -> FIFO(2) -> strobe(0x35) -> strobe(0x3B) -> strobe(0x36)
+   [PASS] TX4 ID=99 原厂(自证)：原厂单发（无 SYNC 写入）
+   [PASS] TX2 ID=99 原厂(自证)：原厂单发（无 SYNC 写入）
+   [PASS] 按键 松开复位：到达原扫描函数体=True，KEY_ON=1 cnt=0 latch=0（期望 {'cnt': 0, 'key_on': 1, 'latch': 0}）
+   [PASS] 按键 按下 #1：到达原扫描函数体=True，KEY_ON=0 cnt=1 latch=0（期望 {'cnt': 1, 'key_on': 0, 'latch': 0}）
+   [PASS] 按键 按下 #34（到阈值）：到达原扫描函数体=True，KEY_ON=1 cnt=34 latch=1（期望 {'cnt': 34, 'key_on': 1, 'latch': 1}）
+   [PASS] 按键 第 35 次（已 latch）：到达原扫描函数体=True，KEY_ON=1 cnt=34 latch=1（期望 {'cnt': 34, 'key_on': 1, 'latch': 1}）
+   [PASS] 按键 再次长按 #34：到达原扫描函数体=True，KEY_ON=0 cnt=34 latch=1（期望 {'cnt': 34, 'key_on': 0, 'latch': 1}）

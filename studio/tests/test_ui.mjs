@@ -21,13 +21,14 @@ const EDGE = process.env.EDGE_PATH
   || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
 
 function parseArgs(argv) {
-  const out = { url: 'http://127.0.0.1:18780/', out: path.join(os.tmpdir(), 'studio_ui_e2e.png'), timeout: 90000, all: false };
+  const out = { url: 'http://127.0.0.1:18780/', out: path.join(os.tmpdir(), 'studio_ui_e2e.png'), timeout: 90000, all: false, only: '' };
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
     if (a === '--url') out.url = argv[++i];
     else if (a === '--out') out.out = argv[++i];
     else if (a === '--timeout') out.timeout = Number(argv[++i]);
     else if (a === '--all') out.all = true;
+    else if (a === '--only') out.only = String(argv[++i] || '');
   }
   return out;
 }
@@ -205,11 +206,23 @@ async function main() {
   const cards = await evalJs('document.querySelectorAll("[data-testid=\\"device-card\\"]").length');
   check('设备卡片数量 >= 3', cards >= 3, '实际 ' + cards);
 
-  // 选择设备（默认选第一台；--all 时全选）
+  // 选择设备（默认选第一台；--all 时全选；--only <id> 时只选指定设备）
   if (opts.all) {
     await evalJs(`(() => {
       document.querySelectorAll('[data-testid="device-select"]').forEach((box) => {
         if (!box.checked) box.click();
+      });
+      return true;
+    })()`);
+  } else if (opts.only) {
+    await evalJs(`(() => {
+      const only = ${JSON.stringify(opts.only)};
+      document.querySelectorAll('[data-testid="device-card"]').forEach((card) => {
+        const box = card.querySelector('[data-testid="device-select"]');
+        if (!box) return;
+        const isOnly = card.getAttribute('data-device-id') === only;
+        if (isOnly && !box.checked) box.click();
+        if (!isOnly && box.checked) box.click();
       });
       return true;
     })()`);
@@ -263,6 +276,14 @@ async function main() {
   check('结果卡片包含 sha256', /[0-9a-f]{64}/i.test(resultInfo.text), '');
   const hasDownload = resultInfo.links.flat().some((h) => h && (h.includes('/api/builds/') || h.endsWith('.bin') || h.endsWith('.zip')));
   check('结果包含下载链接', hasDownload || /下载/.test(resultInfo.text));
+
+  if (opts.only) {
+    const resultIds = await evalJs(`[...document.querySelectorAll('[data-testid="result-file"]')].map((n) => n.getAttribute('data-device-id'))`);
+    check('--only：结果只包含指定设备 ' + opts.only,
+      Array.isArray(resultIds) && resultIds.length === 1 && resultIds[0] === opts.only, JSON.stringify(resultIds));
+    const oneText = await evalJs(`(document.querySelector('[data-testid="result-file"]') || {}).innerText || ''`);
+    check('--only：结果含补丁点/验证信息', /补丁点|验证|PASS/i.test(oneText), String(oneText || '').slice(0, 160));
+  }
 
   // 截图（先回到顶部，避免 sticky header 与内容重叠）
   await evalJs('window.scrollTo(0, 0)');

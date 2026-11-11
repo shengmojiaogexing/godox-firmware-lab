@@ -4,76 +4,90 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0b0f17">
+<meta name="theme-color" content="#0a0a0c">
+<meta name="robots" content="noindex, nofollow">
 <title>神牛密钥工坊 · Godox Key Studio</title>
-<meta name="description" content="本地离线运行的神牛（Godox）固件自定义密钥工坊：选择设备、设置 4 位十六进制私有同步字、生成并导出固件。">
+<meta name="description" content="可在服务器上部署的神牛（Godox）固件自定义密钥工坊：选择设备、设置 4 位十六进制私有同步字、生成并导出固件。">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
-  /* 首屏与资源加载占位（主样式见 styles.css） */
-  html, body { margin:0; background:#0b0f17; color:#e8eefb; }
-  .boot { position:fixed; inset:0; z-index:200; display:grid; place-items:center; padding:24px;
+  /* 首屏占位样式：保证 app.js / styles.css 载入前不闪烁、不白屏 */
+  html, body { margin:0; background:#0a0a0c; color:#f3f0ea; }
+  .boot {
+    position:fixed; inset:0; z-index:200; display:grid; place-items:center; padding:24px;
     background:
-      radial-gradient(900px 500px at 20% 0%, rgba(45,212,255,.10), transparent 60%),
-      radial-gradient(800px 500px at 90% 10%, rgba(79,124,255,.12), transparent 55%),
-      #0b0f17; }
-  .boot-card { display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center;
-    padding:34px 44px; border-radius:20px; border:1px solid rgba(148,163,184,.16);
-    background:rgba(17,24,38,.68); box-shadow:0 30px 80px rgba(0,0,0,.5); }
-  .boot-logo { display:grid; place-items:center; width:56px; height:56px; border-radius:16px;
-    background:linear-gradient(135deg,#22d3ee,#4f7cff); box-shadow:0 0 32px rgba(45,212,255,.35); }
-  .boot-logo svg { width:32px; height:32px; }
-  .boot strong { font:600 1.05rem/1.2 "Segoe UI","Microsoft YaHei UI","Microsoft YaHei",sans-serif; letter-spacing:.04em; }
-  .boot p { margin:0; font:400 .82rem/1.6 "Segoe UI","Microsoft YaHei UI","Microsoft YaHei",sans-serif; color:#8b99ad; max-width:340px; }
-  .boot-spinner { width:22px; height:22px; border-radius:50%; border:2px solid rgba(45,212,255,.22);
-    border-top-color:#2dd4ff; animation:bootspin .8s linear infinite; }
-  @keyframes bootspin { to { transform:rotate(360deg); } }
-  .boot.boot-error .boot-spinner { display:none; }
-  .boot.boot-error p { color:#fda4af; }
+      radial-gradient(900px 480px at 72% -12%, rgba(255,171,51,.09), transparent 60%),
+      radial-gradient(700px 420px at 0% 8%, rgba(143,179,255,.04), transparent 62%),
+      #0a0a0c;
+  }
+  .boot-card {
+    display:flex; flex-direction:column; align-items:center; gap:16px; text-align:center;
+    padding:36px 46px; border-radius:18px; border:1px solid rgba(255,255,255,.08);
+    background:#111114; box-shadow:0 40px 90px -50px #000;
+  }
+  .boot-mark {
+    display:grid; place-items:center; width:46px; height:46px; border-radius:12px;
+    background:linear-gradient(160deg,#ffc76b,#ffa02b);
+    box-shadow:0 0 0 1px rgba(255,182,74,.35), inset 0 1px 0 rgba(255,255,255,.4);
+  }
+  .boot-mark svg { width:28px; height:28px; }
+  .boot strong {
+    font:600 15px/1.3 "Segoe UI","Microsoft YaHei UI","Microsoft YaHei",sans-serif;
+    letter-spacing:.08em;
+  }
+  .boot-bar { width:152px; height:2px; border-radius:2px; background:rgba(255,255,255,.09); overflow:hidden; }
+  .boot-bar i {
+    display:block; width:42%; height:100%; border-radius:2px; background:#ffb64a;
+    animation:bootload 1.1s ease-in-out infinite;
+  }
+  @keyframes bootload { 0% { transform:translateX(-100%); } 100% { transform:translateX(350%); } }
+  .boot p {
+    margin:0; font:400 12px/1.6 "Segoe UI","Microsoft YaHei UI","Microsoft YaHei",sans-serif;
+    color:#8b8780; max-width:340px;
+  }
+  .boot.boot-error .boot-bar { display:none; }
+  .boot.boot-error p { color:#ff8592; }
   html.booting body { overflow:hidden; }
   html.booting #app { visibility:hidden; }
   html:not(.booting) .boot { display:none; }
-  .noscript { position:fixed; inset:0; display:grid; place-items:center; background:#0b0f17; color:#e8eefb;
-    padding:24px; font:400 1rem/1.7 "Microsoft YaHei",sans-serif; z-index:300; text-align:center; }
+  .noscript {
+    position:fixed; inset:0; display:grid; place-items:center; background:#0a0a0c; color:#f3f0ea;
+    padding:24px; font:400 15px/1.7 "Microsoft YaHei",sans-serif; z-index:300; text-align:center;
+  }
 </style>
 </head>
 <body>
 <div class="boot" id="boot" role="status" aria-live="polite">
   <div class="boot-card">
-    <span class="boot-logo" aria-hidden="true">
+    <span class="boot-mark" aria-hidden="true">
       <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="11.6" cy="16" r="5.1" stroke="#06121c" stroke-width="2.6"/>
-        <path d="M16.9 16h10.3M22.4 16v4.2M26.4 16v3.2" stroke="#06121c" stroke-width="2.6" stroke-linecap="round"/>
+        <circle cx="11.6" cy="16" r="5.1" stroke="#1a1205" stroke-width="2.6"/>
+        <path d="M16.9 16h10.3M22.4 16v4.2M26.4 16v3.2" stroke="#1a1205" stroke-width="2.6" stroke-linecap="round"/>
       </svg>
     </span>
     <strong>神牛密钥工坊</strong>
-    <span class="boot-spinner" aria-hidden="true"></span>
+    <span class="boot-bar" aria-hidden="true"><i></i></span>
     <p id="boot-msg">正在载入本地界面…</p>
   </div>
 </div>
 <noscript><div class="noscript">需要启用 JavaScript 才能使用「神牛密钥工坊」。</div></noscript>
 
-<div class="bg-fx" aria-hidden="true">
-  <span class="orb orb-cyan"></span>
-  <span class="orb orb-blue"></span>
-  <span class="orb orb-amber"></span>
-  <span class="grid-overlay"></span>
-</div>
+<div class="ambient" aria-hidden="true"><span class="ambient-beam"></span><span class="ambient-grid"></span></div>
 
 <div id="app" class="app">
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand">
+      <a class="brand" href="./" aria-label="神牛密钥工坊">
         <span class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="11.6" cy="16" r="5.1" stroke="#06121c" stroke-width="2.6"/>
-            <path d="M16.9 16h10.3M22.4 16v4.2M26.4 16v3.2" stroke="#06121c" stroke-width="2.6" stroke-linecap="round"/>
+            <circle cx="11.6" cy="16" r="5.1" stroke="#1a1205" stroke-width="2.6"/>
+            <path d="M16.9 16h10.3M22.4 16v4.2M26.4 16v3.2" stroke="#1a1205" stroke-width="2.6" stroke-linecap="round"/>
           </svg>
         </span>
-        <div class="brand-text">
-          <h1>神牛密钥工坊</h1>
-          <p>Godox Key Studio · 2.4 GHz 私有同步字定制</p>
-        </div>
-      </div>
+        <span class="brand-text">
+          <span class="brand-code">GODOX · KEY STUDIO</span>
+          <span class="brand-name">2.4 GHz 私有同步字工坊</span>
+        </span>
+      </a>
       <div class="topbar-meta">
         <span class="badge-mock hidden" id="mock-badge">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 3 7.5V12c0 5 3.8 8.4 9 9.5 5.2-1.1 9-4.5 9-9.5V7.5L12 3Z"/><path d="m8.6 12 2.3 2.3 4.5-4.6"/></svg>
@@ -81,13 +95,13 @@
         </span>
         <span class="status-chip is-loading" id="status-chip" role="status">
           <span class="status-dot" aria-hidden="true"></span>
-          <span id="status-text">连接本地服务…</span>
+          <span id="status-text">连接服务…</span>
         </span>
         <span class="meta-chip" id="device-count-chip" title="已识别设备数量">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.5"/><path d="M9 2.6V5M15 2.6V5M9 19v2.4M15 19v2.4M2.6 9H5M2.6 15H5M19 9h2.4M19 15h2.4"/></svg>
-          <b id="device-count">—</b><span>台设备</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2.5 4.8 13.4h6.1l-1 8.1 8.3-11.1h-6.1l.9-7.9Z"/></svg>
+          <b id="device-count">—</b><span class="meta-label">台设备</span>
         </span>
-        <button type="button" class="icon-btn" id="btn-refresh" title="重新检测本地服务并刷新数据" aria-label="刷新本地服务状态与数据">
+        <button type="button" class="icon-btn" id="btn-refresh" title="重新检测服务连接并刷新数据" aria-label="刷新服务状态与数据">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.2A8 8 0 1 0 17.8 17"/><path d="M20 4.5v6.7h-6.7"/></svg>
         </button>
       </div>
@@ -98,18 +112,46 @@
     <span class="mock-banner-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/></svg>
     </span>
-    <p><strong>演示模式</strong> · 页面使用内置示例数据，不请求本地后端。启动 <code>studio\server.py</code> 后可生成真实固件。</p>
+    <p><strong>演示模式</strong> · 页面使用内置示例数据，不会请求后端；启动后端服务后可生成真实固件。</p>
     <a class="btn btn-ghost btn-xs" href="./">退出演示</a>
   </div>
 
-  <main class="layout">
-    <section class="panel" id="panel-devices" aria-labelledby="devices-title">
+  <main class="page">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>PRIVATE SYNC WORD STUDIO</p>
+        <h1 id="hero-title">神牛密钥工坊</h1>
+        <p class="hero-lead">为闪光灯与引闪器写入同一把私有的 2.4&nbsp;GHz 同步字密钥：选择设备、输入 4 位十六进制值，补丁、打包与整机验证都在服务端完成。</p>
+        <ul class="hero-tags">
+          <li>浏览器即用</li>
+          <li>服务端打补丁</li>
+          <li>原厂固件可回滚</li>
+        </ul>
+      </div>
+      <ol class="flow" aria-label="使用流程">
+        <li class="flow-step" id="step-devices">
+          <span class="flow-idx" aria-hidden="true">01</span>
+          <div class="flow-copy"><b>选择设备</b><small id="step-devices-note">勾选灯 / 引闪器</small></div>
+        </li>
+        <li class="flow-step" id="step-key">
+          <span class="flow-idx" aria-hidden="true">02</span>
+          <div class="flow-copy"><b>设置密钥</b><small id="step-key-note">4 位十六进制</small></div>
+        </li>
+        <li class="flow-step" id="step-build">
+          <span class="flow-idx" aria-hidden="true">03</span>
+          <div class="flow-copy"><b>生成固件</b><small id="step-build-note">下载并刷写</small></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="panel panel-devices" id="panel-devices" aria-labelledby="devices-title">
       <header class="panel-head">
         <div class="panel-title">
-          <span class="panel-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2.5"/><path d="M9 2.6V5M15 2.6V5M9 19v2.4M15 19v2.4M2.6 9H5M2.6 15H5M19 9h2.4M19 15h2.4"/></svg>
-          </span>
-          <h2 id="devices-title">选择设备</h2>
+          <span class="step-no" aria-hidden="true">01</span>
+          <div class="panel-heading">
+            <h2 id="devices-title">选择设备</h2>
+            <p class="panel-sub">勾选需要刷入同一密钥的设备 · 灯与引闪器必须同密钥才能正常引闪</p>
+          </div>
           <span class="pill" id="selected-badge">已选 0 台</span>
         </div>
         <div class="panel-actions">
@@ -117,76 +159,92 @@
           <button class="btn btn-ghost btn-sm" id="btn-clear-select" type="button">清空</button>
         </div>
       </header>
-      <p class="panel-hint">勾选需要刷入同一密钥的设备；灯与引闪器必须使用同一把密钥才能正常引闪。</p>
       <div class="devices-grid" id="devices-grid" data-testid="device-grid" aria-live="polite"></div>
       <div class="empty hidden" id="devices-empty"></div>
     </section>
 
-    <div class="config-row">
-      <section class="panel panel-key" id="panel-key" aria-labelledby="key-title">
-        <header class="panel-head">
-          <div class="panel-title">
-            <span class="panel-icon accent-amber" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.4" cy="12" r="3.7"/><path d="M12.1 12h8.5M17.2 12v3.3M20.2 12v2.4"/></svg>
-            </span>
-            <h2 id="key-title">自定义密钥</h2>
-            <span class="pill pill-amber">16-bit</span>
-          </div>
-        </header>
-        <label class="key-field-label" for="key-input">十六进制密钥</label>
-        <div class="key-field" id="key-field">
-          <span class="key-prefix" aria-hidden="true">0x</span>
-          <input id="key-input" class="key-input" type="text" inputmode="text" autocomplete="off"
-                 autocapitalize="characters" spellcheck="false" maxlength="4" placeholder="D798"
-                 aria-describedby="key-status" data-testid="key-input">
-        </div>
-        <p class="key-status" id="key-status" role="status" aria-live="polite">
-          <span class="key-status-icon" id="key-status-icon" aria-hidden="true"><span class="status-dot"></span></span>
-          <span id="key-status-text">输入 4 位十六进制密钥（0-9、A-F）</span>
-        </p>
-        <div class="key-suggest hidden" id="key-suggest"></div>
-        <div class="key-stats">
-          <div class="key-stat"><span>SYNC1</span><b id="stat-sync1">—</b></div>
-          <div class="key-stat"><span>SYNC0</span><b id="stat-sync0">—</b></div>
-          <div class="key-stat"><span>十进制</span><b id="stat-decimal">—</b></div>
-        </div>
-        <div class="key-actions">
-          <button class="btn btn-soft" id="btn-random" type="button" data-testid="key-random">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7h3.2c1.6 0 2.9.9 3.8 2.3l3 4.4c.9 1.4 2.2 2.3 3.8 2.3h3.2"/><path d="m17.5 13.5 3 2.5-3 2.5"/><path d="M3.5 17h3.2c1.6 0 2.9-.9 3.8-2.3l.9-1.3"/><path d="M14.2 9.1l.7-1.1c.9-1.4 2.2-2.3 3.8-2.3h.3"/><path d="m17.5 3.5 3 2.5-3 2.5"/></svg>
-            <span>随机密钥</span>
-          </button>
-          <button class="btn btn-soft btn-amber" id="btn-derive" type="button" data-testid="key-passphrase">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3"/><rect x="4.5" y="11" width="15" height="9.5" rx="2.4"/><path d="M12 15v2.2"/></svg>
-            <span>口令派生</span>
-          </button>
-        </div>
-        <details class="rules" id="key-rules">
-          <summary>
-            <span>密钥规则与保留值</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9.5 6 6 6-6"/></svg>
-          </summary>
-          <div class="rules-body">
-            <p id="rules-note">密钥必须是 16 位值（4 位十六进制），且不能等于原厂 ID 能产生的同步字或保留值。</p>
-            <div class="rules-group">
-              <span class="rules-label">保留 / 危险同步字</span>
-              <div class="chip-row" id="forbidden-chips"></div>
+    <div class="workbench">
+      <div class="workbench-main">
+        <section class="panel panel-key" id="panel-key" aria-labelledby="key-title">
+          <header class="panel-head">
+            <div class="panel-title">
+              <span class="step-no" aria-hidden="true">02</span>
+              <div class="panel-heading">
+                <h2 id="key-title">自定义密钥</h2>
+                <p class="panel-sub">16-bit 私有同步字 · 全部设备共用同一把</p>
+              </div>
+              <span class="pill pill-amber">16-bit</span>
             </div>
-            <div class="rules-group">
-              <span class="rules-label">原厂公开同步字（会被拒绝）</span>
-              <div class="chip-row chip-row-scroll" id="public-chips"></div>
+          </header>
+          <label class="key-field-label" for="key-input">十六进制密钥</label>
+          <div class="key-console">
+            <div class="key-console-main">
+              <div class="key-field" id="key-field">
+                <span class="key-prefix" aria-hidden="true">0x</span>
+                <input id="key-input" class="key-input" type="text" inputmode="text" autocomplete="off"
+                       autocapitalize="characters" spellcheck="false" maxlength="4" placeholder="D798"
+                       aria-describedby="key-status" data-testid="key-input">
+                <span class="key-target" id="key-target">尚未选择设备</span>
+              </div>
+              <p class="key-status" id="key-status" role="status" aria-live="polite">
+                <span class="key-status-icon" id="key-status-icon" aria-hidden="true"><span class="status-dot"></span></span>
+                <span id="key-status-text">输入 4 位十六进制密钥（0-9、A-F）</span>
+              </p>
+              <div class="key-suggest hidden" id="key-suggest"></div>
+            </div>
+            <div class="key-console-actions">
+              <button class="btn btn-soft" id="btn-random" type="button" data-testid="key-random">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7h3.2c1.6 0 2.9.9 3.8 2.3l3 4.4c.9 1.4 2.2 2.3 3.8 2.3h3.2"/><path d="m17.5 13.5 3 2.5-3 2.5"/><path d="M3.5 17h3.2c1.6 0 2.9-.9 3.8-2.3l.9-1.3"/><path d="M14.2 9.1l.7-1.1c.9-1.4 2.2-2.3 3.8-2.3h.3"/><path d="m17.5 3.5 3 2.5-3 2.5"/></svg>
+                <span>随机密钥</span>
+              </button>
+              <button class="btn btn-soft btn-amber" id="btn-derive" type="button" data-testid="key-passphrase">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11V8a5 5 0 0 1 10 0v3"/><rect x="4.5" y="11" width="15" height="9.5" rx="2.4"/><path d="M12 15v2.2"/></svg>
+                <span>口令派生</span>
+              </button>
             </div>
           </div>
-        </details>
-      </section>
+          <div class="key-stats">
+            <div class="key-stat"><span>SYNC1</span><b id="stat-sync1">—</b></div>
+            <div class="key-stat"><span>SYNC0</span><b id="stat-sync0">—</b></div>
+            <div class="key-stat"><span>十进制</span><b id="stat-decimal">—</b></div>
+          </div>
+          <p class="key-note">同一把密钥必须同时写入闪光灯与引闪器；任一设备更换密钥后，其余设备都需要重新刷写。</p>
+          <ol class="key-steps">
+            <li><b aria-hidden="true">1</b><span>灯与引闪器选齐后一次生成，保证同步字一致</span></li>
+            <li><b aria-hidden="true">2</b><span>用官方 G3 升级工具刷入对应设备的 <code>.bin</code></span></li>
+            <li><b aria-hidden="true">3</b><span>实拍前核对 SYNC1 / SYNC0 并保留原厂固件备用</span></li>
+          </ol>
+          <details class="rules" id="key-rules">
+            <summary>
+              <span>密钥规则与保留值</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9.5 6 6 6-6"/></svg>
+            </summary>
+            <div class="rules-body">
+              <p id="rules-note">密钥必须是 16 位值（4 位十六进制），且不能等于原厂 ID 能产生的同步字或保留值。</p>
+              <div class="rules-group">
+                <span class="rules-label">保留 / 危险同步字</span>
+                <div class="chip-row" id="forbidden-chips"></div>
+              </div>
+              <div class="rules-group">
+                <span class="rules-label">原厂公开同步字（会被拒绝）</span>
+                <div class="chip-row chip-row-scroll" id="public-chips"></div>
+              </div>
+            </div>
+          </details>
+        </section>
+      </div>
 
-      <div class="side-stack">
+      <aside class="workbench-side">
         <section class="panel" id="panel-options" aria-labelledby="options-title">
           <header class="panel-head">
             <div class="panel-title">
               <span class="panel-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2.1"/><circle cx="15.5" cy="12" r="2.1"/><circle cx="7.5" cy="17" r="2.1"/></svg>
               </span>
-              <h2 id="options-title">生成选项</h2>
+              <div class="panel-heading">
+                <h2 id="options-title">生成选项</h2>
+                <p class="panel-sub">默认即可，除非你明确需要容器备用件</p>
+              </div>
             </div>
           </header>
           <div class="switch-list">
@@ -209,13 +267,14 @@
           </div>
         </section>
 
-        <section class="panel panel-generate" aria-labelledby="generate-title">
+        <section class="panel panel-generate" id="panel-generate" aria-labelledby="generate-title">
           <header class="panel-head">
             <div class="panel-title">
-              <span class="panel-icon accent-green" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5 4.8 13.4h6.1l-1 8.1 8.3-11.1h-6.1l.9-7.9Z"/></svg>
-              </span>
-              <h2 id="generate-title">生成并导出</h2>
+              <span class="step-no" aria-hidden="true">03</span>
+              <div class="panel-heading">
+                <h2 id="generate-title">生成并导出</h2>
+                <p class="panel-sub">服务端打补丁 · 生成物保存在服务器 builds/ 目录</p>
+              </div>
             </div>
           </header>
           <dl class="summary" id="generate-summary">
@@ -226,22 +285,25 @@
           </dl>
           <button class="btn btn-primary btn-generate" id="btn-generate" type="button" disabled data-testid="generate-btn">
             <span class="btn-spinner hidden" id="generate-spinner" aria-hidden="true"></span>
-            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11"/><path d="m7.5 10 4.5 4.5 4.5-4.5"/><path d="M4 16.5v2A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5v-2"/></svg>
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2.5 4.8 13.4h6.1l-1 8.1 8.3-11.1h-6.1l.9-7.9Z"/></svg>
             <span id="generate-label">生成并导出</span>
             <kbd class="kbd">Enter</kbd>
           </button>
           <p class="generate-hint" id="generate-hint">选择设备并输入合法密钥后即可生成。</p>
         </section>
-      </div>
+      </aside>
     </div>
 
     <section class="panel hidden" id="panel-result" data-testid="results" aria-labelledby="result-title" aria-live="polite">
       <header class="panel-head">
         <div class="panel-title">
-          <span class="panel-icon accent-green" aria-hidden="true">
+          <span class="panel-icon accent-ok" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7 5.3-5.6"/></svg>
           </span>
-          <h2 id="result-title">生成结果</h2>
+          <div class="panel-heading">
+            <h2 id="result-title">生成结果</h2>
+            <p class="panel-sub">下载固件，用官方 G3 升级软件刷入</p>
+          </div>
           <span class="pill" id="result-pill">—</span>
         </div>
         <div class="panel-actions" id="result-actions"></div>
@@ -255,7 +317,10 @@
           <span class="panel-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg>
           </span>
-          <h2 id="history-title">生成历史</h2>
+          <div class="panel-heading">
+            <h2 id="history-title">生成历史</h2>
+            <p class="panel-sub">最近的生成记录，可再次下载</p>
+          </div>
           <span class="pill" id="history-count">—</span>
         </div>
         <div class="panel-actions">
@@ -270,7 +335,7 @@
   </main>
 
   <footer class="footer">
-    <p>本地离线运行 · 密钥与固件不会离开本机 · 生成物保存在 <code>studio/builds/</code></p>
+    <p>由密钥工坊服务提供 · 密钥与固件在服务端处理 · 生成物保存在服务器 <code>builds/</code> 目录</p>
     <p class="footer-muted">仅对本人合法拥有的设备做互操作研究；刷写有风险，请保留原厂固件用于回滚。</p>
   </footer>
 </div>
@@ -285,7 +350,6 @@
    探测使用 fetch，404 不会在控制台产生报错。 */
 (function () {
   'use strict';
-  var root = document.documentElement;
   var msgEl = document.getElementById('boot-msg');
   var bootEl = document.getElementById('boot');
   var candidates = ['static/', './'];

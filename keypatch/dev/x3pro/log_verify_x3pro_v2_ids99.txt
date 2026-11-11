@@ -1,0 +1,120 @@
+X3 Pro（X3pro_C_v1.22_app.bin）私有密钥补丁 —— 独立验证
+原厂 : D:\神牛\devices/x3pro/firmware/X3pro_C_v1.22_app.bin
+成品 : D:\神牛\keypatch/out/X3pro_C_v1.22_app_keyD798.bin
+密钥 : 0xD798   密钥模式 ID=99   普通帧同步字 0x01F4
+
+## 1. 输入镜像 / 哈希
+  [PASS] 原厂镜像大小 1941020 B  | 实际 1941020
+  [PASS] 原厂镜像 sha256  | 2e2b8a3b5ff70e62c4acddc406b055ea2625e4833a213e81863f96c0da5a911b
+  [PASS] 成品镜像大小不变（原位补丁）  | 成品 1941020 B
+  [PASS] 成品 sha256 与 Lead 最新声明一致  | 023ec3fefd2bd3a0dbe5b49bf4be962675d6d9a95664cd73515d64cce8a48243
+
+## 2. 镜像基址判定（0x08020000）
+  [PASS] 向量表 [0] 初值 SP=0x20270000 落在 SRAM 区 (0x20000000..0x3FFFFFFF)  | vec[0]=0x20270000
+  [PASS] 向量表 [1] Reset 向量为 Thumb 地址 0x08031345  | vec[1]=0x08031345
+  [PASS] Reset 地址 - 基址 == 0x11344（Reset_Handler 偏移）  | 实际 0x11344（0x08031344 - 0x08020000）
+  [PASS] offset 0x11344 处是 Reset_Handler（首条 ldr.w sp,[pc,#..]）  | ldr.w sp, [pc, #0x34]
+  [PASS] Reset_Handler 载入的初值 SP 与向量表 [0] 一致（0x20270000）  | 字面量@0x0803137C = 0x20270000
+  [PASS] Reset_Handler 首先调用系统初始化函数 0x08030BBC  | bl 目标
+  [PASS] 系统初始化把 SCB->VTOR 写成 0x08020000（应用向量表基址的铁证）  | SCB=0xE000ED00 字面量@0x08030BFC；基址 0x08020000 字面量@0x08030C04；str [SCB,#8]（SCB->VTOR）= 基址：是
+  [PASS] Reset_Handler 的 .data 源地址落在镜像内: ['0x081B05FC']
+  [PASS] 向量表 [7] 指向默认 handler 0x08031394 且为 b .（0xE7FE）  | b #0x8031394
+  [PASS] 所有非零向量表项（[0] 为 SP）均为 Thumb 奇数地址且落在镜像范围内  | 异常项 []
+  [PASS] 镜像 4 字节对齐字面量中 0x08020000 恰出现 1 次（VTOR 用）  | 位置 ['0x08030C04']
+
+## 3. 同步字函数 0x0802F040（边界 / 公式 / 写入序列）
+  [PASS] 函数头 0x0802F040 = movs r2,#1; mov r3,r0; push {r4,lr}  | movs r2, #1 / mov r3, r0 / push {r4, lr}
+  [PASS] 0x0802F046 处 10 字节 = movw r4,#0xC368; add r3,r2; udiv r4,r4,r3  | 原厂原字节 4c f2 68 34 13 44 b4 fb f3 f4
+  [PASS] 10 字节反汇编正是 movw/add/udiv 且与常量 0xC368 一致  | movw r4, #0xc368 / add r3, r2 / udiv r4, r4, r3
+  [PASS] add r3,r2 语义：r2=1 使 r3 = ID+1（0x0802F04A）
+  [PASS] udiv r4,r4,r3 为无符号除法（原厂公式 floor(50024/(ID+1))）
+  [PASS] 函数以 b.w delay_us(0x0802B5DC) 尾调用结束（0x0802F096）  | b.w #0x802b5dc
+  [PASS] 最后指令结束于 0x0802F09A（长 0x5A），2 字节 NOP 对齐后下一函数 0x0802F09C 以 push 开头  | push {r4, lr}；对齐 NOP=00 bf
+  [PASS] 同步字函数写入/时序序列：reg4(0x0802F05E) -> reg5(0x0802F06E) -> delay20 -> SCAL(0x33) -> 1ms -> SIDLE(0x36) -> delay700  | 0x0802F058:movs r0, #4 ; 0x0802F05E:bl #0x802e71c ; 0x0802F068:movs r0, #5 ; 0x0802F06E:bl #0x802e71c ; 0x0802F072:movs r0, #0x14 ; 0x0802F078:movs r0, #0x33 ; 0x0802F07E:mov.w r0, #0x3e8 ; 0x0802F086:movs r0, #0x36 ; 0x0802F08C:mov.w r0, #0x2bc
+
+## 4. 设置结构 0x20001768 / ID=99 可达性
+  [PASS] 调用点 0x0802F234：设置指针 = 0x20001768（字面量@0x0802F268），ID 取 [+1]（ldrb r0, [r4, #1]）  | 实际设置指针 0x20001768
+  [PASS] 调用点 0x0802F902：设置指针 = 0x20001768（字面量@0x0802F938），ID 取 [+1]（ldrb r0, [r4, #1]）  | 实际设置指针 0x20001768
+  [PASS] id 菜单钳位片段起始 0x08029996（cmp 实际在 0x080299A4/0x080299B2 循环处）  | ldr r3, [pc, #0x1c] ; ldr r2, [pc, #0x1c] ; ldrb r1, [r3] ; ldrb r3, [r2, #1] ; cbz r1, #0x80299ae ; adds r3, #0xa ; uxtb r3, r3 ; cmp r3, #0x63 ; it hi ; movhi r3, #0x63 ; strb r3, [r2, #1] ; pop {r4, pc}
+  [PASS] 钳位片段读标志 0x20000F9C 与设置 0x20001768，写回 [+1]  | flag@0x080299B4=0x20000F9C settings@0x080299B8=0x20001768
+  [PASS] Unicorn 片段执行菜单钳位：99 可由 +1/+10 到达且为上限  | 98+1 -> 99=>99; 99+1 -> 钳位 99=>99; 89+10 -> 99=>99; 98+10 -> 钳位 99=>99; 0+1 -> 1=>1; 0+10 -> 10=>10
+
+## 5. 全镜像写 CC2500 reg4/reg5 的唯一性
+  [PASS] write_reg(0x0802E71C) 直接调用点 80 个，r0 常量回溯 79 个（另 1 个在字节写 thunk 内，r0 由调用者传入，另行核对）  | 无法回溯 0 个: []
+  [PASS] 写 reg4/reg5 的调用点恰为 4 处（初始化表 2 + 同步字函数 2）  | 实际 ['0x0802E950', '0x0802E962', '0x0802F05E', '0x0802F06E']
+  [PASS] 原厂镜像无 burst 写 reg0x44（写 reg4/5 只能来自上述 4 处）  | 0x44 调用点 []
+  [PASS] 字节写 thunk 0x0802ECB4 的 2 个调用点也不写 reg4/5（r0=[24, 6]）  | 调用点 ['0x0802543C:r0=24', '0x08025450:r0=6']
+  [PASS] 初始化表 reg4 <- 0xC3、reg5 <- 0x68（SYNC1/SYNC0 复位值）  | reg4=0xC3 reg5=0x68
+  [PASS] 成品新增唯一 write_reg 调用点 = 注入区 set_sync（reg=0x44 burst）  | 新增 ['0x081C0074']；其中 r0=0x44 的 ['0x081C0074']
+
+## 6. 发送入口 0x0802EDC4 / 0x0802EE2C
+  [PASS] TX4 入口 = push {r4,lr}; bl radio_wake(0x0802EC64)  | push {r4, lr} / bl #0x802ec64
+  [PASS] TX2 入口同样 = push {r4,lr}; bl radio_wake
+  [PASS] TX4 函数体：FIFO(0x7F,4B) -> STX(0x35) -> 600us -> SFTX(0x3B) -> SIDLE(0x36) -> pop {r4,pc}  | 0x0802EDE0=movs r2, #4 ; 0x0802EDE2=ldr r1, [pc, #0x40] ; 0x0802EDE4=movs r0, #0x7f ; 0x0802EDE6=bl #0x802e71c
+  [PASS] TX2 函数体：40us -> FIFO(0x7F,2B) -> STX -> 500us -> SFTX -> SIDLE  | 0x0802EE48=movs r0, #0x28 ; 0x0802EE4E=movs r2, #2 ; 0x0802EE50=ldr r1, [pc, #0x40] ; 0x0802EE52=movs r0, #0x7f ; 0x0802EE54=bl #0x802e71c
+  [PASS] TX4 静态引用：16 个 BL 调用点 + 2 个 B.W 尾跳（任务书称 16 调用点）  | 总入口引用 18
+  [PASS] TX2 静态引用：9 个 BL 调用点 + 1 个 B.W 尾跳（任务书称 9 调用点）  | 总入口引用 10
+  [PASS] 同步字函数静态引用 6 处（含 2 个设置结构 ldrb 调用点）
+  [PASS] TX4/TX2 入口覆盖后残留 2 字节 = 原 bl 指令后半（死字节，未被改写）  | TX4 残留 4d ff / TX2 残留 19 ff
+
+## 7. 成品差异范围（3 补丁点 + 注入区）
+  [PASS] 注入区实际代码长度 232 字节（0xE8，原厂全 0xFF）  | 上限窗口 0x400
+  [PASS] 原厂注入窗口 0x081C0000..0x081C0400 全 0xFF
+  [PASS] 成品注入窗口剩余 792 字节保持 0xFF
+  [PASS] 与原厂差异字节数 = 240（预期 240）  | 差异区间 ['0x0EDC4..0x0EDC7', '0x0EE2C..0x0EE2F', '0x0F046..0x0F04F', '0x1A0000..0x1A007F', '0x1A0081..0x1A0087', '0x1A0089..0x1A0095', '0x1A0097..0x1A0098', '0x1A009A..0x1A00A7', '0x1A00A9..0x1A00AA', '0x1A00AC..0x1A00C3', '0x1A00C5..0x1A00C6', '0x1A00C8..0x1A00D5', '0x1A00D7..0x1A00D8', '0x1A00DA..0x1A00E7']
+  [PASS] 0x0802EDC4 原厂字节 = 10 b5 ff f7  | 实际 10 b5 ff f7
+  [PASS] 0x0802EE2C 原厂字节 = 10 b5 ff f7  | 实际 10 b5 ff f7
+  [PASS] 0x0802F046 原厂字节 = 4c f2 68 34 13 44 b4 fb f3 f4  | 实际 4c f2 68 34 13 44 b4 fb f3 f4
+  [PASS] 差异仅落在补丁点与注入区代码内（无其它字节变化）
+
+## 8. 注入区反汇编核对（分支目标 / 常量 / 蹦床顺序 / 栈平衡）
+  [PASS] 注入区线性反汇编恰好 74 条指令、覆盖 232 字节  | 74 条 / 232 字节
+  [PASS] 注入区完整指令序列与独立期望表逐条一致
+  [PASS] 0x0802EDC4 入口 4 字节 = B.W -> inj_tx4(0x081C001A)  | 字节 91 f1 29 b9
+  [PASS] 0x0802EE2C 入口 4 字节 = B.W -> inj_tx2(0x081C003E)  | 字节 91 f1 07 b9
+  [PASS] 0x0802F046 起 10 字节 = B.W inj_sync + 3x NOP(0xBF00)  | 90 f1 db bf 00 bf 00 bf 00 bf
+  [PASS] ID=99 判断：cmp r0,#0x63 / cmp r3,#0x63（两处包装各一）  | cmp r0:#99=1 cmp r3:#99=2
+  [PASS] KEY 常量 0xD798 出现 4 次（inj_sync 1 + set_key 1 + 两个 key 蹦床 2）  | movw r4 KEY=1 movw r0 KEY=3
+  [PASS] 0x01F4（原厂 ID=99 同步字 500）出现 3 次（set_ord + 两个 ord 蹦床）  | 3 次
+  [PASS] 6 个蹦床均为 push -> bl 0x0802EC64(唤醒) ->[写同步字]-> b.w 原函数体  | 0x081C008C: wake->sync->resume; 0x081C009E: wake->sync->resume; 0x081C00B0: wake->sync->resume; 0x081C00BA: wake->sync->resume; 0x081C00CC: wake->sync->resume; 0x081C00DE: wake->sync->resume
+  [PASS] 包装函数在密钥模式末尾调用 set_key 恢复 SYNC=KEY  | 2 次
+  [PASS] 注入区静态栈操作：9 个 push {r4,lr} / 5 个 pop {r4,pc}（其余 3 个 push 由原函数 pop 配对）  | push=9 pop=5
+  [PASS] TX4 恢复点之后原函数体以 pop {r4,pc} 结束（0x0802EE1E）
+  [PASS] TX2 恢复点之后原函数体以 pop {r4,pc} 结束（0x0802EE8C）
+  [PASS] 注入区没有关中断指令（cpsid/cpsie 均不存在，属已知残余风险）  | cpsid/cpsie 数：0
+  [PASS] 注入区仅 2 处直接内存写（写栈缓冲 SYNC1/SYNC0），其余经 write_reg  | strb r3, [r1]; strb r4, [r1, #1]
+
+## 9. 空闲闪存 / 引用扫描
+  [PASS] 原厂 0x081B0A30..0x081F4000 全 0xFF（275920 字节）
+  [PASS] 原厂无字面量引用 0x081C0000..0x081C0400（0 处）  | 发现 []
+  [PASS] 原厂无分支目标落入 0x081C0000..0x081C0400（0 处）  | 发现 []
+  [PASS] 成品注入区外部分支入口恰为 3 个补丁点（无其它跳入）  | 实际 [('0x802edc4', 'b.w', '0x81c001a'), ('0x802ee2c', 'b.w', '0x81c003e'), ('0x802f046', 'b.w', '0x81c0000')]
+  [PASS] 成品无字面量引用注入窗口（补丁只加分支，不加数据指针）  | 发现 []
+
+## 10. Unicorn 调用级语义（同步字 / 双发 / 原厂自证）
+  [PASS] 原厂镜像自证：set_sync(ID)=floor(50024/(ID+1))，reg4/reg5 单写 + 20us/SCAL/1ms/SIDLE/700us 序列  | ID=0  SYNC=0xC368; ID=1  SYNC=0x61B4; ID=2  SYNC=0x4122; ID=37 SYNC=0x0524; ID=50 SYNC=0x03D4; ID=73 SYNC=0x02A4; ID=98 SYNC=0x01F9; ID=99 SYNC=0x01F4
+  [PASS] 补丁版 set_sync：ID=99 -> KEY(0xD798)，ID 0..98 与原厂逐位一致，后段时序/栈平衡不变  | ID=0  SYNC=0xC368; ID=1  SYNC=0x61B4; ID=2  SYNC=0x4122; ID=37 SYNC=0x0524; ID=50 SYNC=0x03D4; ID=73 SYNC=0x02A4; ID=98 SYNC=0x01F9; ID=99 SYNC=0xD798
+  [PASS] 原厂镜像自证 TX4(ID=0)：wake + 单发 FIFO(4)/STX/SFTX/SIDLE，无 SYNC 写入  | wake FIFO(4) strobe(0x35) delay(600) strobe(0x3B) strobe(0x36)
+  [PASS] 原厂镜像自证 TX2(ID=0)：wake + 40us + 单发 FIFO(2)/STX/500us/SFTX/SIDLE  | wake delay(40) FIFO(2) strobe(0x35) delay(500) strobe(0x3B) strobe(0x36)
+  [PASS] 补丁版 TX4(ID=99)：wake+SYNC=KEY -> FIFO(4) -> wake+SYNC=0x01F4 -> FIFO(4) -> SYNC=KEY（双发）  | wake SYNC=0xD798 FIFO(4) strobe(0x35) delay(600) strobe(0x3B) strobe(0x36) wake SYNC=0x01F4 FIFO(4) strobe(0x35) delay(600) strobe(0x3B) strobe(0x36) SYNC=0xD798
+  [PASS] 同步字写入发生在射频唤醒 bl 0x0802EC64 之后（双发两帧均如此）  | 前两事件 [('wake',), ('sync', 55192)] / 第二帧 [('wake',), ('sync', 500)]
+  [PASS] 补丁版 TX2(ID=99)：wake+SYNC=KEY -> FIFO(2) -> wake+SYNC=0x01F4 -> FIFO(2) -> SYNC=KEY（双发）  | wake SYNC=0xD798 delay(40) FIFO(2) strobe(0x35) delay(500) strobe(0x3B) strobe(0x36) wake SYNC=0x01F4 delay(40) FIFO(2) strobe(0x35) delay(500) strobe(0x3B) strobe(0x36) SYNC=0xD798
+  [PASS] 补丁版 TX4 普通模式(ID!=99) 与原厂逐事件一致（单发、无 SYNC 写入）  | ID=0  一致; ID=1  一致; ID=5  一致; ID=37 一致; ID=98 一致
+  [PASS] 补丁版 TX2 普通模式(ID!=99) 与原厂逐事件一致  | ID=0  一致; ID=1  一致; ID=5  一致; ID=37 一致; ID=98 一致
+  [PASS] 双发第二帧 SYNC=0x01F4 正是原厂 ID=99 同步字 floor(50024/100)=500  | 50024//100 = 500
+  [PASS] 双发使 2 字节短命令每帧发射次数 1 -> 2（时序变化已记录为风险）
+
+## 汇总
+  1. 输入镜像 / 哈希                               PASS  4 /  4
+  2. 镜像基址判定（0x08020000）                      PASS 11 / 11
+  3. 同步字函数 0x0802F040（边界 / 公式 / 写入序列）        PASS  8 /  8
+  4. 设置结构 0x20001768 / ID=99 可达性             PASS  5 /  5
+  5. 全镜像写 CC2500 reg4/reg5 的唯一性              PASS  6 /  6
+  6. 发送入口 0x0802EDC4 / 0x0802EE2C            PASS  8 /  8
+  7. 成品差异范围（3 补丁点 + 注入区）                     PASS  8 /  8
+  8. 注入区反汇编核对（分支目标 / 常量 / 蹦床顺序 / 栈平衡）        PASS 15 / 15
+  9. 空闲闪存 / 引用扫描                             PASS  5 /  5
+  10. Unicorn 调用级语义（同步字 / 双发 / 原厂自证）         PASS 11 / 11
+
+总计: PASS=81  FAIL=0
+结论: PASS —— 全部独立检查通过

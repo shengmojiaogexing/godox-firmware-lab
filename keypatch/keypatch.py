@@ -158,16 +158,23 @@ def _patch_one(device_id: str, key_text: str, out_dir: str,
         print("   输出     : %s  (%d 字节, sha256 %s)"
               % (_rel(dst), len(patched), common.sha256_hex(patched)[:16] + "…"))
     if do_container:
-        # G3 V2.0 容器备用件（仅少数 V2.0/A1 设备需要；内嵌文件名必须含设备 ID，
-        # 如 AD100Pro / AD200Pro / X3C，由设备模块的 container_name 模板给出）
-        cname = info.get("container_name") or _container_name(name)
-        cname = cname.format(key=key)
-        cdst = os.path.join(out_dir, cname)
-        blob = container_lib.build(patched, cname)
-        common.write_file(cdst, blob)
-        if not quiet:
-            print("   容器备用 : %s  (%d 字节, payload %d + footer %d)"
-                  % (_rel(cdst), len(blob), len(patched), len(blob) - len(patched)))
+        if info.get("container_builtin"):
+            # 该设备的原厂文件本身就是 G3 V2.0 容器（如 X2T-C）：apply() 已就地重算 MD5，
+            # 再包一层会把容器 footer 当 payload 刷进 Flash，所以明确跳过。
+            if not quiet:
+                print("   容器备用 : 跳过（%s 的固件本身已是 G3 V2.0 容器，"
+                      "apply() 已重算 MD5，无需二次打包）" % device_id)
+        else:
+            # G3 V2.0 容器备用件（仅少数 V2.0/A1 设备需要；内嵌文件名必须含设备 ID，
+            # 如 AD100Pro / AD200Pro / X3C，由设备模块的 container_name 模板给出）
+            cname = info.get("container_name") or _container_name(name)
+            cname = cname.format(key=key)
+            cdst = os.path.join(out_dir, cname)
+            blob = container_lib.build(patched, cname)
+            common.write_file(cdst, blob)
+            if not quiet:
+                print("   容器备用 : %s  (%d 字节, payload %d + footer %d)"
+                      % (_rel(cdst), len(blob), len(patched), len(blob) - len(patched)))
     if do_verify:
         ok_all = True
         ver = getattr(mod, "verify", None)

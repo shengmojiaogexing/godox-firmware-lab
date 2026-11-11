@@ -97,8 +97,16 @@ class StudioApiTest(unittest.TestCase):
         self.assertEqual(status, 200)
         ids = {d["id"] for d in parsed["devices"]}
         self.assertIn("x3c", ids)
+        self.assertIn("x3pros", ids)
+        self.assertIn("x3s", ids)
+        self.assertIn("x2ts", ids)
+        self.assertIn("x2tc", ids)
         self.assertIn("ad100", ids)
         self.assertIn("ad200", ids)
+        self.assertIn("v1c", ids)
+        self.assertIn("v1s", ids)
+        self.assertIn("v860iiis", ids)
+        self.assertIn("v860iiic", ids)
         for row in parsed["devices"]:
             for key in ("id", "name", "kind", "model", "firmware_version",
                         "out_name", "original_sha256", "firmware", "features"):
@@ -203,11 +211,17 @@ class StudioApiTest(unittest.TestCase):
         api_files = {f["device"]: f for f in parsed["build"]["files"]}
         tmp = tempfile.mkdtemp(prefix="keypatch-cli-")
         try:
+            # 子进程 stdout/stderr 是管道：Windows 默认按 GBK 编解码，而 keypatch.py 输出含
+            # 非 GBK 字符（如 «µs»/⚡）会 UnicodeEncodeError，父进程按 GBK 解码也会崩。
+            # 这里强制子进程用 UTF-8 输出、父进程按 UTF-8 解码（errors=replace 兜底）。
+            env = dict(os.environ)
+            env["PYTHONIOENCODING"] = "utf-8"
             proc = subprocess.run(
                 [sys.executable, os.path.join(KEYPATCH, "keypatch.py"),
                  "patch-all", "--key", "0x6B21", "--out", tmp],
-                cwd=REPO, capture_output=True, text=True, timeout=180)
-            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+                cwd=REPO, capture_output=True, text=True,
+                encoding="utf-8", errors="replace", env=env, timeout=180)
+            self.assertEqual(proc.returncode, 0, (proc.stdout or "") + (proc.stderr or ""))
             for device_id in self.ready_ids:
                 fname = api_files[device_id]["filename"]
                 cli_path = os.path.join(tmp, fname)
@@ -225,6 +239,18 @@ class StudioApiTest(unittest.TestCase):
             self.skipTest("X3-C 原厂固件未就位")
         status, parsed, _, _ = jrequest(self.port, "/api/generate", "POST",
                                         {"key": "0x5A3C", "devices": ["x3c"],
+                                         "verify": True}, timeout=180)
+        self.assertEqual(status, 200, parsed)
+        entry = parsed["build"]["files"][0]
+        self.assertTrue(entry["verify_results"], "应有验证结果")
+        for item in entry["verify_results"]:
+            self.assertTrue(item["ok"], item["msg"])
+
+    def test_generate_with_verify_x3pros(self):
+        if "x3pros" not in self.ready_ids:
+            self.skipTest("X3 Pro S 原厂固件未就位")
+        status, parsed, _, _ = jrequest(self.port, "/api/generate", "POST",
+                                        {"key": "0x5A3C", "devices": ["x3pros"],
                                          "verify": True}, timeout=180)
         self.assertEqual(status, 200, parsed)
         entry = parsed["build"]["files"][0]

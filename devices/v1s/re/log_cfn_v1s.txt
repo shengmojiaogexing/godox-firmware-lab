@@ -1,0 +1,464 @@
+V1S C.Fn / settings 逆向证据脚本（cfn-analyst / task-1）
+固件: D:\神牛\devices\v1s\firmware\V1S_V1.8.bin
+运行: D:\神牛\tools\python\python.exe devices\v1s\re\cfn_v1s.py
+
+==============================================================================
+0. 固件身份 / 基址
+==============================================================================
+  文件: D:\神牛\devices\v1s\firmware\V1S_V1.8.bin
+  大小: 78500 B (0x132A4)
+  基址: 0x08003000  结束: 0x080162A4
+  sha256: 87a0600046e1b7c2198a7ac8fac15959bb3a5d582edf44d8e0df38706dcb917a
+  [PASS] 镜像大小 == 78500 B
+  [PASS] sha256 与任务给定一致（未改动）
+  vector[0] SP  = 0x20001540   (V1C 0x20001550)
+  vector[1] PC  = 0x080030D5
+  [PASS] 初始化 SP = 0x20001540（RAM 顶部，V1C 为 0x20001550）
+  [PASS] 复位向量 = 0x080030D5（Thumb，入口 0x080030D4）
+
+==============================================================================
+1. C.Fn 最大值/回绕表 0x08015DE6 与引用点
+==============================================================================
+  表内容: 01 01 01 01 01 1f 63 01 02 06 01 01
+  每项 max: ['item0=1', 'item1=1', 'item2=1', 'item3=1', 'item4=1', 'item5=31', 'item6=99', 'item7=1', 'item8=2', 'item9=6', 'item10=1', 'item11=1']
+  [PASS] 12 字节内容 == 01 01 01 01 01 1F 63 01 02 06 01 01
+  [PASS] item6(ID) max == 0x63(99)
+  [PASS] item8(LIGHT) max == 2（0/1/2 三态）
+  ldr 字面量引用 3 处:
+    0x08005A82  bd 4b        ldr     r3, [pc, #0x2f4]   fn=0x080059FC
+    0x0800C3B2  d1 4d        ldr     r5, [pc, #0x344]   fn=0x0800C354
+    0x0800EE2E  36 4b        ldr     r3, [pc, #0xd8]   fn=0x0800EC58
+  [PASS] 表引用点 == dec 0x08005A82 / inc 0x0800C3B2 / 设置应用 0x0800EE2E
+  [PASS] dec 引用点在递减 handler 0x080059FC 内
+  [PASS] inc 引用点在递增 handler 0x0800C354 内
+  动态索引用法: 0x08005A84  5b 5c        ldrb    r3, [r3, r1]
+  动态索引用法: 0x0800C3BC  ae 5c        ldrb    r6, [r5, r2]
+  [PASS] 0x08005A84 = ldrb r3,[max_table, item]（dec 用同一个 item 索引）
+  [PASS] 0x0800C3BC = ldrb r6,[max_table, item]（inc 用同一个 item 索引）
+
+==============================================================================
+2. settings RAM 基址 / 12 项边界 / item6、item8 地址
+==============================================================================
+  0x20001054 的 ldr 字面量引用: 42 处
+    前 12 处: ['0x0800363E', '0x0800367A', '0x08003952', '0x0800397C', '0x08003D66', '0x0800443C', '0x080044B6', '0x0800455A', '0x08004648', '0x08004730', '0x0800485C', '0x080048C4']
+  [PASS] settings 基址字面量引用 == 42 处（同族中最集中的 RAM 基址）
+  同一 RAM 窗口 0x20001000..0x2000113F 的其它字面量（说明它们是独立结构，非 settings）:
+    0x20001018 x1
+    0x20001024 x4
+    0x20001054 x42
+    0x20001064 x7
+    0x2000107E x10
+    0x2000108C x4
+    0x2000110C x3
+    0x20001120 x8
+  [PASS] 0x20001054 是窗口内引用最多的基址
+  [PASS] 0x20001064（= settings 基址+0x10）是独立结构，不是 settings 的别名
+  dec handler 基址加载: 0x08005A3E  cb 48        ldr     r0, [pc, #0x32c] -> 0x20001054
+  [PASS] dec handler 在 0x08005A3E 载入 settings 基址 = 0x20001054
+  [PASS] dec handler 动态索引访问 0x08005A5A = r3, [r0, r1]
+  [PASS] dec handler 动态索引访问 0x08005A62 = r3, [r0, r1]
+  [PASS] dec handler 动态索引访问 0x08005A86 = r3, [r0, r1]
+  inc handler 基址加载: 0x0800C396  d5 48        ldr     r0, [pc, #0x354] -> 0x20001054
+  [PASS] inc handler 在 0x0800C396 载入 settings 基址
+  [PASS] inc handler 动态索引访问 0x0800C3B4 = r3, [r0, r2]
+  [PASS] inc handler 动态索引访问 0x0800C3BA = r3, [r0, r2]
+  [PASS] inc handler 动态索引访问 0x0800C3C6 = r4, [r0, r2]
+  `cmp #0xb`（item 索引 0..0xB 边界）出现点:
+    0x08005C4C  0b 29        cmp     r1, #0xb   fn=0x080059FC
+    0x0800715E  0b 2a        cmp     r2, #0xb   fn=0x080070A8
+    0x0800C5B6  0b 29        cmp     r1, #0xb   fn=0x0800C354
+    0x0800DEB0  0b 28        cmp     r0, #0xb   fn=0x0800DE70
+  [PASS] dec handler 内有 cmp #0xB（12 项选择边界）
+  [PASS] inc handler 内有 cmp #0xB（12 项选择边界）
+  [PASS] 至少 2 处 cmp #0xB 边界证据
+  item 地址: item0=0x20001054 ... item6(ID)=0x2000105A item8(LIGHT)=0x2000105C
+  [PASS] item6(ID)=0x2000105A  item8(LIGHT)=0x2000105C（base+n）
+  当前选中项 0x200004D0 的引用: ['0x080043BC', '0x0800440C', '0x0800446E', '0x0800450A', '0x080045BE', '0x08004696', '0x08004852', '0x080048B8', '0x08004A00', '0x08004C92', '0x08005A50', '0x0800C3A8', '0x080111A4']
+  [PASS] dec(0x08005A50)/inc(0x0800C3A8) 都从 0x200004D0 取当前项
+
+==============================================================================
+3. settings[0..0xD] 读者/写者全表（前向污点扫描）
+==============================================================================
+  共 111 个静态访问点（含动态索引）
+  动态索引访问（base == settings 基址）8 处:
+    0x08005A5A  43 5c        ldrb    r3, [r0, r1]   fn=0x080059FC
+    0x08005A62  43 54        strb    r3, [r0, r1]   fn=0x080059FC
+    0x08005A86  43 54        strb    r3, [r0, r1]   fn=0x080059FC
+    0x0800C3B4  83 5c        ldrb    r3, [r0, r2]   fn=0x0800C354
+    0x0800C3BA  83 54        strb    r3, [r0, r2]   fn=0x0800C354
+    0x0800C3C6  84 54        strb    r4, [r0, r2]   fn=0x0800C354
+    0x0800EE34  15 5c        ldrb    r5, [r2, r0]   fn=0x0800EC58
+    0x0800EE3C  14 54        strb    r4, [r2, r0]   fn=0x0800EC58
+  --- settings[0] @0x20001054  读者 5 / 写者 3 ---
+    0x08004440  38 78        ldrb    r0, [r7]   fn=0x0800431C
+    0x08004450  38 78        ldrb    r0, [r7]   fn=0x0800431C
+    0x08005806  14 78        ldrb    r4, [r2]   fn=0x080056F0
+    0x08005EBA  01 70        strb    r1, [r0]   fn=0x08005E68
+    0x08006B8A  00 78        ldrb    r0, [r0]   fn=0x08006B84
+    0x0800CEA0  26 70        strb    r6, [r4]   fn=0x0800CB88
+    0x08013954  13 70        strb    r3, [r2]   fn=0x0801383C
+    0x08013CCC  05 78        ldrb    r5, [r0]   fn=0x08013B98
+  --- settings[1] @0x20001055  读者 4 / 写者 3 ---
+    0x08003640  49 78        ldrb    r1, [r1, #1]   fn=0x08003628
+    0x080044BA  68 78        ldrb    r0, [r5, #1]   fn=0x0800431C
+    0x080044CA  68 78        ldrb    r0, [r5, #1]   fn=0x0800431C
+    0x0800580A  54 78        ldrb    r4, [r2, #1]   fn=0x080056F0
+    0x08005EBC  42 70        strb    r2, [r0, #1]   fn=0x08005E68
+    0x0800CEA2  66 70        strb    r6, [r4, #1]   fn=0x0800CB88
+    0x08013958  53 70        strb    r3, [r2, #1]   fn=0x0801383C
+  --- settings[2] @0x20001056  读者 4 / 写者 3 ---
+    0x0800455E  b0 78        ldrb    r0, [r6, #2]   fn=0x0800431C
+    0x0800456E  b0 78        ldrb    r0, [r6, #2]   fn=0x0800431C
+    0x08005812  94 78        ldrb    r4, [r2, #2]   fn=0x080056F0
+    0x08005EBE  81 70        strb    r1, [r0, #2]   fn=0x08005E68
+    0x0800CEA4  a6 70        strb    r6, [r4, #2]   fn=0x0800CB88
+    0x08011670  90 78        ldrb    r0, [r2, #2]   fn=0x0801166C
+    0x08013960  93 70        strb    r3, [r2, #2]   fn=0x0801383C
+  --- settings[3] @0x20001057  读者 4 / 写者 3 ---
+    0x0800464C  e0 78        ldrb    r0, [r4, #3]   fn=0x0800431C
+    0x0800465C  e0 78        ldrb    r0, [r4, #3]   fn=0x0800431C
+    0x08005816  d4 78        ldrb    r4, [r2, #3]   fn=0x080056F0
+    0x08005EC0  c1 70        strb    r1, [r0, #3]   fn=0x08005E68
+    0x0800CEA6  e6 70        strb    r6, [r4, #3]   fn=0x0800CB88
+    0x080116BC  d0 78        ldrb    r0, [r2, #3]   fn=0x0801166C
+    0x08013964  d3 70        strb    r3, [r2, #3]   fn=0x0801383C
+  --- settings[4] @0x20001058  读者 4 / 写者 5 ---
+    0x08004734  28 79        ldrb    r0, [r5, #4]   fn=0x0800431C
+    0x08004744  28 79        ldrb    r0, [r5, #4]   fn=0x0800431C
+    0x08004D2E  04 71        strb    r4, [r0, #4]   fn=0x08004D04
+    0x0800581A  14 79        ldrb    r4, [r2, #4]   fn=0x080056F0
+    0x08005EC8  01 71        strb    r1, [r0, #4]   fn=0x08005E68
+    0x0800CEAE  26 71        strb    r6, [r4, #4]   fn=0x0800CB88
+    0x0800E8B2  04 71        strb    r4, [r0, #4]   fn=0x0800E890
+    0x080111AE  1b 79        ldrb    r3, [r3, #4]   fn=0x08011178
+    0x08013968  13 71        strb    r3, [r2, #4]   fn=0x0801383C
+  --- settings[5] @0x20001059  读者 5 / 写者 3 ---
+    0x08004860  70 79        ldrb    r0, [r6, #5]   fn=0x0800431C
+    0x08004874  70 79        ldrb    r0, [r6, #5]   fn=0x0800431C
+    0x0800581E  54 79        ldrb    r4, [r2, #5]   fn=0x080056F0
+    0x08005952  40 79        ldrb    r0, [r0, #5]   fn=0x080058FC
+    0x08005ECE  43 71        strb    r3, [r0, #5]   fn=0x08005E68
+    0x0800CEB4  61 71        strb    r1, [r4, #5]   fn=0x0800CB88
+    0x0800E7FA  40 79        ldrb    r0, [r0, #5]   fn=0x0800E6E4
+    0x0801396C  53 71        strb    r3, [r2, #5]   fn=0x0801383C
+  --- settings[6] @0x2000105A  读者 8 / 写者 3 ---
+    0x080048C6  a8 79        ldrb    r0, [r5, #6]   fn=0x0800431C
+    0x080048DE  a8 79        ldrb    r0, [r5, #6]   fn=0x0800431C
+    0x08005826  94 79        ldrb    r4, [r2, #6]   fn=0x080056F0
+    0x08005A8E  80 79        ldrb    r0, [r0, #6]   fn=0x080059FC
+    0x08005E48  80 79        ldrb    r0, [r0, #6]   fn=0x08005DE4
+    0x08005ECA  81 71        strb    r1, [r0, #6]   fn=0x08005E68
+    0x0800C3EC  80 79        ldrb    r0, [r0, #6]   fn=0x0800C354
+    0x0800CEB0  a6 71        strb    r6, [r4, #6]   fn=0x0800CB88
+    0x0800CEC0  a0 79        ldrb    r0, [r4, #6]   fn=0x0800CB88
+    0x0800CEEC  80 79        ldrb    r0, [r0, #6]   fn=0x0800CB88
+    0x08013974  93 71        strb    r3, [r2, #6]   fn=0x0801383C
+  --- settings[7] @0x2000105B  读者 14 / 写者 6 ---
+    0x08003D6A  c5 79        ldrb    r5, [r0, #7]   fn=0x08003D64
+    0x080049AC  e0 79        ldrb    r0, [r4, #7]   fn=0x0800431C
+    0x080049BC  e0 79        ldrb    r0, [r4, #7]   fn=0x0800431C
+    0x0800582A  d4 79        ldrb    r4, [r2, #7]   fn=0x080056F0
+    0x08005EC2  c2 71        strb    r2, [r0, #7]   fn=0x08005E68
+    0x0800792C  c0 79        ldrb    r0, [r0, #7]   fn=0x0800791C
+    0x08007C5C  c0 79        ldrb    r0, [r0, #7]   fn=0x08007C4C
+    0x08007F0C  c0 79        ldrb    r0, [r0, #7]   fn=0x08007EFC
+    0x08008342  e8 79        ldrb    r0, [r5, #7]   fn=0x08008308
+    0x08008400  e8 79        ldrb    r0, [r5, #7]   fn=0x08008308
+    0x08008424  e8 79        ldrb    r0, [r5, #7]   fn=0x08008308
+    0x080086E6  e8 79        ldrb    r0, [r5, #7]   fn=0x08008308
+    0x08008774  e8 79        ldrb    r0, [r5, #7]   fn=0x08008308
+    0x0800CEA8  e0 71        strb    r0, [r4, #7]   fn=0x0800CB88
+    0x0800E9E2  ce 71        strb    r6, [r1, #7]   fn=0x0800E908
+    0x0800E9E6  cd 71        strb    r5, [r1, #7]   fn=0x0800E908
+    0x0800F36C  c2 71        strb    r2, [r0, #7]   fn=0x0800F08C
+    0x0800F56C  c0 79        ldrb    r0, [r0, #7]   fn=0x0800F474
+    0x0800F694  c0 79        ldrb    r0, [r0, #7]   fn=0x0800F5A4
+    0x08013978  d3 71        strb    r3, [r2, #7]   fn=0x0801383C
+  --- settings[8] @0x2000105C  读者 5 / 写者 3 ---
+    0x08003956  00 7a        ldrb    r0, [r0, #8]   fn=0x08003950
+    0x0800397E  01 7a        ldrb    r1, [r0, #8]   fn=0x08003950
+    0x08004A8A  38 7a        ldrb    r0, [r7, #8]   fn=0x0800431C
+    0x08004A9A  38 7a        ldrb    r0, [r7, #8]   fn=0x0800431C
+    0x0800582E  14 7a        ldrb    r4, [r2, #8]   fn=0x080056F0
+    0x08005EC4  01 72        strb    r1, [r0, #8]   fn=0x08005E68
+    0x0800CEAA  26 72        strb    r6, [r4, #8]   fn=0x0800CB88
+    0x0801397C  13 72        strb    r3, [r2, #8]   fn=0x0801383C
+  --- settings[9] @0x2000105D  读者 6 / 写者 4 ---
+    0x08004AD2  78 7a        ldrb    r0, [r7, #9]   fn=0x0800431C
+    0x08004AFE  78 7a        ldrb    r0, [r7, #9]   fn=0x0800431C
+    0x08004B26  78 7a        ldrb    r0, [r7, #9]   fn=0x0800431C
+    0x08005832  54 7a        ldrb    r4, [r2, #9]   fn=0x080056F0
+    0x08005EC6  43 72        strb    r3, [r0, #9]   fn=0x08005E68
+    0x0800C3DC  41 72        strb    r1, [r0, #9]   fn=0x0800C354
+    0x0800CEAC  61 72        strb    r1, [r4, #9]   fn=0x0800CB88
+    0x08012646  60 7a        ldrb    r0, [r4, #9]   fn=0x08012640
+    0x0801269A  60 7a        ldrb    r0, [r4, #9]   fn=0x08012640
+    0x08013980  53 72        strb    r3, [r2, #9]   fn=0x0801383C
+  --- settings[10] @0x2000105E  读者 1 / 写者 1 ---
+    0x0800583A  94 7a        ldrb    r4, [r2, #0xa]   fn=0x080056F0
+    0x08013988  93 72        strb    r3, [r2, #0xa]   fn=0x0801383C
+  --- settings[11] @0x2000105F  读者 1 / 写者 1 ---
+    0x0800583E  d4 7a        ldrb    r4, [r2, #0xb]   fn=0x080056F0
+    0x0801398C  d3 72        strb    r3, [r2, #0xb]   fn=0x0801383C
+  --- settings[12] @0x20001060  读者 1 / 写者 1 ---
+    0x08005842  14 7b        ldrb    r4, [r2, #0xc]   fn=0x080056F0
+    0x08013990  13 73        strb    r3, [r2, #0xc]   fn=0x0801383C
+  --- settings[13] @0x20001061  读者 1 / 写者 1 ---
+    0x08005846  52 7b        ldrb    r2, [r2, #0xd]   fn=0x080056F0
+    0x08013994  53 73        strb    r3, [r2, #0xd]   fn=0x0801383C
+  [PASS] settings 窗口静态访问点总数 == 111
+  item8(LIGHT) 读者: ['0x08003956', '0x0800397E', '0x08004A8A', '0x08004A9A', '0x0800582E']
+  item8(LIGHT) 写者: ['0x08005EC4', '0x0800CEAA', '0x0801397C']
+  [PASS] item8 全部 5 个读者 == 造型灯 2 + 菜单显示 2 + save 1
+  [PASS] item8 全部 3 个写者 == 出厂默认 / 按键恢复默认 / 上电 load 展开
+  item6(ID) 读者: ['0x080048C6', '0x080048DE', '0x08005826', '0x08005A8E', '0x08005E48', '0x0800C3EC', '0x0800CEC0', '0x0800CEEC']
+  item6(ID) 写者: ['0x08005ECA', '0x0800CEB0', '0x08013974']
+  [PASS] 两个 gate 的同步块都读 settings[6]=ID
+  [PASS] ID 持久化写点：load 展开 0x08013974 / 默认 0x08005ECA=0
+
+==============================================================================
+4. item8(LIGHT) 功能读者、三态语义与 mask 补丁
+==============================================================================
+  [PASS] 造型灯任务函数起始 = 0x08003950（fn 范围 0x08003950..0x08003A48）
+  [PASS] LIGHT 功能读者#1 @0x08003956 原厂字节 = 00 7a (期望 00 7a)
+  [PASS] LIGHT 功能读者#2 @0x0800397E 原厂字节 = 01 7a (期望 01 7a)
+  读者#1 上下文:
+    0x08003956  00 7a        ldrb    r0, [r0, #8]
+    0x08003958  36 4c        ldr     r4, [pc, #0xd8]
+    0x0800395A  37 4f        ldr     r7, [pc, #0xdc]
+    0x0800395E  01 28        cmp     r0, #1
+    0x08003960  0c d1        bne     #0x800397c
+  读者#2 上下文:
+    0x0800397C  2c 48        ldr     r0, [pc, #0xb0]
+    0x0800397E  01 7a        ldrb    r1, [r0, #8]
+    0x08003980  2f 48        ldr     r0, [pc, #0xbc]
+    0x08003982  02 29        cmp     r1, #2
+    0x08003984  15 d0        beq     #0x80039b2
+  [PASS] settings[8]==1 -> OFF 分支（0x0800395E cmp r0,#1）
+  [PASS] settings[8]==2 -> ON 分支（0x08003982 cmp r1,#2）
+  [PASS] settings[8]==0 -> 12sec 定时器初值 0x4B<<5=2400（0x080039A8/AC）
+  [PASS] 造型灯输出 GPIO = 0x48001000（bit13/14 由 0x800A80A 写）
+  [PASS] mask#1 替换字节 00 20 = movs r0,#0（等价 settings[8]=0）
+  [PASS] mask#2 替换字节 00 21 = movs r1,#0（等价 settings[8]=0）
+  -> mask 后 LIGHT 行为固定为 settings[8]==0（12sec 出厂默认），用户把 C.Fn LIGHT 设为 1/2 不再驱动造型灯。
+  菜单渲染（fn 0x0800431C）中 item8 分支:
+    0x08004A08  08 25        movs    r5, #8
+    0x08004A0A  08 28        cmp     r0, #8
+    0x08004A86  29 4f        ldr     r7, [pc, #0xa4]
+    0x08004A8A  38 7a        ldrb    r0, [r7, #8]
+    0x08004A8E  40 00        lsls    r0, r0, #1
+    0x08004A90  00 1d        adds    r0, r0, #4
+    0x08004A9A  38 7a        ldrb    r0, [r7, #8]
+  [PASS] 0x08004A0A cmp r0,#8 -> item8 专用渲染分支
+  [PASS] 箭头行 = 2*settings[8]+4（0x08004A8E lsls / 0x08004A90 adds）
+  选项字形序列(row4 '12sec'): [1, 2, 54, 40, 38]
+  [PASS] 字形 1,2,s,e,c 解码 == '12sec'（settings[8]=0 选项）
+  [PASS] 字形 O,F,F 解码 == 'OFF'（settings[8]=1 选项，row 6）
+  [PASS] 字形 O,N 解码 == 'ON'（settings[8]=2 选项，row 8）
+
+==============================================================================
+5. 递减/递增 handler + item==6(ID) gate（hook 替换点）
+==============================================================================
+  gate 0x08005A8A 所在函数: 0x080059FC..0x08005DE4 (fn=0x080059FC)
+  [PASS] gate 0x08005A8A 位于 handler 0x080059FC 内
+  gate 0x0800C3E8 所在函数: 0x0800C354..0x0800C764 (fn=0x0800C354)
+  [PASS] gate 0x0800C3E8 位于 handler 0x0800C354 内
+  [PASS] dec gate(cmp r1,#6; bne) @0x08005A8A 原厂字节 = 06 29 02 d1 (期望 06 29 02 d1)
+  [PASS] dec gate 同步块 ldrb r0,[r0,#6] @0x08005A8E 原厂字节 = 80 79 (期望 80 79)
+  [PASS] dec gate 同步块 bl 0x080112DC @0x08005A90 原厂字节 = 0b f0 24 fc (期望 0b f0 24 fc)
+  [PASS] dec gate 后 bl 目标 == 同步字函数 0x080112DC
+  [PASS] dec gate 同步块后即 pop 返回（0x08005A94）
+  [PASS] inc gate(cmp r1,#6; bne) @0x0800C3E8 原厂字节 = 06 29 f5 d1 (期望 06 29 f5 d1)
+  [PASS] inc gate 同步块 ldrb r0,[r0,#6] @0x0800C3EC 原厂字节 = 80 79 (期望 80 79)
+  [PASS] inc gate 同步块 bl 0x080112DC @0x0800C3EE 原厂字节 = 04 f0 75 ff (期望 04 f0 75 ff)
+  [PASS] inc gate 后 bl 目标 == 同步字函数 0x080112DC
+  [PASS] inc gate 同步块后即 pop 返回（0x0800C3F2）
+  dec gate 处 r0 反向数据流: status=resolved value=0x20001054
+    0x08005A3E  cb 48        ldr     r0, [pc, #0x32c]   ; 字面量@0x08005D6C = 0x20001054
+  [PASS] dec gate 处 r0 == settings 基址 0x20001054
+  inc gate 处 r0 反向数据流: status=resolved value=0x20001054
+    0x0800C396  d5 48        ldr     r0, [pc, #0x354]   ; 字面量@0x0800C6EC = 0x20001054
+  [PASS] inc gate 处 r0 == settings 基址 0x20001054
+  gate 前一条: 0x08005A88  11 78        ldrb    r1, [r2]
+  [PASS] 0x08005A88 = ldrb r1,<当前项>（gate 处 r1 = item 索引）
+  gate 前一条: 0x0800C3E6  09 78        ldrb    r1, [r1]
+  [PASS] 0x0800C3E6 = ldrb r1,<当前项>（gate 处 r1 = item 索引）
+  dec 0x08005A88 处 r2: status=resolved value=0x200004D0
+  [PASS] dec 处 r2 == 0x200004D0（当前选中项）
+  inc 0x0800C3E6 处 r1: status=resolved value=0x200004D0
+  [PASS] inc 处 r1 == 0x200004D0（当前选中项）
+  补丁点 0x08005A8A: 06 29 02 d1 -> 00 e0 00 bf
+      0x08005A8A  00 e0        b       #0x8005a8e
+      0x08005A8C  00 bf        nop     
+  [PASS] 0x08005A8A 补丁字节 00 e0 00 bf = 无条件 b 到原厂同步块（4B，无需代码洞）
+  [PASS] 同步块入口 0x08005A8E 仍读 settings[6]=ID（保持同步字公式的 ID 实参）
+  补丁点 0x0800C3E8: 06 29 f5 d1 -> 00 e0 00 bf
+      0x0800C3E8  00 e0        b       #0x800c3ec
+      0x0800C3EA  00 bf        nop     
+  [PASS] 0x0800C3E8 补丁字节 00 e0 00 bf = 无条件 b 到原厂同步块（4B，无需代码洞）
+  [PASS] 同步块入口 0x0800C3EC 仍读 settings[6]=ID（保持同步字公式的 ID 实参）
+
+==============================================================================
+6. 同步字函数 0x080112DC 与 50024 分子
+==============================================================================
+  50024 字面量命中: ['0x08011310']
+  [PASS] 50024 全镜像唯一，@0x08011310
+  同步字函数 0x080112DC..0x08011314:
+    0x080112DC  0c 4a        ldr     r2, [pc, #0x30]
+    0x080112DE  10 b5        push    {r4, lr}
+    0x080112E0  41 1c        adds    r1, r0, #1
+    0x080112E2  10 46        mov     r0, r2
+    0x080112E4  f1 f7 04 ff  bl      #0x80030f0
+    0x080112E8  04 46        mov     r4, r0
+    0x080112EA  01 0a        lsrs    r1, r0, #8
+    0x080112EC  04 20        movs    r0, #4
+    0x080112EE  02 f0 b4 f9  bl      #0x801365a
+    0x080112F2  e1 b2        uxtb    r1, r4
+    0x080112F4  05 20        movs    r0, #5
+    0x080112F6  02 f0 b0 f9  bl      #0x801365a
+    0x080112FA  14 20        movs    r0, #0x14
+    0x080112FC  02 f0 66 f8  bl      #0x80133cc
+    0x08011300  33 20        movs    r0, #0x33
+    0x08011302  02 f0 0b fa  bl      #0x801371c
+    0x08011306  7d 20        movs    r0, #0x7d
+    0x08011308  c0 00        lsls    r0, r0, #3
+    0x0801130A  02 f0 5f f8  bl      #0x80133cc
+    0x0801130E  10 bd        pop     {r4, pc}
+    0x08011310  68 c3        stm     r3!, {r3, r5, r6}
+    0x08011312  00 00        movs    r0, r0
+  50024 载入点: 0x080112DC  0c 4a        ldr     r2, [pc, #0x30]
+  [PASS] 0x080112DC ldr 50024（分子，字面量池 @0x08011310）
+  [PASS] 0x08011310 处 u32 == 50024
+  同步字函数调用点: ['0x08005A90', '0x08005E4A', '0x0800C3EE', '0x0800CEC2', '0x0800CEEE']
+  [PASS] 两个 gate 的原厂同步块都在调用同步字函数
+  [PASS] 同步字全部调用点 == 2 个 gate 同步块 + 频道扫描后(0x08005E4A) + 工厂复位(0x0800CEC2/EEE)
+  [PASS] 频道扫描函数 0x08005DE4 扫完后用 settings[6] 调同步字（0x08005E4A）
+
+==============================================================================
+7. settings -> flash 持久化：save / load / 出厂默认
+==============================================================================
+  [PASS] save builder 起始 = 0x080056F0（fn 范围 0x080056F0..0x080058DC）
+  [PASS] 记录头标记 0x5C（0x080056F4 movs r2,#0x5c）
+  [PASS] 0x08005804 载入 settings 基址（记录拷贝段起点）
+  [PASS] settings[0..0xD] -> record+0x2C/0x30/0x34/0x38 拷贝段（0x08005806..4C）
+  [PASS] item8(LIGHT) 写入 record+0x34 byte2（随 C.Fn 记录持久化）
+  [PASS] save 任务 0x0800D7F2 检查 0x20000512
+  [PASS] save 任务 0x0800D7FA 检查 0x20000554
+  [PASS] save 任务 0x0800D808 调用记录 builder 0x080056F0
+  [PASS] save 任务 0x0800D80C 调用 shadow 比较 0x08012C9C
+  [PASS] save 任务 0x0800D82A 调用 0x08010B20（写 flash slot）
+  改值倒计时设置: 0x08010756  c8 20        movs    r0, #0xc8
+  [PASS] 0x08010756 置 200(0xc8) tick 倒计时 [0x20000510]（dec/inc handler 均调用）
+  [PASS] 0x08010730 倒计时递减，归零后置 [0x20000512]=1（save 请求）
+  flash slot 地址计算: 0x08010B40  64 20        movs    r0, #0x64
+  [PASS] slot 偏移 = slot*0x64（0x08010B40/42）
+  [PASS] flash 参数页起始 0x0801F000（0x08010B44）
+  [PASS] 0x08010B48 调用 flash 写函数 0x080091CC
+  [PASS] flash 写函数按 0x12 words(0x48B) 逐 word 编程（0x080091F8）
+  [PASS] 0x080090E0 载入擦除起始 0x0801F000
+  [PASS] 擦除上下文 = {addr=0x0801F000, pages=1}（0x080090E2 str [r0,#4] / E6 str [r0,#8]）
+  [PASS] 备份/校验页 0x0801F800（0x0800EC38）
+  [PASS] 上电 load 任务起始 = 0x0800EC58（fn 0x0800EC58..0x0800EF38）
+  [PASS] 最多 20 个 slot（0x0800EC60 movs r0,#0x14）
+  [PASS] slot 步长 0x64（0x0800EC6E/70）
+  [PASS] 从 0x0801F000 开始扫描（0x0800EC72）
+  [PASS] 0x0800EC76 调用 flash 读函数 0x08009164 -> shadow 0x20000F88
+  [PASS] 记录有效标记 0x5C 校验（0x0800EC7E cmp r0,#0x5c）
+  [PASS] 0x0800EC94 有效 -> 展开函数 0x0801383C
+  [PASS] 0x0800ECD6 无有效记录 -> 出厂默认 0x08005E68
+  [PASS] 展开函数起始 = 0x0801383C（fn 0x0801383C..0x08013B48）
+  [PASS] 0x0801383E 读记录 shadow 0x20000F88
+  [PASS] 0x08013950 载入 settings 基址
+  [PASS] record+0x2C..0x38 -> settings[0..0xD] 展开（0x08013954..94）
+  [PASS] item8(LIGHT) 来自 record+0x34 byte2（0x0801397C）
+  [PASS] 出厂默认函数起始 = 0x08005E68（fn 0x08005E68..008005F60）
+  [PASS] 0x08005EB8 载入 settings 基址
+  出厂默认逐项:
+    settings[ 0] = 0x00   0x08005EBA  01 70        strb    r1, [r0]
+    settings[ 1] = 0x01   0x08005EBC  42 70        strb    r2, [r0, #1]
+    settings[ 2] = 0x00   0x08005EBE  81 70        strb    r1, [r0, #2]
+    settings[ 3] = 0x00   0x08005EC0  c1 70        strb    r1, [r0, #3]
+    settings[ 4] = 0x00   0x08005EC8  01 71        strb    r1, [r0, #4]
+    settings[ 5] = 0x14   0x08005ECE  43 71        strb    r3, [r0, #5]
+    settings[ 6] = 0x00   0x08005ECA  81 71        strb    r1, [r0, #6]
+    settings[ 7] = 0x01   0x08005EC2  c2 71        strb    r2, [r0, #7]
+    settings[ 8] = 0x00   0x08005EC4  01 72        strb    r1, [r0, #8]
+    settings[ 9] = 0x03   0x08005EC6  43 72        strb    r3, [r0, #9]
+  [PASS] item8(LIGHT) 出厂默认 = 0（= 12sec）
+  [PASS] item6(ID) 出厂默认 = 0
+  [PASS] item2(STBY) 出厂默认 = 0
+  item10/11 未在默认函数中写 -> 保持 BSS 0（V1C item11 默认 1，见差异表）
+  [PASS] 已记录：V1S 默认函数只写 settings[0..9]，item10/11 默认 0
+
+==============================================================================
+8. 无线设置同步/覆盖路径（item8 是否会被 RF 同步写回）
+==============================================================================
+  item8 写者: ['0x08005EC4', '0x0800CEAA', '0x0801397C']
+  [PASS] item8 只有 3 个写者；其中无任何无线设置同步/解包写点
+  0x2000103E（V1C 紧凑结构重叠基址 settings-0x16）引用: 无
+  [PASS] V1S 不存在 V1C 式 settings-0x16 重叠紧凑结构（无对应写回路径）
+  settings 合法性 clamp 写点: 0x0800EE3C  14 54        strb    r4, [r2, r0]
+  [PASS] 0x0800EE3C 为 settings[item]=0 的 clamp（仅当 settings[item] > max[item]）
+  [PASS] clamp 条件为 settings[item] > max[item] 才清 0（0x0800EE38/3A）
+  [PASS] clamp 循环 12 项（0x0800EE42 cmp r0,#0xc）
+  按键恢复默认组合写 settings[8]=0: 0x0800CEAA  26 72        strb    r6, [r4, #8]
+  [PASS] 0x0800CEAA 为按键工厂复位路径（settings[8]=0）
+  [PASS] 0x0800CE9C 载入 settings 基址
+  settings 邻近结构字面量引用: 0x20001064 x7, 0x2000107E x10, 0x2000108C x4, 0x2000110C x3, 0x20001120 x8
+  [PASS] 0x20001064 / 0x2000107E 为独立无线设置结构（无线同步不经过 settings[]）
+  [PASS] 0x20001120 为 flash 驱动上下文（0x0800A454/0x0800A508 擦写例程使用）
+
+==============================================================================
+9. 代码洞扫描（连续 0x00 死区 >= 32 B）
+==============================================================================
+  连续 0x00 >= 32 B 的区段: 3 处
+    0x08014DFC..0x08014E20 ( 36 B)  REF {'br': ['0x08014E10']}
+    0x08015336..0x0801536F ( 57 B)  REF {'abs': ['0x0801534A']}
+    0x08015F89..0x08015FF9 (112 B)  REF {'abs': ['0x08015FF8'], 'lit': ['0x08015F98', '0x08015FA0']}
+  [PASS] V1S 只有 3 处 >=32B 的全零区段（且全部有引用）
+  [PASS] 不存在 >=32B 且无任何引用的代码洞（V1C 的 0x08017944 型死区在本固件不存在）
+  [PASS] 0x08014DFC (36B) 不可用：存在 BL/分支/ldr 字面量/绝对地址引用之一
+  [PASS] 0x08015336 (57B) 不可用：存在 BL/分支/ldr 字面量/绝对地址引用之一
+  [PASS] 0x08015F89 (112B) 不可用：存在 BL/分支/ldr 字面量/绝对地址引用之一
+  10..31 B 且无引用的全零段: 48 处（前 12 个）: ['0x08003010(28B)', '0x0801453F(12B)', '0x0801464A(16B)', '0x08014667(20B)', '0x0801468C(16B)', '0x080146AD(16B)', '0x080146CE(16B)', '0x080146EF(16B)', '0x08014710(16B)', '0x08014730(17B)', '0x08014752(16B)', '0x08014773(16B)']
+  这些段是否全部位于非代码（数据）区: True
+  [PASS] 小零段全部位于数据/常量区（字形/表格），注入会破坏显示数据，不建议使用
+  -> 结论：V1S 无可安全注入的 >=32B 代码洞。推荐用第 5 节的 4B 原地补丁（b 同步块 + nop），完全不需要代码洞；若必须注入代码，唯一可行是图像末尾 0x080162A4 之后（需容器/容量验证）。
+
+==============================================================================
+10. 与 V1C(V2.0) 的差异清单（全部在 V1S 内独立复验）
+==============================================================================
+  项                      V1C V2.0     V1S V1.8    
+  settings 基址            0x20001086   0x20001054    d=-50
+  [PASS] settings 基址：V1S 地址 0x20001054 != V1C 地址 0x20001086（未照搬）
+  初始化 SP                 0x20001550   0x20001540    d=-16
+  [PASS] 初始化 SP：V1S 地址 0x20001540 != V1C 地址 0x20001550（未照搬）
+  max/回绕表                0x08018362   0x08015DE6    d=-9596
+  [PASS] max/回绕表：V1S 地址 0x08015DE6 != V1C 地址 0x08018362（未照搬）
+  同步字函数                  0x080121BC   0x080112DC    d=-3808
+  [PASS] 同步字函数：V1S 地址 0x080112DC != V1C 地址 0x080121BC（未照搬）
+  dec gate               0x0800625C   0x08005A8A    d=-2002
+  [PASS] dec gate：V1S 地址 0x08005A8A != V1C 地址 0x0800625C（未照搬）
+  inc gate               0x0800D46E   0x0800C3E8    d=-4230
+  [PASS] inc gate：V1S 地址 0x0800C3E8 != V1C 地址 0x0800D46E（未照搬）
+  LIGHT 功能读者函数           0x080036D4   0x08003950    d=+636
+  [PASS] LIGHT 功能读者函数：V1S 地址 0x08003950 != V1C 地址 0x080036D4（未照搬）
+  C.Fn 菜单渲染              0x08004914   0x0800431C    d=-1528
+  [PASS] C.Fn 菜单渲染：V1S 地址 0x0800431C != V1C 地址 0x08004914（未照搬）
+  save 记录 builder        0x08005EF0   0x080056F0    d=-2048
+  [PASS] save 记录 builder：V1S 地址 0x080056F0 != V1C 地址 0x08005EF0（未照搬）
+  load 展开                0x080158B0   0x0801383C    d=-8308
+  [PASS] load 展开：V1S 地址 0x0801383C != V1C 地址 0x080158B0（未照搬）
+  出厂默认                   0x080066D0   0x08005E68    d=-2152
+  [PASS] 出厂默认：V1S 地址 0x08005E68 != V1C 地址 0x080066D0（未照搬）
+  上电 load 任务             0x0800FEF8   0x0800EC58    d=-4768
+  [PASS] 上电 load 任务：V1S 地址 0x0800EC58 != V1C 地址 0x0800FEF8（未照搬）
+  [PASS] settings 基址 0x20001054（比 V1C 0x20001086 低 0x32）
+  [PASS] max 表 0x08015DE6（比 V1C 0x08018362 低 0x257C）
+  V1C 紧凑结构解包写 settings[8] 的点 0x0800A6FA 在 V1S: 不存在（V1S 无该路径）
+  [PASS] V1S 无 V1C 0x0800A6FA 型 settings[8] 写回路径
+  [PASS] V1S 更小（78500B < 88032B），且无 >=32B 干净代码洞（V1C 有 0x08017944/234B）
+
+==============================================================================
+断言汇总: 144 PASS / 0 FAIL / 共 144
+==============================================================================

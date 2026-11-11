@@ -1,0 +1,578 @@
+V1C v5「C.Fn F3 密钥开关」补丁独立复核（audit_cfn.py）
+固件: D:\神牛\devices\v1c\firmware\V1C_V2.0.bin
+产物: D:\神牛\keypatch\out\V1C_V2.0_keyD798.bin
+Python: 3.11.9 Unicorn: 2.1.4
+orig 88032 B sha256=4435dda84903cb97cfaf34f7eeb15ecb6168771d60b57da1c346e6a9ca36edfb
+art  88032 B sha256=86d563c8c3bc5816844b79a2c6303a39910c7bf349d757d47c8ce01bd79409cd
+
+==============================================================================
+0. 固件/产物身份
+==============================================================================
+  artifact sha256 = 86d563c8c3bc5816844b79a2c6303a39910c7bf349d757d47c8ce01bd79409cd
+  container sha256 = e1634a089cf87d0fc71668be02447139b3b856bed12c3ef3c2ea63db4d5c3e5d
+[PASS] 原厂固件 88032 B / sha256 4435dd…edfb 未变
+[PASS] 产物 V1C_V2.0_keyD798.bin sha256 = 86d563c8c3bc5816844b79a2c6303a39910c7bf349d757d47c8ce01bd79409cd（与 Lead 最终值一致）
+[PASS] container sha256 = e1634a089cf87d0fc71668be02447139b3b856bed12c3ef3c2ea63db4d5c3e5d（与 Lead 最终值一致）
+[PASS] container = 补丁镜像(88032 B) + 56 B 尾部
+
+==============================================================================
+1. 独立重编码 vs CLI 产物（逐字节）
+==============================================================================
+[PASS] 本脚本独立编码的补丁镜像与 CLI 产物逐字节一致
+[PASS] 差异偏移集合一致（71 字节）
+  差异分组: ['0x006DB..0x006DB(1B)', '0x00702..0x00703(2B)', '0x0325C..0x0325F(4B)', '0x076FA..0x076FB(2B)', '0x0A46E..0x0A471(4B)', '0x0F1BC..0x0F1E0(37B)', '0x0F1E4..0x0F1E4(1B)', '0x0F1E6..0x0F1EF(10B)', '0x14944..0x1494D(10B)']
+[PASS] 差异分组恰为：sync 区 + 注入 10B + 两 gate 4B + 3 mask (1+2+2)B
+
+==============================================================================
+2. 同步字函数 56B（flag 版）
+==============================================================================
+[PASS] 56B 与独立构造的 flag 版布局一致（44B 代码 + KEY@+0x2C + FLAG@+0x30 + 50024@+0x34）
+[PASS] KEY@+0x2C = 0xD798
+[PASS] FLAG 字面量@+0x30 = 0x2000108E（settings[8]）
+[PASS] 50024@+0x34 与原厂同址同值
+  补丁反汇编：
+    0x080121BC  10 b5        push    {r4, lr}
+    0x080121BE  0b 4b        ldr     r3, [pc, #0x2c]
+    0x080121C0  0b 4a        ldr     r2, [pc, #0x2c]
+    0x080121C2  1b 78        ldrb    r3, [r3]
+    0x080121C4  41 1c        adds    r1, r0, #1
+    0x080121C6  02 2b        cmp     r3, #2
+    0x080121C8  01 d1        bne     #0x80121ce
+    0x080121CA  07 4a        ldr     r2, [pc, #0x1c]
+    0x080121CC  01 21        movs    r1, #1
+    0x080121CE  10 46        mov     r0, r2
+    0x080121D0  f0 f7 8e ff  bl      #0x80030f0
+    0x080121D4  04 46        mov     r4, r0
+    0x080121D6  01 0a        lsrs    r1, r0, #8
+    0x080121D8  04 20        movs    r0, #4
+    0x080121DA  03 f0 78 fa  bl      #0x80156ce
+    0x080121DE  e1 b2        uxtb    r1, r4
+    0x080121E0  05 20        movs    r0, #5
+    0x080121E2  03 f0 74 fa  bl      #0x80156ce
+    0x080121E6  10 bd        pop     {r4, pc}
+    0x080121E8  98 d7        bvc     #0x801211c
+    0x080121EA  00 00        movs    r0, r0
+    0x080121EC  8e 10        asrs    r6, r1, #2
+    0x080121EE  00 20        movs    r0, #0
+    0x080121F0  68 c3        stm     r3!, {r3, r5, r6}
+    0x080121F2  00 00        movs    r0, r0
+[PASS] BL 目标 = uidiv / WriteReg / WriteReg（不调用 SCAL/delay）
+[PASS] 函数内无 SCAL(0x33)/delay 调用（v5 按 AD100 v4 布局）
+[PASS] 补丁区结束 0x080121F4 == 下一函数 0x080121F4
+
+==============================================================================
+3. 注入代码 0x08017944
+==============================================================================
+[PASS] 原厂注入区前 10B 全 0
+[PASS] 注入 10B 与独立编码一致：push {r0-r4,lr}; ldrb r0,[r0,#6]; bl sync; pop
+  注入反汇编：
+    0x08017944  1f b5        push    {r0, r1, r2, r3, r4, lr}
+    0x08017946  80 79        ldrb    r0, [r0, #6]
+    0x08017948  fa f7 38 fc  bl      #0x80121bc
+    0x0801794C  1f bd        pop     {r0, r1, r2, r3, r4, pc}
+[PASS] 注入 BL 目标 = 0x080121BC（同步字函数）
+[PASS] 原厂无 BL/分支/ldr 字面量/u32 绝对地址指向注入区 10B
+[PASS] 整个 0x08017944..0x08017A2D (234B) 全 0 死区无引用
+
+==============================================================================
+4. 两个 gate（0x0800625C / 0x0800D46E）
+==============================================================================
+[PASS] gate 0x0800625C 原厂字节 06 29 08 d0
+[PASS] gate 0x0800625C 补丁字节 11 f0 72 fb
+[PASS] gate 0x0800625C 解码为 BL 0x08017944
+[PASS] 原厂无引用落入 gate 0x0800625C..0x0800625F
+  0x0800625C -> BL 0x08017944；hook 返回后继续 0x08006260（dec: cmp r1,#0xB; bne pop）
+[PASS] gate 0x0800D46E 原厂字节 06 29 07 d0
+[PASS] gate 0x0800D46E 补丁字节 0a f0 69 fa
+[PASS] gate 0x0800D46E 解码为 BL 0x08017944
+[PASS] 原厂无引用落入 gate 0x0800D46E..0x0800D471
+  0x0800D46E -> BL 0x08017944；hook 返回后继续 0x0800D472（inc: cmp r1,#0xB; bne pop）
+
+==============================================================================
+5. 读者屏蔽 / 标志保护
+==============================================================================
+[PASS] 0x080036DA 原厂字节 00 7a
+[PASS] 0x080036DA 补丁字节 00 20（LIGHT 造型灯任务读者1 (ldrb r0,[r0,#8]) -> movs r0,#0）
+[PASS] 原厂无引用落入 0x080036DA..0x080036DB
+  0x080036DA 反汇编: movs r0, #0
+[PASS] 0x08003702 原厂字节 01 7a
+[PASS] 0x08003702 补丁字节 00 21（LIGHT 造型灯任务读者2 (ldrb r1,[r0,#8]) -> movs r1,#0）
+[PASS] 原厂无引用落入 0x08003702..0x08003703
+  0x08003702 反汇编: movs r1, #0
+[PASS] 0x0800A6FA 原厂字节 08 72
+[PASS] 0x0800A6FA 补丁字节 00 bf（无线解包 settings[8] 写点 -> NOP）
+[PASS] 原厂无引用落入 0x0800A6FA..0x0800A6FB
+  0x0800A6FA 反汇编: nop 
+[PASS] 0x0800A6FA 原厂语义 = strb r0,[r1,#8]（写 settings[8]）
+[PASS] 0x0800A6FA -> NOP(00 bf)，保留同一解包函数其它 settings 写点
+[PASS] 同一函数其它写点未动（0x0800A6E2 = strb r2,[r1]）
+
+==============================================================================
+6. 独立扫描：运行期 settings[8]=0x2000108E 的读者/写者
+==============================================================================
+原厂写点：
+  0x0800672C  fn=0x080066D0  0x0800672C  01 72        strb    r1, [r0, #8]  eff=0x2000108E
+  0x0800A6FA  fn=0x0800A6DC  0x0800A6FA  08 72        strb    r0, [r1, #8]  eff=0x2000108E
+  0x0800E0A4  fn=0x0800DCDC  0x0800E0A4  25 72        strb    r5, [r4, #8]  eff=0x2000108E
+  0x080159F0  fn=0x080158B0  0x080159F0  13 72        strb    r3, [r2, #8]  eff=0x2000108E
+原厂读者：
+  0x080036DA  fn=0x080036D4  0x080036DA  00 7a        ldrb    r0, [r0, #8]  eff=0x2000108E
+  0x08003702  fn=0x080036D4  0x08003702  01 7a        ldrb    r1, [r0, #8]  eff=0x2000108E
+  0x08005076  fn=0x08004914  0x08005076  38 7a        ldrb    r0, [r7, #8]  eff=0x2000108E
+  0x08005086  fn=0x08004914  0x08005086  38 7a        ldrb    r0, [r7, #8]  eff=0x2000108E
+  0x0800602E  fn=0x08005EF0  0x0800602E  14 7a        ldrb    r4, [r2, #8]  eff=0x2000108E
+  0x0800A6CC  fn=0x0800A6AC  0x0800A6CC  09 7a        ldrb    r1, [r1, #8]  eff=0x2000108E
+[PASS] 原厂固定写点 = ['0x0800672C', '0x0800A6FA', '0x0800E0A4', '0x080159F0']（DCDC 复位/出厂默认/load/解包）
+[PASS] LIGHT 的两个功能读者 0x080036DA/0x08003702 均命中
+补丁后写点：
+  0x0800672C  fn=0x080066D0  0x0800672C  01 72        strb    r1, [r0, #8]
+  0x0800E0A4  fn=0x0800DCDC  0x0800E0A4  25 72        strb    r5, [r4, #8]
+  0x080159F0  fn=0x080158B0  0x080159F0  13 72        strb    r3, [r2, #8]
+[PASS] 0x0800A6FA 已被 NOP 消除；其余写点不变（0x0800E0A4 仍存在）
+[PASS] 读者集合：原厂两处被 mask；补丁新增同步函数 0x080121C2 读 flag；其余读者不变
+[PASS] 动态索引写点（dec/inc handler）只会在用户改 item 时写 settings[item]；item=8 改值正是 LIGHT 开关的正常路径
+
+==============================================================================
+6b. 0x0800E0A4（0x0800DCDC 内的默认重置块）语义评估
+==============================================================================
+  0x0800DCDC 是输入/按键扫描任务（由设置应用 dispatcher 0x08015B52 每轮调用）；
+  该块条件：输入 bitmask r2 == 0x300（GPIO 输入两位）+ [0x200004F0] == 1；
+  块内把 settings[0..0xB] 全部写成出厂默认值，随后调用 0x08014EF8 与同步字函数：
+    0x0800E05E  32 79        ldrb    r2, [r6, #4]
+    0x0800E060  52 1c        adds    r2, r2, #1
+    0x0800E062  d2 b2        uxtb    r2, r2
+    0x0800E064  32 71        strb    r2, [r6, #4]
+    0x0800E066  50 2a        cmp     r2, #0x50
+    0x0800E068  7b d9        bls     #0x800e162
+    0x0800E06A  22 46        mov     r2, r4
+    0x0800E06C  26 4c        ldr     r4, [pc, #0x98]
+    0x0800E06E  77 71        strb    r7, [r6, #5]
+    0x0800E070  20 2a        cmp     r2, #0x20
+    0x0800E072  6b d0        beq     #0x800e14c
+    0x0800E074  04 dc        bgt     #0x800e080
+    0x0800E076  04 2a        cmp     r2, #4
+    0x0800E078  0c d0        beq     #0x800e094
+    0x0800E07A  08 2a        cmp     r2, #8
+    0x0800E07C  71 d1        bne     #0x800e162
+    0x0800E07E  47 e0        b       #0x800e110
+    0x0800E080  03 23        movs    r3, #3
+    0x0800E082  1b 02        lsls    r3, r3, #8
+    0x0800E084  9a 42        cmp     r2, r3
+    0x0800E086  6c d1        bne     #0x800e162
+    0x0800E088  0e 29        cmp     r1, #0xe
+    0x0800E08A  69 d0        beq     #0x800e160
+    0x0800E08C  00 78        ldrb    r0, [r0]
+    0x0800E08E  00 28        cmp     r0, #0
+    0x0800E090  4d d0        beq     #0x800e12e
+    0x0800E092  65 e0        b       #0x800e160
+    0x0800E094  00 78        ldrb    r0, [r0]
+    0x0800E096  01 28        cmp     r0, #1
+    0x0800E098  63 d1        bne     #0x800e162
+    0x0800E09A  25 70        strb    r5, [r4]
+    0x0800E09C  65 70        strb    r5, [r4, #1]
+    0x0800E09E  a5 70        strb    r5, [r4, #2]
+    0x0800E0A0  e5 70        strb    r5, [r4, #3]
+    0x0800E0A2  e7 71        strb    r7, [r4, #7]
+    0x0800E0A4  25 72        strb    r5, [r4, #8]
+    0x0800E0A6  03 20        movs    r0, #3
+    0x0800E0A8  60 72        strb    r0, [r4, #9]
+    0x0800E0AA  25 71        strb    r5, [r4, #4]
+    0x0800E0AC  a5 71        strb    r5, [r4, #6]
+    0x0800E0AE  14 20        movs    r0, #0x14
+    0x0800E0B0  60 71        strb    r0, [r4, #5]
+    0x0800E0B2  a5 72        strb    r5, [r4, #0xa]
+    0x0800E0B4  e7 72        strb    r7, [r4, #0xb]
+    0x0800E0B6  0c 48        ldr     r0, [pc, #0x30]
+    0x0800E0B8  35 81        strh    r5, [r6, #8]
+    0x0800E0BA  07 70        strb    r7, [r0]
+    0x0800E0BC  06 f0 1c ff  bl      #0x8014ef8
+    0x0800E0C0  a0 79        ldrb    r0, [r4, #6]
+    0x0800E0C2  04 f0 7b f8  bl      #0x80121bc
+    0x0800E0C6  11 49        ldr     r1, [pc, #0x44]
+    0x0800E0C8  e0 7a        ldrb    r0, [r4, #0xb]
+    0x0800E0CA  08 70        strb    r0, [r1]
+  结论：这是『恢复 C.Fn 默认值』的输入组合路径（不是无线设置同步/远程路径），
+  清 settings[8] 与“恢复默认”语义一致；若产品要求密钥开关不被该组合清除，
+  可考虑把 0x0800E0A4(a5 72)->NOP，但会改变恢复默认语义，需产品决定。
+
+==============================================================================
+7. Unicorn 独立 harness：原厂自证
+==============================================================================
+[PASS] 原厂 ID=0 : sync=0xC368 | WriteReg(4,0xC3) -> WriteReg(5,0x68) -> delay(20) -> strobe(0x33) -> delay(1000)
+[PASS] 原厂 ID=1 : sync=0x61B4 | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20) -> strobe(0x33) -> delay(1000)
+[PASS] 原厂 ID=5 : sync=0x2091 | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20) -> strobe(0x33) -> delay(1000)
+[PASS] 原厂 ID=37: sync=0x0524 | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20) -> strobe(0x33) -> delay(1000)
+[PASS] 原厂 ID=99: sync=0x01F4 | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20) -> strobe(0x33) -> delay(1000)
+
+==============================================================================
+8. Unicorn：补丁后 sync（flag=0/1/2 × ID）
+==============================================================================
+[PASS] flag=0 ID=0 : sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68)
+[PASS] flag=0 ID=1 : sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4)
+[PASS] flag=0 ID=5 : sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91)
+[PASS] flag=0 ID=37: sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24)
+[PASS] flag=0 ID=99: sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4)
+[PASS] flag=1 ID=0 : sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68)
+[PASS] flag=1 ID=1 : sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4)
+[PASS] flag=1 ID=5 : sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91)
+[PASS] flag=1 ID=37: sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24)
+[PASS] flag=1 ID=99: sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4)
+[PASS] flag=2 ID=0 : sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+[PASS] flag=2 ID=1 : sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+[PASS] flag=2 ID=5 : sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+[PASS] flag=2 ID=37: sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+[PASS] flag=2 ID=99: sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+[PASS] v5-LIGHT 语义：flag==2 -> KEY；flag 0/1 -> 50024/(ID+1)；同步函数无 delay(20us)/SCAL（风险见报告）
+
+==============================================================================
+9. Unicorn：注入 hook 经两个 gate 调用 + r0..r4 恢复
+==============================================================================
+[PASS] dec handler item9 在 gate 之前分支到 0x0800626C（bl 0x08014EF8），不经过 hook
+[PASS] inc handler item9 在 gate 之前分支到 0x0800D47C，不经过 hook
+[PASS] ★ 限界：hook 覆盖 item0..8/10/11 的改值；item9(LCD) 原厂路径不调 sync。密钥开关是 item8，不影响本功能；若要求字面「任意 item」需额外补 item9 分支
+[PASS] gate 0x0800625C item=0  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=1  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=2  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=3  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=4  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=5  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=6  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=7  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=8  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=10 flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=11 flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=0  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=1  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=2  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=3  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=4  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=5  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=6  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=7  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=8  flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=10 flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800D46E item=11 flag=2: hook 调用 sync 0xD798；r0..r4 恢复=True
+[PASS] gate 0x0800625C item=8 flag=0: sync=0x2091（普通模式）；r0..r4 恢复
+[PASS] gate 0x0800625C item=8 flag=1: sync=0x2091（普通模式）；r0..r4 恢复
+[PASS] gate 0x0800D46E item=8 flag=0: sync=0x2091（普通模式）；r0..r4 恢复
+[PASS] gate 0x0800D46E item=8 flag=1: sync=0x2091（普通模式）；r0..r4 恢复
+
+==============================================================================
+10. Unicorn：mask 语义（0x080036DA/0x08003702 / 0x0800A6FA）
+==============================================================================
+[PASS] 原厂 0x080036DA 读者读到 settings[8]=2
+[PASS] 补丁后 0x080036DA 强制 0（cmp 前 r0=0）
+[PASS] 原厂 0x08003702 读者读到 settings[8]=2
+[PASS] 补丁后 0x08003702 强制 0（cmp 前 r1=0）
+[PASS] LIGHT 任务原厂/补丁运行无 fault
+[PASS] 补丁后 value=2 的 GPIO 调用序列 == 原厂 value=0（12sec 默认）序列
+[PASS] 原厂 0x0800A6DC：settings[8] 被 compact[0x16]=0x66 覆盖
+[PASS] 补丁后 0x0800A6DC：settings[8] 保持 0xAA（NOP 生效）
+
+==============================================================================
+汇总
+==============================================================================
+检查项: 102   PASS: 102   FAIL: 0
+
+结论: PASS（v5 独立复核全部通过）
+
+==============================================================================
+附 A：CLI 复现 keypatch.py patch --device v1c --key 0xD798 --verify
+（v5-LIGHT 真实运行输出；退出码 0，36 PASS / 0 FAIL）
+==============================================================================
+
+== Godox V1C (v1c)
+   原厂固件 : devices\v1c\firmware\V1C_V2.0.bin  (88032 字节, sha256 4435dda84903cb97…)
+   私有密钥 : 0xD798  ->  SYNC1=0xD7 SYNC0=0x98
+   补丁点   :
+  [1] off+0x0F1BC  0x080121BC  0c 4a 10 b5 41 1c 10 46 f0 f7 94 ff 04 46 01 0a 04 20 03 f0 7e fa e1 b2 05 20 03 f0 7a fa 14 20 03 f0 30 f9 33 20 03 f0 d5 fa 7d 20 c0 00 03 f0 29 f9 10 bd 68 c3 00 00 -> 10 b5 0b 4b 0b 4a 1b 78 41 1c 02 2b 01 d1 07 4a 01 21 10 46 f0 f7 8e ff 04 46 01 0a 04 20 03 f0 78 fa e1 b2 05 20 03 f0 74 fa 10 bd 98 d7 00 00 8e 10 00 20 68 c3 00 00  整段改写同步字函数 0x080121BC..0x080121F3（56 字节）：C.Fn LIGHT 密钥开关 RAM[0x2000108E]==1 -> SYNC=KEY 0xD798；==0 -> 50024/(ID+1)；只写 SYNC1/0（无 SCAL、无延时）
+  [2] off+0x14944  0x08017944  00 00 00 00 00 00 00 00 00 00 -> 1f b5 80 79 fa f7 38 fc 1f bd  注入代码（0x08017944 全 0 死区）：任意 C.Fn 项改值后按 settings[6] 立即重设同步字（含 ID 改值与 LIGHT 密钥开关改值）
+  [3] off+0x0325C  0x0800625C  06 29 08 d0            -> 11 f0 72 fb             gate(C.Fn 递减)：cmp r1,#6; beq sync -> BL 注入（任意 C.Fn 改值都重设同步字）
+  [4] off+0x0A46E  0x0800D46E  06 29 07 d0            -> 0a f0 69 fa             gate(C.Fn 递增)：cmp r1,#6; beq sync -> BL 注入（任意 C.Fn 改值都重设同步字）
+  [5] off+0x006DA  0x080036DA  00 7a                  -> 00 20                   造型灯任务：settings[8](LIGHT) 读者固定 0（密钥开关不影响造型灯输出）
+  [6] off+0x00702  0x08003702  01 7a                  -> 00 21                   造型灯任务：settings[8](LIGHT) 第二个读者固定 0（同上）
+  [7] off+0x076FA  0x0800A6FA  08 72                  -> 00 bf                   无线设置同步解包：不再覆盖 settings[8]（保护 LIGHT 密钥开关不被静默清 0）
+   输出     : keypatch\out\V1C_V2.0_keyD798.bin  (88032 字节, sha256 86d563c8c3bc5816…)
+   [PASS] 固件长度 88032 字节（应为 88032，原位补丁）
+   [PASS] 0x080121BC..0x080121F3 补丁区 56 字节与期望函数体完全一致
+   [PASS] 函数体结束于 0x080121F4 == 下一函数起点 0x080121F4（不越界）
+   [PASS] 字面量: KEY=0xD798 @0x080121E8, FLAG=0x2000108E @0x080121EC, 50024 @0x080121F0
+   [PASS] 注入代码 @0x08017944（10 字节，0x08017944 全 0 死区）与期望一致
+   [PASS] C.Fn 递减 gate 0x0800625C = 11 f0 72 fb（BL 注入）
+   [PASS] C.Fn 递增 gate 0x0800D46E = 0a f0 69 fa（BL 注入）
+   [PASS] 读者屏蔽 0x080036DA = 00 20（造型灯任务：settings[8](LIGHT) 读者固定 0（密钥开关不影响造型灯输出））
+   [PASS] 读者屏蔽 0x08003702 = 00 21（造型灯任务：settings[8](LIGHT) 第二个读者固定 0（同上））
+   [PASS] 读者屏蔽 0x0800A6FA = 00 bf（无线设置同步解包：不再覆盖 settings[8]（保护 LIGHT 密钥开关不被静默清 0））
+   [PASS] 与原厂差异 71 字节，offset=['0x006DB', '0x00702', '0x00703', '0x0325C', '0x0325D', '0x0325E', '0x0325F', '0x076FA', '0x076FB', '0x0A46E', '0x0A46F', '0x0A470', '0x0A471', '0x0F1BC', '0x0F1BD', '0x0F1BE', '0x0F1BF', '0x0F1C0', '0x0F1C1', '0x0F1C2', '0x0F1C3', '0x0F1C4', '0x0F1C5', '0x0F1C6', '0x0F1C7', '0x0F1C8', '0x0F1C9', '0x0F1CA', '0x0F1CB', '0x0F1CC', '0x0F1CD', '0x0F1CE', '0x0F1CF', '0x0F1D0', '0x0F1D1', '0x0F1D2', '0x0F1D3', '0x0F1D4', '0x0F1D5', '0x0F1D6', '0x0F1D7', '0x0F1D8', '0x0F1D9', '0x0F1DA', '0x0F1DB', '0x0F1DC', '0x0F1DD', '0x0F1DE', '0x0F1DF', '0x0F1E0', '0x0F1E4', '0x0F1E6', '0x0F1E7', '0x0F1E8', '0x0F1E9', '0x0F1EA', '0x0F1EB', '0x0F1EC', '0x0F1ED', '0x0F1EE', '0x0F1EF', '0x14944', '0x14945', '0x14946', '0x14947', '0x14948', '0x14949', '0x1494A', '0x1494B', '0x1494C', '0x1494D']（应恰为 ['0x006DB', '0x00702', '0x00703', '0x0325C', '0x0325D', '0x0325E', '0x0325F', '0x076FA', '0x076FB', '0x0A46E', '0x0A46F', '0x0A470', '0x0A471', '0x0F1BC', '0x0F1BD', '0x0F1BE', '0x0F1BF', '0x0F1C0', '0x0F1C1', '0x0F1C2', '0x0F1C3', '0x0F1C4', '0x0F1C5', '0x0F1C6', '0x0F1C7', '0x0F1C8', '0x0F1C9', '0x0F1CA', '0x0F1CB', '0x0F1CC', '0x0F1CD', '0x0F1CE', '0x0F1CF', '0x0F1D0', '0x0F1D1', '0x0F1D2', '0x0F1D3', '0x0F1D4', '0x0F1D5', '0x0F1D6', '0x0F1D7', '0x0F1D8', '0x0F1D9', '0x0F1DA', '0x0F1DB', '0x0F1DC', '0x0F1DD', '0x0F1DE', '0x0F1DF', '0x0F1E0', '0x0F1E4', '0x0F1E6', '0x0F1E7', '0x0F1E8', '0x0F1E9', '0x0F1EA', '0x0F1EB', '0x0F1EC', '0x0F1ED', '0x0F1EE', '0x0F1EF', '0x14944', '0x14945', '0x14946', '0x14947', '0x14948', '0x14949', '0x1494A', '0x1494B', '0x1494C', '0x1494D']）
+   [PASS] 差异之外无任何字节变化（0 处）
+   [PASS] Unicorn 2.1.4 调用级测试：同步字 0x080121BD，RAM[0x2000108E]=flag
+   [PASS] ID=0  flag=2 密钥模式(LIGHT=ON): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+   [PASS] ID=5  flag=2 密钥模式(LIGHT=ON): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+   [PASS] ID=99 flag=2 密钥模式(LIGHT=ON): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+   [PASS] ID=0  flag=0 原厂公式: sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68)
+   [PASS] ID=1  flag=0 原厂公式: sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4)
+   [PASS] ID=5  flag=0 原厂公式: sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91)
+   [PASS] ID=37 flag=0 原厂公式: sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24)
+   [PASS] ID=99 flag=0 原厂公式: sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4)
+   [PASS] ID=0  flag=1 原厂公式: sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68)
+   [PASS] ID=1  flag=1 原厂公式: sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4)
+   [PASS] ID=5  flag=1 原厂公式: sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91)
+   [PASS] ID=37 flag=1 原厂公式: sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24)
+   [PASS] ID=99 flag=1 原厂公式: sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4)
+   [PASS] 注入 hook: item=6 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=6
+   [PASS] 注入 hook: item=8 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=8
+   [PASS] 注入 hook: item=5 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=5
+   [PASS] 注入 hook: item=8 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=8
+   [PASS] 注入 hook: item=11 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=11
+   [PASS] ID=0  原厂(自证): sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+   [PASS] ID=1  原厂(自证): sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+   [PASS] ID=5  原厂(自证): sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+   [PASS] ID=37 原厂(自证): sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+   [PASS] ID=99 原厂(自证): sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+
+==============================================================================
+附 B：CLI 复现 keypatch/selftest.py --key 0xD798
+（v5-LIGHT 真实运行输出；退出码 0，180 PASS / 0 FAIL，ALL PASS）
+==============================================================================
+================================================================================
+keypatch 总自检   密钥 = 0xD798  输出目录 = C:\Users\22435\AppData\Local\Temp\dsh-kAvTA0\keypatch_selftest_32z_kff5
+================================================================================
+
+### ad100
+  [PASS] 长度不变 50248 字节
+  [PASS] 差异字节 48 个（补丁点）
+  [PASS] 输出 sha256 与原厂不同
+  [PASS] 固件长度 50248 字节（应为 50248，原位补丁）
+  [PASS] 0x0800B758..0x0800B78F 补丁区 56 字节与期望函数体完全一致
+  [PASS] 函数体结束于 0x0800B790 == 下一函数起点 0x0800B790（不越界）
+  [PASS] 字面量: KEY=0xD798 @0x0800B784, FLAG=0x20000486 @0x0800B788, 50024 @0x0800B78C
+  [PASS] 与原厂差异 48 字节，offset=['0x08758', '0x08759', '0x0875A', '0x0875B', '0x0875C', '0x0875D', '0x0875E', '0x0875F', '0x08760', '0x08761', '0x08762', '0x08763', '0x08764', '0x08765', '0x08766', '0x08767', '0x08768', '0x08769', '0x0876A', '0x0876B', '0x0876C', '0x0876D', '0x0876E', '0x0876F', '0x08770', '0x08771', '0x08773', '0x08774', '0x08775', '0x08776', '0x08777', '0x08778', '0x08779', '0x0877A', '0x0877B', '0x0877C', '0x08780', '0x08781', '0x08782', '0x08783', '0x08784', '0x08785', '0x08786', '0x08787', '0x08788', '0x08789', '0x0878A', '0x0878B']（应恰为 ['0x08758', '0x08759', '0x0875A', '0x0875B', '0x0875C', '0x0875D', '0x0875E', '0x0875F', '0x08760', '0x08761', '0x08762', '0x08763', '0x08764', '0x08765', '0x08766', '0x08767', '0x08768', '0x08769', '0x0876A', '0x0876B', '0x0876C', '0x0876D', '0x0876E', '0x0876F', '0x08770', '0x08771', '0x08773', '0x08774', '0x08775', '0x08776', '0x08777', '0x08778', '0x08779', '0x0877A', '0x0877B', '0x0877C', '0x08780', '0x08781', '0x08782', '0x08783', '0x08784', '0x08785', '0x08786', '0x08787', '0x08788', '0x08789', '0x0878A', '0x0878B']）
+  [PASS] 补丁区之外无任何字节变化（差异 0 处）
+  [PASS] Unicorn 2.1.4 调用级测试：从 0x0800B759 执行，RAM[0x20000486]=flag，桩替换 WriteReg/WriteCmd/delay_us
+  [PASS] ID=0  flag=1 密钥模式(KEY): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98（仅 2 次写寄存器）| WriteReg(4,0xD7) -> WriteReg(5,0x98)
+  [PASS] ID=5  flag=1 密钥模式(KEY): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98（仅 2 次写寄存器）| WriteReg(4,0xD7) -> WriteReg(5,0x98)
+  [PASS] ID=99 flag=1 密钥模式(KEY): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98（仅 2 次写寄存器）| WriteReg(4,0xD7) -> WriteReg(5,0x98)
+  [PASS] ID=0  flag=0 原厂公式: sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68（仅 2 次写寄存器）| WriteReg(4,0xC3) -> WriteReg(5,0x68)
+  [PASS] ID=1  flag=0 原厂公式: sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4（仅 2 次写寄存器）| WriteReg(4,0x61) -> WriteReg(5,0xB4)
+  [PASS] ID=5  flag=0 原厂公式: sync=0x2091 -> SYNC1=0x20 SYNC0=0x91（仅 2 次写寄存器）| WriteReg(4,0x20) -> WriteReg(5,0x91)
+  [PASS] ID=37 flag=0 原厂公式: sync=0x0524 -> SYNC1=0x05 SYNC0=0x24（仅 2 次写寄存器）| WriteReg(4,0x05) -> WriteReg(5,0x24)
+  [PASS] ID=99 flag=0 原厂公式: sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4（仅 2 次写寄存器）| WriteReg(4,0x01) -> WriteReg(5,0xF4)
+  [PASS] 同一 ID=5 下 flag=1/0 同步字分别为 0xD798 / 0x2091（应 0xD798 / 0x2091）
+  [PASS] ID=0  原厂(自证): sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=1  原厂(自证): sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=5  原厂(自证): sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=37 原厂(自证): sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=99 原厂(自证): sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] flag=0x01(ON): ID=0  sync=0xD798 期望 0xD798
+  [PASS] flag=0x01(ON): ID=1  sync=0xD798 期望 0xD798
+  [PASS] flag=0x01(ON): ID=37 sync=0xD798 期望 0xD798
+  [PASS] flag=0x01(ON): ID=99 sync=0xD798 期望 0xD798
+  [PASS] flag=0: ID=0  sync=0xC368 期望 0xC368
+  [PASS] flag=0: ID=1  sync=0x61B4 期望 0x61B4
+  [PASS] flag=0: ID=37 sync=0x0524 期望 0x0524
+  [PASS] flag=0: ID=99 sync=0x01F4 期望 0x01F4
+  输出: C:\Users\22435\AppData\Local\Temp\dsh-kAvTA0\keypatch_selftest_32z_kff5\AD100pro_V1.2_keyD798.bin
+  sha256: 0b254518d49d511191d7f668c5ac67c324664b399380a1d9b5d2beee4f1af5ce
+  补丁点:
+    0x0800B758  0c 4a 10 b5 41 1c 10 46 f7 f7 c6 fc 04 46 01 0a 04 20 01 f0 e2 fa e1 b2 05 20 01 f0 de fa 14 20 01 f0 9e f9 33 20 01 f0 39 fb 7d 20 c0 00 01 f0 97 f9 10 bd 68 c3 00 00 -> 10 b5 0b 4b 0b 4a 1b 78 41 1c 00 2b 01 d0 07 4a 01 21 10 46 f7 f7 c0 fc 04 46 01 0a 04 20 01 f0 dc fa e1 b2 05 20 01 f0 d8 fa 10 bd 98 d7 00 00 86 04 00 20 68 c3 00 00 整段改写同步字函数 0x0800B758..0x0800B78F（56 字节）：C.Fn 密钥开关 RAM[0x20000486]==1 -> SYNC=KEY 0xD798；==0 -> 50024/(ID+1)；只写 SYNC1/0（无 SCAL、无延时）
+
+### ad200
+  [PASS] 长度不变 46380 字节
+  [PASS] 差异字节 62 个（补丁点）
+  [PASS] 输出 sha256 与原厂不同
+  [PASS] 固件长度 46380 字节（应为 46380，原位补丁）
+  [PASS] 0x0800B9AC..0x0800B9E3 补丁区 56 字节与期望函数体完全一致
+  [PASS] 函数体结束于 0x0800B9E4 == 下一函数起点 0x0800B9E4（不越界）
+  [PASS] 字面量: KEY=0xD798 @0x0800B9D8, FLAG=0x2000041F @0x0800B9DC, 50024 @0x0800B9E0
+  [PASS] 即时生效 hook 0x080045EF = d3（期望 d3：bne->blo，item>=6 才重设）
+  [PASS] 即时生效 hook 0x0800854F = d3（期望 d3：bne->blo，item>=6 才重设）
+  [PASS] 0x08004AFC = 00 22（期望 00 22）显示时长/数值表：F8=1 不切稳定色温备用表
+  [PASS] 0x08004FF4 = 00 20（期望 00 20）显示页 1：F8=1 不再清 g_mode bit4/改页面标志
+  [PASS] 0x08005C54 = 00 21（期望 00 21）measurement_task 换算：F8=1 不改闪光时长/能量路径
+  [PASS] 0x08006290 = 00 22（期望 00 22）level_table_lookup_b：F8=1 不切备用时长表（实测 360→210）
+  [PASS] 0x0800B144 = 00 23（期望 00 23）muldiv_scale：F8=1 不改功率/时长缩放
+  [PASS] 0x0800B228 = 00 22（期望 00 22）RF 远程设置处理：F8=1 不改设置分叉
+  [PASS] 0x0800BC7E = 00 bf（期望 00 bf）ui_key_80 模式切换：不再静默清 settings[7]（防密钥开关被关）
+  [PASS] 与原厂差异 62 字节，全部落在补丁区（区外 0 处）
+  [PASS] Unicorn 调用级测试：从 0x0800B9AD 执行，RAM[0x2000041F]=flag，桩替换 rf_write_reg8/rf_write_cmd/delay_us
+  [PASS] ID=0  flag=1 密钥模式(F8=ON): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+  [PASS] ID=5  flag=1 密钥模式(F8=ON): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+  [PASS] ID=99 flag=1 密钥模式(F8=ON): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+  [PASS] ID=0  flag=0 原厂公式(F8=OFF): sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68)
+  [PASS] ID=1  flag=0 原厂公式(F8=OFF): sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4)
+  [PASS] ID=5  flag=0 原厂公式(F8=OFF): sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91)
+  [PASS] ID=37 flag=0 原厂公式(F8=OFF): sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24)
+  [PASS] ID=99 flag=0 原厂公式(F8=OFF): sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4)
+  [PASS] 同一 ID=5 下 flag=1/0 同步字分别为 0xD798 / 0x2091（应 0xD798 / 0x2091）
+  [PASS] F8 + (OFF->ON): settings[7] 0 -> 1，立即写 SYNC WriteReg(4,0xD7) -> WriteReg(5,0x98)（期望 WriteReg(4,0xD7) -> WriteReg(5,0x98)）
+  [PASS] F8 + (ON->OFF, 回绕): settings[7] 1 -> 0，立即写 SYNC WriteReg(4,0x20) -> WriteReg(5,0x91)（期望 WriteReg(4,0x20) -> WriteReg(5,0x91)）
+  [PASS] F8 - (ON->OFF): settings[7] 1 -> 0，立即写 SYNC WriteReg(4,0x20) -> WriteReg(5,0x91)（期望 WriteReg(4,0x20) -> WriteReg(5,0x91)）
+  [PASS] F8 - (OFF->ON, 回绕): settings[7] 0 -> 1，立即写 SYNC WriteReg(4,0xD7) -> WriteReg(5,0x98)（期望 WriteReg(4,0xD7) -> WriteReg(5,0x98)）
+  [PASS] F7(ID) + 改值：settings[6] 5 -> 6，立即写 SYNC WriteReg(4,0x1B) -> WriteReg(5,0xEA)（期望 WriteReg(4,0x1B) -> WriteReg(5,0xEA)）
+  [PASS] 稳定色温读者屏蔽：level_table_lookup_b F8=1 -> 210，F8=0 -> 210；原厂 F8=1 -> 360（应 补丁两者相等且异于原厂）
+  [PASS] ui_key_80 模式切换后 settings[7]：补丁=1（应 1），原厂=0（应 0）
+  [PASS] ID=0  原厂(自证): sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=1  原厂(自证): sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=5  原厂(自证): sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=37 原厂(自证): sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=99 原厂(自证): sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] 原厂(自证)：F8 + 改值 settings[7] 0 -> 1 且不重设同步字（calls=）
+  [PASS] flag=0x01(ON): ID=0  sync=0xD798 期望 0xD798
+  [PASS] flag=0x01(ON): ID=1  sync=0xD798 期望 0xD798
+  [PASS] flag=0x01(ON): ID=37 sync=0xD798 期望 0xD798
+  [PASS] flag=0x01(ON): ID=99 sync=0xD798 期望 0xD798
+  [PASS] flag=0: ID=0  sync=0xC368 期望 0xC368
+  [PASS] flag=0: ID=1  sync=0x61B4 期望 0x61B4
+  [PASS] flag=0: ID=37 sync=0x0524 期望 0x0524
+  [PASS] flag=0: ID=99 sync=0x01F4 期望 0x01F4
+  输出: C:\Users\22435\AppData\Local\Temp\dsh-kAvTA0\keypatch_selftest_32z_kff5\AD200pro_V1.60_keyD798.bin
+  sha256: 8515e39012af13f6f02827cdd1ce29ac611f6af1d9241a3bc1aaef5137812efe
+  补丁点:
+    0x0800B9AC  0c 4a 10 b5 41 1c 10 46 f7 f7 9c fb 04 46 01 0a 04 20 01 f0 70 f8 e1 b2 05 20 01 f0 6c f8 14 20 00 f0 2c ff 33 20 01 f0 c7 f8 7d 20 -> 10 b5 0b 4b 0b 4a 1b 78 41 1c 00 2b 01 d0 07 4a 01 21 10 46 f7 f7 96 fb 04 46 01 0a 04 20 01 f0 6a f8 e1 b2 05 20 01 f0 66 f8 10 bd 整段改写同步字函数 44B：C.Fn F8 开关 RAM[0x2000041F]==1 -> SYNC=KEY，==0 -> 50024/(ID+1)；只写 SYNC1/0（无 SCAL、无延时）
+    0x0800B9D8  c0 00 00 f0          -> 98 d7 00 00          字面量池：私有密钥 0xD798（小端）
+    0x0800B9DC  25 ff 10 bd          -> 1f 04 00 20          字面量池：密钥开关地址 0x2000041F（settings[7]）
+    0x0800B9E0  68 c3 00 00          -> 68 c3 00 00          字面量池：50024（与原厂同址同值，普通模式公式用）
+    0x080045EF  d1                   -> d3                   C.Fn dec 处理函数：bne->blo，item>=6（ID/F8）改值后立即重设同步字（F1..F6 与原厂一致）
+    0x0800854F  d1                   -> d3                   C.Fn inc 处理函数：bne->blo，item>=6（ID/F8）改值后立即重设同步字（F1..F6 与原厂一致）
+    0x08004AFC  e2 79                -> 00 22                显示时长/数值表：F8=1 不切稳定色温备用表
+    0x08004FF4  c0 79                -> 00 20                显示页 1：F8=1 不再清 g_mode bit4/改页面标志
+    0x08005C54  c9 79                -> 00 21                measurement_task 换算：F8=1 不改闪光时长/能量路径
+    0x08006290  d2 79                -> 00 22                level_table_lookup_b：F8=1 不切备用时长表（实测 360→210）
+    0x0800B144  db 79                -> 00 23                muldiv_scale：F8=1 不改功率/时长缩放
+    0x0800B228  d2 79                -> 00 22                RF 远程设置处理：F8=1 不改设置分叉
+    0x0800BC7E  ca 71                -> 00 bf                ui_key_80 模式切换：不再静默清 settings[7]（防密钥开关被关）
+
+### x3c
+  [PASS] 长度不变 1021468 字节
+  [PASS] 差异字节 1642 个（补丁点）
+  [PASS] 输出 sha256 与原厂不同
+  [PASS] 固件长度 1021468 字节（应为 1021468，原位补丁+注入）
+  [PASS] 注入区 0x080EE000 起 344 字节（双发包装，共 344/1024 字节）
+  [PASS] 注入区剩余 680 字节保持擦除态 0xFF（不越界改写）
+  [PASS] 入口 0x080118B0 = dc f0 a6 bb（send_short(0x080118B0) 入口: B.W -> 注入包装）
+  [PASS] 入口 0x0801184C = dc f0 28 bc（send_property(0x0801184C) 入口: B.W -> 注入包装）
+  [PASS] 与原厂差异 1642 字节（核心 352 + UI 1290），offset=['0x0B750', '0x0B751', '0x0B752', '0x0B753', '0x0B754', '0x0B755', '0x0D04C', '0x0D04D', '0x0D04E', '0x0D04F', '0x0D0B0', '0x0D0B1']（应恰为并集，前 12 个）
+  [PASS] Unicorn 2.1.4 调用级测试：桩替换 WriteReg(0x08023540)/低层发送(0x0801712C,0x0801708C)/delay(0x080232B6)
+  [PASS] 密钥 KEY=0xD798（SYNC1=0xD7 SYNC0=0x98）；密钥模式第二帧同步字 = floor(50024/(当前ID+1)) 现算
+  [PASS] KEY_ON_FLAG = 0x20001080（ui-x3c 已验证：无字面量引用、40M 指令模拟写追踪仅 BSS 清零；RAM 版，重启复位；后续 flash 持久化）
+  [PASS] send_short(cmd=0x11) ID=5  KEY_ON=1 补丁版(密钥模式/白名单外): 保持原厂单发（不写 SYNC） | SEND_SHORT
+  [PASS] send_short ID=5  KEY_ON=0 补丁版(普通模式, id_off=0): 单发 | SEND_SHORT
+  [PASS] send_short(cmd=0x11) ID=99 KEY_ON=0 补丁版(密钥模式/白名单外): 保持原厂单发（不写 SYNC） | SEND_SHORT
+  [PASS] send_short(cmd=0x11) ID=99 KEY_ON=1 补丁版(密钥模式/白名单外): 保持原厂单发（不写 SYNC） | SEND_SHORT
+  [PASS] send_short ID=99 KEY_ON=0 补丁版(普通模式, id_off=1): 单发 | SEND_SHORT
+  [PASS] send_short(cmd=0x11) ID=5  KEY_ON=1 补丁版(密钥模式/白名单外): 保持原厂单发（不写 SYNC） | SEND_SHORT
+  [PASS] send_short(cmd=0x09) ID=5  KEY_ON=1 补丁版(密钥模式/白名单): SYNC=0xD798 -> SEND -> SYNC=50024/6=0x2091 -> SEND | WriteReg(4,0xD7) -> WriteReg(5,0x98) -> SEND_SHORT -> WriteReg(4,0x20) -> WriteReg(5,0x91) -> SEND_SHORT
+  [PASS] send_short(cmd=0x1A) ID=5  KEY_ON=1 补丁版(密钥模式/白名单): SYNC=0xD798 -> SEND -> SYNC=50024/6=0x2091 -> SEND | WriteReg(4,0xD7) -> WriteReg(5,0x98) -> SEND_SHORT -> WriteReg(4,0x20) -> WriteReg(5,0x91) -> SEND_SHORT
+  [PASS] send_short(cmd=0x21) ID=5  KEY_ON=1 补丁版(密钥模式/白名单): SYNC=0xD798 -> SEND -> SYNC=50024/6=0x2091 -> SEND | WriteReg(4,0xD7) -> WriteReg(5,0x98) -> SEND_SHORT -> WriteReg(4,0x20) -> WriteReg(5,0x91) -> SEND_SHORT
+  [PASS] send_short(cmd=0x29) ID=5  KEY_ON=1 补丁版(密钥模式/白名单): SYNC=0xD798 -> SEND -> SYNC=50024/6=0x2091 -> SEND | WriteReg(4,0xD7) -> WriteReg(5,0x98) -> SEND_SHORT -> WriteReg(4,0x20) -> WriteReg(5,0x91) -> SEND_SHORT
+  [PASS] send_short(cmd=0x11) ID=5  KEY_ON=1 补丁版(密钥模式/白名单外): 保持原厂单发（不写 SYNC） | SEND_SHORT
+  [PASS] send_short(cmd=0x40) ID=5  KEY_ON=1 补丁版(密钥模式/白名单外): 保持原厂单发（不写 SYNC） | SEND_SHORT
+  [PASS] send_property ID=5  KEY_ON=1 补丁版(密钥模式): SYNC=0xD798 -> SEND -> SYNC=0x2091(0x20/0x91) -> SEND | WriteReg(4,0xD7) -> WriteReg(5,0x98) -> SEND_PROP -> WriteReg(4,0x20) -> WriteReg(5,0x91) -> SEND_PROP
+  [PASS] send_property ID=5  KEY_ON=0 补丁版(普通模式, id_off=0): 单发 | SEND_PROP
+  [PASS] send_property ID=99 KEY_ON=0 补丁版(密钥模式): SYNC=0xD798 -> SEND -> SYNC=0x01F4(0x01/0xF4) -> SEND | WriteReg(4,0xD7) -> WriteReg(5,0x98) -> SEND_PROP -> WriteReg(4,0x01) -> WriteReg(5,0xF4) -> SEND_PROP
+  [PASS] send_short ID=99 KEY_ON=0 原厂(自证): 单发(原厂) | SEND_SHORT
+  [PASS] send_short ID=5  KEY_ON=0 原厂(自证): 单发(原厂) | SEND_SHORT
+  [PASS] send_property ID=99 KEY_ON=0 原厂(自证): 单发(原厂) | SEND_PROP
+  [PASS] [UI] 镜像长度 1021468 字节（应 1021468，原位补丁）
+  [PASS] [UI] 与原厂差异 1290 字节；注入区内 1290，区外（原厂代码）0（必须 0）
+  [PASS] [UI] ui_key_toggle @0x080F0000: push {r4, r5, lr}; movs r4, #1; ldr r0, [pc, #0x10]; ldrb r1, [r0]; movs r2, #1; ands r1, r2
+  [PASS] [UI] ui_broadcast_allch @0x080F0020: push {r4, r5, r6, lr}; movs r4, #0; ldr r5, [pc, #0x48]; ldr r6, [pc, #0x4c]; mov r0, r4; bl #0x8014814
+  [PASS] [UI] ui_broadcast_allid @0x080F0100: push {r4, r5, r6, lr}; movs r4, #0; ldr r5, [pc, #0x4c]; mov r0, r4; bl #0x8014814; movs r0, #4
+  [PASS] [UI] ui_key_toggle() 调 2 次: 标志 0x20001080 0->1->0，返回 1/0（期望 1->0）
+  [PASS] [UI] ui_broadcast_allch(): 频道 32；同步字 64 次（KEY 交替=True）；功率帧 32 个([80],0xD1,30)=True；造型灯帧 32 个([80],0xB1,1)=True；TEST 32
+  [PASS] [UI] 字模区 0x080F0200 已写入（96 字节/字，非零字节 42）
+  [PASS] [UI] 标签区 UTF-8 首项 = '密钥'（应为 '密钥'）
+  [PASS] [UI] 页 1 尾部挂载点 0x0800FF50: bl #0x80f1200 + 00bf（应为 bl 0x80F1200 + nop）
+  [PASS] [UI] FUN_080079E8 内差异偏移 = ['0x0B750', '0x0B751', '0x0B752', '0x0B753', '0x0B754', '0x0B755']（应恰好是挂载点 4 字节）
+  [PASS] [UI] tile_mode=full icon=False: 共 34 个 bl；2×建磁贴、2×文本、图标调用=0；原厂 setter 全部出现=True
+  [PASS] [UI] ui_quickpanel_ext 桩执行: parent(r5)=0x20042100 正确=True；磁贴 2 个 [(537141504, 1, 40, 288), (537141504, 1, 176, 288)]；属性 setter 序列与原厂(0x08007B16-0x08007BD2)一致=True（13 个/片 × 2 片）；关键参数=True；返回颜色 0x00000000（期望 0x00332211）；r6(0x200004C7) RAM 未被写=True
+  [PASS] [UI] 底部页签布局补丁默认未应用（0x08007E7C/0x0800807A/0x08008084 与原厂一致 → 仍是原厂 2 个页签）
+  [PASS] [UI] 0x0800FE78 保持原厂首指令 2de9fc41（实际 2de9fc41）
+  [PASS] [UI] UI tick 调用点 0x08014C1E: bl #0x80f1100（应为 bl wrapper 0x80F1100）
+  [PASS] [UI] wrapper 反汇编: push {r4, lr}; bl #0x80f1000; bl #0x800fe78; pop {r4, pc}（应为 push {r4,lr}; bl poll; bl 0x0800FE78; pop {r4,pc}）
+  [PASS] [UI] ui_tiles_poll: 动作调用 ['0x080F0000', '0x080F0020']（期望 ['0x080F0000', '0x080F0020']）；按下判定 `ldrh r1,[r0,#0x28]`+`ands r1,r6(=8)`=True
+  [PASS] [UI] 轮询桩执行: 按住 KEY 3 tick -> KEY_ON=1（期望 1，边沿只触发一次）；松开再按 -> 0（期望 0）；按住 BCAST 3 tick -> 广播 1 次（期望 1）
+  [PASS] [UI] 注入函数复现原尾指令 `ldr r1,=0x200004C2; movs r0,#6; strb r0,[r1]`=True
+  [PASS] [UI] ui_broadcast_allid 全 ID 扫描: 步长 1、上限 100 = True（期望 True）
+  [PASS] [UI] 最终镜像的 UI 区域与 ui_patch 输出一致
+  [PASS] （x3c 的 Lead 交叉验证由设备模块 verify 覆盖）
+  输出: C:\Users\22435\AppData\Local\Temp\dsh-kAvTA0\keypatch_selftest_32z_kff5\X3_C_v1.38_app_keyD798.bin
+  sha256: 6800f5624112c2c1bd26e3fa57bb5bc423b4a47c537c49c0dc97b5fa2f93e2a8
+  补丁点:
+    0x080118B0  10 b5 0a 4c          -> dc f0 a6 bb          send_short(0x080118B0) 入口: B.W -> 注入包装
+    0x0801184C  70 b5 0b 4c          -> dc f0 28 bc          send_property(0x0801184C) 入口: B.W -> 注入包装
+    0x080EE000  ff ff ff ff …(344 B) -> 10 b5 04 46 …(344 B) 空闲闪存 0x080EE000 注入：密钥模式双发（KEY 帧 + 当前ID普通同步字帧）
+    0x080F0000  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff... -> 30 b5 01 24 04 48 01 78 01 22 11 40 61 40 01 70... [UI] ui_key_toggle(): 翻转 KEY_ON 标志 0x20001080（fw-x3c 双发读这个字节）
+    0x080F0020  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff... -> 70 b5 00 24 12 4d 13 4e 20 46 24 f7 f3 fb 04 20... [UI] ui_broadcast_allch(): 32 频道广播（SYNC=KEY）
+    0x080F0100  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff... -> 70 b5 00 24 13 4d 20 46 24 f7 84 fb 04 20 29 0a... [UI] ui_broadcast_allid(): 全频道 + 全 ID 扫描（慢）
+    0x080F0200  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff... -> 00 00 00 00 00 00 60 00 00 00 78 00 00 00 f8 00... [UI] 自绘字模 24x24：密/钥/广/播/全（480 字节）
+    0x080F0400  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff... -> e5 af 86 e9 92 a5 00 e5 b9 bf e6 92 ad 00 e5 85... [UI] UTF-8 标签：密钥 / 广播 / 全频道 / 全ID / KEY ON / KEY OFF
+    0x080F0500  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff... -> 4b 45 59 00 00 00 00 00 42 43 41 53 54 00 00 00... [UI] 快捷面板标签 ASCII: KEY / BCAST / BROADCAST
+    0x080F1200  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff... -> 70 b5 35 46 5e 49 06 20 08 70 00 2d 5a d0 82 b0... [UI] build_page1_tiles(): 建 KEY / BROADCAST 两个磁贴（页 1 尾部挂载）
+    0x0800FF50  094906200870         -> e1f056f900bf         [UI] 页 1 尾部 -> bl 0x080F1200 + nop（整页建完后建 KEY/BCAST 磁贴）
+    0x080F1000  ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff... -> 70 b5 08 26 14 4c 20 68 00 28 0f d0 01 8d 31 40... [UI] ui_tiles_poll(): 轮询磁贴按下 -> ui_key_toggle / ui_broadcast_allch
+    0x080F1100  ff ff ff ff ff ff ff ff ff ff ff ff -> 10 b5 ff f7 7d ff 1e f7 b7 fe 10 bd [UI] UI tick wrapper：push{r4,lr}; bl poll; bl 0x0800FE78; pop{r4,pc}
+    0x08014C1E  fbf72bf9             -> dcf06ffa             [UI] UI tick: bl 0x0800FE78 -> bl wrapper(0x080F1100)（页 1 处理器仍完整执行；0x0800FE78 保持原厂）
+
+### v1c
+  [PASS] 长度不变 88032 字节
+  [PASS] 差异字节 71 个（补丁点）
+  [PASS] 输出 sha256 与原厂不同
+  [PASS] 固件长度 88032 字节（应为 88032，原位补丁）
+  [PASS] 0x080121BC..0x080121F3 补丁区 56 字节与期望函数体完全一致
+  [PASS] 函数体结束于 0x080121F4 == 下一函数起点 0x080121F4（不越界）
+  [PASS] 字面量: KEY=0xD798 @0x080121E8, FLAG=0x2000108E @0x080121EC, 50024 @0x080121F0
+  [PASS] 注入代码 @0x08017944（10 字节，0x08017944 全 0 死区）与期望一致
+  [PASS] C.Fn 递减 gate 0x0800625C = 11 f0 72 fb（BL 注入）
+  [PASS] C.Fn 递增 gate 0x0800D46E = 0a f0 69 fa（BL 注入）
+  [PASS] 读者屏蔽 0x080036DA = 00 20（造型灯任务：settings[8](LIGHT) 读者固定 0（密钥开关不影响造型灯输出））
+  [PASS] 读者屏蔽 0x08003702 = 00 21（造型灯任务：settings[8](LIGHT) 第二个读者固定 0（同上））
+  [PASS] 读者屏蔽 0x0800A6FA = 00 bf（无线设置同步解包：不再覆盖 settings[8]（保护 LIGHT 密钥开关不被静默清 0））
+  [PASS] 与原厂差异 71 字节，offset=['0x006DB', '0x00702', '0x00703', '0x0325C', '0x0325D', '0x0325E', '0x0325F', '0x076FA', '0x076FB', '0x0A46E', '0x0A46F', '0x0A470', '0x0A471', '0x0F1BC', '0x0F1BD', '0x0F1BE', '0x0F1BF', '0x0F1C0', '0x0F1C1', '0x0F1C2', '0x0F1C3', '0x0F1C4', '0x0F1C5', '0x0F1C6', '0x0F1C7', '0x0F1C8', '0x0F1C9', '0x0F1CA', '0x0F1CB', '0x0F1CC', '0x0F1CD', '0x0F1CE', '0x0F1CF', '0x0F1D0', '0x0F1D1', '0x0F1D2', '0x0F1D3', '0x0F1D4', '0x0F1D5', '0x0F1D6', '0x0F1D7', '0x0F1D8', '0x0F1D9', '0x0F1DA', '0x0F1DB', '0x0F1DC', '0x0F1DD', '0x0F1DE', '0x0F1DF', '0x0F1E0', '0x0F1E4', '0x0F1E6', '0x0F1E7', '0x0F1E8', '0x0F1E9', '0x0F1EA', '0x0F1EB', '0x0F1EC', '0x0F1ED', '0x0F1EE', '0x0F1EF', '0x14944', '0x14945', '0x14946', '0x14947', '0x14948', '0x14949', '0x1494A', '0x1494B', '0x1494C', '0x1494D']（应恰为 ['0x006DB', '0x00702', '0x00703', '0x0325C', '0x0325D', '0x0325E', '0x0325F', '0x076FA', '0x076FB', '0x0A46E', '0x0A46F', '0x0A470', '0x0A471', '0x0F1BC', '0x0F1BD', '0x0F1BE', '0x0F1BF', '0x0F1C0', '0x0F1C1', '0x0F1C2', '0x0F1C3', '0x0F1C4', '0x0F1C5', '0x0F1C6', '0x0F1C7', '0x0F1C8', '0x0F1C9', '0x0F1CA', '0x0F1CB', '0x0F1CC', '0x0F1CD', '0x0F1CE', '0x0F1CF', '0x0F1D0', '0x0F1D1', '0x0F1D2', '0x0F1D3', '0x0F1D4', '0x0F1D5', '0x0F1D6', '0x0F1D7', '0x0F1D8', '0x0F1D9', '0x0F1DA', '0x0F1DB', '0x0F1DC', '0x0F1DD', '0x0F1DE', '0x0F1DF', '0x0F1E0', '0x0F1E4', '0x0F1E6', '0x0F1E7', '0x0F1E8', '0x0F1E9', '0x0F1EA', '0x0F1EB', '0x0F1EC', '0x0F1ED', '0x0F1EE', '0x0F1EF', '0x14944', '0x14945', '0x14946', '0x14947', '0x14948', '0x14949', '0x1494A', '0x1494B', '0x1494C', '0x1494D']）
+  [PASS] 差异之外无任何字节变化（0 处）
+  [PASS] Unicorn 2.1.4 调用级测试：同步字 0x080121BD，RAM[0x2000108E]=flag
+  [PASS] ID=0  flag=2 密钥模式(LIGHT=ON): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+  [PASS] ID=5  flag=2 密钥模式(LIGHT=ON): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+  [PASS] ID=99 flag=2 密钥模式(LIGHT=ON): sync=0xD798 -> SYNC1=0xD7 SYNC0=0x98 | WriteReg(4,0xD7) -> WriteReg(5,0x98)
+  [PASS] ID=0  flag=0 原厂公式: sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68)
+  [PASS] ID=1  flag=0 原厂公式: sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4)
+  [PASS] ID=5  flag=0 原厂公式: sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91)
+  [PASS] ID=37 flag=0 原厂公式: sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24)
+  [PASS] ID=99 flag=0 原厂公式: sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4)
+  [PASS] ID=0  flag=1 原厂公式: sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68)
+  [PASS] ID=1  flag=1 原厂公式: sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4)
+  [PASS] ID=5  flag=1 原厂公式: sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91)
+  [PASS] ID=37 flag=1 原厂公式: sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24)
+  [PASS] ID=99 flag=1 原厂公式: sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4)
+  [PASS] 注入 hook: item=6 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=6
+  [PASS] 注入 hook: item=8 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=8
+  [PASS] 注入 hook: item=5 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=5
+  [PASS] 注入 hook: item=8 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=8
+  [PASS] 注入 hook: item=11 -> sync 调用 [37]（期望 1 次, r0=ID=37），返回 r0=0x20001086 r1=11
+  [PASS] ID=0  原厂(自证): sync=0xC368 -> SYNC1=0xC3 SYNC0=0x68 | WriteReg(4,0xC3) -> WriteReg(5,0x68) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=1  原厂(自证): sync=0x61B4 -> SYNC1=0x61 SYNC0=0xB4 | WriteReg(4,0x61) -> WriteReg(5,0xB4) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=5  原厂(自证): sync=0x2091 -> SYNC1=0x20 SYNC0=0x91 | WriteReg(4,0x20) -> WriteReg(5,0x91) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=37 原厂(自证): sync=0x0524 -> SYNC1=0x05 SYNC0=0x24 | WriteReg(4,0x05) -> WriteReg(5,0x24) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] ID=99 原厂(自证): sync=0x01F4 -> SYNC1=0x01 SYNC0=0xF4 | WriteReg(4,0x01) -> WriteReg(5,0xF4) -> delay(20) -> WriteCmd(0x33) -> delay(1000)
+  [PASS] flag=0x02(ON): ID=0  sync=0xD798 期望 0xD798
+  [PASS] flag=0x02(ON): ID=1  sync=0xD798 期望 0xD798
+  [PASS] flag=0x02(ON): ID=37 sync=0xD798 期望 0xD798
+  [PASS] flag=0x02(ON): ID=99 sync=0xD798 期望 0xD798
+  [PASS] flag=0: ID=0  sync=0xC368 期望 0xC368
+  [PASS] flag=0: ID=1  sync=0x61B4 期望 0x61B4
+  [PASS] flag=0: ID=37 sync=0x0524 期望 0x0524
+  [PASS] flag=0: ID=99 sync=0x01F4 期望 0x01F4
+  输出: C:\Users\22435\AppData\Local\Temp\dsh-kAvTA0\keypatch_selftest_32z_kff5\V1C_V2.0_keyD798.bin
+  sha256: 86d563c8c3bc5816844b79a2c6303a39910c7bf349d757d47c8ce01bd79409cd
+  补丁点:
+    0x080121BC  0c 4a 10 b5 41 1c 10 46 f0 f7 94 ff 04 46 01 0a 04 20 03 f0 7e fa e1 b2 05 20 03 f0 7a fa 14 20 03 f0 30 f9 33 20 03 f0 d5 fa 7d 20 c0 00 03 f0 29 f9 10 bd 68 c3 00 00 -> 10 b5 0b 4b 0b 4a 1b 78 41 1c 02 2b 01 d1 07 4a 01 21 10 46 f0 f7 8e ff 04 46 01 0a 04 20 03 f0 78 fa e1 b2 05 20 03 f0 74 fa 10 bd 98 d7 00 00 8e 10 00 20 68 c3 00 00 整段改写同步字函数 0x080121BC..0x080121F3（56 字节）：C.Fn LIGHT 密钥开关 RAM[0x2000108E]==1 -> SYNC=KEY 0xD798；==0 -> 50024/(ID+1)；只写 SYNC1/0（无 SCAL、无延时）
+    0x08017944  00 00 00 00 00 00 00 00 00 00 -> 1f b5 80 79 fa f7 38 fc 1f bd 注入代码（0x08017944 全 0 死区）：任意 C.Fn 项改值后按 settings[6] 立即重设同步字（含 ID 改值与 LIGHT 密钥开关改值）
+    0x0800625C  06 29 08 d0          -> 11 f0 72 fb          gate(C.Fn 递减)：cmp r1,#6; beq sync -> BL 注入（任意 C.Fn 改值都重设同步字）
+    0x0800D46E  06 29 07 d0          -> 0a f0 69 fa          gate(C.Fn 递增)：cmp r1,#6; beq sync -> BL 注入（任意 C.Fn 改值都重设同步字）
+    0x080036DA  00 7a                -> 00 20                造型灯任务：settings[8](LIGHT) 读者固定 0（密钥开关不影响造型灯输出）
+    0x08003702  01 7a                -> 00 21                造型灯任务：settings[8](LIGHT) 第二个读者固定 0（同上）
+    0x0800A6FA  08 72                -> 00 bf                无线设置同步解包：不再覆盖 settings[8]（保护 LIGHT 密钥开关不被静默清 0）
+
+================================================================================
+总自检结论: ALL PASS
+提示：成品 bin 在 C:\Users\22435\AppData\Local\Temp\dsh-kAvTA0\keypatch_selftest_32z_kff5，用官方 G3 升级软件刷入；刷机步骤见 keypatch/README.md

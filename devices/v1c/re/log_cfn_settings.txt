@@ -1,0 +1,1857 @@
+V1C C.Fn / settings 子系统分析（cfn_settings.py）
+固件: D:\神牛\devices\v1c\firmware\V1C_V2.0.bin
+镜像: 88032 字节 sha256=4435dda84903cb97cfaf34f7eeb15ecb6168771d60b57da1c346e6a9ca36edfb
+
+==============================================================================
+1. settings 区与 C.Fn 项布局（独立确认 Lead 骨架）
+==============================================================================
+settings 基址假设: 0x20001086；ID=settings[6]=0x2000108C
+字面量引用统计（0x20001086..0x20001100）:
+  0x20001086  (+0): 51 处，前 8 个: ['0x0800366A', '0x08003692', '0x080036D6', '0x08003700', '0x08003AEA', '0x08004A34', '0x08004AAA', '0x08004B4A']
+  0x20001096  (+16): 2 处，前 8 个: ['0x08014182', '0x08014A36']
+  0x200010B0  (+42): 4 处，前 8 个: ['0x0800F9D8', '0x0800FA64', '0x0800FA9C', '0x0800FAB0']
+基址 0x20001086 被 51 处 ldr literal 引用
+
+C.Fn 最大/回绕表 0x08018362 前 12 字节: 01 01 01 01 01 1f 63 01 02 06 01 01
+  期望（Lead）: 01 01 01 01 01 1f 63 01 02 06 01 01
+  与期望一致: True
+  每项最大值: ['item0=1', 'item1=1', 'item2=1', 'item3=1', 'item4=1', 'item5=31', 'item6=99', 'item7=1', 'item8=2', 'item9=6', 'item10=1', 'item11=1']
+  与 V1 说明书 C.Fn 顺序逐项对齐（外部佐证）:
+    item0 = F1   max=1    手册项名: m/ft
+    item1 = F2   max=1    手册项名: AF
+    item2 = F3   max=1    手册项名: STBY
+    item3 = F4   max=1    手册项名: RX STBY
+    item4 = F5   max=1    手册项名: SCAN
+    item5 = F6   max=31   手册项名: CH
+    item6 = F7   max=99   手册项名: ID
+    item7 = F8   max=1    手册项名: BEEP
+    item8 = F9   max=2    手册项名: LIGHT
+    item9 = F10  max=6    手册项名: LCD
+    item10 = F11  max=1    手册项名: FEB ACL
+    item11 = F12  max=1    手册项名: TX
+  ldr literal 引用该表: ['0x08006254', '0x0800D438', '0x08010136']
+  首个引用上下文:
+    0x08006244  49 1e        subs    r1, r1, #1
+    0x08006246  11 70        strb    r1, [r2]
+    0x08006248  f5 e7        b       #0x8006236
+    0x0800624A  0b 21        movs    r1, #0xb
+    0x0800624C  11 70        strb    r1, [r2]
+    0x0800624E  09 e0        b       #0x8006264
+    0x08006250  09 29        cmp     r1, #9
+    0x08006252  0b d0        beq     #0x800626c
+    0x08006254  df 4b        ldr     r3, [pc, #0x37c]
+    0x08006256  5b 5c        ldrb    r3, [r3, r1]
+    0x08006258  43 54        strb    r3, [r0, r1]
+    0x0800625A  11 78        ldrb    r1, [r2]
+    0x0800625C  06 29        cmp     r1, #6
+    0x0800625E  08 d0        beq     #0x8006272
+    0x08006260  0b 29        cmp     r1, #0xb
+    0x08006262  02 d1        bne     #0x800626a
+    0x08006264  c1 7a        ldrb    r1, [r0, #0xb]
+    0x08006266  dc 48        ldr     r0, [pc, #0x370]
+    0x08006268  01 70        strb    r1, [r0]
+    0x0800626A  f8 bd        pop     {r3, r4, r5, r6, r7, pc}
+    0x0800626C  0e f0 44 fe  bl      #0x8014ef8
+
+  C.Fn 项索引边界线索（cmp #0xB / cmp #0xC）:
+    0x08005232  cmp r0, #0xb
+    0x08006260  cmp r1, #0xb
+    0x08006408  cmp r2, #0xb
+    0x080064A2  cmp r1, #0xb
+    0x08006986  cmp r1, #0xc
+    0x0800699A  cmp r1, #0xc
+    0x08006A84  cmp r0, #0xc
+    0x08006AA0  cmp r2, #0xb
+    0x08006D72  cmp r0, #0xc
+    0x08007B22  cmp r2, #0xb
+    0x08008156  cmp r0, #0xc
+    0x0800841A  cmp r2, #0xb
+    0x080084C0  cmp r0, #0xb
+    0x08009108  cmp r1, #0xc
+    0x0800CD88  cmp r2, #0xc
+    0x0800D090  cmp r0, #0xc
+    0x0800D458  cmp r1, #0xb
+    0x0800D472  cmp r1, #0xb
+    0x0800D634  cmp r2, #0xb
+    0x0800D6D4  cmp r1, #0xc
+    0x0800D6E6  cmp r1, #0xb
+    0x0800DFF0  cmp r0, #0xc
+    0x0800F0E8  cmp r0, #0xb
+    0x080100E2  cmp r0, #0xb
+    0x0801014A  cmp r0, #0xc
+    0x08011DFA  cmp r1, #0xb
+    0x08011E18  cmp r1, #0xb
+    0x08012948  cmp r1, #0xb
+    0x08013530  cmp r0, #0xb
+    0x08013534  cmp r0, #0xc
+
+当前选中项 0x200004F2 的 literal 引用 12 处: ['0x080049B2', '0x08004A02', '0x08004C82', '0x08004E3C', '0x08004EA2', '0x08004FEC', '0x080050B4', '0x080051B0', '0x0800537C', '0x08006222', '0x0800D42E', '0x08012084']
+编辑态 0x200004F1 的 literal 引用 7 处: ['0x08005408', '0x08005442', '0x080061F2', '0x0800D3FE', '0x0800DC58', '0x08011FC8', '0x0801207A']
+
+==============================================================================
+2. settings[n] 读者/写者（n=0..0x1E；前向污点扫描）
+==============================================================================
+共发现 149 个静态访问点（含动态索引）
+
+--- settings[0] (0x20001086)  读者 7 / 写者 5 ---
+  0x08004A38  30 78        ldrb    r0, [r6]  ldrb        off=0  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08004A48  30 78        ldrb    r0, [r6]  ldrb        off=0  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08006006  14 78        ldrb    r4, [r2]  ldrb        off=0  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08006722  01 70        strb    r1, [r0]  strb        off=0  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800744E  00 78        ldrb    r0, [r0]  ldrb        off=0  fn=0x08007448(FUNC_0x08007448)
+  0x0800A6B0  0a 78        ldrb    r2, [r1]  ldrb        off=0  fn=0x0800A6AC(FUNC_0x0800A6AC)
+  0x0800A6CE  81 75        strb    r1, [r0, #0x16]  strb        off=0  fn=0x0800A6AC(FUNC_0x0800A6AC)
+  0x0800A6E2  0a 70        strb    r2, [r1]  strb        off=0  fn=0x0800A6DC(FUNC_0x0800A6DC)
+  0x0800A6F8  80 7d        ldrb    r0, [r0, #0x16]  ldrb        off=0  fn=0x0800A6DC(FUNC_0x0800A6DC)
+  0x0800E09A  25 70        strb    r5, [r4]  strb        off=0  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x080159C8  13 70        strb    r3, [r2]  strb        off=0  fn=0x080158B0(FUNC_0x080158B0)
+  0x08015D56  05 78        ldrb    r5, [r0]  ldrb        off=0  fn=0x08015C10(FUNC_0x08015C10)
+
+--- settings[1] (0x20001087)  读者 5 / 写者 4 ---
+  0x0800366C  40 78        ldrb    r0, [r0, #1]  ldrb        off=1  fn=0x08003654(FUNC_0x08003654)
+  0x08004AAE  78 78        ldrb    r0, [r7, #1]  ldrb        off=1  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08004ABE  78 78        ldrb    r0, [r7, #1]  ldrb        off=1  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x0800600A  54 78        ldrb    r4, [r2, #1]  ldrb        off=1  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08006724  42 70        strb    r2, [r0, #1]  strb        off=1  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800A6C0  4a 78        ldrb    r2, [r1, #1]  ldrb        off=1  fn=0x0800A6AC(FUNC_0x0800A6AC)
+  0x0800A6EE  4a 70        strb    r2, [r1, #1]  strb        off=1  fn=0x0800A6DC(FUNC_0x0800A6DC)
+  0x0800E09C  65 70        strb    r5, [r4, #1]  strb        off=1  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x080159CC  53 70        strb    r3, [r2, #1]  strb        off=1  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[2] (0x20001088)  读者 5 / 写者 4 ---
+  0x08004B4E  b0 78        ldrb    r0, [r6, #2]  ldrb        off=2  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08004B5E  b0 78        ldrb    r0, [r6, #2]  ldrb        off=2  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08006012  94 78        ldrb    r4, [r2, #2]  ldrb        off=2  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08006726  81 70        strb    r1, [r0, #2]  strb        off=2  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800A6B4  8a 78        ldrb    r2, [r1, #2]  ldrb        off=2  fn=0x0800A6AC(FUNC_0x0800A6AC)
+  0x0800A6E6  8a 70        strb    r2, [r1, #2]  strb        off=2  fn=0x0800A6DC(FUNC_0x0800A6DC)
+  0x0800E09E  a5 70        strb    r5, [r4, #2]  strb        off=2  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x080124DC  90 78        ldrb    r0, [r2, #2]  ldrb        off=2  fn=0x080124D8(FUNC_0x080124D8)
+  0x080159D4  93 70        strb    r3, [r2, #2]  strb        off=2  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[3] (0x20001089)  读者 5 / 写者 4 ---
+  0x08004C38  e0 78        ldrb    r0, [r4, #3]  ldrb        off=3  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08004C48  e0 78        ldrb    r0, [r4, #3]  ldrb        off=3  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08006016  d4 78        ldrb    r4, [r2, #3]  ldrb        off=3  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08006728  c1 70        strb    r1, [r0, #3]  strb        off=3  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800A6C4  ca 78        ldrb    r2, [r1, #3]  ldrb        off=3  fn=0x0800A6AC(FUNC_0x0800A6AC)
+  0x0800A6F2  ca 70        strb    r2, [r1, #3]  strb        off=3  fn=0x0800A6DC(FUNC_0x0800A6DC)
+  0x0800E0A0  e5 70        strb    r5, [r4, #3]  strb        off=3  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x08012528  d0 78        ldrb    r0, [r2, #3]  ldrb        off=3  fn=0x080124D8(FUNC_0x080124D8)
+  0x080159D8  d3 70        strb    r3, [r2, #3]  strb        off=3  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[4] (0x2000108A)  读者 4 / 写者 5 ---
+  0x08004D0C  28 79        ldrb    r0, [r5, #4]  ldrb        off=4  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08004D2E  28 79        ldrb    r0, [r5, #4]  ldrb        off=4  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x0800541E  04 71        strb    r4, [r0, #4]  strb        off=4  fn=0x080053F4(FUNC_0x080053F4)
+  0x0800601A  14 79        ldrb    r4, [r2, #4]  ldrb        off=4  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08006730  01 71        strb    r1, [r0, #4]  strb        off=4  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800E0AA  25 71        strb    r5, [r4, #4]  strb        off=4  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x0800FB4E  04 71        strb    r4, [r0, #4]  strb        off=4  fn=0x0800FB2C(FUNC_0x0800FB2C)
+  0x0801208E  1b 79        ldrb    r3, [r3, #4]  ldrb        off=4  fn=0x08012058(FUNC_0x08012058)
+  0x080159DC  13 71        strb    r3, [r2, #4]  strb        off=4  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[5] (0x2000108B)  读者 5 / 写者 3 ---
+  0x08004E4A  78 79        ldrb    r0, [r7, #5]  ldrb        off=5  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08004E5E  78 79        ldrb    r0, [r7, #5]  ldrb        off=5  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x0800601E  54 79        ldrb    r4, [r2, #5]  ldrb        off=5  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08006154  40 79        ldrb    r0, [r0, #5]  ldrb        off=5  fn=0x080060FC(FUNC_0x080060FC)
+  0x08006736  43 71        strb    r3, [r0, #5]  strb        off=5  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800E0B0  60 71        strb    r0, [r4, #5]  strb        off=5  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x0800FA96  40 79        ldrb    r0, [r0, #5]  ldrb        off=5  fn=0x0800F980(FUNC_0x0800F980)
+  0x080159E0  53 71        strb    r3, [r2, #5]  strb        off=5  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[6] (0x2000108C)  读者 8 / 写者 3 ---
+  0x08004EB0  b8 79        ldrb    r0, [r7, #6]  ldrb        off=6  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08004EC8  b8 79        ldrb    r0, [r7, #6]  ldrb        off=6  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08006026  94 79        ldrb    r4, [r2, #6]  ldrb        off=6  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08006272  80 79        ldrb    r0, [r0, #6]  ldrb        off=6  fn=0x080061CC(C.Fn dec 处理（item 值 -1）)
+  0x080066B0  80 79        ldrb    r0, [r0, #6]  ldrb        off=6  fn=0x0800664C(RF 初始化)
+  0x08006732  81 71        strb    r1, [r0, #6]  strb        off=6  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800D482  80 79        ldrb    r0, [r0, #6]  ldrb        off=6  fn=0x0800D3D8(C.Fn inc 处理（item 值 +1）)
+  0x0800E0AC  a5 71        strb    r5, [r4, #6]  strb        off=6  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x0800E0C0  a0 79        ldrb    r0, [r4, #6]  ldrb        off=6  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x0800E136  a0 79        ldrb    r0, [r4, #6]  ldrb        off=6  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x080159E8  93 71        strb    r3, [r2, #6]  strb        off=6  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[7] (0x2000108D)  读者 16 / 写者 7 ---
+  0x08003AEE  c5 79        ldrb    r5, [r0, #7]  ldrb        off=7  fn=0x08003AE8(FUNC_0x08003AE8)
+  0x08004F98  e0 79        ldrb    r0, [r4, #7]  ldrb        off=7  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08004FA8  e0 79        ldrb    r0, [r4, #7]  ldrb        off=7  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x0800602A  d4 79        ldrb    r4, [r2, #7]  ldrb        off=7  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x0800672A  c2 71        strb    r2, [r0, #7]  strb        off=7  fn=0x080066D0(FUNC_0x080066D0)
+  0x080067DA  c0 79        ldrb    r0, [r0, #7]  ldrb        off=7  fn=0x080067CC(FUNC_0x080067CC)
+  0x08008294  c0 79        ldrb    r0, [r0, #7]  ldrb        off=7  fn=0x08008284(FUNC_0x08008284)
+  0x08008880  c0 79        ldrb    r0, [r0, #7]  ldrb        off=7  fn=0x08008870(FUNC_0x08008870)
+  0x08008B3C  c0 79        ldrb    r0, [r0, #7]  ldrb        off=7  fn=0x08008B2C(FUNC_0x08008B2C)
+  0x08008F3A  e8 79        ldrb    r0, [r5, #7]  ldrb        off=7  fn=0x08008F00(FUNC_0x08008F00)
+  0x08008FF4  e8 79        ldrb    r0, [r5, #7]  ldrb        off=7  fn=0x08008F00(FUNC_0x08008F00)
+  0x08009018  e8 79        ldrb    r0, [r5, #7]  ldrb        off=7  fn=0x08008F00(FUNC_0x08008F00)
+  0x080092DE  e8 79        ldrb    r0, [r5, #7]  ldrb        off=7  fn=0x08008F00(FUNC_0x08008F00)
+  0x08009374  e8 79        ldrb    r0, [r5, #7]  ldrb        off=7  fn=0x08008F00(FUNC_0x08008F00)
+  0x0800A6C8  ca 79        ldrb    r2, [r1, #7]  ldrb        off=7  fn=0x0800A6AC(FUNC_0x0800A6AC)
+  0x0800A6F6  ca 71        strb    r2, [r1, #7]  strb        off=7  fn=0x0800A6DC(FUNC_0x0800A6DC)
+  0x0800E0A2  e7 71        strb    r7, [r4, #7]  strb        off=7  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x0800FC82  ce 71        strb    r6, [r1, #7]  strb        off=7  fn=0x0800FBA4(FUNC_0x0800FBA4)
+  0x0800FC86  cd 71        strb    r5, [r1, #7]  strb        off=7  fn=0x0800FBA4(FUNC_0x0800FBA4)
+  0x08010678  c2 71        strb    r2, [r0, #7]  strb        off=7  fn=0x08010384(FUNC_0x08010384)
+  0x08010A5C  c0 79        ldrb    r0, [r0, #7]  ldrb        off=7  fn=0x08010984(FUNC_0x08010984)
+  0x08010C4C  c0 79        ldrb    r0, [r0, #7]  ldrb        off=7  fn=0x08010A98(FUNC_0x08010A98)
+  0x080159EC  d3 71        strb    r3, [r2, #7]  strb        off=7  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[8] (0x2000108E)  读者 6 / 写者 4 ---
+  0x080036DA  00 7a        ldrb    r0, [r0, #8]  ldrb        off=8  fn=0x080036D4(FUNC_0x080036D4)
+  0x08003702  01 7a        ldrb    r1, [r0, #8]  ldrb        off=8  fn=0x080036D4(FUNC_0x080036D4)
+  0x08005076  38 7a        ldrb    r0, [r7, #8]  ldrb        off=8  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08005086  38 7a        ldrb    r0, [r7, #8]  ldrb        off=8  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x0800602E  14 7a        ldrb    r4, [r2, #8]  ldrb        off=8  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x0800672C  01 72        strb    r1, [r0, #8]  strb        off=8  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800A6CC  09 7a        ldrb    r1, [r1, #8]  ldrb        off=8  fn=0x0800A6AC(FUNC_0x0800A6AC)
+  0x0800A6FA  08 72        strb    r0, [r1, #8]  strb        off=8  fn=0x0800A6DC(FUNC_0x0800A6DC)
+  0x0800E0A4  25 72        strb    r5, [r4, #8]  strb        off=8  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x080159F0  13 72        strb    r3, [r2, #8]  strb        off=8  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[9] (0x2000108F)  读者 6 / 写者 4 ---
+  0x080050C0  40 7a        ldrb    r0, [r0, #9]  ldrb        off=9  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x080050EC  68 7a        ldrb    r0, [r5, #9]  ldrb        off=9  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08005114  68 7a        ldrb    r0, [r5, #9]  ldrb        off=9  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x08006032  54 7a        ldrb    r4, [r2, #9]  ldrb        off=9  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x0800672E  43 72        strb    r3, [r0, #9]  strb        off=9  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800D462  41 72        strb    r1, [r0, #9]  strb        off=9  fn=0x0800D3D8(C.Fn inc 处理（item 值 +1）)
+  0x0800E0A8  60 72        strb    r0, [r4, #9]  strb        off=9  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x08014EFE  60 7a        ldrb    r0, [r4, #9]  ldrb        off=9  fn=0x08014EF8(item 9 改值后的专用处理函数)
+  0x08014F52  60 7a        ldrb    r0, [r4, #9]  ldrb        off=9  fn=0x08014EF8(item 9 改值后的专用处理函数)
+  0x080159F4  53 72        strb    r3, [r2, #9]  strb        off=9  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[10] (0x20001090)  读者 6 / 写者 4 ---
+  0x080051FC  a0 7a        ldrb    r0, [r4, #0xa]  ldrb        off=10  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x0800520C  a0 7a        ldrb    r0, [r4, #0xa]  ldrb        off=10  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x080055E8  89 7a        ldrb    r1, [r1, #0xa]  ldrb        off=10  fn=0x08005548(FUNC_0x08005548)
+  0x080056A6  89 7a        ldrb    r1, [r1, #0xa]  ldrb        off=10  fn=0x08005548(FUNC_0x08005548)
+  0x0800603A  94 7a        ldrb    r4, [r2, #0xa]  ldrb        off=10  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08006738  81 72        strb    r1, [r0, #0xa]  strb        off=10  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800A6B8  8a 7a        ldrb    r2, [r1, #0xa]  ldrb        off=10  fn=0x0800A6AC(FUNC_0x0800A6AC)
+  0x0800A6EA  8a 72        strb    r2, [r1, #0xa]  strb        off=10  fn=0x0800A6DC(FUNC_0x0800A6DC)
+  0x0800E0B2  a5 72        strb    r5, [r4, #0xa]  strb        off=10  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x080159FC  93 72        strb    r3, [r2, #0xa]  strb        off=10  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[11] (0x20001091)  读者 6 / 写者 5 ---
+  0x0800524A  e0 7a        ldrb    r0, [r4, #0xb]  ldrb        off=11  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x0800525A  e0 7a        ldrb    r0, [r4, #0xb]  ldrb        off=11  fn=0x08004914(C.Fn 菜单渲染/显示函数 A)
+  0x0800603E  d4 7a        ldrb    r4, [r2, #0xb]  ldrb        off=11  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08006264  c1 7a        ldrb    r1, [r0, #0xb]  ldrb        off=11  fn=0x080061CC(C.Fn dec 处理（item 值 -1）)
+  0x0800673A  c2 72        strb    r2, [r0, #0xb]  strb        off=11  fn=0x080066D0(FUNC_0x080066D0)
+  0x0800D476  c1 7a        ldrb    r1, [r0, #0xb]  ldrb        off=11  fn=0x0800D3D8(C.Fn inc 处理（item 值 +1）)
+  0x0800E0B4  e7 72        strb    r7, [r4, #0xb]  strb        off=11  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x0800E0C8  e0 7a        ldrb    r0, [r4, #0xb]  ldrb        off=11  fn=0x0800DCDC(FUNC_0x0800DCDC)
+  0x08012AB0  d8 72        strb    r0, [r3, #0xb]  strb        off=11  fn=0x080125A8(FUNC_0x080125A8)
+  0x080132F4  d8 72        strb    r0, [r3, #0xb]  strb        off=11  fn=0x08012EF2(FUNC_0x08012EF2)
+  0x08015A00  d3 72        strb    r3, [r2, #0xb]  strb        off=11  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[12] (0x20001092)  读者 1 / 写者 1 ---
+  0x08006042  14 7b        ldrb    r4, [r2, #0xc]  ldrb        off=12  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08015A04  13 73        strb    r3, [r2, #0xc]  strb        off=12  fn=0x080158B0(FUNC_0x080158B0)
+
+--- settings[13] (0x20001093)  读者 1 / 写者 1 ---
+  0x08006046  52 7b        ldrb    r2, [r2, #0xd]  ldrb        off=13  fn=0x08005EF0(设置记录 builder（save 准备）)
+  0x08015A08  53 73        strb    r3, [r2, #0xd]  strb        off=13  fn=0x080158B0(FUNC_0x080158B0)
+
+动态索引访问（基址=settings，索引为寄存器；通常是菜单循环/按当前项访问）: 14
+  0x0800622C  43 5c        ldrb    r3, [r0, r1]  ldrb         fn=0x080061CC(C.Fn dec 处理（item 值 -1）)
+  0x08006234  43 54        strb    r3, [r0, r1]  strb         fn=0x080061CC(C.Fn dec 处理（item 值 -1）)
+  0x08006258  43 54        strb    r3, [r0, r1]  strb         fn=0x080061CC(C.Fn dec 处理（item 值 -1）)
+  0x0800D43A  43 5c        ldrb    r3, [r0, r1]  ldrb         fn=0x0800D3D8(C.Fn inc 处理（item 值 +1）)
+  0x0800D440  43 54        strb    r3, [r0, r1]  strb         fn=0x0800D3D8(C.Fn inc 处理（item 值 +1）)
+  0x0800D44C  44 54        strb    r4, [r0, r1]  strb         fn=0x0800D3D8(C.Fn inc 处理（item 值 +1）)
+  0x0800F9F8  a0 55        strb    r0, [r4, r6]  strb         fn=0x0800F980(FUNC_0x0800F980)
+  0x0800FA18  22 5c        ldrb    r2, [r4, r0]  ldrb         fn=0x0800F980(FUNC_0x0800F980)
+  0x0800FA20  23 54        strb    r3, [r4, r0]  strb         fn=0x0800F980(FUNC_0x0800F980)
+  0x0800FA38  21 5c        ldrb    r1, [r4, r0]  ldrb         fn=0x0800F980(FUNC_0x0800F980)
+  0x0801013C  16 5c        ldrb    r6, [r2, r0]  ldrb         fn=0x0800FEF8(FUNC_0x0800FEF8)
+  0x08010144  14 54        strb    r4, [r2, r0]  strb         fn=0x0800FEF8(FUNC_0x0800FEF8)
+  0x08014188  43 54        strb    r3, [r0, r1]  strb         fn=0x080140F8(FUNC_0x080140F8)
+  0x08014A3C  43 54        strb    r3, [r0, r1]  strb         fn=0x080149CC(FUNC_0x080149CC)
+
+==============================================================================
+2b. 按函数聚合：每个 settings 访问函数的画像（用于推断项语义）
+==============================================================================
+
+=== fn 0x08003654..0x0800369B  FUNC_0x08003654  settings 访问偏移: ['1(R)']
+  BL 目标: ['0x0800B870', '0x0800B882']
+  RAM 字面量: ['0x20001086']
+  --- 访问 0x0800366C  40 78        ldrb    r0, [r0, #1] ldrb off=1 ---
+      0x0800365C  49 03        lsls    r1, r1, #0xd
+      0x0800365E  88 43        bics    r0, r1
+      0x08003660  20 60        str     r0, [r4]
+      0x08003662  20 68        ldr     r0, [r4]
+      0x08003664  49 10        asrs    r1, r1, #1
+      0x08003666  08 43        orrs    r0, r1
+      0x08003668  20 60        str     r0, [r4]
+      0x0800366A  0a 48        ldr     r0, [pc, #0x28]   ; [0x08003694]=0x20001086
+      0x0800366C  40 78        ldrb    r0, [r0, #1]
+      0x0800366E  00 28        cmp     r0, #0
+      0x08003670  05 d1        bne     #0x800367e
+      0x08003672  08 21        movs    r1, #8
+      0x08003674  08 48        ldr     r0, [pc, #0x20]   ; [0x08003698]=0x48001000
+      0x08003676  08 f0 fb f8  bl      #0x800b870
+      0x0800367A  01 28        cmp     r0, #1
+      0x0800367C  01 d0        beq     #0x8003682
+      0x0800367E  00 22        movs    r2, #0
+      0x08003680  00 e0        b       #0x8003684
+      0x08003682  01 22        movs    r2, #1
+      0x08003684  40 21        movs    r1, #0x40
+
+=== fn 0x080036D4..0x080037CB  FUNC_0x080036D4  settings 访问偏移: ['8(R)']
+  BL 目标: ['0x0800B882']
+  RAM 字面量: ['0x20000492', '0x200004E4', '0x200004F3', '0x20000557', '0x20001086']
+  --- 访问 0x080036DA  00 7a        ldrb    r0, [r0, #8] ldrb off=8 ---
+      0x080036CC  10 20        movs    r0, #0x10
+      0x080036CE  0e f0 15 f8  bl      #0x80116fc
+      0x080036D2  10 bd        pop     {r4, pc}
+      0x080036D4  f8 b5        push    {r3, r4, r5, r6, r7, lr}
+      0x080036D6  37 48        ldr     r0, [pc, #0xdc]   ; [0x080037B4]=0x20001086
+      0x080036D8  00 25        movs    r5, #0
+      0x080036DA  00 7a        ldrb    r0, [r0, #8]
+      0x080036DC  36 4c        ldr     r4, [pc, #0xd8]   ; [0x080037B8]=0x48001000
+      0x080036DE  37 4f        ldr     r7, [pc, #0xdc]   ; [0x080037BC]=0x20000557
+      0x080036E0  37 4e        ldr     r6, [pc, #0xdc]   ; [0x080037C0]=0x200004E4
+      0x080036E2  01 28        cmp     r0, #1
+      0x080036E4  0c d1        bne     #0x8003700
+      0x080036E6  41 03        lsls    r1, r0, #0xd
+      0x080036E8  00 22        movs    r2, #0
+      0x080036EA  20 46        mov     r0, r4
+      0x080036EC  08 f0 c9 f8  bl      #0x800b882
+      0x080036F0  01 21        movs    r1, #1
+      0x080036F2  00 22        movs    r2, #0
+  --- 访问 0x08003702  01 7a        ldrb    r1, [r0, #8] ldrb off=8 ---
+      0x080036F2  00 22        movs    r2, #0
+      0x080036F4  89 03        lsls    r1, r1, #0xe
+      0x080036F6  20 46        mov     r0, r4
+      0x080036F8  08 f0 c3 f8  bl      #0x800b882
+      0x080036FC  35 70        strb    r5, [r6]
+      0x080036FE  3d 70        strb    r5, [r7]
+      0x08003700  2c 48        ldr     r0, [pc, #0xb0]   ; [0x080037B4]=0x20001086
+      0x08003702  01 7a        ldrb    r1, [r0, #8]
+      0x08003704  2f 48        ldr     r0, [pc, #0xbc]   ; [0x080037C4]=0x200004F3
+      0x08003706  02 29        cmp     r1, #2
+      0x08003708  15 d0        beq     #0x8003736
+      0x0800370A  2d 49        ldr     r1, [pc, #0xb4]   ; [0x080037C0]=0x200004E4
+      0x0800370C  2e 4e        ldr     r6, [pc, #0xb8]   ; [0x080037C8]=0x20000492
+      0x0800370E  09 78        ldrb    r1, [r1]
+      0x08003710  01 29        cmp     r1, #1
+      0x08003712  2a d0        beq     #0x800376a
+      0x08003714  01 21        movs    r1, #1
+      0x08003716  00 22        movs    r2, #0
+      0x08003718  89 03        lsls    r1, r1, #0xe
+      0x0800371A  20 46        mov     r0, r4
+
+=== fn 0x08003AE8..0x08003B5B  FUNC_0x08003AE8  settings 访问偏移: ['7(R)']
+  BL 目标: ['0x0800B882']
+  RAM 字面量: ['0x20000492', '0x20000544', '0x20001086']
+  --- 访问 0x08003AEE  c5 79        ldrb    r5, [r0, #7] ldrb off=7 ---
+      0x08003ADE  00 20        movs    r0, #0
+      0x08003AE0  00 04        lsls    r0, r0, #0x10
+      0x08003AE2  00 48        ldr     r0, [pc, #0]   ; [0x08003AE4]=0x20000548
+      0x08003AE4  48 05        lsls    r0, r1, #0x15
+      0x08003AE6  00 20        movs    r0, #0
+      0x08003AE8  f8 b5        push    {r3, r4, r5, r6, r7, lr}
+      0x08003AEA  19 48        ldr     r0, [pc, #0x64]   ; [0x08003B50]=0x20001086
+      0x08003AEC  01 21        movs    r1, #1
+      0x08003AEE  c5 79        ldrb    r5, [r0, #7]
+      0x08003AF0  09 20        movs    r0, #9
+      0x08003AF2  c9 03        lsls    r1, r1, #0xf
+      0x08003AF4  c0 06        lsls    r0, r0, #0x1b
+      0x08003AF6  01 24        movs    r4, #1
+      0x08003AF8  00 23        movs    r3, #0
+      0x08003AFA  16 4a        ldr     r2, [pc, #0x58]   ; [0x08003B54]=0x20000492
+      0x08003AFC  01 2d        cmp     r5, #1
+      0x08003AFE  08 d0        beq     #0x8003b12
+      0x08003B00  15 4d        ldr     r5, [pc, #0x54]   ; [0x08003B58]=0x20000544
+      0x08003B02  53 74        strb    r3, [r2, #0x11]
+      0x08003B04  2d 88        ldrh    r5, [r5]
+      0x08003B06  00 2d        cmp     r5, #0
+
+=== fn 0x08004914..0x080053F3  C.Fn 菜单渲染/显示函数 A  settings 访问偏移: ['0(R)', '1(R)', '2(R)', '3(R)', '4(R)', '5(R)', '6(R)', '7(R)', '8(R)', '9(R)', '10(R)', '11(R)']
+  BL 目标: ['0x080030F0', '0x080037CC', '0x08005440', '0x08006E38', '0x0800703C', '0x080070F4', '0x0800740C', '0x08007620', '0x08007728', '0x08007764', '0x08007A04', '0x08007A6C', '0x08007C50']
+  RAM 字面量: ['0x2000012C', '0x200004F2', '0x20000555', '0x20000565', '0x2000056B', '0x20000584', '0x200007C4', '0x20001086']
+  （显示/保存/改值处理函数，上下文略；见 §2 访问点）
+
+=== fn 0x080053F4..0x0800543F  FUNC_0x080053F4  settings 访问偏移: ['4(W)']
+  BL 目标: ['0x0800FB2C']
+  RAM 字面量: ['0x200004DB', '0x200004F0', '0x200004F1', '0x2000055D', '0x20000565', '0x20001086']
+  --- 访问 0x0800541E  04 71        strb    r4, [r0, #4] strb off=4 ---
+      0x0800540E  04 70        strb    r4, [r0]
+      0x08005410  09 48        ldr     r0, [pc, #0x24]   ; [0x08005438]=0x20000565
+      0x08005412  00 78        ldrb    r0, [r0]
+      0x08005414  00 28        cmp     r0, #0
+      0x08005416  01 d0        beq     #0x800541c
+      0x08005418  0a f0 88 fb  bl      #0x800fb2c
+      0x0800541C  07 48        ldr     r0, [pc, #0x1c]   ; [0x0800543C]=0x20001086
+      0x0800541E  04 71        strb    r4, [r0, #4]
+      0x08005420  10 bd        pop     {r4, pc}
+      0x08005422  01 21        movs    r1, #1
+      0x08005424  ef e7        b       #0x8005406
+      0x08005426  00 00        movs    r0, r0
+      0x08005428  5d 05        lsls    r5, r3, #0x15
+      0x0800542A  00 20        movs    r0, #0
+      0x0800542C  f0 04        lsls    r0, r6, #0x13
+      0x0800542E  00 20        movs    r0, #0
+      0x08005430  f1 04        lsls    r1, r6, #0x13
+      0x08005432  00 20        movs    r0, #0
+      0x08005434  db 04        lsls    r3, r3, #0x13
+      0x08005436  00 20        movs    r0, #0
+
+=== fn 0x08005548..0x080056F7  FUNC_0x08005548  settings 访问偏移: ['10(R)']
+  BL 目标: ['0x08009EC4', '0x0800A708', '0x0800B870', '0x0800B882', '0x0800CEE8', '0x0800D354', '0x0801532C', '0x080153EC']
+  RAM 字面量: ['0x20000472', '0x20000497', '0x200004E6', '0x200004E7', '0x2000050A', '0x2000050D', '0x20000510', '0x20000520', '0x20000526', '0x20001086']
+  --- 访问 0x080055E8  89 7a        ldrb    r1, [r1, #0xa] ldrb off=10 ---
+      0x080055D8  0a d0        beq     #0x80055f0
+      0x080055DA  29 78        ldrb    r1, [r5]
+      0x080055DC  49 1c        adds    r1, r1, #1
+      0x080055DE  c9 b2        uxtb    r1, r1
+      0x080055E0  29 70        strb    r1, [r5]
+      0x080055E2  03 29        cmp     r1, #3
+      0x080055E4  04 d9        bls     #0x80055f0
+      0x080055E6  3e 49        ldr     r1, [pc, #0xf8]   ; [0x080056E0]=0x20001086
+      0x080055E8  89 7a        ldrb    r1, [r1, #0xa]
+      0x080055EA  00 29        cmp     r1, #0
+      0x080055EC  07 d0        beq     #0x80055fe
+      0x080055EE  2f 70        strb    r7, [r5]
+      0x080055F0  3c 48        ldr     r0, [pc, #0xf0]   ; [0x080056E4]=0x2000050D
+      0x080055F2  3d 49        ldr     r1, [pc, #0xf4]   ; [0x080056E8]=0x20000472
+      0x080055F4  07 70        strb    r7, [r0]
+      0x080055F6  0a 20        movs    r0, #0xa
+      0x080055F8  08 80        strh    r0, [r1]
+      0x080055FA  3c 48        ldr     r0, [pc, #0xf0]   ; [0x080056EC]=0x2000050A
+      0x080055FC  58 e0        b       #0x80056b0
+      0x080055FE  2c 70        strb    r4, [r5]
+      0x08005600  04 70        strb    r4, [r0]
+  --- 访问 0x080056A6  89 7a        ldrb    r1, [r1, #0xa] ldrb off=10 ---
+      0x08005696  0a d0        beq     #0x80056ae
+      0x08005698  29 78        ldrb    r1, [r5]
+      0x0800569A  49 1c        adds    r1, r1, #1
+      0x0800569C  c9 b2        uxtb    r1, r1
+      0x0800569E  29 70        strb    r1, [r5]
+      0x080056A0  03 29        cmp     r1, #3
+      0x080056A2  04 d9        bls     #0x80056ae
+      0x080056A4  0e 49        ldr     r1, [pc, #0x38]   ; [0x080056E0]=0x20001086
+      0x080056A6  89 7a        ldrb    r1, [r1, #0xa]
+      0x080056A8  00 29        cmp     r1, #0
+      0x080056AA  07 d0        beq     #0x80056bc
+      0x080056AC  2f 70        strb    r7, [r5]
+      0x080056AE  0d 48        ldr     r0, [pc, #0x34]   ; [0x080056E4]=0x2000050D
+      0x080056B0  04 70        strb    r4, [r0]
+      0x080056B2  07 f0 19 fc  bl      #0x800cee8
+      0x080056B6  84 f3 10 88  msr     primask, r4
+      0x080056BA  f8 bd        pop     {r3, r4, r5, r6, r7, pc}
+      0x080056BC  2c 70        strb    r4, [r5]
+      0x080056BE  04 70        strb    r4, [r0]
+
+=== fn 0x08005EF0..0x080060DB  设置记录 builder（save 准备）  settings 访问偏移: ['0(R)', '1(R)', '2(R)', '3(R)', '4(R)', '5(R)', '6(R)', '7(R)', '8(R)', '9(R)', '10(R)', '11(R)', '12(R)', '13(R)']
+  BL 目标: ['0x0800B19C']
+  RAM 字面量: ['0x20000440', '0x200004AD', '0x200004AE', '0x200004B5', '0x200004B9', '0x200004BA', '0x200004C0', '0x200004C6', '0x200004CC', '0x200004D2', '0x200004DC', '0x200004DF', '0x200004E5', '0x200004EA', '0x200004F3', '0x200004F4', '0x200004F5', '0x200004F6', '0x20000500', '0x20000501', '0x20000502', '0x2000054A', '0x2000054D', '0x20000550', '0x20000774', '0x20001086']
+  （显示/保存/改值处理函数，上下文略；见 §2 访问点）
+
+=== fn 0x080060FC..0x080061CB  FUNC_0x080060FC  settings 访问偏移: ['5(R)']
+  BL 目标: ['0x080061CC', '0x0800B870', '0x0800D3D8', '0x0800F0A8']
+  RAM 字面量: ['0x20000478', '0x200004B9', '0x200004BA', '0x200004F3', '0x20000501', '0x20000502', '0x2000054A', '0x20001086']
+  --- 访问 0x08006154  40 79        ldrb    r0, [r0, #5] ldrb off=5 ---
+      0x08006146  01 e0        b       #0x800614c
+      0x08006148  00 f0 40 f8  bl      #0x80061cc
+      0x0800614C  08 f0 ac ff  bl      #0x800f0a8
+      0x08006150  17 48        ldr     r0, [pc, #0x5c]   ; [0x080061B0]=0x20001086
+      0x08006152  18 49        ldr     r1, [pc, #0x60]   ; [0x080061B4]=0x2000054A
+      0x08006154  40 79        ldrb    r0, [r0, #5]
+      0x08006156  08 70        strb    r0, [r1]
+      0x08006158  17 48        ldr     r0, [pc, #0x5c]   ; [0x080061B8]=0x200004F3
+      0x0800615A  00 22        movs    r2, #0
+      0x0800615C  00 78        ldrb    r0, [r0]
+      0x0800615E  03 28        cmp     r0, #3
+      0x08006160  04 d0        beq     #0x800616c
+      0x08006162  00 28        cmp     r0, #0
+      0x08006164  01 d1        bne     #0x800616a
+      0x08006166  15 48        ldr     r0, [pc, #0x54]   ; [0x080061BC]=0x20000501
+      0x08006168  02 70        strb    r2, [r0]
+      0x0800616A  70 bd        pop     {r4, r5, r6, pc}
+      0x0800616C  14 48        ldr     r0, [pc, #0x50]   ; [0x080061C0]=0x200004B9
+
+=== fn 0x080061CC..0x0800664B  C.Fn dec 处理（item 值 -1）  settings 访问偏移: ['6(R)', '11(R)']
+  BL 目标: ['0x080037CC', '0x0800FB2C', '0x080114CC', '0x08011D74', '0x08011DF0', '0x08011EEE', '0x08012114', '0x080121BC', '0x08012230', '0x08012320', '0x08014EF8', '0x080150A6']
+  RAM 字面量: ['0x20000478', '0x200004AD', '0x200004AE', '0x200004AF', '0x200004B9', '0x200004BA', '0x200004C0', '0x200004C2', '0x200004C6', '0x200004D2', '0x200004D8', '0x200004D9', '0x200004DB', '0x200004DC', '0x200004DF', '0x200004E5', '0x200004E6', '0x200004E7', '0x200004EA', '0x200004F0', '0x200004F1', '0x200004F2', '0x200004F3', '0x200004F5', '0x200004F6', '0x200004F7', '0x200004F8', '0x200004F9', '0x20000500', '0x20000501', '0x2000051B', '0x2000053C', '0x20000550', '0x2000055A', '0x2000055D', '0x20000565', '0x20001086']
+  （显示/保存/改值处理函数，上下文略；见 §2 访问点）
+
+=== fn 0x0800664C..0x080066CF  RF 初始化  settings 访问偏移: ['6(R)']
+  BL 目标: ['0x0800D8B8', '0x0800FD04', '0x080121BC', '0x0801532C', '0x08015440', '0x08015470', '0x0801562E', '0x08015658', '0x080156CE', '0x08015790']
+  RAM 字面量: ['0x2000057E', '0x20001086']
+  --- 访问 0x080066B0  80 79        ldrb    r0, [r0, #6] ldrb off=6 ---
+      0x080066A0  33 20        movs    r0, #0x33
+      0x080066A2  0f f0 75 f8  bl      #0x8015790
+      0x080066A6  7d 20        movs    r0, #0x7d
+      0x080066A8  c0 00        lsls    r0, r0, #3
+      0x080066AA  0e f0 c9 fe  bl      #0x8015440
+      0x080066AE  07 48        ldr     r0, [pc, #0x1c]   ; [0x080066CC]=0x20001086
+      0x080066B0  80 79        ldrb    r0, [r0, #6]
+      0x080066B2  0b f0 83 fd  bl      #0x80121bc
+      0x080066B6  09 f0 25 fb  bl      #0x800fd04
+      0x080066BA  70 bd        pop     {r4, r5, r6, pc}
+      0x080066BC  20 4e        ldr     r6, [pc, #0x80]   ; [0x08006740]=0x70034819
+      0x080066BE  00 00        movs    r0, r0
+      0x080066C0  10 27        movs    r7, #0x10
+      0x080066C2  00 00        movs    r0, r0
+      0x080066C4  7e 05        lsls    r6, r7, #0x15
+      0x080066C6  00 20        movs    r0, #0
+      0x080066C8  f2 83        strh    r2, [r6, #0x1e]
+
+=== fn 0x080066D0..0x080067CB  FUNC_0x080066D0  settings 访问偏移: ['0(W)', '1(W)', '2(W)', '3(W)', '4(W)', '5(W)', '6(W)', '7(W)', '8(W)', '9(W)', '10(W)', '11(W)']
+  BL 目标: []
+  RAM 字面量: ['0x200004AD', '0x200004AE', '0x200004B5', '0x200004B9', '0x200004BA', '0x200004C0', '0x200004C2', '0x200004C6', '0x200004CC', '0x200004D2', '0x200004DC', '0x200004DF', '0x200004E5', '0x200004EA', '0x200004F3', '0x200004F5', '0x200004F6', '0x20000500', '0x20000501', '0x20000502', '0x2000054A', '0x2000054D', '0x20001086']
+  --- 访问 0x08006722  01 70        strb    r1, [r0] strb off=0 ---
+      0x08006712  05 20        movs    r0, #5
+      0x08006714  18 70        strb    r0, [r3]
+      0x08006716  20 4b        ldr     r3, [pc, #0x80]   ; [0x08006798]=0x200004DF
+      0x08006718  18 70        strb    r0, [r3]
+      0x0800671A  20 48        ldr     r0, [pc, #0x80]   ; [0x0800679C]=0x200004E5
+      0x0800671C  03 23        movs    r3, #3
+      0x0800671E  01 70        strb    r1, [r0]
+      0x08006720  1f 48        ldr     r0, [pc, #0x7c]   ; [0x080067A0]=0x20001086
+      0x08006722  01 70        strb    r1, [r0]
+      0x08006724  42 70        strb    r2, [r0, #1]
+      0x08006726  81 70        strb    r1, [r0, #2]
+      0x08006728  c1 70        strb    r1, [r0, #3]
+      0x0800672A  c2 71        strb    r2, [r0, #7]
+      0x0800672C  01 72        strb    r1, [r0, #8]
+      0x0800672E  43 72        strb    r3, [r0, #9]
+      0x08006730  01 71        strb    r1, [r0, #4]
+      0x08006732  81 71        strb    r1, [r0, #6]
+      0x08006734  14 23        movs    r3, #0x14
+      0x08006736  43 71        strb    r3, [r0, #5]
+      0x08006738  81 72        strb    r1, [r0, #0xa]
+      0x0800673A  c2 72        strb    r2, [r0, #0xb]
+  --- 访问 0x08006724  42 70        strb    r2, [r0, #1] strb off=1 ---
+      0x08006714  18 70        strb    r0, [r3]
+      0x08006716  20 4b        ldr     r3, [pc, #0x80]   ; [0x08006798]=0x200004DF
+      0x08006718  18 70        strb    r0, [r3]
+      0x0800671A  20 48        ldr     r0, [pc, #0x80]   ; [0x0800679C]=0x200004E5
+      0x0800671C  03 23        movs    r3, #3
+      0x0800671E  01 70        strb    r1, [r0]
+      0x08006720  1f 48        ldr     r0, [pc, #0x7c]   ; [0x080067A0]=0x20001086
+      0x08006722  01 70        strb    r1, [r0]
+      0x08006724  42 70        strb    r2, [r0, #1]
+      0x08006726  81 70        strb    r1, [r0, #2]
+      0x08006728  c1 70        strb    r1, [r0, #3]
+      0x0800672A  c2 71        strb    r2, [r0, #7]
+      0x0800672C  01 72        strb    r1, [r0, #8]
+      0x0800672E  43 72        strb    r3, [r0, #9]
+      0x08006730  01 71        strb    r1, [r0, #4]
+      0x08006732  81 71        strb    r1, [r0, #6]
+      0x08006734  14 23        movs    r3, #0x14
+      0x08006736  43 71        strb    r3, [r0, #5]
+      0x08006738  81 72        strb    r1, [r0, #0xa]
+      0x0800673A  c2 72        strb    r2, [r0, #0xb]
+      0x0800673C  19 48        ldr     r0, [pc, #0x64]   ; [0x080067A4]=0x200004F3
+  --- 访问 0x08006726  81 70        strb    r1, [r0, #2] strb off=2 ---
+      0x08006716  20 4b        ldr     r3, [pc, #0x80]   ; [0x08006798]=0x200004DF
+      0x08006718  18 70        strb    r0, [r3]
+      0x0800671A  20 48        ldr     r0, [pc, #0x80]   ; [0x0800679C]=0x200004E5
+      0x0800671C  03 23        movs    r3, #3
+      0x0800671E  01 70        strb    r1, [r0]
+      0x08006720  1f 48        ldr     r0, [pc, #0x7c]   ; [0x080067A0]=0x20001086
+      0x08006722  01 70        strb    r1, [r0]
+      0x08006724  42 70        strb    r2, [r0, #1]
+      0x08006726  81 70        strb    r1, [r0, #2]
+      0x08006728  c1 70        strb    r1, [r0, #3]
+      0x0800672A  c2 71        strb    r2, [r0, #7]
+      0x0800672C  01 72        strb    r1, [r0, #8]
+      0x0800672E  43 72        strb    r3, [r0, #9]
+      0x08006730  01 71        strb    r1, [r0, #4]
+      0x08006732  81 71        strb    r1, [r0, #6]
+      0x08006734  14 23        movs    r3, #0x14
+      0x08006736  43 71        strb    r3, [r0, #5]
+      0x08006738  81 72        strb    r1, [r0, #0xa]
+      0x0800673A  c2 72        strb    r2, [r0, #0xb]
+      0x0800673C  19 48        ldr     r0, [pc, #0x64]   ; [0x080067A4]=0x200004F3
+      0x0800673E  01 70        strb    r1, [r0]
+
+=== fn 0x080067CC..0x0800680B  FUNC_0x080067CC  settings 访问偏移: ['7(R)']
+  BL 目标: ['0x080068A0', '0x08006948', '0x08006958', '0x08007268', '0x08007448', '0x080076E4', '0x080078D0', '0x080080C0', '0x08008274']
+  RAM 字面量: ['0x20000548', '0x20001086']
+  --- 访问 0x080067DA  c0 79        ldrb    r0, [r0, #7] ldrb off=7 ---
+      0x080067CA  00 20        movs    r0, #0
+      0x080067CC  10 b5        push    {r4, lr}
+      0x080067CE  00 20        movs    r0, #0
+      0x080067D0  00 f0 4a fd  bl      #0x8007268
+      0x080067D4  01 f0 74 fc  bl      #0x80080c0
+      0x080067D8  0a 48        ldr     r0, [pc, #0x28]   ; [0x08006804]=0x20001086
+      0x080067DA  c0 79        ldrb    r0, [r0, #7]
+      0x080067DC  00 f0 b4 f8  bl      #0x8006948
+      0x080067E0  09 48        ldr     r0, [pc, #0x24]   ; [0x08006808]=0x20000548
+      0x080067E2  00 78        ldrb    r0, [r0]
+      0x080067E4  01 f0 46 fd  bl      #0x8008274
+      0x080067E8  01 20        movs    r0, #1
+      0x080067EA  00 f0 7b ff  bl      #0x80076e4
+      0x080067EE  01 20        movs    r0, #1
+      0x080067F0  01 f0 6e f8  bl      #0x80078d0
+
+=== fn 0x08007448..0x080075E3  FUNC_0x08007448  settings 访问偏移: ['0(R)']
+  BL 目标: ['0x0800703C']
+  RAM 字面量: ['0x200007C4', '0x20001086']
+  --- 访问 0x0800744E  00 78        ldrb    r0, [r0] ldrb off=0 ---
+      0x0800743E  00 00        movs    r0, r0
+      0x08007440  c4 07        lsls    r4, r0, #0x1f
+      0x08007442  00 20        movs    r0, #0
+      0x08007444  a4 70        strb    r4, [r4, #2]
+      0x08007446  01 08        lsrs    r1, r0, #0x20
+      0x08007448  70 b5        push    {r4, r5, r6, lr}
+      0x0800744A  64 48        ldr     r0, [pc, #0x190]   ; [0x080075DC]=0x20001086
+      0x0800744C  15 25        movs    r5, #0x15
+      0x0800744E  00 78        ldrb    r0, [r0]
+      0x08007450  04 26        movs    r6, #4
+      0x08007452  63 4c        ldr     r4, [pc, #0x18c]   ; [0x080075E0]=0x200007C4
+      0x08007454  ad 01        lsls    r5, r5, #6
+      0x08007456  00 28        cmp     r0, #0
+      0x08007458  64 d0        beq     #0x8007524
+      0x0800745A  01 22        movs    r2, #1
+      0x0800745C  04 21        movs    r1, #4
+      0x0800745E  09 20        movs    r0, #9
+      0x08007460  ff f7 ec fd  bl      #0x800703c
+      0x08007464  3f 22        movs    r2, #0x3f
+      0x08007466  08 21        movs    r1, #8
+
+=== fn 0x08008284..0x08008333  FUNC_0x08008284  settings 访问偏移: ['7(R)']
+  BL 目标: ['0x080068A0', '0x08006948', '0x08006958', '0x08006E38', '0x08007268', '0x08007448', '0x080076E4', '0x080078D0', '0x080080C0', '0x08008274', '0x08008334', '0x08008EDC']
+  RAM 字面量: ['0x200004B9', '0x20000548', '0x20001086']
+  --- 访问 0x08008294  c0 79        ldrb    r0, [r0, #7] ldrb off=7 ---
+      0x08008284  10 b5        push    {r4, lr}
+      0x08008286  86 b0        sub     sp, #0x18
+      0x08008288  00 20        movs    r0, #0
+      0x0800828A  fe f7 ed ff  bl      #0x8007268
+      0x0800828E  ff f7 17 ff  bl      #0x80080c0
+      0x08008292  25 48        ldr     r0, [pc, #0x94]   ; [0x08008328]=0x20001086
+      0x08008294  c0 79        ldrb    r0, [r0, #7]
+      0x08008296  fe f7 57 fb  bl      #0x8006948
+      0x0800829A  24 48        ldr     r0, [pc, #0x90]   ; [0x0800832C]=0x20000548
+      0x0800829C  00 78        ldrb    r0, [r0]
+      0x0800829E  ff f7 e9 ff  bl      #0x8008274
+      0x080082A2  00 f0 47 f8  bl      #0x8008334
+      0x080082A6  22 48        ldr     r0, [pc, #0x88]   ; [0x08008330]=0x200004B9
+      0x080082A8  00 78        ldrb    r0, [r0]
+      0x080082AA  00 f0 17 fe  bl      #0x8008edc
+
+=== fn 0x08008870..0x0800899F  FUNC_0x08008870  settings 访问偏移: ['7(R)']
+  BL 目标: ['0x080068A0', '0x08006948', '0x08006958', '0x08006E38', '0x08007268', '0x08007448', '0x080076E4', '0x080078D0', '0x08007D50', '0x08007F40', '0x080080C0', '0x08008274', '0x080089A0', '0x08008EDC']
+  RAM 字面量: ['0x20000497', '0x200004AC', '0x200004B1', '0x200004B2', '0x200004B9', '0x2000053C', '0x20000548', '0x2000054D', '0x20001086']
+  --- 访问 0x08008880  c0 79        ldrb    r0, [r0, #7] ldrb off=7 ---
+      0x08008870  30 b5        push    {r4, r5, lr}
+      0x08008872  85 b0        sub     sp, #0x14
+      0x08008874  01 20        movs    r0, #1
+      0x08008876  fe f7 f7 fc  bl      #0x8007268
+      0x0800887A  ff f7 21 fc  bl      #0x80080c0
+      0x0800887E  3f 48        ldr     r0, [pc, #0xfc]   ; [0x0800897C]=0x20001086
+      0x08008880  c0 79        ldrb    r0, [r0, #7]
+      0x08008882  fe f7 61 f8  bl      #0x8006948
+      0x08008886  3e 4d        ldr     r5, [pc, #0xf8]   ; [0x08008980]=0x200004AC
+      0x08008888  3e 48        ldr     r0, [pc, #0xf8]   ; [0x08008984]=0x2000054D
+      0x0800888A  29 78        ldrb    r1, [r5]
+      0x0800888C  01 29        cmp     r1, #1
+      0x0800888E  01 d1        bne     #0x8008894
+      0x08008890  00 21        movs    r1, #0
+      0x08008892  01 70        strb    r1, [r0]
+      0x08008894  00 78        ldrb    r0, [r0]
+      0x08008896  ff f7 5b fa  bl      #0x8007d50
+
+=== fn 0x08008B2C..0x08008BD3  FUNC_0x08008B2C  settings 访问偏移: ['7(R)']
+  BL 目标: ['0x080068A0', '0x08006948', '0x08006E38', '0x08007268', '0x080076E4', '0x080078D0', '0x080080C0', '0x08008274', '0x08008BD4', '0x08008D50']
+  RAM 字面量: ['0x20000548', '0x20001086']
+  --- 访问 0x08008B3C  c0 79        ldrb    r0, [r0, #7] ldrb off=7 ---
+      0x08008B2C  10 b5        push    {r4, lr}
+      0x08008B2E  86 b0        sub     sp, #0x18
+      0x08008B30  02 20        movs    r0, #2
+      0x08008B32  fe f7 99 fb  bl      #0x8007268
+      0x08008B36  ff f7 c3 fa  bl      #0x80080c0
+      0x08008B3A  24 48        ldr     r0, [pc, #0x90]   ; [0x08008BCC]=0x20001086
+      0x08008B3C  c0 79        ldrb    r0, [r0, #7]
+      0x08008B3E  fd f7 03 ff  bl      #0x8006948
+      0x08008B42  23 48        ldr     r0, [pc, #0x8c]   ; [0x08008BD0]=0x20000548
+      0x08008B44  00 78        ldrb    r0, [r0]
+      0x08008B46  ff f7 95 fb  bl      #0x8008274
+      0x08008B4A  01 20        movs    r0, #1
+      0x08008B4C  fe f7 ca fd  bl      #0x80076e4
+      0x08008B50  01 20        movs    r0, #1
+      0x08008B52  fe f7 bd fe  bl      #0x80078d0
+
+=== fn 0x08008F00..0x08009423  FUNC_0x08008F00  settings 访问偏移: ['7(R)']
+  BL 目标: ['0x08006948', '0x08006A2C', '0x08006A90', '0x08006BC0', '0x08006C20', '0x08006D40', '0x08006E38', '0x080071F0', '0x08007304', '0x080076E4', '0x080078D0', '0x08007DD0', '0x08007E2C', '0x08007EB4', '0x08007F98', '0x080080C0', '0x08008274', '0x080089A0', '0x08008BD4', '0x08008D50', '0x08008EDC']
+  RAM 字面量: ['0x200004AF', '0x200004B4', '0x200004B9', '0x200004BA', '0x200004C6', '0x200004DB', '0x200004E5', '0x200004E6', '0x200004EA', '0x200004F3', '0x200004F4', '0x200004F5', '0x20000501', '0x20000502', '0x20000548', '0x2000054A', '0x200007C4', '0x20001086']
+  --- 访问 0x08008F3A  e8 79        ldrb    r0, [r5, #7] ldrb off=7 ---
+      0x08008F2A  81 07        lsls    r1, r0, #0x1e
+      0x08008F2C  6e d0        beq     #0x800900c
+      0x08008F2E  01 2a        cmp     r2, #1
+      0x08008F30  6d d0        beq     #0x800900e
+      0x08008F32  ff f7 31 f8  bl      #0x8007f98
+      0x08008F36  ff f7 c3 f8  bl      #0x80080c0
+      0x08008F3A  e8 79        ldrb    r0, [r5, #7]
+      0x08008F3C  fd f7 04 fd  bl      #0x8006948
+      0x08008F40  38 78        ldrb    r0, [r7]
+      0x08008F42  ff f7 97 f9  bl      #0x8008274
+      0x08008F46  01 20        movs    r0, #1
+      0x08008F48  fe f7 cc fb  bl      #0x80076e4
+      0x08008F4C  40 21        movs    r1, #0x40
+      0x08008F4E  05 20        movs    r0, #5
+      0x08008F50  fe f7 3e ff  bl      #0x8007dd0
+  --- 访问 0x08008FF4  e8 79        ldrb    r0, [r5, #7] ldrb off=7 ---
+      0x08008FE4  cb 4a        ldr     r2, [pc, #0x32c]   ; [0x08009314]=0x200004E5
+      0x08008FE6  00 21        movs    r1, #0
+      0x08008FE8  11 70        strb    r1, [r2]
+      0x08008FEA  cb 4a        ldr     r2, [pc, #0x32c]   ; [0x08009318]=0x200004E6
+      0x08008FEC  1e 46        mov     r6, r3
+      0x08008FEE  11 70        strb    r1, [r2]
+      0x08008FF0  fe f7 d2 ff  bl      #0x8007f98
+      0x08008FF4  e8 79        ldrb    r0, [r5, #7]
+      0x08008FF6  fd f7 a7 fc  bl      #0x8006948
+      0x08008FFA  38 78        ldrb    r0, [r7]
+      0x08008FFC  ff f7 3a f9  bl      #0x8008274
+      0x08009000  c6 48        ldr     r0, [pc, #0x318]   ; [0x0800931C]=0x200004B4
+      0x08009002  00 78        ldrb    r0, [r0]
+      0x08009004  01 28        cmp     r0, #1
+      0x08009006  7d d0        beq     #0x8009104
+      0x08009008  9c e0        b       #0x8009144
+      0x0800900A  3e e1        b       #0x800928a
+      0x0800900C  63 e1        b       #0x80092d6
+  --- 访问 0x08009018  e8 79        ldrb    r0, [r5, #7] ldrb off=7 ---
+      0x08009008  9c e0        b       #0x8009144
+      0x0800900A  3e e1        b       #0x800928a
+      0x0800900C  63 e1        b       #0x80092d6
+      0x0800900E  ad e1        b       #0x800936c
+      0x08009010  fe f7 c2 ff  bl      #0x8007f98
+      0x08009014  ff f7 54 f8  bl      #0x80080c0
+      0x08009018  e8 79        ldrb    r0, [r5, #7]
+      0x0800901A  fd f7 95 fc  bl      #0x8006948
+      0x0800901E  38 78        ldrb    r0, [r7]
+      0x08009020  ff f7 28 f9  bl      #0x8008274
+      0x08009024  01 20        movs    r0, #1
+      0x08009026  fe f7 5d fb  bl      #0x80076e4
+      0x0800902A  bd 48        ldr     r0, [pc, #0x2f4]   ; [0x08009320]=0x200004F5
+      0x0800902C  00 78        ldrb    r0, [r0]
+      0x0800902E  fe f7 4f fc  bl      #0x80078d0
+
+=== fn 0x0800A6AC..0x0800A6DB  FUNC_0x0800A6AC  settings 访问偏移: ['0(R)', '1(R)', '2(R)', '3(R)', '7(R)', '8(R)', '10(R)']
+  BL 目标: []
+  RAM 字面量: ['0x20001070', '0x20001086']
+  --- 访问 0x0800A6B0  0a 78        ldrb    r2, [r1] ldrb off=0 ---
+      0x0800A6A0  40 10        asrs    r0, r0, #1
+      0x0800A6A2  00 20        movs    r0, #0
+      0x0800A6A4  28 07        lsls    r0, r5, #0x1c
+      0x0800A6A6  00 20        movs    r0, #0
+      0x0800A6A8  60 04        lsls    r0, r4, #0x11
+      0x0800A6AA  00 20        movs    r0, #0
+      0x0800A6AC  09 49        ldr     r1, [pc, #0x24]   ; [0x0800A6D4]=0x20001086
+      0x0800A6AE  0a 48        ldr     r0, [pc, #0x28]   ; [0x0800A6D8]=0x20001070
+      0x0800A6B0  0a 78        ldrb    r2, [r1]
+      0x0800A6B2  02 70        strb    r2, [r0]
+      0x0800A6B4  8a 78        ldrb    r2, [r1, #2]
+      0x0800A6B6  42 70        strb    r2, [r0, #1]
+      0x0800A6B8  8a 7a        ldrb    r2, [r1, #0xa]
+      0x0800A6BA  c2 70        strb    r2, [r0, #3]
+      0x0800A6BC  00 22        movs    r2, #0
+      0x0800A6BE  02 71        strb    r2, [r0, #4]
+      0x0800A6C0  4a 78        ldrb    r2, [r1, #1]
+      0x0800A6C2  02 72        strb    r2, [r0, #8]
+      0x0800A6C4  ca 78        ldrb    r2, [r1, #3]
+      0x0800A6C6  82 72        strb    r2, [r0, #0xa]
+      0x0800A6C8  ca 79        ldrb    r2, [r1, #7]
+  --- 访问 0x0800A6B4  8a 78        ldrb    r2, [r1, #2] ldrb off=2 ---
+      0x0800A6A4  28 07        lsls    r0, r5, #0x1c
+      0x0800A6A6  00 20        movs    r0, #0
+      0x0800A6A8  60 04        lsls    r0, r4, #0x11
+      0x0800A6AA  00 20        movs    r0, #0
+      0x0800A6AC  09 49        ldr     r1, [pc, #0x24]   ; [0x0800A6D4]=0x20001086
+      0x0800A6AE  0a 48        ldr     r0, [pc, #0x28]   ; [0x0800A6D8]=0x20001070
+      0x0800A6B0  0a 78        ldrb    r2, [r1]
+      0x0800A6B2  02 70        strb    r2, [r0]
+      0x0800A6B4  8a 78        ldrb    r2, [r1, #2]
+      0x0800A6B6  42 70        strb    r2, [r0, #1]
+      0x0800A6B8  8a 7a        ldrb    r2, [r1, #0xa]
+      0x0800A6BA  c2 70        strb    r2, [r0, #3]
+      0x0800A6BC  00 22        movs    r2, #0
+      0x0800A6BE  02 71        strb    r2, [r0, #4]
+      0x0800A6C0  4a 78        ldrb    r2, [r1, #1]
+      0x0800A6C2  02 72        strb    r2, [r0, #8]
+      0x0800A6C4  ca 78        ldrb    r2, [r1, #3]
+      0x0800A6C6  82 72        strb    r2, [r0, #0xa]
+      0x0800A6C8  ca 79        ldrb    r2, [r1, #7]
+      0x0800A6CA  02 75        strb    r2, [r0, #0x14]
+      0x0800A6CC  09 7a        ldrb    r1, [r1, #8]
+  --- 访问 0x0800A6B8  8a 7a        ldrb    r2, [r1, #0xa] ldrb off=10 ---
+      0x0800A6A8  60 04        lsls    r0, r4, #0x11
+      0x0800A6AA  00 20        movs    r0, #0
+      0x0800A6AC  09 49        ldr     r1, [pc, #0x24]   ; [0x0800A6D4]=0x20001086
+      0x0800A6AE  0a 48        ldr     r0, [pc, #0x28]   ; [0x0800A6D8]=0x20001070
+      0x0800A6B0  0a 78        ldrb    r2, [r1]
+      0x0800A6B2  02 70        strb    r2, [r0]
+      0x0800A6B4  8a 78        ldrb    r2, [r1, #2]
+      0x0800A6B6  42 70        strb    r2, [r0, #1]
+      0x0800A6B8  8a 7a        ldrb    r2, [r1, #0xa]
+      0x0800A6BA  c2 70        strb    r2, [r0, #3]
+      0x0800A6BC  00 22        movs    r2, #0
+      0x0800A6BE  02 71        strb    r2, [r0, #4]
+      0x0800A6C0  4a 78        ldrb    r2, [r1, #1]
+      0x0800A6C2  02 72        strb    r2, [r0, #8]
+      0x0800A6C4  ca 78        ldrb    r2, [r1, #3]
+      0x0800A6C6  82 72        strb    r2, [r0, #0xa]
+      0x0800A6C8  ca 79        ldrb    r2, [r1, #7]
+      0x0800A6CA  02 75        strb    r2, [r0, #0x14]
+      0x0800A6CC  09 7a        ldrb    r1, [r1, #8]
+      0x0800A6CE  81 75        strb    r1, [r0, #0x16]
+      0x0800A6D0  70 47        bx      lr
+
+=== fn 0x0800A6DC..0x0800A707  FUNC_0x0800A6DC  settings 访问偏移: ['0(R)', '1(W)', '2(W)', '3(W)', '7(W)', '8(W)', '10(W)']
+  BL 目标: []
+  RAM 字面量: ['0x20001070', '0x20001086']
+  --- 访问 0x0800A6E2  0a 70        strb    r2, [r1] strb off=0 ---
+      0x0800A6D2  00 00        movs    r0, r0
+      0x0800A6D4  86 10        asrs    r6, r0, #2
+      0x0800A6D6  00 20        movs    r0, #0
+      0x0800A6D8  70 10        asrs    r0, r6, #1
+      0x0800A6DA  00 20        movs    r0, #0
+      0x0800A6DC  08 48        ldr     r0, [pc, #0x20]   ; [0x0800A700]=0x20001070
+      0x0800A6DE  09 49        ldr     r1, [pc, #0x24]   ; [0x0800A704]=0x20001086
+      0x0800A6E0  02 78        ldrb    r2, [r0]
+      0x0800A6E2  0a 70        strb    r2, [r1]
+      0x0800A6E4  42 78        ldrb    r2, [r0, #1]
+      0x0800A6E6  8a 70        strb    r2, [r1, #2]
+      0x0800A6E8  c2 78        ldrb    r2, [r0, #3]
+      0x0800A6EA  8a 72        strb    r2, [r1, #0xa]
+      0x0800A6EC  02 7a        ldrb    r2, [r0, #8]
+      0x0800A6EE  4a 70        strb    r2, [r1, #1]
+      0x0800A6F0  82 7a        ldrb    r2, [r0, #0xa]
+      0x0800A6F2  ca 70        strb    r2, [r1, #3]
+      0x0800A6F4  02 7d        ldrb    r2, [r0, #0x14]
+      0x0800A6F6  ca 71        strb    r2, [r1, #7]
+      0x0800A6F8  80 7d        ldrb    r0, [r0, #0x16]
+      0x0800A6FA  08 72        strb    r0, [r1, #8]
+  --- 访问 0x0800A6E6  8a 70        strb    r2, [r1, #2] strb off=2 ---
+      0x0800A6D6  00 20        movs    r0, #0
+      0x0800A6D8  70 10        asrs    r0, r6, #1
+      0x0800A6DA  00 20        movs    r0, #0
+      0x0800A6DC  08 48        ldr     r0, [pc, #0x20]   ; [0x0800A700]=0x20001070
+      0x0800A6DE  09 49        ldr     r1, [pc, #0x24]   ; [0x0800A704]=0x20001086
+      0x0800A6E0  02 78        ldrb    r2, [r0]
+      0x0800A6E2  0a 70        strb    r2, [r1]
+      0x0800A6E4  42 78        ldrb    r2, [r0, #1]
+      0x0800A6E6  8a 70        strb    r2, [r1, #2]
+      0x0800A6E8  c2 78        ldrb    r2, [r0, #3]
+      0x0800A6EA  8a 72        strb    r2, [r1, #0xa]
+      0x0800A6EC  02 7a        ldrb    r2, [r0, #8]
+      0x0800A6EE  4a 70        strb    r2, [r1, #1]
+      0x0800A6F0  82 7a        ldrb    r2, [r0, #0xa]
+      0x0800A6F2  ca 70        strb    r2, [r1, #3]
+      0x0800A6F4  02 7d        ldrb    r2, [r0, #0x14]
+      0x0800A6F6  ca 71        strb    r2, [r1, #7]
+      0x0800A6F8  80 7d        ldrb    r0, [r0, #0x16]
+      0x0800A6FA  08 72        strb    r0, [r1, #8]
+      0x0800A6FC  70 47        bx      lr
+      0x0800A6FE  00 00        movs    r0, r0
+  --- 访问 0x0800A6EA  8a 72        strb    r2, [r1, #0xa] strb off=10 ---
+      0x0800A6DA  00 20        movs    r0, #0
+      0x0800A6DC  08 48        ldr     r0, [pc, #0x20]   ; [0x0800A700]=0x20001070
+      0x0800A6DE  09 49        ldr     r1, [pc, #0x24]   ; [0x0800A704]=0x20001086
+      0x0800A6E0  02 78        ldrb    r2, [r0]
+      0x0800A6E2  0a 70        strb    r2, [r1]
+      0x0800A6E4  42 78        ldrb    r2, [r0, #1]
+      0x0800A6E6  8a 70        strb    r2, [r1, #2]
+      0x0800A6E8  c2 78        ldrb    r2, [r0, #3]
+      0x0800A6EA  8a 72        strb    r2, [r1, #0xa]
+      0x0800A6EC  02 7a        ldrb    r2, [r0, #8]
+      0x0800A6EE  4a 70        strb    r2, [r1, #1]
+      0x0800A6F0  82 7a        ldrb    r2, [r0, #0xa]
+      0x0800A6F2  ca 70        strb    r2, [r1, #3]
+      0x0800A6F4  02 7d        ldrb    r2, [r0, #0x14]
+      0x0800A6F6  ca 71        strb    r2, [r1, #7]
+      0x0800A6F8  80 7d        ldrb    r0, [r0, #0x16]
+      0x0800A6FA  08 72        strb    r0, [r1, #8]
+      0x0800A6FC  70 47        bx      lr
+      0x0800A6FE  00 00        movs    r0, r0
+      0x0800A700  70 10        asrs    r0, r6, #1
+      0x0800A702  00 20        movs    r0, #0
+
+=== fn 0x0800D3D8..0x0800D8B7  C.Fn inc 处理（item 值 +1）  settings 访问偏移: ['6(R)', '9(W)', '11(R)']
+  BL 目标: ['0x080037CC', '0x0800FB2C', '0x080114CC', '0x08011D74', '0x08011DF0', '0x08011EEE', '0x08012114', '0x080121BC', '0x08012230', '0x08012320', '0x08014EF8', '0x080150A6']
+  RAM 字面量: ['0x20000478', '0x200004AD', '0x200004AE', '0x200004AF', '0x200004B9', '0x200004BA', '0x200004C0', '0x200004C2', '0x200004C6', '0x200004D2', '0x200004D8', '0x200004D9', '0x200004DB', '0x200004DC', '0x200004DF', '0x200004E5', '0x200004E6', '0x200004E7', '0x200004EA', '0x200004F0', '0x200004F1', '0x200004F2', '0x200004F3', '0x200004F5', '0x200004F6', '0x200004F7', '0x200004F8', '0x200004F9', '0x20000500', '0x20000501', '0x2000051B', '0x2000053C', '0x20000550', '0x2000055A', '0x2000055D', '0x20000565', '0x20001086']
+  （显示/保存/改值处理函数，上下文略；见 §2 访问点）
+
+=== fn 0x0800DCDC..0x0800E19B  FUNC_0x0800DCDC  settings 访问偏移: ['0(W)', '1(W)', '2(W)', '3(W)', '4(W)', '5(W)', '6(R)', '7(W)', '8(W)', '9(W)', '10(W)', '11(R)']
+  BL 目标: ['0x080037CC', '0x08003B5C', '0x080053F4', '0x080066D0', '0x0800B718', '0x0800B870', '0x0800D954', '0x0800DA2C', '0x0800DB1C', '0x0800DC14', '0x0800E2F4', '0x0800E9F4', '0x0800F8F0', '0x080114CC', '0x08012058', '0x080121BC', '0x080121F4', '0x08012320', '0x080145BC', '0x08014AB0', '0x08014EF8', '0x08014F68', '0x0801532C']
+  RAM 字面量: ['0x20000478', '0x200004AC', '0x200004B7', '0x200004B8', '0x200004DB', '0x200004F0', '0x200004F3', '0x200004F5', '0x2000051B', '0x2000053B', '0x20000543', '0x20000544', '0x20000550', '0x20000552', '0x20000555', '0x2000055A', '0x2000055D', '0x20001086']
+  --- 访问 0x0800E09A  25 70        strb    r5, [r4] strb off=0 ---
+      0x0800E08A  69 d0        beq     #0x800e160
+      0x0800E08C  00 78        ldrb    r0, [r0]
+      0x0800E08E  00 28        cmp     r0, #0
+      0x0800E090  4d d0        beq     #0x800e12e
+      0x0800E092  65 e0        b       #0x800e160
+      0x0800E094  00 78        ldrb    r0, [r0]
+      0x0800E096  01 28        cmp     r0, #1
+      0x0800E098  63 d1        bne     #0x800e162
+      0x0800E09A  25 70        strb    r5, [r4]
+      0x0800E09C  65 70        strb    r5, [r4, #1]
+      0x0800E09E  a5 70        strb    r5, [r4, #2]
+      0x0800E0A0  e5 70        strb    r5, [r4, #3]
+      0x0800E0A2  e7 71        strb    r7, [r4, #7]
+      0x0800E0A4  25 72        strb    r5, [r4, #8]
+      0x0800E0A6  03 20        movs    r0, #3
+      0x0800E0A8  60 72        strb    r0, [r4, #9]
+      0x0800E0AA  25 71        strb    r5, [r4, #4]
+      0x0800E0AC  a5 71        strb    r5, [r4, #6]
+      0x0800E0AE  14 20        movs    r0, #0x14
+      0x0800E0B0  60 71        strb    r0, [r4, #5]
+      0x0800E0B2  a5 72        strb    r5, [r4, #0xa]
+  --- 访问 0x0800E09C  65 70        strb    r5, [r4, #1] strb off=1 ---
+      0x0800E08C  00 78        ldrb    r0, [r0]
+      0x0800E08E  00 28        cmp     r0, #0
+      0x0800E090  4d d0        beq     #0x800e12e
+      0x0800E092  65 e0        b       #0x800e160
+      0x0800E094  00 78        ldrb    r0, [r0]
+      0x0800E096  01 28        cmp     r0, #1
+      0x0800E098  63 d1        bne     #0x800e162
+      0x0800E09A  25 70        strb    r5, [r4]
+      0x0800E09C  65 70        strb    r5, [r4, #1]
+      0x0800E09E  a5 70        strb    r5, [r4, #2]
+      0x0800E0A0  e5 70        strb    r5, [r4, #3]
+      0x0800E0A2  e7 71        strb    r7, [r4, #7]
+      0x0800E0A4  25 72        strb    r5, [r4, #8]
+      0x0800E0A6  03 20        movs    r0, #3
+      0x0800E0A8  60 72        strb    r0, [r4, #9]
+      0x0800E0AA  25 71        strb    r5, [r4, #4]
+      0x0800E0AC  a5 71        strb    r5, [r4, #6]
+      0x0800E0AE  14 20        movs    r0, #0x14
+      0x0800E0B0  60 71        strb    r0, [r4, #5]
+      0x0800E0B2  a5 72        strb    r5, [r4, #0xa]
+      0x0800E0B4  e7 72        strb    r7, [r4, #0xb]
+  --- 访问 0x0800E09E  a5 70        strb    r5, [r4, #2] strb off=2 ---
+      0x0800E08E  00 28        cmp     r0, #0
+      0x0800E090  4d d0        beq     #0x800e12e
+      0x0800E092  65 e0        b       #0x800e160
+      0x0800E094  00 78        ldrb    r0, [r0]
+      0x0800E096  01 28        cmp     r0, #1
+      0x0800E098  63 d1        bne     #0x800e162
+      0x0800E09A  25 70        strb    r5, [r4]
+      0x0800E09C  65 70        strb    r5, [r4, #1]
+      0x0800E09E  a5 70        strb    r5, [r4, #2]
+      0x0800E0A0  e5 70        strb    r5, [r4, #3]
+      0x0800E0A2  e7 71        strb    r7, [r4, #7]
+      0x0800E0A4  25 72        strb    r5, [r4, #8]
+      0x0800E0A6  03 20        movs    r0, #3
+      0x0800E0A8  60 72        strb    r0, [r4, #9]
+      0x0800E0AA  25 71        strb    r5, [r4, #4]
+      0x0800E0AC  a5 71        strb    r5, [r4, #6]
+      0x0800E0AE  14 20        movs    r0, #0x14
+      0x0800E0B0  60 71        strb    r0, [r4, #5]
+      0x0800E0B2  a5 72        strb    r5, [r4, #0xa]
+      0x0800E0B4  e7 72        strb    r7, [r4, #0xb]
+      0x0800E0B6  0c 48        ldr     r0, [pc, #0x30]   ; [0x0800E0E8]=0x20000555
+
+=== fn 0x0800F980..0x0800FB2B  FUNC_0x0800F980  settings 访问偏移: ['5(R)']
+  BL 目标: ['0x080030F0', '0x0800F688', '0x0800F698', '0x0801217C', '0x08015440', '0x08015642', '0x080156CE', '0x08015790']
+  RAM 字面量: ['0x20000564', '0x20001086', '0x200010B0']
+  --- 访问 0x0800FA96  40 79        ldrb    r0, [r0, #5] ldrb off=5 ---
+      0x0800FA88  08 21        movs    r1, #8
+      0x0800FA8A  00 e0        b       #0x800fa8e
+      0x0800FA8C  46 e0        b       #0x800fb1c
+      0x0800FA8E  18 20        movs    r0, #0x18
+      0x0800FA90  05 f0 1d fe  bl      #0x80156ce
+      0x0800FA94  24 48        ldr     r0, [pc, #0x90]   ; [0x0800FB28]=0x20001086
+      0x0800FA96  40 79        ldrb    r0, [r0, #5]
+      0x0800FA98  02 f0 70 fb  bl      #0x801217c
+      0x0800FA9C  21 4a        ldr     r2, [pc, #0x84]   ; [0x0800FB24]=0x200010B0
+      0x0800FA9E  00 20        movs    r0, #0
+      0x0800FAA0  60 32        adds    r2, #0x60
+      0x0800FAA2  10 54        strb    r0, [r2, r0]
+      0x0800FAA4  40 1c        adds    r0, r0, #1
+      0x0800FAA6  c0 b2        uxtb    r0, r0
+      0x0800FAA8  20 28        cmp     r0, #0x20
+      0x0800FAAA  fa d3        blo     #0x800faa2
+      0x0800FAAC  00 20        movs    r0, #0
+      0x0800FAAE  45 1c        adds    r5, r0, #1
+
+=== fn 0x0800FB2C..0x0800FB5B  FUNC_0x0800FB2C  settings 访问偏移: ['4(W)']
+  BL 目标: ['0x0800F688', '0x0800FD04', '0x080156CE', '0x08015790']
+  RAM 字面量: ['0x20000564', '0x20001086']
+  --- 访问 0x0800FB4E  04 71        strb    r4, [r0, #4] strb off=4 ---
+      0x0800FB3E  ac 81        strh    r4, [r5, #0xc]
+      0x0800FB40  08 21        movs    r1, #8
+      0x0800FB42  18 20        movs    r0, #0x18
+      0x0800FB44  05 f0 c3 fd  bl      #0x80156ce
+      0x0800FB48  00 f0 dc f8  bl      #0x800fd04
+      0x0800FB4C  02 48        ldr     r0, [pc, #8]   ; [0x0800FB58]=0x20001086
+      0x0800FB4E  04 71        strb    r4, [r0, #4]
+      0x0800FB50  70 bd        pop     {r4, r5, r6, pc}
+      0x0800FB52  00 00        movs    r0, r0
+      0x0800FB54  64 05        lsls    r4, r4, #0x15
+      0x0800FB56  00 20        movs    r0, #0
+      0x0800FB58  86 10        asrs    r6, r0, #2
+      0x0800FB5A  00 20        movs    r0, #0
+      0x0800FB5C  10 b5        push    {r4, lr}
+      0x0800FB5E  fa f7 ef fb  bl      #0x800a340
+      0x0800FB62  36 20        movs    r0, #0x36
+      0x0800FB64  05 f0 14 fe  bl      #0x8015790
+
+=== fn 0x0800FBA4..0x0800FCEF  FUNC_0x0800FBA4  settings 访问偏移: ['7(W)']
+  BL 目标: ['0x0800A314', '0x0800B018', '0x0800F068', '0x08010384', '0x08010820', '0x08012320', '0x08014DC4', '0x08015620', '0x080156CE', '0x08015790']
+  RAM 字面量: ['0x20000495', '0x200004AD', '0x200004B5', '0x200004B6', '0x200004B9', '0x200004E3', '0x200004F6', '0x200004FA', '0x20000501', '0x20000520', '0x20000554', '0x20000556', '0x2000057E', '0x200006F4', '0x20001086']
+  --- 访问 0x0800FC82  ce 71        strb    r6, [r1, #7] strb off=7 ---
+      0x0800FC72  0a 21        movs    r1, #0xa
+      0x0800FC74  08 43        orrs    r0, r1
+      0x0800FC76  f1 e7        b       #0x800fc5c
+      0x0800FC78  ff f7 f6 f9  bl      #0x800f068
+      0x0800FC7C  1b 48        ldr     r0, [pc, #0x6c]   ; [0x0800FCEC]=0x200004E3
+      0x0800FC7E  05 70        strb    r5, [r0]
+      0x0800FC80  09 e0        b       #0x800fc96
+      0x0800FC82  ce 71        strb    r6, [r1, #7]
+      0x0800FC84  07 e0        b       #0x800fc96
+      0x0800FC86  cd 71        strb    r5, [r1, #7]
+      0x0800FC88  05 e0        b       #0x800fc96
+      0x0800FC8A  0d 70        strb    r5, [r1]
+      0x0800FC8C  03 e0        b       #0x800fc96
+      0x0800FC8E  0e 70        strb    r6, [r1]
+      0x0800FC90  01 e0        b       #0x800fc96
+      0x0800FC92  00 f0 c5 fd  bl      #0x8010820
+      0x0800FC96  02 f0 43 fb  bl      #0x8012320
+      0x0800FC9A  3a 20        movs    r0, #0x3a
+  --- 访问 0x0800FC86  cd 71        strb    r5, [r1, #7] strb off=7 ---
+      0x0800FC76  f1 e7        b       #0x800fc5c
+      0x0800FC78  ff f7 f6 f9  bl      #0x800f068
+      0x0800FC7C  1b 48        ldr     r0, [pc, #0x6c]   ; [0x0800FCEC]=0x200004E3
+      0x0800FC7E  05 70        strb    r5, [r0]
+      0x0800FC80  09 e0        b       #0x800fc96
+      0x0800FC82  ce 71        strb    r6, [r1, #7]
+      0x0800FC84  07 e0        b       #0x800fc96
+      0x0800FC86  cd 71        strb    r5, [r1, #7]
+      0x0800FC88  05 e0        b       #0x800fc96
+      0x0800FC8A  0d 70        strb    r5, [r1]
+      0x0800FC8C  03 e0        b       #0x800fc96
+      0x0800FC8E  0e 70        strb    r6, [r1]
+      0x0800FC90  01 e0        b       #0x800fc96
+      0x0800FC92  00 f0 c5 fd  bl      #0x8010820
+      0x0800FC96  02 f0 43 fb  bl      #0x8012320
+      0x0800FC9A  3a 20        movs    r0, #0x3a
+      0x0800FC9C  05 f0 78 fd  bl      #0x8015790
+
+=== fn 0x08010384..0x080106F7  FUNC_0x08010384  settings 访问偏移: ['7(W)']
+  BL 目标: ['0x080030F0', '0x0800311C', '0x080047F8', '0x080048A4', '0x08009CAC', '0x0800B018', '0x0800F400', '0x0800F5F8', '0x0800F7D8', '0x08010E34', '0x08014DC4', '0x080150A6', '0x0801532C', '0x080156CE']
+  RAM 字面量: ['0x20000492', '0x20000493', '0x20000495', '0x200004AD', '0x200004AE', '0x200004B5', '0x200004B6', '0x200004B9', '0x200004C0', '0x200004C2', '0x200004C6', '0x200004D2', '0x200004DC', '0x200004DF', '0x200004F6', '0x200004FA', '0x200004FE', '0x20000501', '0x20000511', '0x20000554', '0x20000556', '0x20000564', '0x200006F4', '0x20001086']
+  --- 访问 0x08010678  c2 71        strb    r2, [r0, #7] strb off=7 ---
+      0x08010668  1e 48        ldr     r0, [pc, #0x78]   ; [0x080106E4]=0x200004AD
+      0x0801066A  91 07        lsls    r1, r2, #0x1e
+      0x0801066C  e4 d1        bne     #0x8010638
+      0x0801066E  05 70        strb    r5, [r0]
+      0x08010670  03 e0        b       #0x801067a
+      0x08010672  01 2a        cmp     r2, #1
+      0x08010674  01 d8        bhi     #0x801067a
+      0x08010676  1c 48        ldr     r0, [pc, #0x70]   ; [0x080106E8]=0x20001086
+      0x08010678  c2 71        strb    r2, [r0, #7]
+      0x0801067A  20 78        ldrb    r0, [r4]
+      0x0801067C  00 28        cmp     r0, #0
+      0x0801067E  96 d0        beq     #0x80105ae
+      0x08010680  1a 48        ldr     r0, [pc, #0x68]   ; [0x080106EC]=0x200004FE
+      0x08010682  1c 49        ldr     r1, [pc, #0x70]   ; [0x080106F4]=0x20000493
+      0x08010684  05 80        strh    r5, [r0]
+      0x08010686  1a 48        ldr     r0, [pc, #0x68]   ; [0x080106F0]=0x20000492
+      0x08010688  05 70        strb    r5, [r0]
+      0x0801068A  01 20        movs    r0, #1
+      0x0801068C  08 70        strb    r0, [r1]
+      0x0801068E  f8 bd        pop     {r3, r4, r5, r6, r7, pc}
+      0x08010690  f6 04        lsls    r6, r6, #0x13
+
+=== fn 0x08010984..0x08010A97  FUNC_0x08010984  settings 访问偏移: ['7(R)']
+  BL 目标: ['0x0800FB84', '0x0800FCF0', '0x08015440']
+  RAM 字面量: ['0x200004B9', '0x200004BA', '0x200004C6', '0x200004D2', '0x200004DC', '0x200004DF', '0x200004F3', '0x20000502', '0x20001086']
+  --- 访问 0x08010A5C  c0 79        ldrb    r0, [r0, #7] ldrb off=7 ---
+      0x08010A4C  28 46        mov     r0, r5
+      0x08010A4E  04 f0 f7 fc  bl      #0x8015440
+      0x08010A52  64 1c        adds    r4, r4, #1
+      0x08010A54  e4 b2        uxtb    r4, r4
+      0x08010A56  04 2c        cmp     r4, #4
+      0x08010A58  b9 d3        blo     #0x80109ce
+      0x08010A5A  0e 48        ldr     r0, [pc, #0x38]   ; [0x08010A94]=0x20001086
+      0x08010A5C  c0 79        ldrb    r0, [r0, #7]
+      0x08010A5E  00 28        cmp     r0, #0
+      0x08010A60  06 d0        beq     #0x8010a70
+      0x08010A62  81 20        movs    r0, #0x81
+      0x08010A64  ff f7 44 f9  bl      #0x800fcf0
+      0x08010A68  28 46        mov     r0, r5
+      0x08010A6A  04 f0 e9 fc  bl      #0x8015440
+      0x08010A6E  f8 bd        pop     {r3, r4, r5, r6, r7, pc}
+      0x08010A70  80 20        movs    r0, #0x80
+      0x08010A72  f7 e7        b       #0x8010a64
+      0x08010A74  f3 04        lsls    r3, r6, #0x13
+
+=== fn 0x08010A98..0x08010CC3  FUNC_0x08010A98  settings 访问偏移: ['7(R)']
+  BL 目标: ['0x0800FB84', '0x0800FCF0', '0x0800FD04', '0x080108B0', '0x08015440']
+  RAM 字面量: ['0x200004B9', '0x200004BA', '0x200004C6', '0x200004D2', '0x200004DC', '0x200004DF', '0x200004F3', '0x20000502', '0x20000510', '0x2000054A', '0x2000055A', '0x20000562', '0x20000564', '0x20001086']
+  --- 访问 0x08010C4C  c0 79        ldrb    r0, [r0, #7] ldrb off=7 ---
+      0x08010C3C  01 55        strb    r1, [r0, r4]
+      0x08010C3E  64 1c        adds    r4, r4, #1
+      0x08010C40  e4 b2        uxtb    r4, r4
+      0x08010C42  04 2c        cmp     r4, #4
+      0x08010C44  00 d2        bhs     #0x8010c48
+      0x08010C46  64 e7        b       #0x8010b12
+      0x08010C48  1c 48        ldr     r0, [pc, #0x70]   ; [0x08010CBC]=0x20001086
+      0x08010C4A  69 79        ldrb    r1, [r5, #5]
+      0x08010C4C  c0 79        ldrb    r0, [r0, #7]
+      0x08010C4E  88 42        cmp     r0, r1
+      0x08010C50  09 d0        beq     #0x8010c66
+      0x08010C52  68 71        strb    r0, [r5, #5]
+      0x08010C54  00 28        cmp     r0, #0
+      0x08010C56  16 d0        beq     #0x8010c86
+      0x08010C58  81 20        movs    r0, #0x81
+      0x08010C5A  ff f7 49 f8  bl      #0x800fcf0
+      0x08010C5E  ff 20        movs    r0, #0xff
+      0x08010C60  f5 30        adds    r0, #0xf5
+      0x08010C62  04 f0 ed fb  bl      #0x8015440
+
+=== fn 0x08012058..0x08012113  FUNC_0x08012058  settings 访问偏移: ['4(R)']
+  BL 目标: ['0x0800FB2C']
+  RAM 字面量: ['0x200004AD', '0x200004AF', '0x200004B9', '0x200004DB', '0x200004F0', '0x200004F1', '0x200004F2', '0x200004F3', '0x2000055D', '0x20000565', '0x20001086']
+  --- 访问 0x0801208E  1b 79        ldrb    r3, [r3, #4] ldrb off=4 ---
+      0x0801207E  02 78        ldrb    r2, [r0]
+      0x08012080  01 2a        cmp     r2, #1
+      0x08012082  07 d1        bne     #0x8012094
+      0x08012084  1e 4b        ldr     r3, [pc, #0x78]   ; [0x08012100]=0x200004F2
+      0x08012086  1b 78        ldrb    r3, [r3]
+      0x08012088  04 2b        cmp     r3, #4
+      0x0801208A  03 d1        bne     #0x8012094
+      0x0801208C  1d 4b        ldr     r3, [pc, #0x74]   ; [0x08012104]=0x20001086
+      0x0801208E  1b 79        ldrb    r3, [r3, #4]
+      0x08012090  01 2b        cmp     r3, #1
+      0x08012092  02 d0        beq     #0x801209a
+      0x08012094  4a 40        eors    r2, r1
+      0x08012096  02 70        strb    r2, [r0]
+      0x08012098  23 e0        b       #0x80120e2
+      0x0801209A  1b 48        ldr     r0, [pc, #0x6c]   ; [0x08012108]=0x20000565
+      0x0801209C  02 78        ldrb    r2, [r0]
+      0x0801209E  00 2a        cmp     r2, #0
+      0x080120A0  1e d0        beq     #0x80120e0
+      0x080120A2  fd f7 43 fd  bl      #0x800fb2c
+      0x080120A6  1c e0        b       #0x80120e2
+
+=== fn 0x080124D8..0x08012567  FUNC_0x080124D8  settings 访问偏移: ['2(R)', '3(R)']
+  BL 目标: []
+  RAM 字面量: ['0x200004B9', '0x200004F3', '0x20000536', '0x20000538', '0x20000539', '0x2000053A', '0x2000054D', '0x20001086']
+  --- 访问 0x080124DC  90 78        ldrb    r0, [r2, #2] ldrb off=2 ---
+      0x080124CC  88 13        asrs    r0, r1, #0xe
+      0x080124CE  00 00        movs    r0, r0
+      0x080124D0  00 0c        lsrs    r0, r0, #0x10
+      0x080124D2  00 48        ldr     r0, [pc, #0]   ; [0x080124D4]=0x48000800
+      0x080124D4  00 08        lsrs    r0, r0, #0x20
+      0x080124D6  00 48        ldr     r0, [pc, #0]   ; [0x080124D8]=0x4A1AB5F0
+      0x080124D8  f0 b5        push    {r4, r5, r6, r7, lr}
+      0x080124DA  1a 4a        ldr     r2, [pc, #0x68]   ; [0x08012544]=0x20001086
+      0x080124DC  90 78        ldrb    r0, [r2, #2]
+      0x080124DE  00 28        cmp     r0, #0
+      0x080124E0  2c d1        bne     #0x801253c
+      0x080124E2  19 48        ldr     r0, [pc, #0x64]   ; [0x08012548]=0x20000536
+      0x080124E4  19 4b        ldr     r3, [pc, #0x64]   ; [0x0801254C]=0x00004650
+      0x080124E6  01 88        ldrh    r1, [r0]
+      0x080124E8  49 1c        adds    r1, r1, #1
+      0x080124EA  89 b2        uxth    r1, r1
+      0x080124EC  01 80        strh    r1, [r0]
+      0x080124EE  99 42        cmp     r1, r3
+      0x080124F0  24 d3        blo     #0x801253c
+      0x080124F2  00 23        movs    r3, #0
+      0x080124F4  16 49        ldr     r1, [pc, #0x58]   ; [0x08012550]=0x20000539
+  --- 访问 0x08012528  d0 78        ldrb    r0, [r2, #3] ldrb off=3 ---
+      0x08012518  01 2f        cmp     r7, #1
+      0x0801251A  01 d1        bne     #0x8012520
+      0x0801251C  00 28        cmp     r0, #0
+      0x0801251E  03 d0        beq     #0x8012528
+      0x08012520  04 28        cmp     r0, #4
+      0x08012522  01 d0        beq     #0x8012528
+      0x08012524  02 28        cmp     r0, #2
+      0x08012526  08 d1        bne     #0x801253a
+      0x08012528  d0 78        ldrb    r0, [r2, #3]
+      0x0801252A  00 28        cmp     r0, #0
+      0x0801252C  07 d0        beq     #0x801253e
+      0x0801252E  14 20        movs    r0, #0x14
+      0x08012530  0c 4a        ldr     r2, [pc, #0x30]   ; [0x08012564]=0x2000053A
+      0x08012532  84 42        cmp     r4, r0
+      0x08012534  10 70        strb    r0, [r2]
+      0x08012536  01 d3        blo     #0x801253c
+      0x08012538  0b 70        strb    r3, [r1]
+      0x0801253A  35 70        strb    r5, [r6]
+      0x0801253C  f0 bd        pop     {r4, r5, r6, r7, pc}
+      0x0801253E  28 20        movs    r0, #0x28
+      0x08012540  f6 e7        b       #0x8012530
+
+=== fn 0x080125A8..0x08012BAD  FUNC_0x080125A8  settings 访问偏移: ['11(W)']
+  BL 目标: ['0x0800A6DC', '0x0800A8E4', '0x080150A6']
+  RAM 字面量: ['0x20000110', '0x20000125', '0x200004B9', '0x200004BA', '0x200004C0', '0x200004C2', '0x200004C4', '0x200004C6', '0x200004D2', '0x200004D8', '0x200004D9', '0x200004DB', '0x200004DC', '0x200004DF', '0x200004E1', '0x200004E6', '0x200004E7', '0x200004F3', '0x200004F4', '0x200004F5', '0x200004F7', '0x200004F8', '0x200004F9', '0x20000500', '0x20000501', '0x20000510', '0x20000511', '0x2000051B', '0x2000051E', '0x2000051F', '0x20001070', '0x20001086']
+  --- 访问 0x08012AB0  d8 72        strb    r0, [r3, #0xb] strb off=11 ---
+      0x08012AA0  d8 48        ldr     r0, [pc, #0x360]   ; [0x08012E04]=0x200004B9
+      0x08012AA2  1e 9b        ldr     r3, [sp, #0x78]
+      0x08012AA4  03 70        strb    r3, [r0]
+      0x08012AA6  88 07        lsls    r0, r1, #0x1e
+      0x08012AA8  d7 4b        ldr     r3, [pc, #0x35c]   ; [0x08012E08]=0x200004F5
+      0x08012AAA  c0 0f        lsrs    r0, r0, #0x1f
+      0x08012AAC  18 70        strb    r0, [r3]
+      0x08012AAE  d7 4b        ldr     r3, [pc, #0x35c]   ; [0x08012E0C]=0x20001086
+      0x08012AB0  d8 72        strb    r0, [r3, #0xb]
+      0x08012AB2  d4 48        ldr     r0, [pc, #0x350]   ; [0x08012E04]=0x200004B9
+      0x08012AB4  03 78        ldrb    r3, [r0]
+      0x08012AB6  98 07        lsls    r0, r3, #0x1e
+      0x08012AB8  11 98        ldr     r0, [sp, #0x44]
+      0x08012ABA  0d d0        beq     #0x8012ad8
+      0x08012ABC  d4 4e        ldr     r6, [pc, #0x350]   ; [0x08012E10]=0x20000500
+      0x08012ABE  9b 07        lsls    r3, r3, #0x1e
+      0x08012AC0  9b 0f        lsrs    r3, r3, #0x1e
+      0x08012AC2  30 70        strb    r0, [r6]
+      0x08012AC4  01 2b        cmp     r3, #1
+      0x08012AC6  05 d0        beq     #0x8012ad4
+      0x08012AC8  cd 4b        ldr     r3, [pc, #0x334]   ; [0x08012E00]=0x200004D9
+
+=== fn 0x08012EF2..0x08013853  FUNC_0x08012EF2  settings 访问偏移: ['11(W)']
+  BL 目标: ['0x0800311C', '0x08003B7C', '0x0800A8E4', '0x0800A99C', '0x08012BAE', '0x08012EF2', '0x080150A6']
+  RAM 字面量: ['0x20000122', '0x20000125', '0x200004B9', '0x200004BA', '0x200004C0', '0x200004C6', '0x200004D2', '0x200004D8', '0x200004D9', '0x200004DC', '0x200004DF', '0x200004EA', '0x200004F3', '0x200004F4', '0x200004F5', '0x200004F7', '0x20000500', '0x20000501', '0x20000510', '0x20000511', '0x2000051A', '0x20001070', '0x20001086']
+  --- 访问 0x080132F4  d8 72        strb    r0, [r3, #0xb] strb off=11 ---
+      0x080132E4  01 20        movs    r0, #1
+      0x080132E6  18 70        strb    r0, [r3]
+      0x080132E8  01 e0        b       #0x80132ee
+      0x080132EA  e5 48        ldr     r0, [pc, #0x394]   ; [0x08013680]=0x200004F5
+      0x080132EC  04 70        strb    r4, [r0]
+      0x080132EE  e4 48        ldr     r0, [pc, #0x390]   ; [0x08013680]=0x200004F5
+      0x080132F0  e4 4b        ldr     r3, [pc, #0x390]   ; [0x08013684]=0x20001086
+      0x080132F2  00 78        ldrb    r0, [r0]
+      0x080132F4  d8 72        strb    r0, [r3, #0xb]
+      0x080132F6  c8 07        lsls    r0, r1, #0x1f
+      0x080132F8  11 d0        beq     #0x801331e
+      0x080132FA  e3 4b        ldr     r3, [pc, #0x38c]   ; [0x08013688]=0x200004F3
+      0x080132FC  03 20        movs    r0, #3
+      0x080132FE  18 70        strb    r0, [r3]
+      0x08013300  14 9b        ldr     r3, [sp, #0x50]
+      0x08013302  e2 48        ldr     r0, [pc, #0x388]   ; [0x0801368C]=0x20000501
+      0x08013304  02 2b        cmp     r3, #2
+      0x08013306  00 d9        bls     #0x801330a
+      0x08013308  04 70        strb    r4, [r0]
+      0x0801330A  e1 48        ldr     r0, [pc, #0x384]   ; [0x08013690]=0x200004B9
+      0x0801330C  1e 9b        ldr     r3, [sp, #0x78]
+
+=== fn 0x08014EF8..0x08014F67  item 9 改值后的专用处理函数  settings 访问偏移: ['9(R)']
+  BL 目标: ['0x08011630', '0x080116FC', '0x080150A6']
+  RAM 字面量: ['0x2000058D', '0x20001086']
+  --- 访问 0x08014EFE  60 7a        ldrb    r0, [r4, #9] ldrb off=9 ---
+      0x08014EEE  d7 d3        blo     #0x8014ea0
+      0x08014EF0  f8 bd        pop     {r3, r4, r5, r6, r7, pc}
+      0x08014EF2  00 00        movs    r0, r0
+      0x08014EF4  c4 07        lsls    r4, r0, #0x1f
+      0x08014EF6  00 20        movs    r0, #0
+      0x08014EF8  f8 b5        push    {r3, r4, r5, r6, r7, lr}
+      0x08014EFA  19 4c        ldr     r4, [pc, #0x64]   ; [0x08014F60]=0x20001086
+      0x08014EFC  19 4d        ldr     r5, [pc, #0x64]   ; [0x08014F64]=0x2000058D
+      0x08014EFE  60 7a        ldrb    r0, [r4, #9]
+      0x08014F00  29 78        ldrb    r1, [r5]
+      0x08014F02  88 42        cmp     r0, r1
+      0x08014F04  25 d0        beq     #0x8014f52
+      0x08014F06  03 00        movs    r3, r0
+      0x08014F08  00 f0 cd f8  bl      #0x80150a6
+      0x08014F0C  07 05        lsls    r7, r0, #0x14
+      0x08014F0E  07 09        lsrs    r7, r0, #4
+      0x08014F10  0b 0d        lsrs    r3, r1, #0x14
+      0x08014F12  0f 11        asrs    r7, r1, #4
+      0x08014F14  26 00        movs    r6, r4
+      0x08014F16  00 21        movs    r1, #0
+  --- 访问 0x08014F52  60 7a        ldrb    r0, [r4, #9] ldrb off=9 ---
+      0x08014F42  fc f7 75 fb  bl      #0x8011630
+      0x08014F46  38 46        mov     r0, r7
+      0x08014F48  fc f7 d8 fb  bl      #0x80116fc
+      0x08014F4C  30 46        mov     r0, r6
+      0x08014F4E  fc f7 d5 fb  bl      #0x80116fc
+      0x08014F52  60 7a        ldrb    r0, [r4, #9]
+      0x08014F54  28 70        strb    r0, [r5]
+      0x08014F56  f8 bd        pop     {r3, r4, r5, r6, r7, pc}
+      0x08014F58  03 20        movs    r0, #3
+      0x08014F5A  60 72        strb    r0, [r4, #9]
+      0x08014F5C  e1 e7        b       #0x8014f22
+      0x08014F5E  00 00        movs    r0, r0
+      0x08014F60  86 10        asrs    r6, r0, #2
+      0x08014F62  00 20        movs    r0, #0
+      0x08014F64  8d 05        lsls    r5, r1, #0x16
+      0x08014F66  00 20        movs    r0, #0
+      0x08014F68  30 b5        push    {r4, r5, lr}
+      0x08014F6A  37 48        ldr     r0, [pc, #0xdc]   ; [0x08015048]=0x200004F0
+
+=== fn 0x080158B0..0x08015BBF  FUNC_0x080158B0  settings 访问偏移: ['0(W)', '1(W)', '2(W)', '3(W)', '4(W)', '5(W)', '6(W)', '7(W)', '8(W)', '9(W)', '10(W)', '11(W)', '12(W)', '13(W)']
+  BL 目标: ['0x08003654', '0x080036D4', '0x080037E4', '0x08003A74', '0x08003AE8', '0x080060FC', '0x0800680C', '0x0800A268', '0x0800A584', '0x0800A5A0', '0x0800B882', '0x0800B94C', '0x0800B9A0', '0x0800BA28', '0x0800C414', '0x0800D1CC', '0x0800D28C', '0x0800D384', '0x0800DCDC', '0x0800E440', '0x0800E4C4', '0x0800E4FC', '0x0800E524', '0x0800E784', '0x0800E7E4', '0x0800E868', '0x0800E8AC', '0x0800E8D8', '0x0800E938', '0x0800E9A0', '0x0800EB88', '0x0800F980', '0x0800FD94', '0x0800FEC4', '0x0800FEF8', '0x08010A98', '0x080111D8', '0x080122D4', '0x0801233C', '0x08014024', '0x080140F8', '0x08014E30', '0x08015E68']
+  RAM 字面量: ['0x20000000', '0x2000044C', '0x20000493', '0x200004AD', '0x200004AE', '0x200004B5', '0x200004B9', '0x200004BA', '0x200004C0', '0x200004C6', '0x200004CC', '0x200004D2', '0x200004DC', '0x200004DF', '0x200004E5', '0x200004EA', '0x200004F3', '0x200004F4', '0x200004F5', '0x200004F6', '0x20000500', '0x20000501', '0x20000502', '0x2000054A', '0x2000054D', '0x20000550', '0x200005B4', '0x20000708', '0x20000FA4', '0x20001086']
+  --- 访问 0x080159C8  13 70        strb    r3, [r2] strb off=0 ---
+      0x080159B8  cb 6a        ldr     r3, [r1, #0x2c]
+      0x080159BA  03 60        str     r3, [r0]
+      0x080159BC  03 78        ldrb    r3, [r0]
+      0x080159BE  d3 70        strb    r3, [r2, #3]
+      0x080159C0  43 78        ldrb    r3, [r0, #1]
+      0x080159C2  13 71        strb    r3, [r2, #4]
+      0x080159C4  2d 4a        ldr     r2, [pc, #0xb4]   ; [0x08015A7C]=0x20001086
+      0x080159C6  83 78        ldrb    r3, [r0, #2]
+      0x080159C8  13 70        strb    r3, [r2]
+      0x080159CA  c3 78        ldrb    r3, [r0, #3]
+      0x080159CC  53 70        strb    r3, [r2, #1]
+      0x080159CE  0b 6b        ldr     r3, [r1, #0x30]
+      0x080159D0  03 60        str     r3, [r0]
+      0x080159D2  03 78        ldrb    r3, [r0]
+      0x080159D4  93 70        strb    r3, [r2, #2]
+      0x080159D6  43 78        ldrb    r3, [r0, #1]
+      0x080159D8  d3 70        strb    r3, [r2, #3]
+      0x080159DA  83 78        ldrb    r3, [r0, #2]
+      0x080159DC  13 71        strb    r3, [r2, #4]
+      0x080159DE  c3 78        ldrb    r3, [r0, #3]
+      0x080159E0  53 71        strb    r3, [r2, #5]
+  --- 访问 0x080159CC  53 70        strb    r3, [r2, #1] strb off=1 ---
+      0x080159BC  03 78        ldrb    r3, [r0]
+      0x080159BE  d3 70        strb    r3, [r2, #3]
+      0x080159C0  43 78        ldrb    r3, [r0, #1]
+      0x080159C2  13 71        strb    r3, [r2, #4]
+      0x080159C4  2d 4a        ldr     r2, [pc, #0xb4]   ; [0x08015A7C]=0x20001086
+      0x080159C6  83 78        ldrb    r3, [r0, #2]
+      0x080159C8  13 70        strb    r3, [r2]
+      0x080159CA  c3 78        ldrb    r3, [r0, #3]
+      0x080159CC  53 70        strb    r3, [r2, #1]
+      0x080159CE  0b 6b        ldr     r3, [r1, #0x30]
+      0x080159D0  03 60        str     r3, [r0]
+      0x080159D2  03 78        ldrb    r3, [r0]
+      0x080159D4  93 70        strb    r3, [r2, #2]
+      0x080159D6  43 78        ldrb    r3, [r0, #1]
+      0x080159D8  d3 70        strb    r3, [r2, #3]
+      0x080159DA  83 78        ldrb    r3, [r0, #2]
+      0x080159DC  13 71        strb    r3, [r2, #4]
+      0x080159DE  c3 78        ldrb    r3, [r0, #3]
+      0x080159E0  53 71        strb    r3, [r2, #5]
+      0x080159E2  4b 6b        ldr     r3, [r1, #0x34]
+      0x080159E4  03 60        str     r3, [r0]
+  --- 访问 0x080159D4  93 70        strb    r3, [r2, #2] strb off=2 ---
+      0x080159C4  2d 4a        ldr     r2, [pc, #0xb4]   ; [0x08015A7C]=0x20001086
+      0x080159C6  83 78        ldrb    r3, [r0, #2]
+      0x080159C8  13 70        strb    r3, [r2]
+      0x080159CA  c3 78        ldrb    r3, [r0, #3]
+      0x080159CC  53 70        strb    r3, [r2, #1]
+      0x080159CE  0b 6b        ldr     r3, [r1, #0x30]
+      0x080159D0  03 60        str     r3, [r0]
+      0x080159D2  03 78        ldrb    r3, [r0]
+      0x080159D4  93 70        strb    r3, [r2, #2]
+      0x080159D6  43 78        ldrb    r3, [r0, #1]
+      0x080159D8  d3 70        strb    r3, [r2, #3]
+      0x080159DA  83 78        ldrb    r3, [r0, #2]
+      0x080159DC  13 71        strb    r3, [r2, #4]
+      0x080159DE  c3 78        ldrb    r3, [r0, #3]
+      0x080159E0  53 71        strb    r3, [r2, #5]
+      0x080159E2  4b 6b        ldr     r3, [r1, #0x34]
+      0x080159E4  03 60        str     r3, [r0]
+      0x080159E6  03 78        ldrb    r3, [r0]
+      0x080159E8  93 71        strb    r3, [r2, #6]
+      0x080159EA  43 78        ldrb    r3, [r0, #1]
+      0x080159EC  d3 71        strb    r3, [r2, #7]
+
+=== fn 0x08015C10..0x08015E03  FUNC_0x08015C10  settings 访问偏移: ['0(R)']
+  BL 目标: ['0x0800311C', '0x080150E0', '0x08015130', '0x080151E0', '0x0801523C']
+  RAM 字面量: ['0x20000136', '0x2000035C', '0x200004B9', '0x200004C0', '0x200004C4', '0x200004C6', '0x200004D2', '0x20000517', '0x2000051B', '0x20000538', '0x2000054B', '0x2000054C', '0x20001086']
+  --- 访问 0x08015D56  05 78        ldrb    r5, [r0] ldrb off=0 ---
+      0x08015D48  04 b2        sxth    r4, r0
+      0x08015D4A  ff 20        movs    r0, #0xff
+      0x08015D4C  2d 30        adds    r0, #0x2d
+      0x08015D4E  84 42        cmp     r4, r0
+      0x08015D50  00 dd        ble     #0x8015d54
+      0x08015D52  04 46        mov     r4, r0
+      0x08015D54  27 48        ldr     r0, [pc, #0x9c]   ; [0x08015DF4]=0x20001086
+      0x08015D56  05 78        ldrb    r5, [r0]
+      0x08015D58  01 2d        cmp     r5, #1
+      0x08015D5A  06 d1        bne     #0x8015d6a
+      0x08015D5C  20 46        mov     r0, r4
+      0x08015D5E  27 21        movs    r1, #0x27
+      0x08015D60  48 43        muls    r0, r1, r0
+      0x08015D62  0a 21        movs    r1, #0xa
+      0x08015D64  ed f7 da f9  bl      #0x800311c
+      0x08015D68  04 b2        sxth    r4, r0
+      0x08015D6A  20 46        mov     r0, r4
+      0x08015D6C  00 26        movs    r6, #0
+      0x08015D6E  0a 21        movs    r1, #0xa
+
+==============================================================================
+2c. settings[n] -> RAM 镜像副本（handler/apply 路径）
+==============================================================================
+  settings[3] 读取@0x08012528 -> 镜像 RAM 0x2000053A（写@0x08012534）
+  settings[5] 读取@0x0800FA96 -> 镜像 RAM 0x200010B0（写@0x0800FAA2）
+  settings[6] 读取@0x0800E0C0 -> 镜像 RAM 0x200004F5（写@0x0800E0CA）
+  settings[11] 读取@0x08006264 -> 镜像 RAM 0x200004F5（写@0x08006268）
+  settings[13] 读取@0x08006046 -> 镜像 RAM 0x200004B5（写@0x08006052）
+
+  补充：0x0800A6AC / 0x0800A6DC 是一对「settings[0/1/2/3/7/8/10] <-> 紧凑结构 0x20001070」的打包/解包函数：
+    * 0x0800A6AC（settings -> 0x20001070；被 0x08003B7C 调用，后者由 RF 设置打包路径 0x08012EF2 调用）
+    * 0x0800A6DC（0x20001070 -> settings；被 0x080125A8.. 的 RF 设置应用路径 0x08012790 调用）
+    * 注意 0x20001070+0x16 == 0x20001086 == settings[0]：打包函数最后一条
+      `strb r1,[r0,#0x16]` 实际落在 settings[0]（原厂重叠/疑似 quirk），
+      解包函数会把 settings[0/1/2/3/7/8/10] 从该紧凑结构覆盖回去。
+    * 含义：item2 等被包含的项可能被 RF「设置同步」覆盖，需要在整机验证；
+      item4/5/6/9/11 不在这对函数里（但 0x0800DCDC 仍写 settings[0..11]）。
+
+==============================================================================
+2d. 逐项语义汇总（读者/写者/默认值/证据）
+==============================================================================
+
+item0  = F1   m/ft     max=1   default=0 (0x00)
+  语义: m/ft（距离单位显示；仅影响测距/显示换算，无硬件动作）
+  读者 7 / 写者 5；涉及函数: ['0x08004914', '0x08005EF0', '0x080066D0', '0x08007448', '0x0800A6AC', '0x0800A6DC', '0x0800DCDC', '0x080158B0', '0x08015C10']
+    读 0x08004A38  30 78        ldrb    r0, [r6]  fn=0x08004914
+    读 0x08004A48  30 78        ldrb    r0, [r6]  fn=0x08004914
+    读 0x08006006  14 78        ldrb    r4, [r2]  fn=0x08005EF0
+    读 0x0800744E  00 78        ldrb    r0, [r0]  fn=0x08007448
+    读 0x0800A6B0  0a 78        ldrb    r2, [r1]  fn=0x0800A6AC
+    读 0x0800A6F8  80 7d        ldrb    r0, [r0, #0x16]  fn=0x0800A6DC
+    读 0x08015D56  05 78        ldrb    r5, [r0]  fn=0x08015C10
+    写 0x08006722  01 70        strb    r1, [r0]  fn=0x080066D0
+    写 0x0800A6CE  81 75        strb    r1, [r0, #0x16]  fn=0x0800A6AC
+    写 0x0800A6E2  0a 70        strb    r2, [r1]  fn=0x0800A6DC
+    写 0x0800E09A  25 70        strb    r5, [r4]  fn=0x0800DCDC
+    写 0x080159C8  13 70        strb    r3, [r2]  fn=0x080158B0
+
+item1  = F2   AF       max=1   default=1 (0x01)
+  语义: AF（AF 辅助灯；应用函数 0x08003654 控制 GPIOF/GPIOE 相关位）
+  读者 5 / 写者 4；涉及函数: ['0x08003654', '0x08004914', '0x08005EF0', '0x080066D0', '0x0800A6AC', '0x0800A6DC', '0x0800DCDC', '0x080158B0']
+    读 0x0800366C  40 78        ldrb    r0, [r0, #1]  fn=0x08003654
+    读 0x08004AAE  78 78        ldrb    r0, [r7, #1]  fn=0x08004914
+    读 0x08004ABE  78 78        ldrb    r0, [r7, #1]  fn=0x08004914
+    读 0x0800600A  54 78        ldrb    r4, [r2, #1]  fn=0x08005EF0
+    读 0x0800A6C0  4a 78        ldrb    r2, [r1, #1]  fn=0x0800A6AC
+    写 0x08006724  42 70        strb    r2, [r0, #1]  fn=0x080066D0
+    写 0x0800A6EE  4a 70        strb    r2, [r1, #1]  fn=0x0800A6DC
+    写 0x0800E09C  65 70        strb    r5, [r4, #1]  fn=0x0800DCDC
+    写 0x080159CC  53 70        strb    r3, [r2, #1]  fn=0x080158B0
+
+item2  = F3   STBY     max=1   default=0 (0x00)
+  语义: STBY（自动待机；0x080124D8 中 settings[2]!=0 时跳过待机计时）
+  读者 5 / 写者 4；涉及函数: ['0x08004914', '0x08005EF0', '0x080066D0', '0x0800A6AC', '0x0800A6DC', '0x0800DCDC', '0x080124D8', '0x080158B0']
+    读 0x08004B4E  b0 78        ldrb    r0, [r6, #2]  fn=0x08004914
+    读 0x08004B5E  b0 78        ldrb    r0, [r6, #2]  fn=0x08004914
+    读 0x08006012  94 78        ldrb    r4, [r2, #2]  fn=0x08005EF0
+    读 0x0800A6B4  8a 78        ldrb    r2, [r1, #2]  fn=0x0800A6AC
+    读 0x080124DC  90 78        ldrb    r0, [r2, #2]  fn=0x080124D8
+    写 0x08006726  81 70        strb    r1, [r0, #2]  fn=0x080066D0
+    写 0x0800A6E6  8a 70        strb    r2, [r1, #2]  fn=0x0800A6DC
+    写 0x0800E09E  a5 70        strb    r5, [r4, #2]  fn=0x0800DCDC
+    写 0x080159D4  93 70        strb    r3, [r2, #2]  fn=0x080158B0
+
+item3  = F4   RX STBY  max=1   default=0 (0x00)
+  语义: RX STBY（接收待机超时；0x080124D8 中 settings[3] 选择 20/40 阈值）
+  读者 5 / 写者 4；涉及函数: ['0x08004914', '0x08005EF0', '0x080066D0', '0x0800A6AC', '0x0800A6DC', '0x0800DCDC', '0x080124D8', '0x080158B0']
+    读 0x08004C38  e0 78        ldrb    r0, [r4, #3]  fn=0x08004914
+    读 0x08004C48  e0 78        ldrb    r0, [r4, #3]  fn=0x08004914
+    读 0x08006016  d4 78        ldrb    r4, [r2, #3]  fn=0x08005EF0
+    读 0x0800A6C4  ca 78        ldrb    r2, [r1, #3]  fn=0x0800A6AC
+    读 0x08012528  d0 78        ldrb    r0, [r2, #3]  fn=0x080124D8
+    写 0x08006728  c1 70        strb    r1, [r0, #3]  fn=0x080066D0
+    写 0x0800A6F2  ca 70        strb    r2, [r1, #3]  fn=0x0800A6DC
+    写 0x0800E0A0  e5 70        strb    r5, [r4, #3]  fn=0x0800DCDC
+    写 0x080159D8  d3 70        strb    r3, [r2, #3]  fn=0x080158B0
+
+item4  = F5   SCAN     max=1   default=0 (0x00)
+  语义: SCAN（频道扫描；改值到 1 时 0x08012058 触发扫描；扫描/设置应用路径 0x0800FB2C、0x080053F4 会把 settings[4] 写回 0）
+  读者 4 / 写者 5；涉及函数: ['0x08004914', '0x080053F4', '0x08005EF0', '0x080066D0', '0x0800DCDC', '0x0800FB2C', '0x08012058', '0x080158B0']
+    读 0x08004D0C  28 79        ldrb    r0, [r5, #4]  fn=0x08004914
+    读 0x08004D2E  28 79        ldrb    r0, [r5, #4]  fn=0x08004914
+    读 0x0800601A  14 79        ldrb    r4, [r2, #4]  fn=0x08005EF0
+    读 0x0801208E  1b 79        ldrb    r3, [r3, #4]  fn=0x08012058
+    写 0x0800541E  04 71        strb    r4, [r0, #4]  fn=0x080053F4
+    写 0x08006730  01 71        strb    r1, [r0, #4]  fn=0x080066D0
+    写 0x0800E0AA  25 71        strb    r5, [r4, #4]  fn=0x0800DCDC
+    写 0x0800FB4E  04 71        strb    r4, [r0, #4]  fn=0x0800FB2C
+    写 0x080159DC  13 71        strb    r3, [r2, #4]  fn=0x080158B0
+
+item5  = F6   CH       max=31  default=20 (0x14)
+  语义: CH（频道；显示为 settings[5]+1，最大值 31 => 1..32；0x080060FC 抄到 0x2000054A）
+  读者 5 / 写者 3；涉及函数: ['0x08004914', '0x08005EF0', '0x080060FC', '0x080066D0', '0x0800DCDC', '0x0800F980', '0x080158B0']
+    读 0x08004E4A  78 79        ldrb    r0, [r7, #5]  fn=0x08004914
+    读 0x08004E5E  78 79        ldrb    r0, [r7, #5]  fn=0x08004914
+    读 0x0800601E  54 79        ldrb    r4, [r2, #5]  fn=0x08005EF0
+    读 0x08006154  40 79        ldrb    r0, [r0, #5]  fn=0x080060FC
+    读 0x0800FA96  40 79        ldrb    r0, [r0, #5]  fn=0x0800F980
+    写 0x08006736  43 71        strb    r3, [r0, #5]  fn=0x080066D0
+    写 0x0800E0B0  60 71        strb    r0, [r4, #5]  fn=0x0800DCDC
+    写 0x080159E0  53 71        strb    r3, [r2, #5]  fn=0x080158B0
+
+item6  = F7   ID       max=99  default=0 (0x00)
+  语义: ID（1..99/0=OFF；RF 初始化/改值后调用 0x080121BC 同步字函数）
+  读者 8 / 写者 3；涉及函数: ['0x08004914', '0x08005EF0', '0x080061CC', '0x0800664C', '0x080066D0', '0x0800D3D8', '0x0800DCDC', '0x080158B0']
+    读 0x08004EB0  b8 79        ldrb    r0, [r7, #6]  fn=0x08004914
+    读 0x08004EC8  b8 79        ldrb    r0, [r7, #6]  fn=0x08004914
+    读 0x08006026  94 79        ldrb    r4, [r2, #6]  fn=0x08005EF0
+    读 0x08006272  80 79        ldrb    r0, [r0, #6]  fn=0x080061CC
+    读 0x080066B0  80 79        ldrb    r0, [r0, #6]  fn=0x0800664C
+    读 0x0800D482  80 79        ldrb    r0, [r0, #6]  fn=0x0800D3D8
+    读 0x0800E0C0  a0 79        ldrb    r0, [r4, #6]  fn=0x0800DCDC
+    读 0x0800E136  a0 79        ldrb    r0, [r4, #6]  fn=0x0800DCDC
+    写 0x08006732  81 71        strb    r1, [r0, #6]  fn=0x080066D0
+    写 0x0800E0AC  a5 71        strb    r5, [r4, #6]  fn=0x0800DCDC
+    写 0x080159E8  93 71        strb    r3, [r2, #6]  fn=0x080158B0
+
+item7  = F8   BEEP     max=1   default=1 (0x01)
+  语义: BEEP（按键提示音开关；应用函数 0x08003AE8，默认 1=开）
+  读者 16 / 写者 7；涉及函数: ['0x08003AE8', '0x08004914', '0x08005EF0', '0x080066D0', '0x080067CC', '0x08008284', '0x08008870', '0x08008B2C', '0x08008F00', '0x0800A6AC', '0x0800A6DC', '0x0800DCDC', '0x0800FBA4', '0x08010384', '0x08010984', '0x08010A98', '0x080158B0']
+    读 0x08003AEE  c5 79        ldrb    r5, [r0, #7]  fn=0x08003AE8
+    读 0x08004F98  e0 79        ldrb    r0, [r4, #7]  fn=0x08004914
+    读 0x08004FA8  e0 79        ldrb    r0, [r4, #7]  fn=0x08004914
+    读 0x0800602A  d4 79        ldrb    r4, [r2, #7]  fn=0x08005EF0
+    读 0x080067DA  c0 79        ldrb    r0, [r0, #7]  fn=0x080067CC
+    读 0x08008294  c0 79        ldrb    r0, [r0, #7]  fn=0x08008284
+    读 0x08008880  c0 79        ldrb    r0, [r0, #7]  fn=0x08008870
+    读 0x08008B3C  c0 79        ldrb    r0, [r0, #7]  fn=0x08008B2C
+    读 0x08008F3A  e8 79        ldrb    r0, [r5, #7]  fn=0x08008F00
+    读 0x08008FF4  e8 79        ldrb    r0, [r5, #7]  fn=0x08008F00
+    读 0x08009018  e8 79        ldrb    r0, [r5, #7]  fn=0x08008F00
+    读 0x080092DE  e8 79        ldrb    r0, [r5, #7]  fn=0x08008F00
+    读 0x08009374  e8 79        ldrb    r0, [r5, #7]  fn=0x08008F00
+    读 0x0800A6C8  ca 79        ldrb    r2, [r1, #7]  fn=0x0800A6AC
+    读 0x08010A5C  c0 79        ldrb    r0, [r0, #7]  fn=0x08010984
+    读 0x08010C4C  c0 79        ldrb    r0, [r0, #7]  fn=0x08010A98
+    写 0x0800672A  c2 71        strb    r2, [r0, #7]  fn=0x080066D0
+    写 0x0800A6F6  ca 71        strb    r2, [r1, #7]  fn=0x0800A6DC
+    写 0x0800E0A2  e7 71        strb    r7, [r4, #7]  fn=0x0800DCDC
+    写 0x0800FC82  ce 71        strb    r6, [r1, #7]  fn=0x0800FBA4
+    写 0x0800FC86  cd 71        strb    r5, [r1, #7]  fn=0x0800FBA4
+    写 0x08010678  c2 71        strb    r2, [r0, #7]  fn=0x08010384
+    写 0x080159EC  d3 71        strb    r3, [r2, #7]  fn=0x080158B0
+
+item8  = F9   LIGHT    max=2   default=0 (0x00)
+  语义: LIGHT（造型灯模式；应用函数 0x080036D4 控制 GPIOE/GPIOF 灯输出，值 0/1/2）
+  读者 6 / 写者 4；涉及函数: ['0x080036D4', '0x08004914', '0x08005EF0', '0x080066D0', '0x0800A6AC', '0x0800A6DC', '0x0800DCDC', '0x080158B0']
+    读 0x080036DA  00 7a        ldrb    r0, [r0, #8]  fn=0x080036D4
+    读 0x08003702  01 7a        ldrb    r1, [r0, #8]  fn=0x080036D4
+    读 0x08005076  38 7a        ldrb    r0, [r7, #8]  fn=0x08004914
+    读 0x08005086  38 7a        ldrb    r0, [r7, #8]  fn=0x08004914
+    读 0x0800602E  14 7a        ldrb    r4, [r2, #8]  fn=0x08005EF0
+    读 0x0800A6CC  09 7a        ldrb    r1, [r1, #8]  fn=0x0800A6AC
+    写 0x0800672C  01 72        strb    r1, [r0, #8]  fn=0x080066D0
+    写 0x0800A6FA  08 72        strb    r0, [r1, #8]  fn=0x0800A6DC
+    写 0x0800E0A4  25 72        strb    r5, [r4, #8]  fn=0x0800DCDC
+    写 0x080159F0  13 72        strb    r3, [r2, #8]  fn=0x080158B0
+
+item9  = F10  LCD      max=6   default=3 (0x03)
+  语义: LCD（LCD 亮度/对比度；0x08014EF8 专用处理，值 0..6，默认 3）
+  读者 6 / 写者 4；涉及函数: ['0x08004914', '0x08005EF0', '0x080066D0', '0x0800D3D8', '0x0800DCDC', '0x08014EF8', '0x080158B0']
+    读 0x080050C0  40 7a        ldrb    r0, [r0, #9]  fn=0x08004914
+    读 0x080050EC  68 7a        ldrb    r0, [r5, #9]  fn=0x08004914
+    读 0x08005114  68 7a        ldrb    r0, [r5, #9]  fn=0x08004914
+    读 0x08006032  54 7a        ldrb    r4, [r2, #9]  fn=0x08005EF0
+    读 0x08014EFE  60 7a        ldrb    r0, [r4, #9]  fn=0x08014EF8
+    读 0x08014F52  60 7a        ldrb    r0, [r4, #9]  fn=0x08014EF8
+    写 0x0800672E  43 72        strb    r3, [r0, #9]  fn=0x080066D0
+    写 0x0800D462  41 72        strb    r1, [r0, #9]  fn=0x0800D3D8
+    写 0x0800E0A8  60 72        strb    r0, [r4, #9]  fn=0x0800DCDC
+    写 0x080159F4  53 72        strb    r3, [r2, #9]  fn=0x080158B0
+
+item10 = F11  FEB ACL  max=1   default=0 (0x00)
+  语义: FEB ACL（按 V1 说明书项序；读者在 0x08005548，功能未完全定性）
+  读者 6 / 写者 4；涉及函数: ['0x08004914', '0x08005548', '0x08005EF0', '0x080066D0', '0x0800A6AC', '0x0800A6DC', '0x0800DCDC', '0x080158B0']
+    读 0x080051FC  a0 7a        ldrb    r0, [r4, #0xa]  fn=0x08004914
+    读 0x0800520C  a0 7a        ldrb    r0, [r4, #0xa]  fn=0x08004914
+    读 0x080055E8  89 7a        ldrb    r1, [r1, #0xa]  fn=0x08005548
+    读 0x080056A6  89 7a        ldrb    r1, [r1, #0xa]  fn=0x08005548
+    读 0x0800603A  94 7a        ldrb    r4, [r2, #0xa]  fn=0x08005EF0
+    读 0x0800A6B8  8a 7a        ldrb    r2, [r1, #0xa]  fn=0x0800A6AC
+    写 0x08006738  81 72        strb    r1, [r0, #0xa]  fn=0x080066D0
+    写 0x0800A6EA  8a 72        strb    r2, [r1, #0xa]  fn=0x0800A6DC
+    写 0x0800E0B2  a5 72        strb    r5, [r4, #0xa]  fn=0x0800DCDC
+    写 0x080159FC  93 72        strb    r3, [r2, #0xa]  fn=0x080158B0
+
+item11 = F12  TX       max=1   default=1 (0x01)
+  语义: TX（无线发送模式/标志；改值后镜像到 0x200004F5，射频任务读取）
+  读者 6 / 写者 5；涉及函数: ['0x08004914', '0x08005EF0', '0x080061CC', '0x080066D0', '0x0800D3D8', '0x0800DCDC', '0x080125A8', '0x08012EF2', '0x080158B0']
+    读 0x0800524A  e0 7a        ldrb    r0, [r4, #0xb]  fn=0x08004914
+    读 0x0800525A  e0 7a        ldrb    r0, [r4, #0xb]  fn=0x08004914
+    读 0x0800603E  d4 7a        ldrb    r4, [r2, #0xb]  fn=0x08005EF0
+    读 0x08006264  c1 7a        ldrb    r1, [r0, #0xb]  fn=0x080061CC
+    读 0x0800D476  c1 7a        ldrb    r1, [r0, #0xb]  fn=0x0800D3D8
+    读 0x0800E0C8  e0 7a        ldrb    r0, [r4, #0xb]  fn=0x0800DCDC
+    写 0x0800673A  c2 72        strb    r2, [r0, #0xb]  fn=0x080066D0
+    写 0x0800E0B4  e7 72        strb    r7, [r4, #0xb]  fn=0x0800DCDC
+    写 0x08012AB0  d8 72        strb    r0, [r3, #0xb]  fn=0x080125A8
+    写 0x080132F4  d8 72        strb    r0, [r3, #0xb]  fn=0x08012EF2
+    写 0x08015A00  d3 72        strb    r3, [r2, #0xb]  fn=0x080158B0
+
+==============================================================================
+3. 设置持久化、记录布局、出厂默认（独立确认）
+==============================================================================
+save 记录 builder : 0x08005EF0（settings 拷贝段 0x08006004..0x08006066）
+load/expand 函数  : 0x080158B0（0x080159C4 起写 settings[0..0xD]）
+出厂默认函数      : 0x080066D0（0x08006722..0x0800673A 写 settings[0..0xB]）
+加载/默认任务     : 0x0800FEF8（槽位 0x0801F000+slot*100，头部 0x5C 合法标记）
+
+记录偏移 -> settings 映射（save/load 两侧指令推导）:
+  record[0x2E..0x2F] = settings[0..1]
+  record[0x30..0x33] = settings[2..5]
+  record[0x34..0x37] = settings[6..9]
+  record[0x38..0x3B] = settings[10..13]
+
+出厂默认（0x080066D0 逐条写入 settings；★ 仅 item0..0xB）:
+  0x08006722  01 70        strb r1, [r0]       settings[0]=0  (m/ft=m)
+  0x08006724  42 70        strb r2, [r0, #1]   settings[1]=1  (AF=ON)
+  0x08006726  81 70        strb r1, [r0, #2]   settings[2]=0  (STBY=默认)
+  0x08006728  c1 70        strb r1, [r0, #3]   settings[3]=0  (RX STBY=默认)
+  0x08006730  01 71        strb r1, [r0, #4]   settings[4]=0  (SCAN=OFF)
+  0x08006736  43 71        strb r3, [r0, #5]   settings[5]=0x14 (CH=20 -> 显示 CH21)
+  0x08006732  81 71        strb r1, [r0, #6]   settings[6]=0  (ID=OFF)
+  0x0800672A  c2 71        strb r2, [r0, #7]   settings[7]=1  (BEEP=ON)
+  0x0800672C  01 72        strb r1, [r0, #8]   settings[8]=0  (LIGHT=OFF)
+  0x0800672E  43 72        strb r3, [r0, #9]   settings[9]=3  (LCD=3)
+  0x08006738  81 72        strb r1, [r0, #0xa]  settings[10]=0 (FEB ACL=OFF)
+  0x0800673A  c2 72        strb r2, [r0, #0xb]  settings[11]=1 (TX=ON)
+
+★ 结论：settings[0..0xD] 随 record 持久化；出厂默认 settings[2]=0，
+  所以 item2(STBY) 作为密钥开关时，出厂/恢复默认后为普通模式。
+
+==============================================================================
+3b. save/load 细节、record 字节与 settings 写点（补充证据）
+==============================================================================
+save builder 函数 0x08005EF0..0x080060DB（0x08005EF0 是其内部）
+  settings 拷贝（0x08006004..0x08006066）:
+    0x08006004  2d 4a        ldr     r2, [pc, #0xb4]   ; [0x080060BC]=0x20001086
+    0x08006006  14 78        ldrb    r4, [r2]
+    0x08006008  8c 70        strb    r4, [r1, #2]
+    0x0800600A  54 78        ldrb    r4, [r2, #1]
+    0x0800600C  cc 70        strb    r4, [r1, #3]
+    0x0800600E  0c 68        ldr     r4, [r1]
+    0x08006010  c4 62        str     r4, [r0, #0x2c]
+    0x08006012  94 78        ldrb    r4, [r2, #2]
+    0x08006014  0c 70        strb    r4, [r1]
+    0x08006016  d4 78        ldrb    r4, [r2, #3]
+    0x08006018  4c 70        strb    r4, [r1, #1]
+    0x0800601A  14 79        ldrb    r4, [r2, #4]
+    0x0800601C  8c 70        strb    r4, [r1, #2]
+    0x0800601E  54 79        ldrb    r4, [r2, #5]
+    0x08006020  cc 70        strb    r4, [r1, #3]
+    0x08006022  0c 68        ldr     r4, [r1]
+    0x08006024  04 63        str     r4, [r0, #0x30]
+    0x08006026  94 79        ldrb    r4, [r2, #6]
+    0x08006028  0c 70        strb    r4, [r1]
+    0x0800602A  d4 79        ldrb    r4, [r2, #7]
+    0x0800602C  4c 70        strb    r4, [r1, #1]
+    0x0800602E  14 7a        ldrb    r4, [r2, #8]
+    0x08006030  8c 70        strb    r4, [r1, #2]
+    0x08006032  54 7a        ldrb    r4, [r2, #9]
+    0x08006034  cc 70        strb    r4, [r1, #3]
+    0x08006036  0c 68        ldr     r4, [r1]
+    0x08006038  44 63        str     r4, [r0, #0x34]
+    0x0800603A  94 7a        ldrb    r4, [r2, #0xa]
+    0x0800603C  0c 70        strb    r4, [r1]
+    0x0800603E  d4 7a        ldrb    r4, [r2, #0xb]
+    0x08006040  4c 70        strb    r4, [r1, #1]
+    0x08006042  14 7b        ldrb    r4, [r2, #0xc]
+    0x08006044  8c 70        strb    r4, [r1, #2]
+    0x08006046  52 7b        ldrb    r2, [r2, #0xd]
+    0x08006048  ca 70        strb    r2, [r1, #3]
+    0x0800604A  0a 68        ldr     r2, [r1]
+    0x0800604C  82 63        str     r2, [r0, #0x38]
+    0x0800604E  1c 4a        ldr     r2, [pc, #0x70]   ; [0x080060C0]=0x200004B5
+    0x08006050  12 78        ldrb    r2, [r2]
+    0x08006052  0a 70        strb    r2, [r1]
+    0x08006054  1b 4a        ldr     r2, [pc, #0x6c]   ; [0x080060C4]=0x200004AD
+    0x08006056  12 78        ldrb    r2, [r2]
+    0x08006058  4a 70        strb    r2, [r1, #1]
+    0x0800605A  1b 4a        ldr     r2, [pc, #0x6c]   ; [0x080060C8]=0x200004AE
+    0x0800605C  12 78        ldrb    r2, [r2]
+    0x0800605E  8a 70        strb    r2, [r1, #2]
+    0x08006060  cb 70        strb    r3, [r1, #3]
+    0x08006062  09 68        ldr     r1, [r1]
+    0x08006064  c1 63        str     r1, [r0, #0x3c]
+  调用者: ['0x0800E9BC', '0x0801189E']
+
+  flash 参数页地址（0x0801F000/0x0801F800）的 literal 引用:
+    0x08009D48  ldr r1, [pc, #0x10]   ; 0x0801F000
+    0x0800FED8  ldr r0, [pc, #0x14]   ; 0x0801F800
+    0x0800FF12  ldr r1, [pc, #0x2c0]   ; 0x0801F000
+    0x080118BC  ldr r0, [pc, #0xc]   ; 0x0801F000
+
+  写 settings 区（strb 到基址）的代码点（不含 0x08005EF0 save builder）:
+    0x08003B02    53 74        strb    r3, [r2, #0x11]  <- [0x08003AEA]=0x20001086
+    0x0800541E    04 71        strb    r4, [r0, #4]  <- [0x0800541C]=0x20001086
+    0x080055EE    2f 70        strb    r7, [r5]  <- [0x080055E6]=0x20001086
+    0x080055F4    07 70        strb    r7, [r0]  <- [0x080055E6]=0x20001086
+    0x080055FE    2c 70        strb    r4, [r5]  <- [0x080055E6]=0x20001086
+    0x080056AC    2f 70        strb    r7, [r5]  <- [0x080056A4]=0x20001086
+    0x080056B0    04 70        strb    r4, [r0]  <- [0x080056A4]=0x20001086
+    0x080056BC    2c 70        strb    r4, [r5]  <- [0x080056A4]=0x20001086
+    0x080056BE    04 70        strb    r4, [r0]  <- [0x080056A4]=0x20001086
+    0x08006008    8c 70        strb    r4, [r1, #2]  <- [0x08006004]=0x20001086
+    0x0800600C    cc 70        strb    r4, [r1, #3]  <- [0x08006004]=0x20001086
+    0x08006014    0c 70        strb    r4, [r1]  <- [0x08006004]=0x20001086
+    0x08006018    4c 70        strb    r4, [r1, #1]  <- [0x08006004]=0x20001086
+    0x0800601C    8c 70        strb    r4, [r1, #2]  <- [0x08006004]=0x20001086
+    0x08006156    08 70        strb    r0, [r1]  <- [0x08006150]=0x20001086
+    0x08006168    02 70        strb    r2, [r0]  <- [0x08006150]=0x20001086
+    0x08006722    01 70        strb    r1, [r0]  <- [0x08006720]=0x20001086
+    0x08006724    42 70        strb    r2, [r0, #1]  <- [0x08006720]=0x20001086
+    0x08006726    81 70        strb    r1, [r0, #2]  <- [0x08006720]=0x20001086
+    0x08006728    c1 70        strb    r1, [r0, #3]  <- [0x08006720]=0x20001086
+    0x0800672A    c2 71        strb    r2, [r0, #7]  <- [0x08006720]=0x20001086
+    0x0800672C    01 72        strb    r1, [r0, #8]  <- [0x08006720]=0x20001086
+    0x0800672E    43 72        strb    r3, [r0, #9]  <- [0x08006720]=0x20001086
+    0x08006730    01 71        strb    r1, [r0, #4]  <- [0x08006720]=0x20001086
+    0x08006732    81 71        strb    r1, [r0, #6]  <- [0x08006720]=0x20001086
+    0x08006736    43 71        strb    r3, [r0, #5]  <- [0x08006720]=0x20001086
+    0x08006738    81 72        strb    r1, [r0, #0xa]  <- [0x08006720]=0x20001086
+    0x08008892    01 70        strb    r1, [r0]  <- [0x0800887E]=0x20001086
+    0x0800A6B2    02 70        strb    r2, [r0]  <- [0x0800A6AC]=0x20001086
+    0x0800A6B6    42 70        strb    r2, [r0, #1]  <- [0x0800A6AC]=0x20001086
+    0x0800A6BA    c2 70        strb    r2, [r0, #3]  <- [0x0800A6AC]=0x20001086
+    0x0800A6BE    02 71        strb    r2, [r0, #4]  <- [0x0800A6AC]=0x20001086
+    0x0800A6C2    02 72        strb    r2, [r0, #8]  <- [0x0800A6AC]=0x20001086
+    0x0800A6E2    0a 70        strb    r2, [r1]  <- [0x0800A6DE]=0x20001086
+    0x0800A6E6    8a 70        strb    r2, [r1, #2]  <- [0x0800A6DE]=0x20001086
+    0x0800A6EA    8a 72        strb    r2, [r1, #0xa]  <- [0x0800A6DE]=0x20001086
+    0x0800A6EE    4a 70        strb    r2, [r1, #1]  <- [0x0800A6DE]=0x20001086
+    0x0800A6F2    ca 70        strb    r2, [r1, #3]  <- [0x0800A6DE]=0x20001086
+    0x0800A6F6    ca 71        strb    r2, [r1, #7]  <- [0x0800A6DE]=0x20001086
+    0x0800E06E    77 71        strb    r7, [r6, #5]  <- [0x0800E06C]=0x20001086
+    0x0800FA6A    50 54        strb    r0, [r2, r1]  <- [0x0800FA64]=0x200010B0
+    0x0800FA72    60 70        strb    r0, [r4, #1]  <- [0x0800FA64]=0x200010B0
+    0x0800FAA2    10 54        strb    r0, [r2, r0]  <- [0x0800FA9C]=0x200010B0
+    0x0800FAC0    1e 54        strb    r6, [r3, r0]  <- [0x0800FAB0]=0x200010B0
+    0x0800FAC2    5c 54        strb    r4, [r3, r1]  <- [0x0800FAB0]=0x200010B0
+    0x0800FAC8    16 54        strb    r6, [r2, r0]  <- [0x0800FAB0]=0x200010B0
+    0x0800FB4E    04 71        strb    r4, [r0, #4]  <- [0x0800FB4C]=0x20001086
+    0x08010144    14 54        strb    r4, [r2, r0]  <- [0x08010138]=0x20001086
+    0x08010678    c2 71        strb    r2, [r0, #7]  <- [0x08010676]=0x20001086
+    0x08010688    05 70        strb    r5, [r0]  <- [0x08010676]=0x20001086
+    0x0801068C    08 70        strb    r0, [r1]  <- [0x08010676]=0x20001086
+    0x08010C52    68 71        strb    r0, [r5, #5]  <- [0x08010C48]=0x20001086
+    0x08011FD4    54 54        strb    r4, [r2, r1]  <- [0x08011FCA]=0x20001086
+    0x08012096    02 70        strb    r2, [r0]  <- [0x0801208C]=0x20001086
+    0x08012AB0    d8 72        strb    r0, [r3, #0xb]  <- [0x08012AAE]=0x20001086
+    0x08012AC2    30 70        strb    r0, [r6]  <- [0x08012AAE]=0x20001086
+    0x080132F4    d8 72        strb    r0, [r3, #0xb]  <- [0x080132F0]=0x20001086
+    0x080132FE    18 70        strb    r0, [r3]  <- [0x080132F0]=0x20001086
+    0x08013308    04 70        strb    r4, [r0]  <- [0x080132F0]=0x20001086
+    0x08014188    43 54        strb    r3, [r0, r1]  <- [0x08014182]=0x20001096
+    0x08014A3C    43 54        strb    r3, [r0, r1]  <- [0x08014A36]=0x20001096
+    0x080159C8    13 70        strb    r3, [r2]  <- [0x080159C4]=0x20001086
+    0x080159CC    53 70        strb    r3, [r2, #1]  <- [0x080159C4]=0x20001086
+    0x080159D4    93 70        strb    r3, [r2, #2]  <- [0x080159C4]=0x20001086
+    0x080159D8    d3 70        strb    r3, [r2, #3]  <- [0x080159C4]=0x20001086
+    0x080159DC    13 71        strb    r3, [r2, #4]  <- [0x080159C4]=0x20001086
+
+==============================================================================
+4. 可复用 C.Fn 开关项评估与推荐（含 mask / hook 方案）
+==============================================================================
+推荐排序（item 号 = settings 索引，F 号 = item+1）:
+  item2  F3  STBY     : 首选：F3 STBY；默认 0=普通、显示 OFF/ON；唯一功能读者 0x080124DC，mask 成 movs r0,#0 即恢复出厂待机行为；不涉及 RF/闪光/GPIO 输出
+  item3  F4  RX STBY  : 次选：F4 RX STBY；默认 0；唯一功能读者 0x08012528，mask 后仅影响待机超时阈值；与 F3 同一待机任务，改动更局部
+  item0  F1  m/ft     : 低风险但 UX 差：F1 m/ft 只有显示读者 0x0800744E/0x08015D56，无硬件动作；但菜单显示 m/ft 而非 ON/OFF，作为开关不直观
+  item8  F9  LIGHT    : 可用：F9 LIGHT；默认 0；应用读者 0x080036D4 需 mask；max=2（多一个状态），且会失去原厂造型灯 C.Fn 功能
+  item10 F11 FEB ACL  : 待定：F11 FEB ACL；默认 0；读者 0x08005548 的语义未完全定性，暂不推荐
+  item4  F5  SCAN     : 不推荐：F5 SCAN；默认 0，但 0x08012058 改值到 1 会触发扫描，0x0800FB2C/0x080053F4 会把 settings[4] 写回 0（密钥标志会被自清）
+  item1  F2  AF       : 不推荐：F2 AF；默认 1，需反相语义（0=KEY）并 mask 0x08003654，且与 AF 辅助灯冲突
+  item7  F8  BEEP     : 不推荐：F8 BEEP；默认 1；读者最多（16 处：应用 0x08003AE8 + 多路 UI/按键/显示），且 V1C 的 item7 不是 AD200 的稳定色温设置
+  item11 F12 TX       : 不推荐：F12 TX；默认 1，0x200004F5 镜像被 RF/UI 多处读取，语义风险高
+  item5  F6  CH       : 不适合：F6 CH；max 31、默认 20，非 0/1（射频频道）
+  item6  F7  ID       : 不适合：F7 ID；这是当前设计的开关项，用户要求不再用 ID
+  item9  F10 LCD      : 不适合：F10 LCD；max 6、默认 3，非 0/1（LCD 亮度/对比度）
+
+★ 首选 item2 = F3 STBY（默认 0；菜单显示 OFF/ON）
+  需 mask 的功能读者（2B ldrb -> movs，恢复出厂默认行为）:
+    0x080124DC  原厂 90 78    -> 00 20     ldrb r0,[r2,#2] -> movs r0,#0（STBY=1 时不再关闭自动待机定时器）
+  保留（不 mask）的读者：
+    * 菜单渲染 0x08004B4E/0x08004B5E：显示 F3 的 ON/OFF（用户需要看到开关状态）
+    * save 0x08006012 / load 0x080159D4：持久化（必须保留）
+    * A6AC/A6DC 0x0800A6B4/0x0800A6E6：与 0x20001070 紧凑结构互拷（无线设置同步，风险见下）
+
+  立即生效 hook（代码洞 0x08017944，10 字节）：
+    1f b5 80 79 fa f7 38 fc 1f bd
+    等价 C：push {r0-r4,lr}; r0 = settings[6]; rf_sync(id); pop {r0-r4,pc}
+  函数门兜底（原厂 4B cmp/beq -> 4B bl hook）:
+    0x0800625C  原厂 06 29 08 d0 (当前 06 29 08 d0) -> 11 f0 72 fb  dec 处理 0x0800625C: cmp r1,#6; beq -> bl hook
+    0x0800D46E  原厂 06 29 07 d0 (当前 06 29 07 d0) -> 0a f0 69 fa  inc 处理 0x0800D46E: cmp r1,#6; beq -> bl hook
+
+  说明：hook 在每次 C.Fn 改值（dec/inc 的改值分支）无条件调用同步字函数；
+  原厂 ID(item6) 改值立即同步的行为保留；chosen item 改值也立即同步。
+  hook 入口 r0=settings 基址（0x0800625C / 0x0800D46E 已用 CFG+数据流确认），
+  故可直接 ldrb r0,[r0,#6] 取 ID，无需额外字面量。
+
+  风险：item2 属于 A6AC/A6DC 的无线设置紧凑结构（settings[2] <-> 0x20001071），
+  触发器等外部设置同步可能覆盖密钥标志；同理 0x0800DCDC 会写 settings[1..11]。
+  需要 Lead 在模拟/真机验证该路径；必要时把对应写点也 mask 为保留 bit。
+
+==============================================================================
+5. 代码洞（死区）验证：0x08017944 / 0x08017D28 + 其它 >=32B 全 0 区
+==============================================================================
+全镜像 >=16 字节连续 0x00 段（按长度前 25）:
+  文件 0x14944  地址 0x08017944  234 字节
+  文件 0x14D28  地址 0x08017D28  222 字节
+  文件 0x1449E  地址 0x0801749E  57 字节
+  文件 0x13F0A  地址 0x08016F0A  36 字节
+  文件 0x13F42  地址 0x08016F42  29 字节
+  文件 0x00010  地址 0x08003010  28 字节
+  文件 0x139A0  地址 0x080169A0  26 字节
+  文件 0x13B6E  地址 0x08016B6E  26 字节
+  文件 0x139C2  地址 0x080169C2  25 字节
+  文件 0x14478  地址 0x08017478  23 字节
+  文件 0x139E6  地址 0x080169E6  22 字节
+  文件 0x13775  地址 0x08016775  20 字节
+  文件 0x13A2C  地址 0x08016A2C  18 字节
+  文件 0x13D01  地址 0x08016D01  18 字节
+  文件 0x1383E  地址 0x0801683E  17 字节
+  文件 0x13758  地址 0x08016758  16 字节
+  文件 0x1379A  地址 0x0801679A  16 字节
+  文件 0x137BB  地址 0x080167BB  16 字节
+  文件 0x137DC  地址 0x080167DC  16 字节
+  文件 0x137FD  地址 0x080167FD  16 字节
+  文件 0x1381E  地址 0x0801681E  16 字节
+  文件 0x13860  地址 0x08016860  16 字节
+  文件 0x13881  地址 0x08016881  16 字节
+  文件 0x13968  地址 0x08016968  16 字节
+  文件 0x13989  地址 0x08016989  16 字节
+
+候选 0x08017944 (文件偏移 0x14944, 期望长 234):
+  全 0=True；实际连续 0 区 0x08017944..0x08017A2E (234 字节)
+  BL 目标落入: []
+  分支目标落入: []
+  ldr 字面量指向: []
+  全镜像 u32 绝对地址指向区间: 0 处 []
+  (thumb 变体扫描命中 0 处)
+  => 可用作注入区（无任何引用）
+  hook 需要 10 字节，本区可用 234 字节：足够
+候选 0x08017D28 (文件偏移 0x14D28, 期望长 222):
+  全 0=True；实际连续 0 区 0x08017D28..0x08017E06 (222 字节)
+  BL 目标落入: []
+  分支目标落入: []
+  ldr 字面量指向: []
+  全镜像 u32 绝对地址指向区间: 0 处 []
+  (thumb 变体扫描命中 0 处)
+  => 可用作注入区（无任何引用）
+
+其它 >=32B 全 0 区可用性（无任何引用者，最多列 5 个）:
+  0x08017944 (文件 0x14944)  234 字节  可用
+  0x08017D28 (文件 0x14D28)  222 字节  可用
+
+hook 静态复核（在 0x08017944 处解码）：
+  0x08017944  1f b5        push   {r0, r1, r2, r3, r4, lr}
+  0x08017946  80 79        ldrb   r0, [r0, #6]
+  0x08017948  fa f7 38 fc  bl     #0x80121bc
+  0x0801794C  1f bd        pop    {r0, r1, r2, r3, r4, pc}
+  hook 长度 10 B；BL 目标 = ['0x080121BC']
+  等价 C：push {r0-r4,lr}; ldrb r0,[r0,#6]; bl 0x080121BC; pop {r0-r4,pc}
+
+==============================================================================
+汇总
+==============================================================================
+[PASS] C.Fn 最大值表 0x08018362 与 Lead 给定 12 字节一致
+[PASS] C.Fn 项数 12（0..0xB）
+[PASS] 最大值表与 V1 说明书项序对齐：item5=CH(max31)、item6=ID(max99)
+[PASS] item7=max1、item8=max2、item9=max6
+[PASS] 出厂默认 settings[2]=0（item2 STBY 默认普通模式）
+[PASS] 代码洞 0x08017944..0x08017A2D (234 B) 全 0 且无 BL/分支/字面量/u32 引用
+[PASS] 代码洞 0x08017D28..0x08017E05 (222 B) 全 0 且无 BL/分支/字面量/u32 引用
+[PASS] hook 门 0x0800625C 原厂字节 06 29 08 d0（实际 06 29 08 d0）
+[PASS] hook 门 0x0800D46E 原厂字节 06 29 07 d0（实际 06 29 07 d0）
+[PASS] mask 点 0x080124DC 原厂字节 90 78（实际 90 78）
+[PASS] 注入 hook 10B 可反汇编，BL 目标 = 0x080121BC
+[PASS] hook 门 0x0800625C 处 r0 = settings 基址 0x20001086（数据流确认）
+[PASS] hook 门 0x0800D46E 处 r0 = settings 基址 0x20001086（数据流确认）
+[PASS] settings 访问点扫描数量 149（>=100）
+[PASS] item2 存在静态读者（用于菜单显示/持久化）
+
+检查项: 15   PASS: 15   FAIL: 0
+结论: PASS（C.Fn 子系统分析完成，关键结构自洽）

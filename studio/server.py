@@ -101,10 +101,14 @@ def _suggest_key(bad: int | None) -> int:
 # --------------------------------------------------------------------------- #
 # 设备注册表
 # --------------------------------------------------------------------------- #
+# 兜底元数据：仅在 keypatch/devices/<id>.py 的 DEVICE 缺少 kind/model/firmware_version 时使用。
+# 正常情况下设备元数据优先来自设备模块（devices.list_devices()），这里只是老模块的补齐表。
 _FALLBACK_META = {
     "ad100": {"kind": "flash", "model": "AD100 Pro", "firmware_version": "V1.2"},
     "ad200": {"kind": "flash", "model": "AD200 Pro", "firmware_version": "V1.60"},
     "x3c": {"kind": "trigger", "model": "X3-C", "firmware_version": "V1.38"},
+    "x3pros": {"kind": "trigger", "model": "X3 Pro S", "firmware_version": "V1.11"},
+    "x2ts": {"kind": "trigger", "model": "X2T-S", "firmware_version": "V1.4"},
 }
 
 
@@ -148,6 +152,7 @@ def _device_rows() -> list[dict]:
         expected = info.get("sha256")
         matches = bool(present and expected and actual == expected)
         base = info.get("base")
+        container_builtin = bool(info.get("container_builtin"))
         rows.append({
             "id": device_id,
             "name": info.get("name", device_id),
@@ -165,9 +170,11 @@ def _device_rows() -> list[dict]:
                 "sha256": actual,
                 "matches": matches,
             },
+            # 原厂文件即 G3 V2.0 容器（如 X2T-C）：输出已内嵌容器，不再二次打包
+            "container_builtin": container_builtin,
             "features": {
                 "verify": hasattr(mod, "verify"),
-                "container": g3_container is not None,
+                "container": (g3_container is not None) and (not container_builtin),
             },
         })
     return rows
@@ -323,7 +330,13 @@ def api_generate(payload: dict, builds_dir: str) -> dict:
                 common.write_file(dst_path, patched)
 
                 extra_files = []
-                if want_container:
+                verify_results = []
+                warnings = []
+                if want_container and info.get("container_builtin"):
+                    # 该设备原厂固件本身就是 G3 V2.0 容器（如 X2T-C）：apply() 已就地
+                    # 重算 MD5，再包一层会把容器 footer 当 payload 刷进 Flash，必须跳过。
+                    warnings.append("固件本身即 G3 V2.0 容器，已内嵌容器信息（无需再打包容器）")
+                elif want_container:
                     cname = info.get("container_name") or (
                         (fname[:-4] if fname.lower().endswith(".bin") else fname) + "_container.bin")
                     cname = os.path.basename(cname.format(key=key))
@@ -331,8 +344,6 @@ def api_generate(payload: dict, builds_dir: str) -> dict:
                     common.write_file(os.path.join(build_dir, cname), cdata)
                     extra_files.append(cname)
 
-                verify_results = []
-                warnings = []
                 if do_verify:
                     verifier = getattr(mod, "verify", None)
                     if verifier is None:
