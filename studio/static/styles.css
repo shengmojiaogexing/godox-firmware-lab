@@ -2329,6 +2329,131 @@ details.detail[open] > summary svg { transform: rotate(180deg); }
 }
 
 /* ---------- 动效偏好 ---------- */
+/* ============================================================
+   分步向导：一次只显示当前步骤
+   ============================================================ */
+.wizard-step {
+  display: block;
+  animation: wiz-in 0.28s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.wizard-step[hidden] { display: none !important; }
+
+@keyframes wiz-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* 步骤内的导航条 */
+.wizard-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.012));
+}
+
+.wizard-nav-hint {
+  font-size: 12.5px;
+  color: var(--ink-3);
+  letter-spacing: 0.01em;
+}
+
+.wizard-nav .btn { min-height: 40px; }
+
+.wizard-nav .btn-primary {
+  justify-content: center;
+}
+
+.wizard-nav .btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+}
+
+/* 步骤 2 里的生成按钮在全宽时更醒目 */
+.wizard-step.is-current .workbench-side .btn-generate {
+  width: 100%;
+}
+
+/* 生成历史收进抽屉，避免首屏过长 */
+.history-drawer {
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.014);
+  overflow: hidden;
+}
+
+.history-drawer > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px 20px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.history-drawer > summary::-webkit-details-marker { display: none; }
+
+.history-drawer > summary > span:first-child {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.history-drawer > summary b {
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.history-drawer > summary small {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.history-drawer > summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-right: 1.6px solid var(--ink-3);
+  border-bottom: 1.6px solid var(--ink-3);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+.history-drawer[open] > summary::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
+
+.history-drawer > summary:hover { background: rgba(255, 255, 255, 0.022); }
+
+.history-drawer[open] > summary { border-bottom: 1px solid var(--line); }
+
+.history-drawer > #panel-history {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .wizard-nav { flex-direction: column-reverse; align-items: stretch; }
+  .wizard-nav .btn { width: 100%; justify-content: center; }
+  .wizard-nav-hint { text-align: center; }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

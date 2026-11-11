@@ -97,7 +97,8 @@
     build: null,
     history: [],
     historyExpanded: false,
-    mockBuilds: []
+    mockBuilds: [],
+    wizardStep: 1
   };
 
   var els = {};
@@ -392,7 +393,8 @@
       els.keyTarget.classList.toggle('is-ready', n > 0);
     }
     updateGroupPicks();
-    updateFlow();
+    syncWizardGates();
+    syncFlowToWizard();
   }
 
   /* 设备分组头的「已选 x / y」计数 */
@@ -734,6 +736,7 @@
       els.btnGenerate.classList.toggle('spinning', on);
     }
     if (els.generateLabel) els.generateLabel.textContent = on ? '正在生成…' : '生成并导出';
+    syncWizardGates();
   }
 
   function renderProgress() {
@@ -772,6 +775,7 @@
     if (!state.key.valid) { toast('warning', '密钥不合法', '请输入合法的 4 位十六进制密钥。'); return; }
     setGenerating(true);
     renderProgress();
+    gotoStep(3, { silent: true });
     var body = {
       key: state.key.hex,
       devices: Array.from(state.selected),
@@ -783,7 +787,8 @@
       state.build = data.build;
       renderBuild(data.build);
       loadHistory();
-      toast('success', '固件生成完成', data.build.files.length + ' 个文件，点击卡片右侧下载。');
+      gotoStep(3);
+      toast('success', '固件生成完成', data.build.files.length + ' 个文件，向下查看下载与刷写步骤。');
     }).catch(function (err) {
       if (state._progressTimer) clearInterval(state._progressTimer);
       renderGenerateError(err);
@@ -1173,6 +1178,91 @@
   }
 
   /* ------------------------------------------------------------ 事件 */
+  /* ------------------------------------------------------- 分步向导 */
+  /* 一次只显示当前步骤：
+       1 选择设备 → 2 设置密钥与选项 → 3 导出与刷写
+     步骤是「显示层」的切换，所有 data-testid 元素始终存在于 DOM，
+     只是被 hidden 隐藏，便于自动化测试与无障碍读屏。 */
+  var WIZ_TOTAL = 3;
+
+  function wizStepEl(n) { return document.querySelector('[data-wiz-step="' + n + '"]'); }
+
+  function gotoStep(n, opts) {
+    opts = opts || {};
+    n = Math.max(1, Math.min(WIZ_TOTAL, Number(n) || 1));
+    state.wizardStep = n;
+    for (var i = 1; i <= WIZ_TOTAL; i += 1) {
+      var el = wizStepEl(i);
+      if (!el) continue;
+      var isCur = i === n;
+      el.hidden = !isCur;
+      el.classList.toggle('is-current', isCur);
+    }
+    syncWizardGates();
+    syncFlowToWizard();
+    if (!opts.silent) {
+      var cur = wizStepEl(n);
+      if (cur && cur.scrollIntoView) {
+        try { cur.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) { cur.scrollIntoView(); }
+      }
+    }
+    if (n === 2 && els.keyInput && opts.focusKey) {
+      try { els.keyInput.focus(); } catch (e) { /* noop */ }
+    }
+  }
+
+  /* 每步的前进条件：不满足时禁用「下一步」 */
+  function syncWizardGates() {
+    var n = state.selected.size;
+    var keyOk = !!(state.key && state.key.valid);
+    var next1 = document.querySelector('[data-wiz-next="1"]');
+    if (next1) {
+      next1.disabled = n === 0;
+      next1.textContent = n === 0 ? '请先选择设备' : ('下一步：设置密钥（已选 ' + n + ' 台）');
+    }
+    var hint2 = $('wiz2-hint');
+    if (hint2) {
+      if (state.generating) hint2.textContent = '正在生成，请稍候…';
+      else if (!keyOk) hint2.textContent = '填入合法的 4 位十六进制密钥后才能生成';
+      else if (n === 0) hint2.textContent = '还没有选择设备，请回到上一步勾选';
+      else hint2.textContent = '就绪：点击「生成并导出」开始打补丁';
+    }
+  }
+
+  /* 顶部流程条跟随当前步骤 */
+  function syncFlowToWizard() {
+    var s = state.wizardStep || 1;
+    setFlowStep(els.stepDevices, s > 1, s === 1);
+    setFlowStep(els.stepKey, s > 2, s === 2);
+    setFlowStep(els.stepBuild, s === 3 && !!state.build, s === 3 && !state.build);
+  }
+
+  function bindWizard() {
+    document.addEventListener('click', function (ev) {
+      var t = ev.target;
+      if (!t || !t.closest) return;
+      var next = t.closest('[data-wiz-next]');
+      if (next) {
+        ev.preventDefault();
+        gotoStep(Number(next.getAttribute('data-wiz-next')) + 1, { focusKey: true });
+        return;
+      }
+      var back = t.closest('[data-wiz-back]');
+      if (back) {
+        ev.preventDefault();
+        gotoStep(Number(back.getAttribute('data-wiz-back')));
+        return;
+      }
+      var restart = t.closest('[data-wiz-restart]');
+      if (restart) {
+        ev.preventDefault();
+        state.build = null;
+        gotoStep(1);
+        toast('info', '已重新开始', '可以重新选择设备与密钥。');
+      }
+    });
+  }
+
   function bindEvents() {
     if (els.btnRefresh) els.btnRefresh.addEventListener('click', function () {
       els.btnRefresh.classList.add('spinning');
@@ -1479,6 +1569,8 @@
     };
 
     bindEvents();
+    bindWizard();
+    gotoStep(1, { silent: true });
     document.documentElement.classList.remove('booting');
     renderKeyRules(mockRules());
 

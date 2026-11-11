@@ -144,6 +144,8 @@
       </ol>
     </section>
 
+    <!-- 步骤 01：选择设备 -->
+    <section class="wizard-step" id="wiz-step-1" data-wiz-step="1" aria-labelledby="devices-title">
     <section class="panel panel-devices" id="panel-devices" aria-labelledby="devices-title">
       <header class="panel-head">
         <div class="panel-title">
@@ -162,6 +164,14 @@
       <div class="devices-grid" id="devices-grid" data-testid="device-grid" aria-live="polite"></div>
       <div class="empty hidden" id="devices-empty"></div>
     </section>
+    <nav class="wizard-nav" data-wiz-nav="1" aria-label="步骤 1 导航">
+      <a class="btn btn-ghost btn-sm" href="#panel-history">查看生成历史</a>
+      <button class="btn btn-primary" type="button" data-wiz-next="1" disabled>下一步：设置密钥</button>
+    </nav>
+    </section>
+
+    <!-- 步骤 02：设置密钥 -->
+    <section class="wizard-step" id="wiz-step-2" data-wiz-step="2" aria-labelledby="key-title" hidden>
 
     <div class="workbench">
       <div class="workbench-main">
@@ -293,8 +303,16 @@
         </section>
       </aside>
     </div>
+    <nav class="wizard-nav" data-wiz-nav="2" aria-label="步骤 2 导航">
+      <button class="btn btn-ghost btn-sm" type="button" data-wiz-back="1">← 上一步：选择设备</button>
+      <span class="wizard-nav-hint" id="wiz2-hint">填入合法密钥后，点右侧「生成并导出」</span>
+    </nav>
+    </section>
 
-    <section class="panel hidden" id="panel-result" data-testid="results" aria-labelledby="result-title" aria-live="polite">
+    <!-- 步骤 03：导出与刷写 -->
+    <section class="wizard-step" id="wiz-step-3" data-wiz-step="3" aria-labelledby="result-title" hidden>
+
+    <section class="panel" id="panel-result" data-testid="results" aria-labelledby="result-title" aria-live="polite">
       <header class="panel-head">
         <div class="panel-title">
           <span class="panel-icon accent-ok" aria-hidden="true">
@@ -309,7 +327,17 @@
         <div class="panel-actions" id="result-actions"></div>
       </header>
       <div id="result-root"></div>
+      <nav class="wizard-nav" data-wiz-nav="3" aria-label="步骤 3 导航">
+        <button class="btn btn-ghost btn-sm" type="button" data-wiz-back="2">← 返回修改密钥</button>
+        <button class="btn btn-soft btn-sm" type="button" data-wiz-restart="1">重新开始</button>
+      </nav>
     </section>
+    </section>
+
+    <details class="history-drawer" id="history-drawer">
+      <summary>
+        <span><b>生成历史</b><small>展开查看最近生成记录，可再次下载</small></span>
+      </summary>
 
     <section class="panel" id="panel-history" aria-labelledby="history-title">
       <header class="panel-head">
@@ -332,6 +360,7 @@
       </header>
       <div id="history-root"></div>
     </section>
+    </details>
   </main>
 
   <footer class="footer">

@@ -237,6 +237,22 @@ async function main() {
   const selected = await evalJs('document.querySelectorAll("[data-testid=\\"device-select\\"]:checked").length');
   check('可以勾选设备', selected >= 1, '已选 ' + selected);
 
+  // 分步向导：勾选设备后进入「02 设置密钥」步骤，密钥区才会显示
+  const toStep2 = await evalJs(`(() => {
+    const btn = document.querySelector('[data-wiz-next="1"]');
+    if (!btn || btn.disabled) return false;
+    btn.click();
+    return true;
+  })()`);
+  await sleep(500);
+  check('可以进入密钥步骤', toStep2);
+  const step2Shown = await evalJs(`(() => {
+    const s1 = document.querySelector('[data-wiz-step="1"]');
+    const s2 = document.querySelector('[data-wiz-step="2"]');
+    return !!s1 && !!s2 && s1.hidden === true && s2.hidden === false;
+  })()`);
+  check('一次只显示当前步骤', step2Shown);
+
   // 输入密钥（走原生 setter + input 事件）
   await evalJs(`(() => {
     const el = document.querySelector('[data-testid="key-input"]');
@@ -247,7 +263,7 @@ async function main() {
     el.dispatchEvent(new Event('change', { bubbles: true }));
     return true;
   })()`);
-  await sleep(800);
+  await sleep(1200);
   const keyValue = await evalJs('document.querySelector("[data-testid=\\"key-input\\"]")?.value');
   check('密钥输入可用', String(keyValue || '').includes('D798'), String(keyValue));
   const syncText = await evalJs('document.body.innerText');
