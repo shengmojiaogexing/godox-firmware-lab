@@ -98,3 +98,6 @@ devices/*/out/**/functions.meta.json
 devices/*/out/**/periph_map.json
 devices/*/out/decompiled/**
 devices/*/re/ghidra_exports/
+
+# ---------- 本地临时工作目录 ----------
+work/
