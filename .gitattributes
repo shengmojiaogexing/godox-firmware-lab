@@ -1,4 +1,4 @@
-﻿* text=auto
+* text=auto
 *.bat text eol=crlf
 *.cmd text eol=crlf
 *.ps1 text eol=crlf
@@ -11,3 +11,41 @@
 *.exe binary
 *.dll binary
 *.pyd binary
+
+# ---------------------------------------------------------------------------
+# GitHub 语言统计排除规则（linguist）
+# 下面这些是逆向工具自动产出的文件，不是本项目手写源码，
+# 标记为 generated 后不计入仓库的语言构成比例（文件仍保留在仓库中）。
+# ---------------------------------------------------------------------------
+
+# Ghidra 全量导出（反编译 C、函数表、字符串、交叉引用等）
+devices/*/re/ghidra_exports/** linguist-generated=true
+devices/*/re/**/*.c linguist-generated=true
+devices/*/re/**/*.csv linguist-generated=true
+devices/*/re/**/*.tsv linguist-generated=true
+devices/*/re/**/*.txt linguist-generated=true
+devices/*/re/**/*.log linguist-generated=true
+
+# capstone / 脚本生成的伪 C 与反汇编产物
+devices/*/out/** linguist-generated=true
+devices/*/decompiled/** linguist-generated=true
+keypatch/out/** linguist-generated=true
+
+# 逆向分析导出的数据（函数表 / 外设映射 / 字符串转储）
+devices/*/re/** linguist-generated=true
+devices/*/emu/**/*.png linguist-generated=true
+keypatch/dev/**/*.png linguist-generated=true
+keypatch/dev/**/*.csv linguist-generated=true
+keypatch/dev/**/*.log linguist-generated=true
+
+# 模拟器导出、日志与调试转储
+**/lcd_out/** linguist-generated=true
+**/*_disasm.txt linguist-generated=true
+**/disasm*.txt linguist-generated=true
+**/log_*.txt linguist-generated=true
+**/strings*.txt linguist-generated=true
+
+# 文档与资产不计入语言统计
+*.md linguist-documentation
+docs/images/** linguist-documentation
+devices/*/docs/** linguist-documentation
