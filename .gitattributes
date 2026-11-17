@@ -57,3 +57,6 @@ devices/*/out/*/*.json linguist-generated=true
 *.md linguist-documentation
 *.png linguist-documentation
 *.svg linguist-documentation
+
+# --- 自动反编译产物已从仓库移除（见 .gitignore 与 LEGAL.md）---
+# 以下规则保留作为兜底：即使本机重新生成，也不计入语言统计。

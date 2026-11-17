@@ -84,7 +84,7 @@ sync = 你的 16 位私有密钥       # 例如 0xD798
 | 🧬 **原位补丁** | 输出固件与原厂**长度完全一致**，官方 G3 升级软件可直接刷写；原厂文件不被修改 |
 | 📱 **13 台设备** | 覆盖 X3 / X3 Pro / X2T / V1 / V860III / AD 系列，模板化接入新设备 |
 | 🔬 **离线验证** | 生成时用 Unicorn 实际执行补丁后的机器码，配合静态检查与 sha256 校验，给出 PASS/FAIL |
-| 📚 **逆向档案** | 反汇编、伪 C、外设映射、2.4 GHz 协议分析、函数表、启动链报告 |
+| 📚 **逆向档案** | 手写的协议分析、外设映射、补丁规格与验证记录（不含自动反编译产物） |
 | 🐞 **模拟调试** | 部分设备附带 Unicorn 模拟器与网页调试器，可运行真实固件、还原屏幕、注入按键/射频 |
 | 🔁 **可回滚** | 不修改原厂固件，重新刷入原版即可恢复出厂状态 |
 | 🧪 **有测试** | API 16 项 + 无头浏览器 UI 17 项回归，CI 自动执行 |
@@ -287,7 +287,7 @@ godox-firmware-lab/
 <details>
 <summary><b>X3 系列（引闪器）</b></summary>
 
-- `devices/x3c/` —— Ghidra 全量导出、Unicorn 模拟器、浏览器调试界面
+- `devices/x3c/` —— Unicorn 模拟器、浏览器调试界面、手写逆向笔记（Ghidra 导出需自行生成）
 - `devices/x3pro/` —— 长按 PA6 切换密钥模式（RAM 版），KEY + 原厂同步字帧双发
 - `devices/x3pros/` —— ID=99 密钥模式，KEY + ID99 双发
 - `devices/x3s/` —— 机内开关 + 双发核心
@@ -312,7 +312,7 @@ godox-firmware-lab/
 <details>
 <summary><b>AD 系列（闪光灯）</b></summary>
 
-- `devices/ad100pro/` —— 1199 函数反汇编/伪 C、OLED 位流模拟、Web 调试器
+- `devices/ad100pro/` —— OLED 位流模拟、Web 调试器、人工重建的核心函数伪 C
 - `devices/ad200pro/` —— 模拟器 + CLI/Web 调试器 + 自动测试
 - `devices/ad300pro/` —— C.Fn `F8` 开关、11 处补丁规格、verify 47 项
 </details>

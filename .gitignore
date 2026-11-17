@@ -82,3 +82,19 @@ scripts/*.local.ps1
 gcm-diagnose.log
 *.pem
 sshask/
+
+# ---------- 自动反编译产物（不入库，仅本机生成）----------
+# 这些是 Ghidra / Capstone 从厂商固件自动导出的内容，
+# 不属于本项目原创作品，且公开传播存在法律风险，故不纳入仓库。
+devices/*/re/**/*.c
+devices/*/re/**/*.csv
+devices/*/re/**/*.tsv
+devices/*/re/**/*.txt
+devices/*/re/**/*.json
+devices/*/out/**/*.c
+devices/*/out/**/disasm.txt
+devices/*/out/**/functions.json
+devices/*/out/**/functions.meta.json
+devices/*/out/**/periph_map.json
+devices/*/out/decompiled/**
+devices/*/re/ghidra_exports/

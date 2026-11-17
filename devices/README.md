@@ -40,7 +40,7 @@ devices/<设备>/
 ├─ firmware/            # ★ 原厂固件放这里（*.bin 被 .gitignore 忽略，仅本机）
 │  └─ README.md         #   记录固件来源、版本、sha256（这个会入库）
 ├─ docs/                #   逆向报告、内存映射、外设、协议、UI 等文档
-├─ re/                  #   反汇编 / 伪 C / Ghidra 导出 / 函数表（可选）
+├─ re/                  #   手写逆向分析笔记（自动反编译产物不入库）
 ├─ analysis/            #   静态分析流水线产物（可选）
 ├─ emu/ 或 sim/         #   Unicorn 模拟器 + Web 调试界面（可选）
 ├─ tools/  tests/       #   分析脚本与自动测试（可选）
