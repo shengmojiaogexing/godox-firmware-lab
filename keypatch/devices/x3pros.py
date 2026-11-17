@@ -79,7 +79,7 @@ import common  # noqa: E402
 # ---------------------------------------------------------------------------
 DEVICE = {
     "id": "x3pros",
-    "name": "Godox X3 Pro (X3 Pro trigger, S)",
+    "name": "Godox X3 Pro S",
     "image": "devices/x3pros/firmware/X3pro_S_v1.11_app.bin",
     "kind": "trigger",                       # trigger=引闪器 / flash=闪光灯
     "model": "X3 Pro S",
