@@ -32,11 +32,21 @@ devices/*/decompiled/** linguist-generated=true
 keypatch/out/** linguist-generated=true
 
 # 逆向分析导出的数据（函数表 / 外设映射 / 字符串转储）
-devices/*/re/** linguist-generated=true
+# 注意：只排除产出物，不排除手写的 *.py 分析脚本
+devices/*/re/**/*.c linguist-generated=true
+devices/*/re/**/*.csv linguist-generated=true
+devices/*/re/**/*.tsv linguist-generated=true
+devices/*/re/**/*.txt linguist-generated=true
+devices/*/re/**/*.log linguist-generated=true
+devices/*/re/**/*.json linguist-generated=true
+devices/*/re/**/*.out linguist-generated=true
+devices/*/ghidra_exports/** linguist-generated=true
 devices/*/emu/**/*.png linguist-generated=true
 keypatch/dev/**/*.png linguist-generated=true
 keypatch/dev/**/*.csv linguist-generated=true
 keypatch/dev/**/*.log linguist-generated=true
+keypatch/dev/**/*.txt linguist-generated=true
+keypatch/dev/**/*.tsv linguist-generated=true
 
 # 模拟器导出、日志与调试转储
 **/lcd_out/** linguist-generated=true
