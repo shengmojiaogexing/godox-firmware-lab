@@ -12,50 +12,48 @@
 *.dll binary
 *.pyd binary
 
-# ---------------------------------------------------------------------------
+# ===========================================================================
 # GitHub 语言统计排除规则（linguist）
-# 下面这些是逆向工具自动产出的文件，不是本项目手写源码，
-# 标记为 generated 后不计入仓库的语言构成比例（文件仍保留在仓库中）。
-# ---------------------------------------------------------------------------
+#
+# 以下文件是逆向工具自动产出的（Ghidra 反编译 C、capstone 伪 C、函数表、
+# 字符串转储等），并非本项目手写源码。标记为 generated 后不计入语言构成，
+# 文件本身仍保留在仓库中。
+#
+# 关键：只按扩展名排除产出物，绝不整目录排除，
+# 因为 devices/*/re/ 下同时存在手写的 .py 分析脚本，必须计入统计。
+# linguist 的 glob 不能跨目录用 `**`，故用 `*` 逐级列出。
+# ===========================================================================
 
-# Ghidra 全量导出（反编译 C、函数表、字符串、交叉引用等）
-devices/*/re/ghidra_exports/** linguist-generated=true
-devices/*/re/**/*.c linguist-generated=true
-devices/*/re/**/*.csv linguist-generated=true
-devices/*/re/**/*.tsv linguist-generated=true
-devices/*/re/**/*.txt linguist-generated=true
-devices/*/re/**/*.log linguist-generated=true
+# --- Ghidra / capstone 反编译产物：C 源码 ---
+devices/*/re/*.c linguist-generated=true
+devices/*/re/*/*.c linguist-generated=true
+devices/*/re/*/*/*.c linguist-generated=true
+devices/*/re/*/*/*/*.c linguist-generated=true
+devices/*/re/*/*/*/*/*.c linguist-generated=true
+devices/*/out/*.c linguist-generated=true
+devices/*/out/*/*.c linguist-generated=true
+devices/*/out/*/*/*.c linguist-generated=true
+devices/*/decompiled/*.c linguist-generated=true
+devices/*/decompiled/*/*.c linguist-generated=true
+keypatch/out/*.c linguist-generated=true
 
-# capstone / 脚本生成的伪 C 与反汇编产物
-devices/*/out/** linguist-generated=true
-devices/*/decompiled/** linguist-generated=true
-keypatch/out/** linguist-generated=true
+# --- 逆向导出的数据文件（函数表 / 外设映射 / 字符串转储）---
+devices/*/re/*.txt linguist-generated=true
+devices/*/re/*/*.txt linguist-generated=true
+devices/*/re/*/*/*.txt linguist-generated=true
+devices/*/re/*.csv linguist-generated=true
+devices/*/re/*/*.csv linguist-generated=true
+devices/*/re/*.tsv linguist-generated=true
+devices/*/re/*/*.tsv linguist-generated=true
+devices/*/re/*.json linguist-generated=true
+devices/*/re/*/*.json linguist-generated=true
+devices/*/out/*.json linguist-generated=true
+devices/*/out/*/*.json linguist-generated=true
 
-# 逆向分析导出的数据（函数表 / 外设映射 / 字符串转储）
-# 注意：只排除产出物，不排除手写的 *.py 分析脚本
-devices/*/re/**/*.c linguist-generated=true
-devices/*/re/**/*.csv linguist-generated=true
-devices/*/re/**/*.tsv linguist-generated=true
-devices/*/re/**/*.txt linguist-generated=true
-devices/*/re/**/*.log linguist-generated=true
-devices/*/re/**/*.json linguist-generated=true
-devices/*/re/**/*.out linguist-generated=true
-devices/*/ghidra_exports/** linguist-generated=true
-devices/*/emu/**/*.png linguist-generated=true
-keypatch/dev/**/*.png linguist-generated=true
-keypatch/dev/**/*.csv linguist-generated=true
-keypatch/dev/**/*.log linguist-generated=true
-keypatch/dev/**/*.txt linguist-generated=true
-keypatch/dev/**/*.tsv linguist-generated=true
+# --- 日志与调试转储 ---
+*.log linguist-generated=true
 
-# 模拟器导出、日志与调试转储
-**/lcd_out/** linguist-generated=true
-**/*_disasm.txt linguist-generated=true
-**/disasm*.txt linguist-generated=true
-**/log_*.txt linguist-generated=true
-**/strings*.txt linguist-generated=true
-
-# 文档与资产不计入语言统计
+# --- 文档与图片不计入语言统计 ---
 *.md linguist-documentation
-docs/images/** linguist-documentation
-devices/*/docs/** linguist-documentation
+*.png linguist-documentation
+*.svg linguist-documentation
