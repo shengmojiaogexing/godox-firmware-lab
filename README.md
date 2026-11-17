@@ -209,7 +209,7 @@ V1C / V1S / V860III-C / V860III-S / **AD300 Pro** 等已按同一流程接入（
 
 ## ⚖️ 许可与相关项目
 
-- 本项目原创代码/文档：**MIT**（见 [`LICENSE`](LICENSE)）；厂商固件与第三方组件不在许可范围内。
+- 本项目原创代码/文档：**GPL-3.0-or-later**（见 [`LICENSE`](LICENSE)）；厂商固件与第三方组件不在许可范围内。
 - 相关独立项目：[`Godox-S3-Trigger`](https://github.com/YuchanHu/Godox-S3-Trigger) —— ESP32-S3 引闪器固件（GPL-3.0-or-later），
   本项目的协议结论与其净室实现互为交叉验证。
 
