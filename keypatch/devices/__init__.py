@@ -25,7 +25,7 @@ import importlib
 import os
 
 # 已注册的设备 id（顺序 = CLI / studio 里的展示顺序；保持与旧版一致）。
-DEVICE_IDS = ["ad100", "ad200", "x3c", "x3pro", "x3pros", "x3s", "v1c", "v1s", "v860iiic", "v860iiis", "ad300", "x2tc", "x2ts"]
+DEVICE_IDS = ["ad100", "ad200", "ad200proii_mask", "x3c", "x3pro", "x3pros", "x3s", "v1c", "v1s", "v860iiic", "v860iiis", "ad300", "x2tc", "x2ts"]
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 KEYPATCH_DIR = os.path.dirname(_HERE)          # <repo>/keypatch

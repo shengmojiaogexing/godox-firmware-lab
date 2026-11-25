@@ -53,8 +53,8 @@ DEVICE = {
     "sha256": "3a3d3b917615bb20339f6c355ebe66d8d94e8199509c1e820007542c1ebf4e7c",
     "out_name": "AD100pro_V1.2_key{key:04X}.bin",
     "container_name": "AD100Pro_V1.2_key{key:04X}_container.bin",
-    "notes": "C.Fn 密钥开关(RAM 0x20000486)：1 -> SYNC=私有 KEY；0 -> 原厂 50024/(ID+1)。"
-             "原位 56 字节整函数改写",
+    "notes": "C.Fn 第 7 项 KEY(RAM 0x20000486)：ON -> SYNC=私有 KEY；OFF -> 原厂 50024/(ID+1)。"
+             "含 C.Fn KEY 菜单 UI + 改值即时生效 + 屏蔽原厂 4 处色温读者与 2 处静默清零",
 }
 
 # ---- 目标函数与地址 ---------------------------------------------------------
@@ -74,6 +74,55 @@ KEY_FLAG_ADDR = 0x20000486
 ORIG_FUNC = bytes.fromhex(
     "0c4a10b5411c1046f7f7c6fc0446010a042001f0e2fae1b2052001f0defa"
     "142001f09ef9332001f039fb7d20c00001f097f910bd68c30000")
+
+# ---- C.Fn「KEY」UI 补丁 + 改值即时生效 + 读者/清零屏蔽常量 ------------------
+UI_HEADER_START = 0x08003F10
+UI_HEADER_END = 0x08003F88
+UI_HEADER_SIZE = UI_HEADER_END - UI_HEADER_START   # 120 字节
+UI_ORIG_HEADER = bytes.fromhex(
+    "582102231f22002001f00af8"
+    "5f2102232822002001f004f8"
+    "662102233522002000f0feff"
+    "6f2102230122002000f0f8ff"
+    "762102234022002000f0f2ff"
+    "022379211a46002000f0ecff"
+    "002102230c22084600f0e6ff"
+    "072102234022002000f0e0ff"
+    "0a2102230f22002000f0daff"
+    "112102233122002000f0d4ff")
+UI_GLYPH_FN = 0x08004F30         # draw_glyph16(page, x, glyph_idx, mode)
+UI_HIGHLIGHT = 0x08004318        # 选中行反白 + 边框
+UI_G_K, UI_G_E, UI_G_Y = 0x14, 0x0E, 0x22
+UI_G_O, UI_G_N, UI_G_F = 0x18, 0x17, 0x0F
+UI_TITLE_GLYPHS = ((0x00, 0x0C), (0x07, 0x40), (0x0A, 0x0F), (0x11, 0x31))
+
+# 单点补丁列表：(地址, 原厂字节, 新字节, 说明)
+EXTRA_PATCHES: tuple[tuple[int, bytes, bytes, str], ...] = (
+    (0x08003FA2, bytes.fromhex("b9e1"), bytes.fromhex("b6e7"),
+     "C.Fn page>=2 分支跳到 KEY 绘制代码 0x08003F12"),
+    (0x0800490C, bytes.fromhex("0528"), bytes.fromhex("0628"),
+     "C.Fn 选择项 +1 上限 5->6（0x08004880）"),
+    (0x08008A8A, bytes.fromhex("0521"), bytes.fromhex("0621"),
+     "C.Fn 选择项 -1 回绕 5->6（0x08008A5C）"),
+    (0x08004F88, bytes.fromhex("05b0f0bd"), bytes.fromhex("01b0ffbd"),
+     "0x08004F30 字形函数收尾恢复 r0-r3（add sp,#4; pop {r0-r7,pc}）"),
+    (0x080048FA, bytes.fromhex("dbd1"), bytes.fromhex("dbd3"),
+     "C.Fn + 改值即时刷新同步字：bne->blo（item>=5 即 ID/KEY 均调用 0x0800B758）"),
+    (0x08008AC4, bytes.fromhex("dfd1"), bytes.fromhex("dfd3"),
+     "C.Fn - 改值即时刷新同步字：bne->blo（item>=5 即 ID/KEY 均调用 0x0800B758）"),
+    (0x08005502, bytes.fromhex("8871"), bytes.fromhex("00bf"),
+     "阻断 TTL/Multi 画面刷新静默清零 RAM[0x20000486]（strb->nop）"),
+    (0x0800B8D8, bytes.fromhex("9171"), bytes.fromhex("00bf"),
+     "阻断切换 HSS 静默清零 RAM[0x20000486]（strb->nop）"),
+    (0x08006130, bytes.fromhex("8979"), bytes.fromhex("0021"),
+     "屏蔽色温模式读者 #1（ldrb r1,[r1,#6]->movs r1,#0）"),
+    (0x0800678C, bytes.fromhex("8979"), bytes.fromhex("0021"),
+     "屏蔽色温模式读者 #2（ldrb r1,[r1,#6]->movs r1,#0）"),
+    (0x0800AF98, bytes.fromhex("9b79"), bytes.fromhex("0023"),
+     "屏蔽色温模式读者 #3（ldrb r3,[r3,#6]->movs r3,#0）"),
+    (0x0800B0A0, bytes.fromhex("9279"), bytes.fromhex("0022"),
+     "屏蔽色温模式读者 #4（ldrb r2,[r2,#6]->movs r2,#0，避免 KEY=ON 阻断 HSS）"),
+)
 
 DIV_FUNC = 0x080030F0         # __aeabi_uidiv
 WRITE_REG = 0x0800CD32        # CC2500_WriteReg(reg=r0, val=r1)
@@ -252,6 +301,57 @@ def build_sync_function(key: int) -> bytes:
     return blob
 
 
+def build_ui_header_patch() -> bytes:
+    """生成 0x08003F10..0x08003F88 的 120 字节替换内容：C.Fn 标题 + 第 7 项 KEY ON/OFF 绘制。"""
+    a = _Asm(UI_HEADER_START)
+    a.branch("b", "title")               # 0x08003F10: 正常页面流程跳到标题
+    a.label("helper")                    # 0x08003F12: page>=2 注入代码
+    # "KEY" 标签（page=2, mode=2）
+    a.emit(_t_movs_imm(0, 2))
+    a.emit(_t_movs_imm(3, 2))
+    for x, g in ((0x0A, UI_G_K), (0x11, UI_G_E), (0x18, UI_G_Y)):
+        a.emit(_t_movs_imm(1, x))
+        a.emit(_t_movs_imm(2, g))
+        a.bl(UI_GLYPH_FN)
+    # 值区域公共 'O'（page=4, mode=1）
+    a.emit(_t_movs_imm(0, 4))
+    a.emit(_t_movs_imm(3, 1))
+    a.emit(_t_movs_imm(1, 0x4A))
+    a.emit(_t_movs_imm(2, UI_G_O))
+    a.bl(UI_GLYPH_FN)
+    # 读 0x20000486（r5=0x20000480 由 draw 入口设置；用 r7 避免破坏 page 寄存器 r0）
+    a.emit(_t_ldrb_imm(7, 5, 6))
+    a.emit(_t_cmp_imm(7, 0))
+    a.branch("beq", "off")
+    a.emit(_t_movs_imm(1, 0x51))
+    a.emit(_t_movs_imm(2, UI_G_N))
+    a.bl(UI_GLYPH_FN)
+    a.branch("b", "done")
+    a.label("off")
+    a.emit(_t_movs_imm(1, 0x51))
+    a.emit(_t_movs_imm(2, UI_G_F))
+    a.bl(UI_GLYPH_FN)
+    a.emit(_t_movs_imm(1, 0x58))
+    a.emit(_t_movs_imm(2, UI_G_F))
+    a.bl(UI_GLYPH_FN)
+    a.label("done")
+    a.emit(_t_b(UI_HIGHLIGHT - (a.here() + 4)))
+    # "C.Fn" 标题（依赖 0x08004F88 恢复 r0-r3，每字形 8B）
+    a.label("title")
+    a.emit(_t_movs_imm(0, 0))
+    a.emit(_t_movs_imm(3, 2))
+    for x, g in UI_TITLE_GLYPHS:
+        a.emit(_t_movs_imm(1, x))
+        a.emit(_t_movs_imm(2, g))
+        a.bl(UI_GLYPH_FN)
+    code = a.finish()
+    assert a.here() <= UI_HEADER_END, (hex(a.here()), hex(UI_HEADER_END))
+    if len(code) < UI_HEADER_SIZE:
+        code += b"\x00\xbf" * ((UI_HEADER_SIZE - len(code)) // 2)
+    assert len(code) == UI_HEADER_SIZE, len(code)
+    return code
+
+
 def build_sync_function_id0(key: int) -> bytes:
     """v2 语义（临时可切换版）：ID==0 -> SYNC=KEY；ID!=0 -> 50024/(ID+1)。
 
@@ -302,41 +402,53 @@ def _off(addr: int) -> int:
     return addr - BASE
 
 
+def _all_patches(key: int) -> list[tuple[int, bytes, bytes, str]]:
+    """返回完整补丁列表（核心同步字 + C.Fn KEY 菜单 UI + 即时生效 + 读者/清零屏蔽）。"""
+    sync_blob = build_sync_function(key)
+    ui_header = build_ui_header_patch()
+    items: list[tuple[int, bytes, bytes, str]] = [
+        (SYNC_FN, ORIG_FUNC, sync_blob,
+         "整段改写同步字函数 0x%08X..0x%08X（%d 字节）：C.Fn 密钥开关"
+         " RAM[0x%08X]==1 -> SYNC=KEY 0x%04X；==0 -> 50024/(ID+1)；"
+         "只写 SYNC1/0（无 SCAL、无延时）"
+         % (SYNC_FN, SYNC_FN_END - 1, SYNC_FN_SIZE, KEY_FLAG_ADDR, key)),
+        (UI_HEADER_START, UI_ORIG_HEADER, ui_header,
+         "重写 C.Fn 头部 120B：删 'Ver 1.2'，注入 page2 KEY 标签 + ON/OFF 绘制，保留 'C.Fn'"),
+    ]
+    items.extend(EXTRA_PATCHES)
+    return items
+
+
 def apply(data: bytes, key: int) -> tuple[bytes, list[dict]]:
-    """把原厂镜像 data 打上 v4「C.Fn 开关密钥」补丁，返回 (patched_bytes, patch_log)。"""
+    """把原厂镜像 data 打上 v4 完整版「C.Fn KEY 开关密钥 + UI + 即时生效」补丁。"""
     key = common.validate_key(key)
 
     if len(data) != IMAGE_SIZE:
         raise ValueError("AD100 Pro V1.2 固件长度应为 %d 字节，实际 %d 字节（版本不符，拒绝打补丁）"
                          % (IMAGE_SIZE, len(data)))
 
-    off = _off(SYNC_FN)
-    before = bytes(data[off:off + SYNC_FN_SIZE])
-    if before != ORIG_FUNC:
-        raise ValueError(
-            "补丁点 0x%08X..0x%08X 原始字节与预期不符（固件版本不符，拒绝打补丁）\n"
-            "  期望 %s\n  实际 %s"
-            % (SYNC_FN, SYNC_FN_END - 1, ORIG_FUNC.hex(" "), before.hex(" ")))
-
-    blob = build_sync_function(key)
-    assert len(blob) == SYNC_FN_SIZE
-    assert SYNC_FN + len(blob) == SYNC_FN_END  # 不越过下一函数
-
     buf = bytearray(data)
-    buf[off:off + SYNC_FN_SIZE] = blob
+    log: list[dict] = []
+    for addr, orig, new, desc in _all_patches(key):
+        off = _off(addr)
+        cur = bytes(buf[off:off + len(orig)])
+        if cur != orig:
+            raise ValueError(
+                "补丁点 0x%08X..0x%08X 原始字节与预期不符（固件版本不符，拒绝打补丁）\n"
+                "  期望 %s\n  实际 %s"
+                % (addr, addr + len(orig) - 1, orig.hex(" "), cur.hex(" ")))
+        assert len(new) == len(orig)
+        buf[off:off + len(orig)] = new
+        log.append({
+            "addr": addr,
+            "offset": off,
+            "before": orig.hex(" ") if len(orig) <= 16 else orig[:8].hex(" ") + " …(%d B)" % len(orig),
+            "after": new.hex(" ") if len(new) <= 16 else new[:8].hex(" ") + " …(%d B)" % len(new),
+            "desc": desc,
+        })
+
     patched = bytes(buf)
     assert len(patched) == len(data)
-
-    log = [{
-        "addr": SYNC_FN,
-        "offset": off,
-        "before": before.hex(" "),
-        "after": blob.hex(" "),
-        "desc": ("整段改写同步字函数 0x%08X..0x%08X（%d 字节）：C.Fn 密钥开关"
-                 " RAM[0x%08X]==1 -> SYNC=KEY 0x%04X；==0 -> 50024/(ID+1)；"
-                 "只写 SYNC1/0（无 SCAL、无延时）"
-                 % (SYNC_FN, SYNC_FN_END - 1, SYNC_FN_SIZE, KEY_FLAG_ADDR, key)),
-    }]
     return patched, log
 
 
@@ -379,17 +491,30 @@ def apply_id0(data: bytes, key: int) -> tuple[bytes, list[dict]]:
 # 离线验证
 # ---------------------------------------------------------------------------
 def _expected_diff_offsets(key: int) -> set[int]:
-    """打补丁后相对原厂镜像应当且只应当变化的文件偏移。"""
-    blob = build_sync_function(key)
-    base = _off(SYNC_FN)
-    return {base + i for i in range(SYNC_FN_SIZE) if blob[i] != ORIG_FUNC[i]}
+    """打补丁后相对原厂镜像应当且只应当变化的文件偏移（含核心 + UI + 保护）。"""
+    out: set[int] = set()
+    for addr, orig, new, _desc in _all_patches(key):
+        base = _off(addr)
+        for i in range(len(orig)):
+            if new[i] != orig[i]:
+                out.add(base + i)
+    return out
 
 
-def _unpatch(patched: bytes) -> bytes:
-    """把补丁区还原成原厂 56 字节（用于原厂 harness 自证，无需再读文件）。"""
+def _unpatch_sync_only(patched: bytes) -> bytes:
+    """只还原同步字函数 56 字节（供 id0 变体使用）。"""
     buf = bytearray(patched)
     off = _off(SYNC_FN)
     buf[off:off + SYNC_FN_SIZE] = ORIG_FUNC
+    return bytes(buf)
+
+
+def _unpatch(patched: bytes) -> bytes:
+    """把全部补丁区还原成原厂字节（用于原厂 harness 自证，无需再读文件）。"""
+    buf = bytearray(patched)
+    for addr, orig, _new, _desc in _all_patches(0xD798):
+        off = _off(addr)
+        buf[off:off + len(orig)] = orig
     return bytes(buf)
 
 
@@ -514,7 +639,8 @@ def verify(patched: bytes, key: int) -> list[tuple[bool, str]]:
     results.append((len(patched) == IMAGE_SIZE,
                     "固件长度 %d 字节（应为 %d，原位补丁）" % (len(patched), IMAGE_SIZE)))
 
-    # 2) 补丁区 56 字节与期望完全一致
+    # 2) 全部补丁区（核心 + UI + 即时生效 + 保护）与期望完全一致
+    all_p = _all_patches(key)
     blob = build_sync_function(key)
     off = _off(SYNC_FN)
     got = bytes(patched[off:off + SYNC_FN_SIZE])
@@ -523,6 +649,17 @@ def verify(patched: bytes, key: int) -> list[tuple[bool, str]]:
                     % (SYNC_FN, SYNC_FN_END - 1, SYNC_FN_SIZE) if got == blob else
                     "补丁区字节与期望不符\n  期望 %s\n  实际 %s"
                     % (blob.hex(" "), got.hex(" "))))
+
+    ui_ok = True
+    ui_bad = []
+    for addr, _orig, new, desc in all_p[1:]:
+        o = _off(addr)
+        if bytes(patched[o:o + len(new)]) != new:
+            ui_ok = False
+            ui_bad.append("0x%08X(%s)" % (addr, desc))
+    results.append((ui_ok,
+                    "C.Fn KEY UI + 即时生效 + 读者/清零屏蔽共 %d 处补丁全部匹配" % (len(all_p) - 1)
+                    if ui_ok else "UI/保护补丁不符: %s" % ", ".join(ui_bad)))
 
     # 3) 不得越过下一函数 0x0800B790
     results.append((SYNC_FN + len(blob) == SYNC_FN_END,
@@ -541,10 +678,10 @@ def verify(patched: bytes, key: int) -> list[tuple[bool, str]]:
     diffs = [i for i in range(len(patched)) if patched[i] != orig[i]]
     expected = _expected_diff_offsets(key)
     results.append((set(diffs) == expected,
-                    "与原厂差异 %d 字节，offset=%s（应恰为 %s）"
-                    % (len(diffs), ["0x%05X" % d for d in diffs],
-                       ["0x%05X" % d for d in sorted(expected)])))
-    outside_diff = [i for i in diffs if not (off <= i < off + SYNC_FN_SIZE)]
+                    "与原厂差异 %d 字节（期望 %d 字节，完全匹配）"
+                    % (len(diffs), len(expected))))
+    zones = [(_off(a), _off(a) + len(o)) for a, o, _n, _d in all_p]
+    outside_diff = [i for i in diffs if not any(lo <= i < hi for lo, hi in zones)]
     results.append((not outside_diff,
                     "补丁区之外无任何字节变化（差异 %d 处）" % len(outside_diff)))
 
@@ -639,7 +776,7 @@ def verify_id0(patched: bytes, key: int) -> list[tuple[bool, str]]:
                     "字面量: KEY=0x%04X @0x%08X, 50024 @0x%08X"
                     % (lits[0], SYNC_FN + 44, SYNC_FN + 52)))
 
-    orig = _unpatch(patched)
+    orig = _unpatch_sync_only(patched)
     diffs = [i for i in range(len(patched)) if patched[i] != orig[i]]
     expected = _expected_diff_offsets_id0(key)
     results.append((set(diffs) == expected,

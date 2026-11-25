@@ -62,8 +62,12 @@ DEVICE = {
     "sha256": "45fdd9522c432f4be60a470741d3e5c12a7ee629eb2b277aed5187639f85ef62",
     "out_name": "X3_C_v1.38_app_key{key:04X}.bin",
     "container_name": "X3C_V1.38_app_key{key:04X}_container.bin",
-    "notes": "ID=99 密钥模式：KEY 帧 + ID99(500) 帧双发；其它 ID 原厂单发（原位补丁+注入）",
+    "notes": "长按拨轮/M/C ≈1.5s 开关密钥模式（打开时向密钥灯发一帧提示短帧 D5 00 响一声，关闭静默）；"
+             "按住 ≈20s 关机；⚡ 保持原厂电源；密钥模式下引闪/属性帧双发（兼容普通灯）",
 }
+
+DEFAULT_MODE = "keybtn5"
+BTN_BEEP_CMD = 0x00                # 无闪光提示短帧 [D5 00]：密钥灯收到后蜂鸣器响一声、不闪光
 
 # ---- 镜像 -------------------------------------------------------------------
 BASE = 0x08004800
@@ -711,7 +715,12 @@ def _patched_regions(key: int) -> list[tuple[int, bytes, bytes, str]]:
 # 打补丁
 # ===========================================================================
 def apply(data: bytes, key: int) -> tuple[bytes, list[dict]]:
-    """把原厂镜像 data 打上"ID=99 密钥模式双发"补丁，返回 (patched_bytes, patch_log)。"""
+    """默认入口：长按按键开关（keybtn5）+ 打开密钥模式时发提示短帧响一声 + 白名单双发。"""
+    return apply_keys(data, key, mode=DEFAULT_MODE)
+
+
+def apply_legacy_ui(data: bytes, key: int) -> tuple[bytes, list[dict]]:
+    """旧版入口：ID=99 + 快捷面板磁贴 UI（保留给历史脚本对照）。"""
     key = common.validate_key(key)
     if len(data) != IMAGE_SIZE:
         raise ValueError("X3-C V1.38 固件长度应为 %d 字节，实际 %d 字节（版本不符，拒绝打补丁）"
@@ -951,7 +960,12 @@ def _check_prop(patched: bytes, key: int, ident: int, id_off: int,
 
 
 def verify(patched: bytes, key: int) -> list[tuple[bool, str]]:
-    """离线验证：长度 + 静态字节 + 差异范围 + Unicorn 调用级（双发/单发）。"""
+    """默认离线验证：对应 apply()（keybtn5 按键长按开关 + 开密钥响一声 + 双发白名单）。"""
+    return verify_keys(patched, key, mode=DEFAULT_MODE)
+
+
+def verify_legacy_ui(patched: bytes, key: int) -> list[tuple[bool, str]]:
+    """旧版离线验证：长度 + 静态字节 + 差异范围 + Unicorn 调用级（双发/单发）。"""
     key = common.validate_key(key)
     results: list[tuple[bool, str]] = []
 
@@ -1245,6 +1259,7 @@ def _btn_cfg(mode: str) -> dict:
                                  else BTN_KEYBTN4_TICKS2)),
             "stage2_disabled": mode == "keybtn4_k1",
             "robust": mode == "keybtn5",
+            "beep_on_enable": mode == "keybtn5",
             "watchdog": BTN_KEYBTN5_WATCHDOG,
             "broadcast_allid": mode in ("keybtn7", "keybtn8", "keybtn11", "keybtn12"),
             "broadcast_lite": mode in ("keybtn8", "keybtn12"),
@@ -1768,15 +1783,38 @@ def _emit_shutdown(a: _Asm) -> None:
     a.pop(0x10, pc=True)               # pop {r4, pc}
 
 
-def _emit_toggle(a: _Asm) -> None:
-    """KEY_ON ^= 1（只用 caller-saved r0/r1/r2）。"""
+def _emit_toggle(a: _Asm, key: int | None = None) -> None:
+    """KEY_ON ^= 1；当 key 非空且切为 1（打开密钥模式）时，用 KEY 同步字发 1 帧无闪光提示短帧 [D5 00] 让密钥灯嘀响一声，再恢复普通同步字。"""
     a.label("toggle")
+    if key is None:
+        _emit_addr(a, 0, KEY_ON_FLAG_RAM)
+        a.ldrb(1, 0)
+        a.movs(2, 1)
+        a.eors(1, 2)
+        a.strb_imm(1, 0, 0)
+        a.bx_lr()
+        return
+    a.push(0x70, lr=True)               # push {r4, r5, r6, lr}
     _emit_addr(a, 0, KEY_ON_FLAG_RAM)
     a.ldrb(1, 0)
     a.movs(2, 1)
     a.eors(1, 2)
     a.strb_imm(1, 0, 0)
-    a.bx_lr()
+    a.cmp_imm(1, 0)
+    a.beq("toggle_done")                # 关闭密钥模式 -> 静默返回
+    # 打开密钥模式 -> 用 KEY 同步字发一帧 [D5, 00]（灯端蜂鸣器响一声、不闪光）
+    _emit_sync_key(a, key)
+    _emit_addr(a, 6, TX_BUF_RAM)
+    a.movs(0, 0xD5)
+    a.strb_imm(0, 6, 0)
+    a.movs(0, BTN_BEEP_CMD)
+    a.strb_imm(0, 6, 1)
+    a.bl(LOW_SEND_SHORT)
+    # 恢复当前 ID 的公共同步字（保持原厂收包/后续单发状态）
+    _emit_ordinary_sync(a, hi=True)
+    _emit_ordinary_sync(a, hi=False)
+    a.label("toggle_done")
+    a.pop(0x70, pc=True)                # pop {r4, r5, r6, pc}
 
 
 def _emit_probe(a: _Asm, n_frames: int) -> None:
@@ -1906,7 +1944,7 @@ def build_btn_injection(key: int, mode: str = "keybtn2") -> tuple[bytes, dict]:
 
     for action in cfg["actions"]:
         if action == "toggle":
-            _emit_toggle(a)
+            _emit_toggle(a, key if cfg.get("beep_on_enable") else None)
         elif action == "broadcast":
             _emit_broadcast(a, key)
         elif action == "shutdown":
@@ -2474,17 +2512,28 @@ def _check_keybtn5(patched: bytes, key: int) -> tuple[bool, str]:
     # 去抖会先消耗 3 次扫描：counter 在 (th1+3) 附近到 30、在 (th2+3) 附近到 400
     D = BTN_KEYBTN5_DEBOUNCE
     m_uc = uc
-    # 1) 未到阈值（th1+D-6 次）不切；再多按 10 次到阈值 → 切 KEY_ON、不关机
+    # 1) 未到阈值（th1+D-6 次）不切；再多按 10 次到阈值 → 切 KEY_ON=1、发 1 帧提示短帧 [D5 00]、不关机
     state["key_on"] = 0
+    rec["low_send"].clear()
+    rec["wreg"].clear()
     press(max(0, th1 + D - 6))
     v0 = _uc_read_byte(uc, KEY_ON_FLAG_RAM)
+    beep0 = len(rec["low_send"])
     press(10)
     v1 = _uc_read_byte(uc, KEY_ON_FLAG_RAM)
+    beep1 = len(rec["low_send"])
+    tx_bytes = bytes(m_uc.mem_read(TX_BUF_RAM, 2))
+    ord_sync = SYNC_NUMERATOR // (state["id"] + 1)
+    want_wreg = [(4, (key >> 8) & 0xFF), (5, key & 0xFF),
+                 (4, (ord_sync >> 8) & 0xFF), (5, ord_sync & 0xFF)]
+    wreg_ok = rec["wreg"] == want_wreg
     sd1 = rec["shutdown"]
-    ok = v0 == 0 and v1 == 1 and sd1 == 0
+    ok = (v0 == 0 and v1 == 1 and sd1 == 0
+          and beep0 == 0 and beep1 == 1 and tx_bytes == bytes([0xD5, BTN_BEEP_CMD])
+          and wreg_ok)
     ok_all &= ok
-    msgs.append("阈值前 KEY_ON=%d(应0) → 到阈值 KEY_ON=%d(应1) 关机=%d(应0)"
-                % (v0, v1, sd1))
+    msgs.append("阈值前 KEY_ON=%d(应0) → 到阈值 KEY_ON=%d(应1) 提示音帧=%d(应1,buf=%s,wreg=%s) 关机=%d(应0)"
+                % (v0, v1, beep1, tx_bytes.hex(), wreg_ok, sd1))
     # 2) 继续按住：接近但未到 400 不关机；再按 30 次过 400 → 关机一次
     press(max(0, th2 - th1 - D - 20))
     v2 = _uc_read_byte(uc, KEY_ON_FLAG_RAM)
@@ -2498,7 +2547,7 @@ def _check_keybtn5(patched: bytes, key: int) -> tuple[bool, str]:
     msgs.append("400 tick 前关机=%d(应0) → 到 400 tick 关机=%d(应1) → 再按 10 tick=%d(应1)"
                 % (sd2, sd3, sd4))
     release()
-    # 3) 外部清零 counter（模拟固件改写）→ 再按 30 tick 仍能切
+    # 3) 外部清零 counter（模拟固件改写）→ 再按 30 tick 仍能切；再长按关闭(1->0)时静默不发提示帧
     m_uc.mem_write(BTN_RAM5_CNT16, b"\x00\x00")
     m_uc.mem_write(BTN_RAM5_STREAK, b"\x00")
     m_uc.mem_write(KEY_ON_FLAG_RAM, b"\x00")
@@ -2506,9 +2555,15 @@ def _check_keybtn5(patched: bytes, key: int) -> tuple[bool, str]:
     press(th1 + D + 2)
     v3 = _uc_read_byte(uc, KEY_ON_FLAG_RAM)
     release()
-    ok = v3 == 1
+    beep_before_off = len(rec["low_send"])
+    press(th1 + D + 2)
+    v3_off = _uc_read_byte(uc, KEY_ON_FLAG_RAM)
+    release()
+    beep_after_off = len(rec["low_send"])
+    ok = v3 == 1 and v3_off == 0 and beep_after_off == beep_before_off
     ok_all &= ok
-    msgs.append("外部清零 counter 后再按 30 tick：KEY_ON=%d(应1)" % v3)
+    msgs.append("重按开=%d(应1) → 再长按关=%d(应0) 关闭静默=%s"
+                % (v3, v3_off, beep_after_off == beep_before_off))
     # 4) 空闲 2000 tick：不误动作、计数器归零
     m_uc.mem_write(KEY_ON_FLAG_RAM, b"\x00")
     state["key_on"] = 0

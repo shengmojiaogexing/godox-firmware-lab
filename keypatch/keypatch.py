@@ -212,11 +212,19 @@ def cmd_patch_all(args) -> int:
     key = common.key_from_text(args.key)
     print("=== 给全部已实现设备打同一把密钥 0x%04X ===" % key)
     made = []
+    skipped = []
     for d in devs.available():
+        mod = _load(d)
+        img_path = _resolve(mod.DEVICE["image"])
+        if not os.path.isfile(img_path):
+            skipped.append((d, _rel(img_path)))
+            print("\n== %s (%s)  [跳过：未放置原厂固件 %s]"
+                  % (mod.DEVICE.get("name", d), d, _rel(img_path)))
+            continue
         ok, dst = _patch_one(d, "0x%04X" % key, out_dir, args.verify, quiet=False,
                              do_container=args.container)
         made.append(dst)
-    print("\n全部完成（%d 个）:" % len(made))
+    print("\n全部完成（%d 个，跳过 %d 个未放固件的设备）:" % (len(made), len(skipped)))
     for m in made:
         print("  " + _rel(m))
     print("\n注意：三份固件必须使用同一把密钥；刷机时灯和引闪器都要刷。")

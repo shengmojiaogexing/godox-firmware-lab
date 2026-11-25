@@ -8,7 +8,7 @@
 补丁、打包与整机验证全部在本地完成，原厂固件不改动、可随时刷回。
 
 [![License](https://img.shields.io/github/license/shengmojiaogexing/godox-firmware-lab?color=blue&cacheSeconds=300)](LICENSE)
-[![Devices](https://img.shields.io/badge/devices-13%20supported-success)](#设备支持矩阵)
+[![Devices](https://img.shields.io/badge/devices-14%20supported-success)](#设备支持矩阵)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](#快速开始)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)](#快速开始)
 [![Tests](https://img.shields.io/badge/tests-API%2016%20%C2%B7%20UI%2017-brightgreen)](#测试)
@@ -82,7 +82,7 @@ sync = 你的 16 位私有密钥       # 例如 0xD798
 |---|---|
 | 🖥️ **可视化密钥工坊** | 浏览器内完成「选设备 → 设密钥 → 生成 → 下载」全流程，无需命令行 |
 | 🧬 **原位补丁** | 输出固件与原厂**长度完全一致**，官方 G3 升级软件可直接刷写；原厂文件不被修改 |
-| 📱 **13 台设备** | 覆盖 X3 / X3 Pro / X2T / V1 / V860III / AD 系列，模板化接入新设备 |
+| 📱 **14 台设备** | 覆盖 X3 / X3 Pro / X2T / V1 / V860III / AD（含 AD200 Pro II）系列，模板化接入新设备 |
 | 🔬 **离线验证** | 生成时用 Unicorn 实际执行补丁后的机器码，配合静态检查与 sha256 校验，给出 PASS/FAIL |
 | 📚 **逆向档案** | 手写的协议分析、外设映射、补丁规格与验证记录（不含自动反编译产物） |
 | 🐞 **模拟调试** | 部分设备附带 Unicorn 模拟器与网页调试器，可运行真实固件、还原屏幕、注入按键/射频 |
@@ -132,14 +132,15 @@ sync = 你的 16 位私有密钥       # 例如 0xD798
 
 | 设备 | 类型 | 固件版本 | 密钥开关 | 状态 |
 |---|---|:---:|---|:---:|
-| Godox **X3-C** | 引闪器 | `X3_C_v1.38_app.bin` | 快捷面板 KEY/BCAST 磁贴 | ✅ |
+| Godox **X3-C** | 引闪器 | `X3_C_v1.38_app.bin` | 长按拨轮/M/C ≈1.5s（打开时密钥灯嘀响一声，关闭静默；RAM 版） | ✅ |
 | Godox **X3-S** | 引闪器 | `X3_S_v1.25_app.bin` | 长按拨轮/M/C ≈1.5s | ✅ |
 | Godox **X3 Pro-C** | 引闪器 | `X3pro_C_v1.22_app.bin` | 长按 PA6 ≈1.5s（RAM 版） | ✅ |
 | Godox **X3 Pro S** | 引闪器 | `X3pro_S_v1.11_app.bin` | ID=99 密钥模式 | ✅ |
 | Godox **X2T-C** | 引闪器 | `X2TC_Z02_V1.01.bin` ¹ | C.Fn 第 4 页 `LIGHT` | ✅ |
 | Godox **X2T-S** | 引闪器 | `X2T-S_V1.4.bin` | C.Fn 第 3 项 `BEEP` | ✅ |
-| Godox **AD100 Pro** | 闪光灯 | `AD100pro_V1.2.bin` | C.Fn「KEY」 | ✅ |
+| Godox **AD100 Pro** | 闪光灯 | `AD100pro_V1.2.bin` | C.Fn 第 7 项 `KEY`（改值即时生效，掉电保存） | ✅ |
 | Godox **AD200 Pro** | 闪光灯 | `AD200pro_V1.60.bin` | C.Fn 第 8 项 `F8` | ✅ |
+| Godox **AD200 Pro II** ² | 闪光灯 | `AD200ProII_V1.05.bin` | 菜单「蒙版」设为 4 加密 / 2 普通（切档需重启；**作者：夕梦**） | ✅ |
 | Godox **AD300 Pro** | 闪光灯 | `AD300pro_V1.30.bin` | C.Fn 第 8 项 `F8` | ✅ |
 | Godox **V1C** | 闪光灯 | `V1C_V2.0.bin` | C.Fn 第 3 页 `LIGHT` | ✅ |
 | Godox **V1S** | 闪光灯 | `V1S_V1.8.bin` | C.Fn 第 3 页 `LIGHT` | ✅ |
@@ -148,6 +149,8 @@ sync = 你的 16 位私有密钥       # 例如 0xD798
 | Godox **V862C** | 闪光灯 | — | 模板已就绪 | 🧩 计划中 |
 
 <sub>¹ `X2TC_Z02_V1.01.bin` 本身是 **G3 V2.0 容器**。工具会在容器内原位修改 payload 并重算 MD5，输出仍是可直接刷写的容器，因此该设备**不需要**勾选「生成 G3 容器备用件」。</sub>
+<br>
+<sub>² `AD200ProII_V1.05.bin` 遮罩版低风险补丁（`ad200proii_mask`）由 **夕梦** 独立逆向、实现并完成实机验证，详见 [`devices/ad200proii/README.md`](devices/ad200proii/README.md)。</sub>
 
 > **原厂固件不随仓库分发。** 请从官方渠道获取后放入 `devices/<设备>/firmware/`，
 > 或在 studio 界面直接拖拽上传（会校验 sha256）。各版本 sha256 见 [`docs/设备清单.md`](docs/设备清单.md)。
@@ -194,6 +197,7 @@ devices/x2tc/firmware/X2TC_Z02_V1.01.bin
 devices/x2ts/firmware/X2T-S_V1.4.bin
 devices/ad100pro/firmware/AD100pro_V1.2.bin
 devices/ad200pro/firmware/AD200pro_V1.60.bin
+devices/ad200proii/firmware/AD200ProII_V1.05.bin
 devices/ad300pro/firmware/AD300pro_V1.30.bin
 devices/v1c/firmware/V1C_V2.0.bin
 devices/v1s/firmware/V1S_V1.8.bin
@@ -265,7 +269,7 @@ godox-firmware-lab/
 │   ├── x2tc/ · x2ts/        #   X2T 系列（含 G3 容器处理）
 │   ├── v1c/ · v1s/          #   V1 系列逆向档案
 │   ├── v860iiic/ · v860iiis/  # V860III 系列逆向档案
-│   └── ad100pro/ · ad200pro/ · ad300pro/  # AD 系列
+│   └── ad100pro/ · ad200pro/ · ad200proii/ · ad300pro/  # AD 系列（ad200proii 作者：夕梦）
 ├── docs/                    # 总览、设备清单、新增设备指南、截图
 ├── scripts/                 # 启动脚本
 ├── tools/                   # 本机运行时与安装脚本（大件已 gitignore）
@@ -312,8 +316,9 @@ godox-firmware-lab/
 <details>
 <summary><b>AD 系列（闪光灯）</b></summary>
 
-- `devices/ad100pro/` —— OLED 位流模拟、Web 调试器、人工重建的核心函数伪 C
+- `devices/ad100pro/` —— OLED 位流模拟、Web 调试器、C.Fn 第 7 项 `KEY` 菜单补丁与人工重建的核心函数伪 C
 - `devices/ad200pro/` —— 模拟器 + CLI/Web 调试器 + 自动测试
+- `devices/ad200proii/` —— AD200 Pro II（V1.05）设置字节遮罩版低风险补丁（44 B、实机通过，**作者：夕梦**，见 [`devices/ad200proii/README.md`](devices/ad200proii/README.md)）
 - `devices/ad300pro/` —— C.Fn `F8` 开关、11 处补丁规格、verify 47 项
 </details>
 
@@ -406,6 +411,7 @@ CI 会在每次推送时执行语法检查、设备注册、API 测试与前端�
 ## ⚖️ 许可与致谢
 
 - 本项目原创代码与文档：**[GPL-3.0-or-later](LICENSE)**。厂商固件与第三方组件不在许可范围内，详见 LICENSE 末尾的「许可范围说明」。
+- **社区贡献署名**：**Godox AD200 Pro II（`ad200proii_mask`，V1.05 设置字节遮罩版低风险补丁）**由 **夕梦** 独立逆向、编写补丁模块并完成实机验证（许可：GPL-3.0-or-later，详见 [`devices/ad200proii/README.md`](devices/ad200proii/README.md)）。
 - 相关独立项目：[**Godox-S3-Trigger**](https://github.com/YuchanHu/Godox-S3-Trigger) —— ESP32-S3 引闪器固件（GPL-3.0-or-later），本项目的协议结论与其净室实现互为交叉验证。
 - 技术栈：[Unicorn](https://www.unicorn-engine.org/) · [Capstone](https://www.capstone-engine.org/) · [Ghidra](https://ghidra-sre.org/)
 
