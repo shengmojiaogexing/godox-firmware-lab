@@ -46,6 +46,7 @@
 - [接入新设备](#接入新设备)
 - [测试](#测试)
 - [常见问题](#常见问题)
+- [交流群](#-交流群)
 - [贡献](#贡献)
 - [许可与致谢](#许可与致谢)
 - [法律声明](#法律声明-权利人通知)
@@ -397,9 +398,29 @@ CI 会在每次推送时执行语法检查、设备注册、API 测试与前端�
 
 ---
 
+## 💬 交流群
+
+刷写遇到问题、交流逆向经验或接入新设备，欢迎加入 QQ 交流群：
+
+<div align="center">
+
+**📱 QQ 群号：[546820728](https://qm.qq.com/q/546820728)**
+
+<img alt="神牛固件研究工坊 QQ 交流群二维码" src="docs/images/qq_group_crop.jpg" width="280">
+
+<sub>手机可长按图片识别二维码，或直接搜索群号 <b>546820728</b> 加入</sub>
+
+</div>
+
+> [!TIP]
+> 提问前建议先运行 `python keypatch/selftest.py` 并附上设备型号、固件版本与报错信息，便于快速定位。
+
+---
+
 ## 🤝 贡献
 
-欢迎提交 Issue 与 Pull Request。提交前请：
+交流与提问可加入上方的 QQ 群（[546820728](https://qm.qq.com/q/546820728)）；缺陷与功能建议请走 Issue。
+提交 Pull Request 前请：
 
 1. 确保 `python keypatch/selftest.py` 与 `python studio/tests/test_api.py` 通过
 2. 新设备请附带逆向档案与 `verify()` 验证项
