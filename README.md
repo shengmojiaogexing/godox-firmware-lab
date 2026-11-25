@@ -411,7 +411,7 @@ CI 会在每次推送时执行语法检查、设备注册、API 测试与前端�
 ## ⚖️ 许可与致谢
 
 - 本项目原创代码与文档：**[GPL-3.0-or-later](LICENSE)**。厂商固件与第三方组件不在许可范围内，详见 LICENSE 末尾的「许可范围说明」。
-- **社区贡献署名**：**Godox AD200 Pro II（`ad200proii_mask`，V1.05 设置字节遮罩版低风险补丁）**由 **夕梦** 独立逆向、编写补丁模块并完成实机验证（许可：GPL-3.0-or-later，详见 [`devices/ad200proii/README.md`](devices/ad200proii/README.md)）。
+- **社区贡献署名**：**Godox AD200 Pro II（`ad200proii_mask`，V1.05 设置字节遮罩版低风险补丁）**由 **夕梦（[@PriestessVFTS](https://github.com/PriestessVFTS)）** 独立逆向、编写补丁模块并完成实机验证（许可：GPL-3.0-or-later，详见 [`devices/ad200proii/README.md`](devices/ad200proii/README.md)）。
 - 相关独立项目：[**Godox-S3-Trigger**](https://github.com/YuchanHu/Godox-S3-Trigger) —— ESP32-S3 引闪器固件（GPL-3.0-or-later），本项目的协议结论与其净室实现互为交叉验证。
 - 技术栈：[Unicorn](https://www.unicorn-engine.org/) · [Capstone](https://www.capstone-engine.org/) · [Ghidra](https://ghidra-sre.org/)
 
